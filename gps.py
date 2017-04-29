@@ -14,7 +14,12 @@ class Gps():
         self.speed = ''
         self.altitude = ''
         self.course = ''
-        self.ser = serial.Serial("/dev/ttyS0", baudrate=9600, timeout=0)
+        try:
+            self.ser = serial.Serial("/dev/ttyS0",
+                                     baudrate=9600,
+                                     timeout=0)
+        except serial.SerialException:
+            print("could not open port")
 
     def create_file(self, filename="gps.csv"):
         with open(filename, 'a') as csvfile:
