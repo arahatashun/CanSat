@@ -53,8 +53,9 @@ class Gps():
             sio2 = io.TextIOWrapper(sio1,
                                     newline='\r',
                                     line_buffering=True)
+            sio3 = sio2.readline()
 
-            msg = pynmea2.parse(sio2.readline())
+            msg = pynmea2.parse(sio3)
 
             if msg.sentence_type == 'GGA':
                 self.latitude = msg.latitude
