@@ -45,17 +45,26 @@ class Gps():
                 self.altitude,
                 self.course]
 
+    def readline(self):
+        eol = b'\r'
+        leneol = len(eol)
+        line = bytearray()
+        while True:
+            c = self.ser.read(1)
+        if c:
+            line += c
+            if line[-leneol:] == eol:
+                break
+        else:
+            break
+    return bytes(line)
+
     def read_data(self):
         self.ser.reset_input_buffer()
         flag = 0
         while flag != 2:
-            sio1 = io.BufferedRWPair(self.ser, self.ser, 1)
-            sio2 = io.TextIOWrapper(sio1,
-                                    newline='\r',
-                                    line_buffering=True)
-            sio3 = sio2.readline()
-
-            msg = pynmea2.parse(sio3)
+            sio = self.readline()
+            msg = pynmea2.parse(sio)
 
             if msg.sentence_type == 'GGA':
                 self.latitude = msg.latitude
