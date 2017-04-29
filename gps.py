@@ -15,7 +15,7 @@ class Gps():
         self.altitude = ''
         self.course = ''
         try:
-            self.ser = serial.Serial("/dev/ttyS0",
+            self.ser = serial.Serial('/dev/ttyS0',
                                      baudrate=9600,
                                      timeout=1)
         except serial.SerialException:
