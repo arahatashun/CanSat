@@ -17,7 +17,10 @@ class Gps():
         try:
             self.ser = serial.Serial("/dev/ttyS0",
                                      baudrate=9600,
-                                     timeout=0)
+                                     bytesize=serial.EIGHTBITS,
+                                     parity=serial.PARITY_NONE,
+                                     stopbits=serial.STOPBITS_ONE,
+                                     timeout=1)
         except serial.SerialException:
             print("could not open port")
 
@@ -46,9 +49,11 @@ class Gps():
         self.ser.reset_input_buffer()
         flag = 0
         while flag != 2:
-            sio1 = io.BufferedRandom(self.ser)
-            sio2 = io.TextIOWrapper(sio1)
-            print(type(sio2))
+            sio1 = io.BufferedRWPair(self.ser, self.ser, 1)
+            sio2 = io.TextIOWrapper(sio1,
+                                    newline='\r',
+                                    line_buffering=True)
+
             msg = pynmea2.parse(sio2.readline())
 
             if msg.sentence_type == 'GGA':
