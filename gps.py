@@ -3,6 +3,7 @@
 import serial
 import csv
 import pynmea2
+import io
 
 
 class Gps():
@@ -40,7 +41,7 @@ class Gps():
         self.ser.reset_input_buffer()
         flag = 0
         while flag != 2:
-            msg = pynmea2.parse(ser.readline())
+            msg = pynmea2.parse(self.ser.readline())
 
             if msg.sentence_type == 'GGA':
                 self.latitude = msg.latitude
@@ -51,7 +52,7 @@ class Gps():
             if msg.sentence_type == 'RMC':
                 self.speed = msg.spd_over_grnd
                 self.course = msg.true_course
-                if flag = 1:
+                if flag == 1:
                     flag = 2
 
 
