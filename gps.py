@@ -17,7 +17,7 @@ class Gps():
         try:
             self.ser = serial.Serial("/dev/ttyS0",
                                      baudrate=9600,
-                                     timeout=0)
+                                     timeout=1)
         except serial.SerialException:
             print("could not open port")
 
@@ -42,27 +42,13 @@ class Gps():
                 self.altitude,
                 self.course]
 
-    def readline(self):
-        eol = b'\r'
-        leneol = len(eol)
-        line = bytearray()
-        while True:
-            c = self.ser.read(1)
-            if c:
-                line += c
-            if line[-leneol:] == eol:
-                break
-        else:
-            break
-    return bytes(line)
-
     def read_data(self):
-        self.ser.reset_input_buffer()
         flag = 0
         while flag != 2:
-
-            self_id = self.readline()
-            msg = pynmea2.parse(self_id)
+            sio1 = io.BufferedRandom(self.ser)
+            sio2 = io.TextIOWrapper(sio1)
+            sio3 = sio2.readline()
+            msg = pynmea2.parse(sio3)
 
             if msg.sentence_type == 'GGA':
                 self.latitude = msg.latitude
