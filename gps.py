@@ -41,7 +41,8 @@ class Gps():
         self.ser.reset_input_buffer()
         flag = 0
         while flag != 2:
-            sio = io.TextIOWrapper(io.BufferedRWPair(self.ser, self.ser))
+            sio = io.TextIOWrapper(io.BufferedRandom(self.ser))
+            print(type(sio))
             msg = pynmea2.parse(sio.readline())
 
             if msg.sentence_type == 'GGA':
