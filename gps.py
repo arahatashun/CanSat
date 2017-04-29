@@ -24,7 +24,7 @@ class Gps():
                                 'altitude',
                                 'course'])
 
-    def write_date(self, filename="gps.csv"):
+    def write_data(self, filename="gps.csv"):
         with open(filename, 'a') as csvfile:
             csvwriter = csv.writer(csvfile, dialect='excel')
             csvwriter.writerow(self.return_results())
@@ -37,17 +37,22 @@ class Gps():
                 self.course]
 
     def read_data(self):
-        while self.ser.in_waiting > 0:
+        self.ser.reset_input_buffer()
+        flag = 0
+        while flag != 2:
             msg = pynmea2.parse(ser.readline())
 
-            if msg.sentence_type = 'GGA':
+            if msg.sentence_type == 'GGA':
                 self.latitude = msg.latitude
                 self.longitude = msg.longitude
                 self.altitude = msg.altitude
-
-            if msg.sentence_type = 'RMC':
+                flag = 1
+            if msg.sentence_type == 'RMC':
                 self.speed = msg.spd_over_grnd
                 self.course = msg.true_course
+                if flag = 1:
+                    flag = 2
+
 
 if __name__ == "__main__":
     mygps = Gps()
