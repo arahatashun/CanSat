@@ -36,11 +36,11 @@ class Gps():
             csvwriter.writerow(self.return_results())
 
     def return_results(self):
-        return [self.latitude,
-                self.longitude,
-                self.speed,
-                self.altitude,
-                self.course]
+        return {"latitude": self.latitude,
+                "longitude": self.longitude,
+                "speed": self.speed,
+                "altitude": self.altitude,
+                "cource": self.course}
 
     def read_data(self):
         flag = 0
