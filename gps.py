@@ -40,12 +40,12 @@ class Gps():
         while self.ser.in_waiting > 0:
             msg = pynmea2.parse(ser.readline())
 
-            if msg.sentence_type = 'GGA':
+            if msg.sentence_type == 'GGA':
                 self.latitude = msg.latitude
                 self.longitude = msg.longitude
                 self.altitude = msg.altitude
 
-            if msg.sentence_type = 'RMC':
+            if msg.sentence_type == 'RMC':
                 self.speed = msg.spd_over_grnd
                 self.course = msg.true_course
 
