@@ -46,9 +46,10 @@ class Gps():
         self.ser.reset_input_buffer()
         flag = 0
         while flag != 2:
-            sio = io.TextIOWrapper(io.BufferedRandom(self.ser))
-            print(type(sio))
-            msg = pynmea2.parse(sio.readline())
+            sio1 = io.BufferedRandom(self.ser)
+            sio2 = io.TextIOWrapper(sio1)
+            print(type(sio2))
+            msg = pynmea2.parse(sio2.readline())
 
             if msg.sentence_type == 'GGA':
                 self.latitude = msg.latitude
