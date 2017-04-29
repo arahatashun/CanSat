@@ -40,7 +40,7 @@ class Gps():
                 self.longitude,
                 self.speed,
                 self.altitude,
-                self.course}
+                self.course]
 
     def read_data(self):
         flag = 0
