@@ -45,7 +45,7 @@ class Gps():
     def read_data(self):
         flag = 0
         while flag != 2:
-            sio1 = io.BufferedRandom(self.ser)
+            sio1 = io.BufferedRWPair(self.ser, self.ser)
             sio2 = io.TextIOWrapper(sio1)
             sio3 = sio2.readline()
             msg = pynmea2.parse(sio3)
