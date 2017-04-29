@@ -47,6 +47,7 @@ class Gps():
                 self.longitude = msg.longitude
                 self.altitude = msg.altitude
                 flag = 1
+
             if msg.sentence_type == 'RMC':
                 self.speed = msg.spd_over_grnd
                 self.course = msg.true_course
