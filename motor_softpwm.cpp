@@ -82,7 +82,7 @@ int MotorSoftPwm::motorMove()
 	  return 0;
 }
 	
-int MotorSoftPwm::motorMove(int m,int pr, int pl,int ps)
+int MotorSoftPwm::setpwm(int m,int pr, int pl,int ps)
 {
 	 mode =m;
 	 pwmvalue_r = pr;

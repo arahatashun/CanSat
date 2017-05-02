@@ -13,7 +13,7 @@ class MotorSoftPwm {
 public:
 	MotorSoftPwm(int m,int pr,int pl,int ps);    //constructor function
 	int motorMove();
-	int setpwm(int m,int pr,int pl,int ps);motor
+	int setpwm(int m,int pr,int pl,int ps);
 };
 
 #endif	  		
