@@ -1,7 +1,7 @@
 // motor_test.cpp
 
-#include<cstdio>
-#include"motor_softpwm.hpp"
+#include <cstdio>
+#include "motor_softpwm.hpp"
 
 int main(){
 	MotorSoftPwm test1(1,70,70,10);
