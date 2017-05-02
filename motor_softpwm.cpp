@@ -6,7 +6,6 @@
 #include <wiringPi.h>
 #include <softPwm.h>
 
-<<<<<<< HEAD
 static const int RIGHTMOTOR1=17;    //GPIO17
 static const int RIGHTMOTOR2=27;    //GPIO27
 static const int LEFTMOTOR1=23;    //GPIO23
@@ -18,20 +17,7 @@ static const int BACK=2;
 static const int RIGHT=3;
 static const int LEFT=4;
 
-MotorSoftPwm::MotorSoftPwm(int m,int pr,int pl,int ps)		//constuctor function
-=======
-static const int RIGHTMOTOR1 = 17    //GPIO17
-static const int RIGHTMOTOR2 = 27 //GPIO27
-static const int LEFTMOTOR1 = 23 //GPIO23
-static const int LEFTMOTOR2 = 24 //GPIO24
-static const int RANGE = 100
-static const int STOP = 0
-static const int FWRD = 1
-static const int BACK = 2
-static const int RIGHT = 3
-static const int LEFT = 4
 MotorSoftPwm::MotorSoftPwm(int m,int pr,int pl,int ps) //constuctor function
->>>>>>> 3dc061ef488021b7d54a3ecf602a9d49397561fc
 {
 	//wiring Pi initialize
 	if(wiringPiSetupGpio() == -1) {
