@@ -6,16 +6,16 @@
 #include<wiringPi.h>
 #include<softPwm.h>
 
-static const int RIGHTMOTOR1=17    //GPIO17
-static const int RIGHTMOTOR2=27    //GPIO27
-static const int LEFTMOTOR1=23    //GPIO23
-static const int LEFTMOTOR2=24    //GPIO24
-static const int RANGE=100
-static const int STOP=0
-static const int FWRD=1
-static const int BACK=2
-static const int RIGHT=3
-static const int LEFT=4
+static const int RIGHTMOTOR1 = 17    //GPIO17
+static const int RIGHTMOTOR2 = 27    //GPIO27
+static const int LEFTMOTOR1 = 23    //GPIO23
+static const int LEFTMOTOR2 = 24    //GPIO24
+static const int RANGE = 100
+static const int STOP = 0
+static const int FWRD = 1
+static const int BACK = 2
+static const int RIGHT = 3
+static const int LEFT = 4
 
 MotorSoftPwm::MotorSoftPwm(int m,int pr,int pl,int ps)		//constuctor function
 {
@@ -30,7 +30,7 @@ MotorSoftPwm::MotorSoftPwm(int m,int pr,int pl,int ps)		//constuctor function
 	 softPwmCreate(LEFTMOTOR1,0,RANGE);
 	 softPwmCreate(LEFTMOTOR2,0,RANGE);
 	 //constructor argument
-	 mode =m;
+	 mode = m;
 	 pwmvalue_r = pr;
 	 pwmvalue_l = pl;
 	 pwmsecond = ps;
@@ -41,7 +41,7 @@ int MotorSoftPwm::motorMove()
     switch(mode)
     {
       case STOP:    //stop
-    		softPwmWrite(RIGHTMOTOR1,0);    
+    		softPwmWrite(RIGHTMOTOR1,0);
     		softPwmWrite(RIGHTMOTOR2,0);
     		softPwmWrite(LEFTMOTOR1,0);
     		softPwmWrite(LEFTMOTOR2,0);
@@ -78,13 +78,13 @@ int MotorSoftPwm::motorMove()
 			break;
 	   }
 	delay(pwmsecond *1000);
-	  
+
 	  return 0;
 }
-	
+
 int MotorSoftPwm::setpwm(int m,int pr, int pl,int ps)
 {
-	 mode =m;
+	 mode = m;
 	 pwmvalue_r = pr;
 	 pwmvalue_l = pl;
 	 pwmsecond = ps;
