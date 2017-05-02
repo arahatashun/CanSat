@@ -4,10 +4,6 @@
 //motor_softpwm.hpp
 //motor softpwm class header file
 
-#include<cstdio>
-#include<wiringPi.h>
-#include<softPwm.h>
-
 class MotorSoftPwm {
 	int mode, pwmvalue_r, pwmvalue_l, pwmsecond;
 public:
