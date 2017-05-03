@@ -97,7 +97,7 @@ int main()
 	motor_right(4,40);
 	motor_stop(10);
 	motor_left(4,40);
-	motor_back(10);
-	motor_forward(5);
+	motor_back(10,40);
+	motor_forward(5,40);
 	return 0;
 }
