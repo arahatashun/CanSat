@@ -16,7 +16,7 @@ static const int z_lsb_reg = 0x06;
 static const int y_msb_reg = 0x07;
 static const int y_lsb_reg = 0x08;
 static const double pi = 3.14159265;
-static const double epsilon = 1e-10
+static const double epsilon = 1e-10;
 
 short read_out(int file,int msb_reg, int lsb_reg)
 {
