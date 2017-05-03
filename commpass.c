@@ -18,30 +18,30 @@ static const double pi = 3.14159265;
 
 short read_out(int file,int msb_reg, int lsb_reg)
 {
-  uint8_t msb = wiringPiI2CReadReg8(file, msb_reg);
-  uint8_t lsb = wiringPiI2CReadReg8(file, lsb_reg);
-  short i = msb << 8| lsb;
+	uint8_t msb = wiringPiI2CReadReg8(file, msb_reg);
+	uint8_t lsb = wiringPiI2CReadReg8(file, lsb_reg);
+	short i = msb << 8| lsb;
 
-  return i;
+	return i;
 }
 
 int main()
 {
 /* WHO AM I */
-  int fd = wiringPiI2CSetup(devid);
+	int fd = wiringPiI2CSetup(devid);
 /* start senser */
-  if((wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous))<0) {
-    printf("write error register mode_reg");
-  }
-  printf("write register:mode_reg")
+	if((wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous))<0) {
+		printf("write error register mode_reg");
+	}
+	printf("write register:mode_reg")
 
 /* read X_MSB */
 	short x = read_out(fd, x_msb_reg, x_lsb_reg);
 	short y = read_out(fd, y_msb_reg, y_lsb_reg);
-  short z = read_out(fd, z_msb_reg, z_lsb_reg);
+	short z = read_out(fd, z_msb_reg, z_lsb_reg);
 //arctan(x/y)*pi/180
-  double angle=atan2((double) x,(double) y)*(180/pi);
+	double angle=atan2((double) x,(double) y)*(180/pi);
 
-  printf("x:%d,y:%d,z%d -angle %f¥n",x,y,z,angle);
+	printf("x:%d,y:%d,z:%d -angle %f¥n",x,y,z,angle);
 	return 0;
 }
