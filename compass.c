@@ -29,14 +29,16 @@ short read_out(int file,int msb_reg, int lsb_reg)
 
 double get_angle(short x,short y)
 {
-	if((double)x<epsilon){
-		double angle_calc = 90 + atan2((double)y,(double)x)*(180/pi);
+	double angle_calc;
+
+	if((double)x<epsilon) {
+		angle_calc = 90 + atan2((double)y,(double)x)*(180/pi);
 	}
-	if((double)x>epsilon){
-		double angle_calc = 270 + atan2((double)y,(double)x)*(180/pi);
+	if((double)x>epsilon) {
+		angle_calc = 270 + atan2((double)y,(double)x)*(180/pi);
 	}
 	else{
-		double angle_calc = 0;
+		angle_calc = 0;
 	}
 	return angle_calc;
 }
