@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <math.h>
-#include <float.h>
+
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
@@ -30,16 +30,12 @@ double get_angle(short x,short y)
 {
 	double angle_calc;
 
-	if((double)x < -DBL_EPSILON) {
+	if((double)x <= 0) {
 		angle_calc = 90 + atan2((double)y,(double)x)*(180/pi);
 	}
-	else if((double)x > DBL_EPSILON) {
+	else if((double)x > 0) {
 		angle_calc = 270 + atan2((double)y,(double)x)*(180/pi);
 	}
-	else{
-		angle_calc = 0;
-	}
-
 	return angle_calc;
 }
 
