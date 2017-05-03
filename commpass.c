@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <math.h>
 
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
