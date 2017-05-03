@@ -5,7 +5,7 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
-static const int　devid = 0x1e; //I2C address
+static const int devid = 0x1e; //I2C address
 static const int mode_reg = 0x02;
 static const int mode_continuous = 0x00;
 static const int mode_single = 0x01;
@@ -34,7 +34,7 @@ int main()
 	if((wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous))<0) {
 		printf("write error register mode_reg");
 	}
-	printf("write register:mode_reg")
+	printf("write register:mode_reg");
 
 /* read X_MSB */
 	short x = read_out(fd, x_msb_reg, x_lsb_reg);
