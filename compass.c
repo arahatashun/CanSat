@@ -33,7 +33,7 @@ double get_angle(short x,short y)
 	if((double)x < -DBL_EPSILON) {
 		angle_calc = 90 + atan2((double)y,(double)x)*(180/pi);
 	}
-	if((double)x > DBL_EPSILON) {
+	else if((double)x > DBL_EPSILON) {
 		angle_calc = 270 + atan2((double)y,(double)x)*(180/pi);
 	}
 	else{
