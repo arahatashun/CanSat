@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <math.h>
-
+#include <float.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
@@ -39,7 +39,7 @@ double get_angle(short x,short y)
 	else{
 		angle_calc = 0;
 	}
-	
+
 	return angle_calc;
 }
 
