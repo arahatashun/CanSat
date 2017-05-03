@@ -56,6 +56,6 @@ int main()
 //arctan(x/y)*pi/180
 	double angle=get_angle(x,y);
 
-	printf("x:%d,y:%d,z:%d -angle %f¥n",x,y,z,angle);
+	printf("x:%d,y:%d,z:%d,angle:%f\n",x,y,z,angle);
 	return 0;
 }
