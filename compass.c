@@ -26,19 +26,6 @@ short read_out(int file,int msb_reg, int lsb_reg)
 	return i;
 }
 
-double get_angle(short x,short y)
-{
-	double angle_calc;
-
-	if((double)x <= 0) {
-		angle_calc = 90 + atan2((double)y,(double)x)*(180/pi);
-	}
-	else if((double)x > 0) {
-		angle_calc = 270 + atan2((double)y,(double)x)*(180/pi);
-	}
-	return angle_calc;
-}
-
 int main()
 {
 /* WHO AM I */
@@ -54,7 +41,7 @@ int main()
 	short y = read_out(fd, y_msb_reg, y_lsb_reg);
 	short z = read_out(fd, z_msb_reg, z_lsb_reg);
 //arctan(x/y)*pi/180
-	double angle=get_angle(x,y);
+	double angle = atan2(double)y, (double)x)*(180/pi) + 180;
 
 	printf("x:%d,y:%d,z:%d,angle:%f\n",x,y,z,angle);
 	return 0;
