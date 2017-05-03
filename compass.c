@@ -16,6 +16,7 @@ static const int z_lsb_reg = 0x06;
 static const int y_msb_reg = 0x07;
 static const int y_lsb_reg = 0x08;
 static const double pi = 3.14159265;
+static const double epsilon = 1e-10
 
 short read_out(int file,int msb_reg, int lsb_reg)
 {
@@ -24,6 +25,20 @@ short read_out(int file,int msb_reg, int lsb_reg)
 	short i = msb << 8| lsb;
 
 	return i;
+}
+
+double get_angle(short x,short y)
+{
+	if((double)x<epsilon){
+		double angle_calc = 90 + atan2((double)y,(double)x)*(180/pi);
+	}
+	if((double)x>epsilon){
+		double angle_calc = 270 + atan2((double)y,(double)x)*(180/pi);
+	}
+	else{
+		double angle_calc = 0;
+	}
+	return angle_calc;
 }
 
 int main()
@@ -41,7 +56,7 @@ int main()
 	short y = read_out(fd, y_msb_reg, y_lsb_reg);
 	short z = read_out(fd, z_msb_reg, z_lsb_reg);
 //arctan(x/y)*pi/180
-	double angle=atan2((double) x,(double) y)*(180/pi);
+	double angle=get_angle(x,y);
 
 	printf("x:%d,y:%d,z:%d -angle %f¥n",x,y,z,angle);
 	return 0;
