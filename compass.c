@@ -60,7 +60,7 @@ int compass_initializer()
 	return 0;
 }
 
-int get_angle()
+double get_angle()
 {
   /* read X_MSB */
 	short x = read_out(fd, x_msb_reg, x_lsb_reg);
