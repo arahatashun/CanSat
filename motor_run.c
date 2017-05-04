@@ -1,8 +1,7 @@
-#include <signal.h>
 #include <stdio.h>
 #include <wiringPi.h>
 #include <softPwm.h>
-#include <signal.h>
+
 
 static const int RIGHTMOTOR1 = 17;//GPIO17
 static const int RIGHTMOTOR2 = 27;//GPIO27
@@ -27,13 +26,12 @@ int pwm_initializer()
 	return 0;
 }
 
-int motor_stop(int seconds)
+int motor_stop(int milliseconds)
 {
 	softPwmWrite(RIGHTMOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(RIGHTMOTOR2,ZERO_PWM_VAL);
 	softPwmWrite(LEFTMOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(LEFTMOTOR2,ZERO_PWM_VAL);
-	int milliseconds=seconds*1000;
 	delay(milliseconds);
 	return 0;
 }
@@ -47,70 +45,46 @@ int motor_cease()
 	return 0;
 }
 
-int motor_forward(int seconds,int pwm_value)
+int motor_forward(int milliseconds,int pwm_value)
 {
 	softPwmWrite(RIGHTMOTOR1,pwm_value);
 	softPwmWrite(RIGHTMOTOR2,ZERO_PWM_VAL);
 	softPwmWrite(LEFTMOTOR1,pwm_value);
 	softPwmWrite(LEFTMOTOR2,ZERO_PWM_VAL);
-	int milliseconds=seconds*1000;
 	delay(milliseconds);
 	motor_cease();
 	return 0;
 }
 
-int motor_back(int seconds,int pwm_value)
+int motor_back(int milliseconds,int pwm_value)
 {
 	softPwmWrite(RIGHTMOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(RIGHTMOTOR2,pwm_value);
 	softPwmWrite(LEFTMOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(LEFTMOTOR2,pwm_value);
-	int milliseconds=seconds*1000;
 	delay(milliseconds);
 	motor_cease();
 	return 0;
 }
 
-int motor_right(int seconds,int pwm_value)
+int motor_right(int milliseconds,int pwm_value)
 {
 	softPwmWrite(RIGHTMOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(RIGHTMOTOR2,pwm_value);
 	softPwmWrite(LEFTMOTOR1,pwm_value);
 	softPwmWrite(LEFTMOTOR2,ZERO_PWM_VAL);
-	int milliseconds=seconds*1000;
 	delay(milliseconds);
 	motor_cease();
 	return 0;
 }
 
-int motor_left(int seconds,int pwm_value)
+int motor_left(int milliseconds,int pwm_value)
 {
 	softPwmWrite(RIGHTMOTOR1,pwm_value);
 	softPwmWrite(RIGHTMOTOR2,ZERO_PWM_VAL);
 	softPwmWrite(LEFTMOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(LEFTMOTOR2,pwm_value);
-	int milliseconds=seconds*1000;
 	delay(milliseconds);
 	motor_cease();
-	return 0;
-}
-
-void handler(int signum)
-{
-	motor_cease();
-}
-
-
-
-int main()
-{
-	signal(SIGINT, handler);
-	pwm_initializer();
-	motor_forward(10,70);
-	motor_right(4,40);
-	motor_stop(5);
-	motor_left(4,40);
-	motor_back(10,40);
-	motor_forward(5,80);
 	return 0;
 }
