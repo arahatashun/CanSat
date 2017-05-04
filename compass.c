@@ -29,20 +29,21 @@ short read_out(int file,int msb_reg, int lsb_reg)
 
 double get_angle(short x,short y)
 {
-	double angle_calc = atan2((double)y, (double)x)*(180/pi) + 180;
+	double angle_calc1 = atan2((double)y, (double)x)*(180/pi) + 180;
+	double angle_calc2 = angle_calc1 - angle_of_deviation;
 	double angle_return;
 
-	if (angle_calc > 360)
+	if (angle_calc2 > 360)
 	{
-		angle_return = angle_calc - 360;
+		angle_return = angle_calc2 - 360;
 	}
-	else if(angle_calc<0)
+	else if(angle_calc2<0)
 	{
-		angle_return = angle_calc + 360;
+		angle_return = angle_calc2 + 360;
 	}
 	else
 	{
-		angle_return = angle_calc;
+		angle_return = angle_calc2;
 	}
 
 	return angle_return;
