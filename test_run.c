@@ -13,7 +13,7 @@ int main()
   {
     while (get_angle()-target_angle<30 && get_angle()-target_angle>-30)
     {
-      motor_forward(10000,70);
+      motor_forward(5000,70);
     }
     while(get_angle()-target_angle>=30)
     {
