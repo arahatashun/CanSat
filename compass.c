@@ -32,17 +32,18 @@ double calc_angle(short x,short y)
 {
 	double angle_calc1 = atan2((double)y, (double)x)*(180/pi) + 180;
 	double angle_calc2 = angle_calc1 + angle_of_deviation;
+	double angle_return;
 	if (angle_calc2 > 360)
 	{
-		double angle_return = angle_calc2 - 360;
+		angle_return = angle_calc2 - 360;
 	}
 	else if(angle_calc2<0)
 	{
-		double angle_return = angle_calc2 + 360;
+		angle_return = angle_calc2 + 360;
 	}
 	else
 	{
-		double angle_return = angle_calc2;
+		angle_return = angle_calc2;
 	}
 	return angle_return;
 }

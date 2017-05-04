@@ -9,7 +9,7 @@ int main()
 {
   pwm_initializer();
   compass_initializer();
-  while (true)
+  while (1)
   {
     while (get_angle()-target_angle<30 && get_angle()-target_angle>-30)
     {
