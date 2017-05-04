@@ -5,6 +5,7 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
+static const int angle_of_deviation = -7;
 static const int devid = 0x1e; //I2C address
 static const int mode_reg = 0x02;
 static const int mode_continuous = 0x00;
@@ -26,6 +27,28 @@ short read_out(int file,int msb_reg, int lsb_reg)
 	return i;
 }
 
+double get_angle(short x,short y)
+{
+	double angle_calc = atan2((double)y, (double)x)*(180/pi) + 180;
+	double angle_return;
+
+	if (angle_calc > 360)
+	{
+		angle_return = angle_calc - 360;
+	}
+	else if(angle_calc<0)
+	{
+		angle_return = angle_calc + 360;
+	}
+	else
+	{
+		angle_return = angle_calc;
+	}
+
+	return angle_return;
+}
+
+
 int main()
 {
 /* WHO AM I */
@@ -41,7 +64,7 @@ int main()
 	short y = read_out(fd, y_msb_reg, y_lsb_reg);
 	short z = read_out(fd, z_msb_reg, z_lsb_reg);
 //arctan(x/y)*pi/180
-	double angle = atan2((double)y, (double)x)*(180/pi) + 180;
+	double angle = get_angle(x,y)
 
 	printf("x:%d,y:%d,z:%d,angle:%f\n",x,y,z,angle);
 	return 0;
