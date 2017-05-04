@@ -17,6 +17,7 @@ static const int z_lsb_reg = 0x06;
 static const int y_msb_reg = 0x07;
 static const int y_lsb_reg = 0x08;
 static const double pi = 3.14159265;
+int fd;
 
 short read_out(int file,int msb_reg, int lsb_reg)
 {
@@ -27,7 +28,7 @@ short read_out(int file,int msb_reg, int lsb_reg)
 	return i;
 }
 
-double get_angle(short x,short y)
+double calc_angle(short x,short y)
 {
 	double angle_calc1 = atan2((double)y, (double)x)*(180/pi) + 180;
 	double angle_calc2 = angle_calc1 + angle_of_deviation;
@@ -46,24 +47,26 @@ double get_angle(short x,short y)
 	return angle_return;
 }
 
-
-int main()
+int compass_initializer()
 {
-/* WHO AM I */
-	int fd = wiringPiI2CSetup(devid);
-/* start senser */
-	if((wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous))<0) {
+	/* WHO AM I */
+	fd = wiringPiI2CSetup(devid);
+	/* start senser */
+	if((wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous))<0)
+	{
 		printf("write error register mode_reg");
 	}
 	printf("write register:mode_reg");
+	return 0;
+}
 
-/* read X_MSB */
+int get_angle()
+{
+  /* read X_MSB */
 	short x = read_out(fd, x_msb_reg, x_lsb_reg);
 	short y = read_out(fd, y_msb_reg, y_lsb_reg);
 	short z = read_out(fd, z_msb_reg, z_lsb_reg);
-//arctan(x/y)*pi/180
-	double angle = get_angle(x,y);
-
+	double angle = calc_angle(x,y);
 	printf("x:%d,y:%d,z:%d,angle:%f\n",x,y,z,angle);
-	return 0;
+	return angle;
 }
