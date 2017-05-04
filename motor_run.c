@@ -36,15 +36,6 @@ int motor_stop(int milliseconds)
 	return 0;
 }
 
-int motor_cease()
-{
-	softPwmWrite(RIGHTMOTOR1,ZERO_PWM_VAL);
-	softPwmWrite(RIGHTMOTOR2,ZERO_PWM_VAL);
-	softPwmWrite(LEFTMOTOR1,ZERO_PWM_VAL);
-	softPwmWrite(LEFTMOTOR2,ZERO_PWM_VAL);
-	return 0;
-}
-
 int motor_forward(int milliseconds,int pwm_value)
 {
 	softPwmWrite(RIGHTMOTOR1,pwm_value);
@@ -52,7 +43,7 @@ int motor_forward(int milliseconds,int pwm_value)
 	softPwmWrite(LEFTMOTOR1,pwm_value);
 	softPwmWrite(LEFTMOTOR2,ZERO_PWM_VAL);
 	delay(milliseconds);
-	motor_cease();
+	motor_stop(10);
 	return 0;
 }
 
@@ -63,7 +54,7 @@ int motor_back(int milliseconds,int pwm_value)
 	softPwmWrite(LEFTMOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(LEFTMOTOR2,pwm_value);
 	delay(milliseconds);
-	motor_cease();
+	motor_stop(10);
 	return 0;
 }
 
@@ -74,7 +65,7 @@ int motor_right(int milliseconds,int pwm_value)
 	softPwmWrite(LEFTMOTOR1,pwm_value);
 	softPwmWrite(LEFTMOTOR2,ZERO_PWM_VAL);
 	delay(milliseconds);
-	motor_cease();
+	motor_stop(10);
 	return 0;
 }
 
@@ -85,6 +76,6 @@ int motor_left(int milliseconds,int pwm_value)
 	softPwmWrite(LEFTMOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(LEFTMOTOR2,pwm_value);
 	delay(milliseconds);
-	motor_cease();
+	motor_stop(10);
 	return 0;
 }
