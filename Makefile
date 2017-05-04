@@ -10,4 +10,4 @@ test_run.o: test_run.c
 motor_run.o: motor_run.c
 	gcc -c motor_run.c
 compass.o: compass.c
-	gcc -c compasst.c
+	gcc -c compass.c
