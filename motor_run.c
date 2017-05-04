@@ -1,6 +1,8 @@
+#include <signal.h>
+#include <stdio.h>
 #include <wiringPi.h>
 #include <softPwm.h>
-#include <stdio.h>
+#include <signal.h>
 
 static const int RIGHTMOTOR1 = 17;//GPIO17
 static const int RIGHTMOTOR2 = 27;//GPIO27
@@ -91,8 +93,15 @@ int motor_left(int seconds,int pwm_value)
 	return 0;
 }
 
+void handler(int signum) {
+	motor_cease();
+}
+
+
+
 int main()
 {
+	signal(SIGINT, handler);
 	pwm_initializer();
 	motor_forward(10,40);
 	motor_right(4,40);
