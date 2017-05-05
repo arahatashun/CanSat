@@ -4,7 +4,7 @@
 
 //note: seikei toukei ni izon
 static const double target_latitude = 35.7133352;//ido
-static const double target_longitude　= 139.7599809;//keido
+static const double target_longitude = 139.7599809;//keido
 static const double pi = 3.14159265;
 
 double target_angle(double lat,double lon)
