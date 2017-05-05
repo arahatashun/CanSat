@@ -11,7 +11,7 @@ double target_angle(double lat,double lon)
 {
   double lat_offset = target_latitude - lat;
   double lon_offset = target_longitude - lon;
-  double angle = atan2(-lat_offset,lon_offset)*(180/pi) + 180;
+  double angle = atan2(-lon_offset,-lat_offset)*(180/pi) + 180;
   return angle;
 }
 
