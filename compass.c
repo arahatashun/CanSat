@@ -30,7 +30,7 @@ short read_out(int file,int msb_reg, int lsb_reg)
 
 double calc_angle(short x,short y)
 {
-	double angle_calc1 = atan2((double)y, (double)x)*(180/pi) + 180;
+	double angle_calc1 = atan2((double)-y, (double)-x)*(180/pi) + 180;
 	double angle_calc2 = angle_calc1 + angle_of_deviation;
 	double angle_return;
 	if (angle_calc2 > 360)
