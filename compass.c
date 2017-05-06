@@ -16,7 +16,7 @@ static const int z_msb_reg = 0x05;
 static const int z_lsb_reg = 0x06;
 static const int y_msb_reg = 0x07;
 static const int y_lsb_reg = 0x08;
-static const double pi = 3.14159265;
+static const double PI = 3.14159265;
 int fd;
 
 short read_out(int file,int msb_reg, int lsb_reg)
@@ -30,7 +30,7 @@ short read_out(int file,int msb_reg, int lsb_reg)
 
 double calc_angle(short x,short y)
 {
-	double angle_calc1 = atan2((double)-y, (double)-x)*(180/pi) + 180;
+	double angle_calc1 = atan2((double)-y, (double)-x)*(180/PI) + 180;
 	double angle_calc2 = angle_calc1 + angle_of_deviation;
 	double angle_return;
 	if (angle_calc2 > 360)
