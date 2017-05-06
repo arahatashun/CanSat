@@ -1,6 +1,6 @@
 #include <math.h>
 #include <signal.h>
-#include <stdlib>
+#include <stdlib.h>
 #include "motor.h"
 #include "compass.h"
 #include "mitibiki.h"
