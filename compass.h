@@ -2,6 +2,6 @@
 #define COMPASS_H
 
 int compass_initializer();
-double get_angle();
+double compass_get_angle();
 
 #endif

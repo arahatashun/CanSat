@@ -6,10 +6,11 @@ static const double target_latitude = 35.7133352;//ido
 static const double target_longitude = 139.7599809;//keido
 static const double PI = 3.14159265;
 
+loc_t data;
+
 int mitibiki_initializer()
 {
    gps_init();
-   loc_t data;
 }
 
 double calc_angle(double lat,double lon)
@@ -21,7 +22,7 @@ double calc_angle(double lat,double lon)
   return angle;
 }
 
-double target_angle(double lat,double lon)
+double target_angle()
 {
   gps_location(&data);
   printf("latitude:%f, longitude:%f\n", data.latitude, data.longitude);

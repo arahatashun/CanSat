@@ -11,15 +11,15 @@ int main()
   compass_initializer();
   while (1)
   {
-    while (get_angle()-target_angle<30 && get_angle()-target_angle>-30)
+    while (compass_get_angle()-target_angle<30 && compass_get_angle()-target_angle>-30)
     {
       motor_forward(5000,70);
     }
-    while(get_angle()-target_angle>=30)
+    while(compass_get_angle()-target_angle>=30)
     {
       motor_left(50,40);
     }
-    while(get_angle()-target_angle<=-30)
+    while(compass_get_angle()-target_angle<=-30)
     {
       motor_right(50,40);
     }

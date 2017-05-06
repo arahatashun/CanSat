@@ -2,6 +2,6 @@
 #define MITIBIKI_H
 
 int mitibiki_initializer();
-double target_angle(double lat,double lon);
+double target_angle();
 
 #endif

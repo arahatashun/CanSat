@@ -17,7 +17,7 @@ int sensor_initializer()
 
 int update_angle()
 {
-  course = get_angle();//compass angle
+  course = compass_get_angle();
   angle_to_go = target_angle();
   delta_angle = course - angle_to_go;
   return delta_angle;
