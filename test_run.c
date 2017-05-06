@@ -1,5 +1,5 @@
 #include <math.h>
-#include "motor_run.h"
+#include "motor.h"
 #include "compass.h"
 
 static const int target_angle = 180;
