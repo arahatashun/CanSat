@@ -1,5 +1,5 @@
-#ifndef MOTOR_RUN_H
-#define MOTOR_RUN_H
+#ifndef MOTOR_H
+#define MOTOR_H
 
 int pwm_initializer();
 int motor_stop(int);
