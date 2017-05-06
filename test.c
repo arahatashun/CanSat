@@ -1,4 +1,6 @@
 #include <math.h>
+#include <signal.h>
+#include <stdlib>
 #include "motor.h"
 #include "compass.h"
 #include "mitibiki.h"
@@ -44,9 +46,15 @@ int decide_route()
   return 0;
 }
 
+void handler(int signum) {
+	motor_stop(10);
+  exit(1);
+}
+
 int main()
 {
   sensor_initializer();
+  signal(SIGINT, handler);
   while (1)
   {
     decide_route();
