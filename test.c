@@ -46,8 +46,9 @@ int decide_route()
   return 0;
 }
 
-void handler(int signum) {
-	motor_stop(10);
+void handler(int signum)
+{
+  motor_stop(10);
   exit(1);
 }
 
