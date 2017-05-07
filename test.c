@@ -27,7 +27,7 @@ int update_angle()
 
 int decide_route()
 {
-  while(0<=update_angle() && update_angle()<=180)
+  while(30<=update_angle() && update_angle()<=180)
   {
     motor_left(50,40);
   }
@@ -35,7 +35,7 @@ int decide_route()
   {
     motor_right(50,40);
   }
-  while(-180<update_angle() && update_angle()<0)
+  while(-180<update_angle() && update_angle()<-30)
   {
     motor_right(50,40);
   }
@@ -59,6 +59,7 @@ int main()
   while (1)
   {
     decide_route();
+    motor_forward(5000);
   }
   return 0;
 }
