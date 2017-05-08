@@ -60,7 +60,7 @@ void accl_and_rotation_read(Acclgyro *acg)
     acg->acclX_scaled = acclX / convert_to_G;
     acg->acclY_scaled = acclY / convert_to_G;
     acg->acclZ_scaled = acclZ / convert_to_G;
-    
+
     acg->x_rotation = get_x_rotation(acg->acclX_scaled, acg->acclY_scaled, acg->acclZ_scaled);
     acg->y_rotation = get_y_rotation(acg->acclX_scaled, acg->acclY_scaled, acg->acclZ_scaled);
 }
@@ -80,7 +80,7 @@ void init_acclgyro()
 {
 	  //initialization process
 	  fd = wiringPiI2CSetup(devid);
-	  wiringPiI2CWriteReg8(fd,power_management_reg,0x00);    //disable sleep mode  
+	  wiringPiI2CWriteReg8(fd,power_management_reg,0x00);    //disable sleep mode
 }
 
 void set_acclgyro(Acclgyro *acg)
@@ -94,13 +94,13 @@ void print_acclgyro(Acclgyro *acg)
 {
 	set_acclgyro(acg);
 	printf("acclX_scaled: %f\n", acg->acclX_scaled);
-    printf("acclY_scaled: %f\n", acg->acclY_scaled);
-    printf("acclZ_scaled: %f\n", acg->acclZ_scaled);
-    printf("X rotation: %f\n", acg->x_rotation);
-    printf("Y rotation: %f\n", acg->y_rotation);
-    printf("gyroX_scaled: %f\n", acg->gyroX_scaled);
-    printf("gyroY_scaled: %f\n", acg->gyroY_scaled);
-    printf("gyroZ_scaled: %f\n", acg->gyroZ_scaled);
+  printf("acclY_scaled: %f\n", acg->acclY_scaled);
+  printf("acclZ_scaled: %f\n", acg->acclZ_scaled);
+  printf("X rotation: %f\n", acg->x_rotation);
+  printf("Y rotation: %f\n", acg->y_rotation);
+  printf("gyroX_scaled: %f\n", acg->gyroX_scaled);
+  printf("gyroY_scaled: %f\n", acg->gyroY_scaled);
+  printf("gyroZ_scaled: %f\n", acg->gyroZ_scaled);
 }
 
 //if reverse,return 1
@@ -119,10 +119,3 @@ int z_posture(Acclgyro *acg)
 	    return 0;
 	}
 }
-
-	  
-	  
-	
-	
-	
-
