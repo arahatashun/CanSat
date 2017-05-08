@@ -5,7 +5,7 @@
 static const double target_latitude = 35.7133352;//ido
 static const double target_longitude = 139.7599809;//keido
 static const double PI = 3.14159265;
-static const double EARTH_RADIUS = 6378.137;
+static const double EARTH_RADIUS = 6378137;
 //構造体で角度と距離返す方がいいかもしれない
 loc_t data;
 
