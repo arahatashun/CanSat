@@ -3,5 +3,6 @@
 
 int mitibiki_initializer();
 double target_angle();
+double get_distace();
 
 #endif
