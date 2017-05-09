@@ -21,7 +21,7 @@ int mitibiki_initializer()
   return 0;
 }
 
-double calc_angle(double lat,double lon)
+double calc_gps_angle(double lat,double lon)
 {
   double lat_offset = target_latitude - lat;
   double lon_offset = target_longitude - lon;
@@ -34,7 +34,7 @@ double target_angle()
 {
   gps_location(&data);
   printf("latitude:%f, longitude:%f\n", data.latitude, data.longitude);
-  double target_angle = calc_angle(data.latitude,data.longitude);
+  double target_angle = calc_gps_angle(data.latitude,data.longitude);
   return target_angle;
 }
 
