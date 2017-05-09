@@ -9,7 +9,7 @@ static const double EARTH_RADIUS = 6378137;
 //構造体で角度と距離返す方がいいかもしれないs
 static loc_t data;
 
-static typedef struct cartesian_coordinates{
+typedef struct cartesian_coordinates{
   double x;
   double y;
   double z;
