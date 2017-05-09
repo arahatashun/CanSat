@@ -59,7 +59,7 @@ int main()
   while (1)
   {
     decide_route();
-    motor_forward(5000);
+    motor_forward(5000,70);
   }
   return 0;
 }
