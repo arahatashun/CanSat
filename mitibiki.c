@@ -41,7 +41,7 @@ double target_angle()
 cartesian_coord latlng_to_xyz(double lat,double lon)
 {
   double rlat = lat*PI/180;
-  double rlon = lon*PI/180;
+  double rlng = lon*PI/180;
   double coslat = cos(rlat);
   cartesian_coord tmp;
   tmp.x =coslat*cos(rlng);
