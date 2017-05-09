@@ -56,7 +56,7 @@ double dist_on_sphere(cartesian_coord target, cartesian_coord current_position)
   double dot_product_y = target.y*current_position.y;
   double dot_product_z = target.z*current_position.z;
   double dot_product_sum =dot_product_x+dot_product_y+dot_product_z;
-  double distance = arccos(dot_product_sum)*EARTH_RADIUS;
+  double distance = acos(dot_product_sum)*EARTH_RADIUS;
   printf("distance : %f\n",distance);
   return distance;
 }
