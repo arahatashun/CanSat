@@ -7,9 +7,9 @@ static const double target_longitude = 139.7599809;//keido
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
 //構造体で角度と距離返す方がいいかもしれない
-static loc_t data;
+loc_t data;
 
-static typedef struct cartesian_coordinates{
+typedef struct cartesian_coordinates{
   double x;
   double y;
   double z;
