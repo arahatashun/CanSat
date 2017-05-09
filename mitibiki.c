@@ -30,7 +30,7 @@ double calc_gps_angle(double lat,double lon)
   return angle;
 }
 
-double target_angle()
+double target_gps_angle()
 {
   gps_location(&data);
   printf("latitude:%f, longitude:%f\n", data.latitude, data.longitude);
