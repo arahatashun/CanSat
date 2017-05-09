@@ -28,7 +28,7 @@ short read_out(int file,int msb_reg, int lsb_reg)
 	return i;
 }
 
-double calc_angle(short x,short y)
+double calc_compass_angle(short x,short y)
 {
 	double angle_calc1 = atan2((double)-y, (double)-x)*(180/PI) + 180;
 	double angle_calc2 = angle_calc1 + angle_of_deviation;
@@ -67,7 +67,7 @@ double compass_get_angle()
 	short x = read_out(fd, x_msb_reg, x_lsb_reg);
 	short y = read_out(fd, y_msb_reg, y_lsb_reg);
 	short z = read_out(fd, z_msb_reg, z_lsb_reg);
-	double angle = calc_angle(x,y);
+	double angle = calc_compass_angle(x,y);
 	printf("x:%d,y:%d,z:%d,angle:%f\n",x,y,z,angle);
 	return angle;
 }
