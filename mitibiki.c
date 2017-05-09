@@ -13,11 +13,12 @@ typedef struct cartesian_coordinates{
   double x;
   double y;
   double z;
-}cartesian_coord
+}cartesian_coord;
 
 int mitibiki_initializer()
 {
   gps_init();
+  return 0;
 }
 
 double calc_angle(double lat,double lon)
