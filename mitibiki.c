@@ -7,9 +7,9 @@ static const double target_longitude = 139.7599809;//keido
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
 //構造体で角度と距離返す方がいいかもしれない
-loc_t data;
+static loc_t data;
 
-typedef struct cartesian_coordinates{
+static typedef struct cartesian_coordinates{
   double x;
   double y;
   double z;
@@ -21,7 +21,7 @@ int mitibiki_initializer()
   return 0;
 }
 
-double calc_gps_angle(double lat,double lon)
+static double calc_gps_angle(double lat,double lon)
 {
   double lat_offset = target_latitude - lat;
   double lon_offset = target_longitude - lon;
@@ -38,7 +38,7 @@ double target_gps_angle()
   return target_angle;
 }
 
-cartesian_coord latlng_to_xyz(double lat,double lon)
+static cartesian_coord latlng_to_xyz(double lat,double lon)
 {
   double rlat = lat*PI/180;
   double rlng = lon*PI/180;
@@ -50,7 +50,7 @@ cartesian_coord latlng_to_xyz(double lat,double lon)
   return tmp;
 }
 
-double dist_on_sphere(cartesian_coord target, cartesian_coord current_position)
+static double dist_on_sphere(cartesian_coord target, cartesian_coord current_position)
 {
   double dot_product_x = target.x*current_position.x;
   double dot_product_y = target.y*current_position.y;

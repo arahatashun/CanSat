@@ -17,9 +17,9 @@ static const int z_lsb_reg = 0x06;
 static const int y_msb_reg = 0x07;
 static const int y_lsb_reg = 0x08;
 static const double PI = 3.14159265;
-int fd;
+static int fd;
 
-short read_out(int file,int msb_reg, int lsb_reg)
+static short read_out(int file,int msb_reg, int lsb_reg)
 {
 	uint8_t msb = wiringPiI2CReadReg8(file, msb_reg);
 	uint8_t lsb = wiringPiI2CReadReg8(file, lsb_reg);
@@ -28,7 +28,7 @@ short read_out(int file,int msb_reg, int lsb_reg)
 	return i;
 }
 
-double calc_compass_angle(short x,short y)
+static double calc_compass_angle(short x,short y)
 {
 	double angle_calc1 = atan2((double)-y, (double)-x)*(180/PI) + 180;
 	double angle_calc2 = angle_calc1 + angle_of_deviation;

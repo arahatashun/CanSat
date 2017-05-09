@@ -6,14 +6,14 @@
 #include "acclgyro.h"
 
 typedef struct acclgyro{
-	double acclX_scaled, acclY_scaled, acclZ_scaled;	//the values of accleration 
+	double acclX_scaled, acclY_scaled, acclZ_scaled;	//the values of accleration
 	double gyroX_scaled, gyroY_scaled, gyroZ_scaled;    //the values of gyroscope
 	double x_rotation,y_rotation;    //XY-axis rotation
 	} Acclgyro;
-	
-int read_word_2c(int addr); 
 
-/*   
+int read_word_2c(int addr);
+
+/*
 double dist(double a,double b);
 double get_y_rotation(double x,double y,double z);
 double get_x_rotation(double x,double y,double z);
@@ -99,10 +99,11 @@ void gyro_read(Acclgyro *data)
 }
 
 
-void acclgyro_initializer()
+int acclgyro_initializer()
 {
 	fd = wiringPiI2CSetup(devid);
 	wiringPiI2CWriteReg8(fd,power_management_reg,0x00); //disable sleep mode
+	return 0;
 }
 
 void set_acclgyro(Acclgyro *data)
