@@ -76,10 +76,12 @@ static double dist_on_sphere(cartesian_coord target, cartesian_coord current_pos
 double get_distace()
 {
   double distance;
+  cartesian_coord target;
+  cartesian_coord current_position;
   gps_location(&data);
   printf("latitude:%f, longitude:%f\n", data.latitude, data.longitude);
-  cartesian_coord target = latlng_to_xyz(target_latitude,target_longitude);
-  cartesian_coord current_position = latlng_to_xyz(data.latitude, data.longitude);
+  target = latlng_to_xyz(target_latitude,target_longitude);
+  current_position = latlng_to_xyz(data.latitude, data.longitude);
   distance = dist_on_sphere(target,current_position);
   return distance;
   //always positive value?

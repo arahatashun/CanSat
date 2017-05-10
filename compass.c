@@ -21,18 +21,22 @@ static int fd;
 
 static short read_out(int file,int msb_reg, int lsb_reg)
 {
-	uint8_t msb = wiringPiI2CReadReg8(file, msb_reg);
-	uint8_t lsb = wiringPiI2CReadReg8(file, lsb_reg);
-	short i = msb << 8| lsb;
-
+	uint8_t msb;
+	uint8_t lsb;
+	short i;
+	msb = wiringPiI2CReadReg8(file, msb_reg);
+	lsb = wiringPiI2CReadReg8(file, lsb_reg);
+	i = msb << 8| lsb;
 	return i;
 }
 
 static double calc_compass_angle(short x,short y)
 {
-	double angle_calc1 = atan2((double)-y, (double)-x)*(180/PI) + 180;
-	double angle_calc2 = angle_calc1 + angle_of_deviation;
+	double angle_calc1;
+	double angle_calc2;
 	double angle_return;
+	angle_calc1 = atan2((double)-y, (double)-x)*(180/PI) + 180;
+	angle_calc2 = angle_calc1 + angle_of_deviation;
 	if (angle_calc2 > 360)
 	{
 		angle_return = angle_calc2 - 360;
@@ -64,10 +68,14 @@ int compass_initializer()
 double compass_get_angle()
 {
   /* read X_MSB */
-	short x = read_out(fd, x_msb_reg, x_lsb_reg);
-	short y = read_out(fd, y_msb_reg, y_lsb_reg);
-	short z = read_out(fd, z_msb_reg, z_lsb_reg);
-	double angle = calc_compass_angle(x,y);
+	short x;
+	short y;
+	short z;
+	double angle;
+	x = read_out(fd, x_msb_reg, x_lsb_reg);
+	y = read_out(fd, y_msb_reg, y_lsb_reg);
+	z = read_out(fd, z_msb_reg, z_lsb_reg);
+	angle = calc_compass_angle(x,y);
 	printf("x:%d,y:%d,z:%d,angle:%f\n",x,y,z,angle);
 	return angle;
 }
