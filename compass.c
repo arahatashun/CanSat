@@ -51,7 +51,7 @@ static double calc_compass_angle(short x,short y)
 int compass_initializer()
 {
 	/* WHO AM I */
-	int fd = wiringPiI2CSetup(devid);
+	fd = wiringPiI2CSetup(devid);
 	/* start senser */
 	if((wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous))<0)
 	{
