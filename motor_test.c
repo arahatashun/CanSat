@@ -1,7 +1,15 @@
 #include "motor.h"
 
+void handler(int signum)
+{
+  motor_stop(10);
+  exit(1);
+}
+
+
 int main()
 {
+  signal(SIGINT, handler);
   pwm_initializer();
-  motor_forward(100, 60);
+  motor_forward(1000, 60);
 }
