@@ -23,9 +23,12 @@ int mitibiki_initializer()
 
 static double calc_gps_angle(double lat,double lon)
 {
-  double lat_offset = target_latitude - lat;
-  double lon_offset = target_longitude - lon;
-  double angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;
+  double lat_offset;
+  double lon_offset;
+  double angle;
+  lat_offset = target_latitude - lat;
+  lon_offset = target_longitude - lon;
+  angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;
   printf("target_angle : %f\n",angle);
   return angle;
 }
@@ -34,15 +37,19 @@ double target_gps_angle()
 {
   gps_location(&data);
   printf("latitude:%f, longitude:%f\n", data.latitude, data.longitude);
-  double target_angle = calc_gps_angle(data.latitude,data.longitude);
+  double target_angle;
+  target_angle = calc_gps_angle(data.latitude,data.longitude);
   return target_angle;
 }
 
 static cartesian_coord latlng_to_xyz(double lat,double lon)
 {
-  double rlat = lat*PI/180;
-  double rlng = lon*PI/180;
-  double coslat = cos(rlat);
+  double rlat;
+  double rlng;
+  double coslar;
+  rlat = lat*PI/180;
+  rlng = lon*PI/180;
+  coslat = cos(rlat);
   cartesian_coord tmp;
   tmp.x =coslat*cos(rlng);
   tmp.y = coslat*sin(rlng);
@@ -52,22 +59,28 @@ static cartesian_coord latlng_to_xyz(double lat,double lon)
 
 static double dist_on_sphere(cartesian_coord target, cartesian_coord current_position)
 {
-  double dot_product_x = target.x*current_position.x;
-  double dot_product_y = target.y*current_position.y;
-  double dot_product_z = target.z*current_position.z;
-  double dot_product_sum =dot_product_x+dot_product_y+dot_product_z;
-  double distance = acos(dot_product_sum)*EARTH_RADIUS;
+  double dot_product_x;
+  double dot_product_y;
+  double dot_product_z;
+  double dot_product_sum;
+  double distance;
+  dot_product_x = target.x*current_position.x;
+  dot_product_y = target.y*current_position.y;
+  dot_product_z = target.z*current_position.z;
+  dot_product_sum =dot_product_x+dot_product_y+dot_product_z;
+  distance = acos(dot_product_sum)*EARTH_RADIUS;
   printf("distance : %f\n",distance);
   return distance;
 }
 
 double get_distace()
 {
+  double distance;
   gps_location(&data);
   printf("latitude:%f, longitude:%f\n", data.latitude, data.longitude);
   cartesian_coord target = latlng_to_xyz(target_latitude,target_longitude);
   cartesian_coord current_position = latlng_to_xyz(data.latitude, data.longitude);
-  double distance = dist_on_sphere(target,current_position);
+  distance = dist_on_sphere(target,current_position);
   return distance;
   //always positive value?
 }
