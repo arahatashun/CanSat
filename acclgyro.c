@@ -5,9 +5,12 @@
 #include <wiringPiI2C.h>
 
 static int fd;
-static int acclX, acclY, acclZ;
-static int gyroX, gyroY, gyroZ;
-
+static int acclX,
+static int acclY;
+static int acclZ;
+static int gyroX;
+static int gyroY;
+static int gyroZ;
 static const int devid = 0x68;    //I2C adress manual p45
 static const int power_management_reg = 0x6B;    //manual p40
 
@@ -22,12 +25,17 @@ static const double convert_to_G = 16384.0;
 static const double convert_to_degpers = 131.0;
 
 typedef struct acclgyro{
-	double acclX_scaled, acclY_scaled, acclZ_scaled;	//the values of accleration
-	double gyroX_scaled, gyroY_scaled, gyroZ_scaled;    //the values of gyroscope
-	double x_rotation,y_rotation;    //XY-axis rotation
-	} Acclgyro;
-	
-	
+	double acclX_scaled;//the values of accleration
+	double acclY_scaled;
+	double acclZ_scaled;
+	double gyroX_scaled;
+	double gyroY_scaled;
+	double gyroZ_scaled;//the values of gyroscope
+	double x_rotation;
+	double y_rotation;//XY-axis rotation
+} Acclgyro;
+
+
 static int read_word_2c(int addr);
 static int accl_and_rotation_read(Acclgyro *data);    //acgは構造体オブジェクトをさすポインタ
 static int gyro_read(Acclgyro *data);
@@ -44,7 +52,8 @@ double get_x_rotation(double x,double y,double z);
 
 static int read_word_2c(int addr)
 {
-	int val = wiringPiI2CReadReg8(fd, addr);
+	int val = 0;
+	val = wiringPiI2CReadReg8(fd, addr);
 	val = val << 8;
 	val += wiringPiI2CReadReg8(fd, addr+1); //隣り合う2つのレジスタの数値を足し合わせる
 	if (val >= 0x8000) val = -(65536 - val); //0x8000=32768以上になったら値を減らしていく
@@ -77,9 +86,9 @@ static int accl_and_rotation_read(Acclgyro *data)
 	int acclX = 0;
 	int acclY = 0;
 	int acclZ = 0;
-	int acclX = read_word_2c(acclX_reg);
-	int acclY = read_word_2c(acclY_reg);
-	int acclZ = read_word_2c(acclZ_reg);
+	acclX = read_word_2c(acclX_reg);
+	acclY = read_word_2c(acclY_reg);
+	acclZ = read_word_2c(acclZ_reg);
 
 	data->acclX_scaled = acclX / convert_to_G;
 	data->acclY_scaled = acclY / convert_to_G;
@@ -96,9 +105,9 @@ static int gyro_read(Acclgyro *data)
 	int gxroX=0;
 	int gyroY=0;
 	int gyroZ=0;
-	int gyroX = read_word_2c(gyroX_reg);
-	int gyroY = read_word_2c(gyroY_reg);
-	int gyroZ = read_word_2c(gyroZ_reg);
+	gyroX = read_word_2c(gyroX_reg);
+	gyroY = read_word_2c(gyroY_reg);
+	gyroZ = read_word_2c(gyroZ_reg);
 	data->gyroX_scaled = gyroX / convert_to_degpers;
 	data->gyroY_scaled = gyroY / convert_to_degpers;
 	data->gyroZ_scaled = gyroZ / convert_to_degpers;
@@ -143,7 +152,7 @@ int z_posture(Acclgyro *data)
 	if(acg->acclZ_scaled < 0)
 	{
 		printf("G:%f z_posture:reverse\n",data->acclZ_scaled);
-		return 1;
+		return -1;
 	}
 	else
 	{
