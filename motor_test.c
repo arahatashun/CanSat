@@ -13,5 +13,7 @@ int main()
 {
   signal(SIGINT, handler);
   pwm_initializer();
-  motor_forward(1000, 60);
+  motor_forward(10000, 60);
+  motor_left(500,50);
+  motor_right(500,50);
 }
