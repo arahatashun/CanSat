@@ -3,27 +3,23 @@
 #include <stdio.h>
 #include <math.h>
 #include <wiringPiI2C.h>
+#include"acclgyro.h"
 
-static int fd;
-static int acclX,
-static int acclY;
-static int acclZ;
-static int gyroX;
-static int gyroY;
-static int gyroZ;
+
+//グローバルデータ宣言(const)
 static const int devid = 0x68;    //I2C adress manual p45
 static const int power_management_reg = 0x6B;    //manual p40
-
 static const int acclX_reg = 0x3B;    //manual p7
 static const int acclY_reg = 0x3D;
 static const int acclZ_reg = 0x3F;
 static const int gyroX_reg = 0x43;    //manual p7
 static const int gyroY_reg = 0x45;
 static const int gyroZ_reg = 0x47;
-
 static const double convert_to_G = 16384.0;
 static const double convert_to_degpers = 131.0;
 
+
+//構造体宣言(typedef)
 typedef struct acclgyro{
 	double acclX_scaled;//the values of accleration
 	double acclY_scaled;
@@ -36,19 +32,25 @@ typedef struct acclgyro{
 } Acclgyro;
 
 
-static int read_word_2c(int addr);
-static int accl_and_rotation_read(Acclgyro *data);    //acgは構造体オブジェクトをさすポインタ
-static int gyro_read(Acclgyro *data);
-static int set_acclgyro(Acclgyro *data);    //integrate accl_read,gyro_read,rotation_read
-int acclgyro_initializer();
-int z_posture(Acclgyro *data);
+//グローバルデータ宣言(not const)
+static int fd;
 
+
+//関数プロトタイプ宣言(static)
+static int read_word_2c(int addr);
 /*
-void print_acclgyro(Acclgyro *data);    //print acclgyro parameter
 double dist(double a,double b);
 double get_y_rotation(double x,double y,double z);
 double get_x_rotation(double x,double y,double z);
 */
+static int accl_and_rotation_read(Acclgyro *data);    //acgは構造体オブジェクトをさすポインタ
+static int gyro_read(Acclgyro *data);
+static int set_acclgyro(Acclgyro *data);    //integrate accl_read,gyro_read,rotation_read
+/*
+void print_acclgyro(Acclgyro *data);    //print acclgyro parameter
+*/
+
+
 
 static int read_word_2c(int addr)
 {

@@ -3,12 +3,12 @@
 #include <inttypes.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
+#include"luxsensor.h"
 
-// ALL COMMAND TSL2561
-// Default I2C RPI address in (0x39) = FLOAT ADDR (Slave) Other [(0x49) = VCC ADDR / (0x29) = GROUND ADDR]
+//グローバルデータ宣言(const)
 /* //change adress:default 0x39
 static const int TSL2561_ADDR_LOW = 0x29;
-static const int TSL2561_ADDR_FLOAT = 0x39;
+static const int TSL2561_ADDR_FLOAT = 0x39;  //default adress
 static const int TSL2561_ADDR_HIGH  = 0x49;
 */
 static const int TSL2561_CONTROL_POWERON = 0x03;
@@ -47,14 +47,16 @@ static const int TSL2561_REGISTER_CHAN1_HIGH = 0x8F;
 static const int LUXDELAY = 500;
 
 
+//グローバルデータ宣言(not const)
 static int fd;   //output of wiringPi setup
 static uint16_t visible_and_ir ;       //CH0 photodiode:sensitive to both visible and infrared light
 static uint16_t ir ;    //CH1 photodiode:sensitive primarily to infared light
 
-int luxsensor_initializer();
-int luxsensor_close();
-static int getLux(int fd);
-int calculateLux();
+
+//関数プロトタイプ宣言(static)
+static int getLux();
+
+
 
 int luxsensor_initializer(){
   // Enable the device
@@ -68,7 +70,7 @@ int luxsensor_close(){
     return 0;
 }
 
-static int getLux(int fd){
+static int getLux(){
     // Set timing (101 mSec)
     wiringPiI2CWriteReg8(fd, TSL2561_REGISTER_TIMING, TSL2561_GAIN_AUTO);
     //Wait for the conversion to complete
@@ -85,7 +87,7 @@ int calculateLux(){
 	double lux =0;
 	double p =0;
 	
-	ratio = getLux(fd);
+	ratio = getLux();
     double p = pow(ratio,1.4);
     if ((ratio >= 0) & (ratio <= 0.52)){
             lux = (0.0315 * visible_and_ir) - (0.0593 * visible_and_ir * p);
