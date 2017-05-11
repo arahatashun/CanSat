@@ -10,9 +10,9 @@ static const double EARTH_RADIUS = 6378137;
 static loc_t data;
 
 typedef struct cartesian_coordinates{
-  double x = 0;
-  double y = 0;
-  double z = 0;
+  double x;
+  double y;
+  double z;
 }cartesian_coord;
 
 int mitibiki_initializer()
