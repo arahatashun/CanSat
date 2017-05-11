@@ -26,11 +26,15 @@ typedef struct acclgyro{
 	double gyroX_scaled, gyroY_scaled, gyroZ_scaled;    //the values of gyroscope
 	double x_rotation,y_rotation;    //XY-axis rotation
 	} Acclgyro;
+	
+	
+static int read_word_2c(int addr);
+static int accl_and_rotation_read(Acclgyro *data);    //acgは構造体オブジェクトをさすポインタ
+static int gyro_read(Acclgyro *data);
+static int set_acclgyro(Acclgyro *data);    //integrate accl_read,gyro_read,rotation_read
+int acclgyro_initializer();
+int z_posture(Acclgyro *data);
 
-int read_word_2c(int addr);
-void accl_and_rotation_read(Acclgyro *data);    //acgは構造体オブジェクトをさすポインタ
-void gyro_read(Acclgyro *data);
-void set_acclgyro(Acclgyro *data);    //integrate accl_read,gyro_read,rotation_read
 /*
 void print_acclgyro(Acclgyro *data);    //print acclgyro parameter
 double dist(double a,double b);
@@ -38,8 +42,7 @@ double get_y_rotation(double x,double y,double z);
 double get_x_rotation(double x,double y,double z);
 */
 
-
-int read_word_2c(int addr)
+static int read_word_2c(int addr)
 {
 	int val = wiringPiI2CReadReg8(fd, addr);
 	val = val << 8;
@@ -69,8 +72,11 @@ double get_x_rotation(double x, double y, double z)
 }
 */
 
-void accl_and_rotation_read(Acclgyro *data)
+static int accl_and_rotation_read(Acclgyro *data)
 {
+	int acclX = 0;
+	int acclY = 0;
+	int acclZ = 0;
 	int acclX = read_word_2c(acclX_reg);
 	int acclY = read_word_2c(acclY_reg);
 	int acclZ = read_word_2c(acclZ_reg);
@@ -82,11 +88,14 @@ void accl_and_rotation_read(Acclgyro *data)
 	data->x_rotation = get_x_rotation(acg->acclX_scaled, acg->acclY_scaled, acg->acclZ_scaled);
 	data>y_rotation = get_y_rotation(acg->acclX_scaled, acg->acclY_scaled, acg->acclZ_scaled);
 */
+	return 0;
 }
 
-
-void gyro_read(Acclgyro *data)
+static int gyro_read(Acclgyro *data)
 {
+	int gxroX=0;
+	int gyroY=0;
+	int gyroZ=0;
 	int gyroX = read_word_2c(gyroX_reg);
 	int gyroY = read_word_2c(gyroY_reg);
 	int gyroZ = read_word_2c(gyroZ_reg);
@@ -95,19 +104,12 @@ void gyro_read(Acclgyro *data)
 	data->gyroZ_scaled = gyroZ / convert_to_degpers;
 }
 
-
-int acclgyro_initializer()
-{
-	fd = wiringPiI2CSetup(devid);
-	wiringPiI2CWriteReg8(fd,power_management_reg,0x00); //disable sleep mode
-	return 0;
-}
-
-void set_acclgyro(Acclgyro *data)
+static int set_acclgyro(Acclgyro *data)
 {
 	//set value
 	accl_and_rotation_read(data);
 	gyro_read(data);
+	return 0;
 }
 
 /*
@@ -126,6 +128,14 @@ void print_acclgyro(Acclgyro *data)
 */
 
 //if reverse,return 1
+
+int acclgyro_initializer()
+{
+	fd = wiringPiI2CSetup(devid);
+	wiringPiI2CWriteReg8(fd,power_management_reg,0x00); //disable sleep mode
+	return 0;
+}
+
 int z_posture(Acclgyro *data)
 {
 	int p;
