@@ -3,27 +3,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <wiringPiI2C.h>
-#include "acclgyro.h"
-
-typedef struct acclgyro{
-	double acclX_scaled, acclY_scaled, acclZ_scaled;	//the values of accleration
-	double gyroX_scaled, gyroY_scaled, gyroZ_scaled;    //the values of gyroscope
-	double x_rotation,y_rotation;    //XY-axis rotation
-	} Acclgyro;
-
-int read_word_2c(int addr);
-
-/*
-double dist(double a,double b);
-double get_y_rotation(double x,double y,double z);
-double get_x_rotation(double x,double y,double z);
-*/
-
-void accl_and_rotation_read(Acclgyro *data);    //acgは構造体オブジェクトをさすポインタ
-void gyro_read(Acclgyro *data);
-
-void set_acclgyro(Acclgyro *data);    //integrate accl_read,gyro_read,rotation_read
-void print_acclgyro(Acclgyro *data);    //print acclgyro parameter
 
 static int fd;
 static int acclX, acclY, acclZ;
@@ -42,15 +21,33 @@ static const int gyroZ_reg = 0x47;
 static const double convert_to_G = 16384.0;
 static const double convert_to_degpers = 131.0;
 
+typedef struct acclgyro{
+	double acclX_scaled, acclY_scaled, acclZ_scaled;	//the values of accleration
+	double gyroX_scaled, gyroY_scaled, gyroZ_scaled;    //the values of gyroscope
+	double x_rotation,y_rotation;    //XY-axis rotation
+	} Acclgyro;
+
+int read_word_2c(int addr);
+void accl_and_rotation_read(Acclgyro *data);    //acgは構造体オブジェクトをさすポインタ
+void gyro_read(Acclgyro *data);
+void set_acclgyro(Acclgyro *data);    //integrate accl_read,gyro_read,rotation_read
+/*
+void print_acclgyro(Acclgyro *data);    //print acclgyro parameter
+double dist(double a,double b);
+double get_y_rotation(double x,double y,double z);
+double get_x_rotation(double x,double y,double z);
+*/
+
+
 int read_word_2c(int addr)
 {
-	int val;
-	val = wiringPiI2CReadReg8(fd, addr);
+	int val = wiringPiI2CReadReg8(fd, addr);
 	val = val << 8;
 	val += wiringPiI2CReadReg8(fd, addr+1); //隣り合う2つのレジスタの数値を足し合わせる
 	if (val >= 0x8000) val = -(65536 - val); //0x8000=32768以上になったら値を減らしていく
 	return val;
 }
+
 /*
 double dist(double a, double b)
 {
