@@ -54,7 +54,10 @@ void handler(int signum)
 
 int main()
 {
-  sensor_initializer();
+  if(sensor_initializer()!=0)
+  {
+    printf("set up failed");
+  }
   signal(SIGINT, handler);
   while (1)
   {

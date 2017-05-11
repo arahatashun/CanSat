@@ -10,9 +10,9 @@ static const double EARTH_RADIUS = 6378137;
 static loc_t data;
 
 typedef struct cartesian_coordinates{
-  double x;
-  double y;
-  double z;
+  double x = 0;
+  double y = 0;
+  double z = 0;
 }cartesian_coord;
 
 int mitibiki_initializer()
@@ -23,9 +23,9 @@ int mitibiki_initializer()
 
 static double calc_gps_angle(double lat,double lon)
 {
-  double lat_offset;
-  double lon_offset;
-  double angle;
+  double lat_offset = 0;
+  double lon_offset = 0;
+  double angle = 0;
   lat_offset = target_latitude - lat;
   lon_offset = target_longitude - lon;
   angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;
@@ -37,16 +37,16 @@ double target_gps_angle()
 {
   gps_location(&data);
   printf("latitude:%f, longitude:%f\n", data.latitude, data.longitude);
-  double target_angle;
+  double target_angle = 0;
   target_angle = calc_gps_angle(data.latitude,data.longitude);
   return target_angle;
 }
 
 static cartesian_coord latlng_to_xyz(double lat,double lon)
 {
-  double rlat;
-  double rlng;
-  double coslar;
+  double rlat = 0;
+  double rlng = 0;
+  double coslar = 0;
   rlat = lat*PI/180;
   rlng = lon*PI/180;
   coslat = cos(rlat);
@@ -59,11 +59,11 @@ static cartesian_coord latlng_to_xyz(double lat,double lon)
 
 static double dist_on_sphere(cartesian_coord target, cartesian_coord current_position)
 {
-  double dot_product_x;
-  double dot_product_y;
-  double dot_product_z;
-  double dot_product_sum;
-  double distance;
+  double dot_product_x = 0;
+  double dot_product_y = 0;
+  double dot_product_z = 0;
+  double dot_product_sum = 0;
+  double distance = 0;
   dot_product_x = target.x*current_position.x;
   dot_product_y = target.y*current_position.y;
   dot_product_z = target.z*current_position.z;
@@ -75,7 +75,7 @@ static double dist_on_sphere(cartesian_coord target, cartesian_coord current_pos
 
 double get_distace()
 {
-  double distance;
+  double distance = 0;
   cartesian_coord target;
   cartesian_coord current_position;
   gps_location(&data);

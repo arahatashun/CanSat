@@ -21,9 +21,9 @@ static int fd;
 
 static short read_out(int file,int msb_reg, int lsb_reg)
 {
-	uint8_t msb;
-	uint8_t lsb;
-	short i;
+	uint8_t msb = 0;
+	uint8_t lsb = 0;
+	short i = 0;
 	msb = wiringPiI2CReadReg8(file, msb_reg);
 	lsb = wiringPiI2CReadReg8(file, lsb_reg);
 	i = msb << 8| lsb;
@@ -32,9 +32,9 @@ static short read_out(int file,int msb_reg, int lsb_reg)
 
 static double calc_compass_angle(short x,short y)
 {
-	double angle_calc1;
-	double angle_calc2;
-	double angle_return;
+	double angle_calc1 = 0;
+	double angle_calc2 = 0;
+	double angle_return = 0;
 	angle_calc1 = atan2((double)-y, (double)-x)*(180/PI) + 180;
 	angle_calc2 = angle_calc1 + angle_of_deviation;
 	if (angle_calc2 > 360)
@@ -68,10 +68,10 @@ int compass_initializer()
 double compass_get_angle()
 {
   /* read X_MSB */
-	short x;
-	short y;
-	short z;
-	double angle;
+	short x = 0;
+	short y = 0;
+	short z = 0;
+	double angle = 0;
 	x = read_out(fd, x_msb_reg, x_lsb_reg);
 	y = read_out(fd, y_msb_reg, y_lsb_reg);
 	z = read_out(fd, z_msb_reg, z_lsb_reg);
