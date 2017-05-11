@@ -147,7 +147,6 @@ int acclgyro_initializer()
 
 int z_posture(Acclgyro *data)
 {
-	int p;
 	set_acclgyro(data);
 	if(acg->acclZ_scaled < 0)
 	{
