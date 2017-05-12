@@ -46,7 +46,7 @@ static cartesian_coord latlng_to_xyz(double lat,double lon)
 {
   double rlat = 0;
   double rlng = 0;
-  double coslar = 0;
+  double coslat = 0;
   rlat = lat*PI/180;
   rlng = lon*PI/180;
   coslat = cos(rlat);
