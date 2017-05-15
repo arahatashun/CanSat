@@ -5,6 +5,8 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 
+#include "compass.h"
+
 static const int angle_of_deviation = -7;
 static const int devid = 0x1e; //I2C address
 static const int mode_reg = 0x02;
