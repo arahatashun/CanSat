@@ -19,7 +19,7 @@ static const int z_lsb_reg = 0x06;
 static const int y_msb_reg = 0x07;
 static const int y_lsb_reg = 0x08;
 static const double PI = 3.14159265;
-static int fd;
+int fd;
 
 static short read_out(int file,int msb_reg, int lsb_reg)
 {

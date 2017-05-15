@@ -16,7 +16,7 @@ int pwm_initializer()
 	//wiring Pi initialize
 	if(wiringPiSetupGpio()!=0)
 	{
-		printf("motor_setup_failed");
+		printf("motor_setup_failed\n");
 	}
 	pwmSetMode(PWM_MODE_MS);
 	//soft pwm initialize
