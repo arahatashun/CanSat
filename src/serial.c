@@ -16,7 +16,7 @@ void serial_init(void)
 
     if (uart0_filestream == -1)
     {
-        printf("gps_serial_init failed\n");
+      printf("gps_serial_init failed\n");
     }
 }
 
