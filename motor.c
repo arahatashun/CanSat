@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <wiringPi.h>
 #include <softPwm.h>
-
+#include "motor.h"
 
 static const int LEFT_MOTOR1 = 17;//GPIO17
 static const int LEFT_MOTOR2 = 27;//GPIO27
