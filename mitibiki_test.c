@@ -3,7 +3,7 @@
 int main()
 {
   mitibiki_initializer();
-  while (1)
+  for(i=0;i<100;i++)
   {
     target_gps_angle();
     get_distace();
