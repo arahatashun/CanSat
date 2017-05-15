@@ -61,10 +61,10 @@ int compass_initializer()
 	/* start senser */
 	if((wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous))<0)
 	{
-		printf("write error register mode_reg¥n");
+		printf("write error register mode_reg\n");
 		return -1;
 	}else{
-		printf("write register:mode_reg¥n");
+		printf("write register:mode_reg\n");
 	}
 	return 0;
 }
