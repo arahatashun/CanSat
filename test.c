@@ -29,19 +29,19 @@ int decide_route()
 {
   while(30<=update_angle() && update_angle()<=180)
   {
-    motor_left(50,40);
+    motor_left(50,60);
   }
   while(180<update_angle() && update_angle()<=360)
   {
-    motor_right(50,40);
+    motor_right(50,60);
   }
   while(-180<update_angle() && update_angle()<-30)
   {
-    motor_right(50,40);
+    motor_right(50,60);
   }
-  while(-360<=update_angle() && update_angle()<=-180)
+  while(-330<=update_angle() && update_angle()<=-180)
   {
-    motor_left(50,40);
+    motor_left(50,60);
   }
   return 0;
 }
@@ -62,7 +62,7 @@ int main()
   while (1)
   {
     decide_route();
-    motor_forward(5000,70);
+    motor_forward(5000,100);
   }
   return 0;
 }
