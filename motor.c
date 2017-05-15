@@ -26,57 +26,50 @@ int pwm_initializer()
 	softPwmCreate(LEFT_MOTOR2,INITIAL_PWM_VAL,PWM_RANGE);
 	return 0;
 }
-
-int motor_stop(int milliseconds)
+/*pwm_valueは0~100の値をとる。
+内部でthreadingしてることに注意
+*/
+int motor_stop()
 {
 	softPwmWrite(RIGHT_MOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(RIGHT_MOTOR2,ZERO_PWM_VAL);
 	softPwmWrite(LEFT_MOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(LEFT_MOTOR2,ZERO_PWM_VAL);
-	delay(milliseconds);
 	return 0;
 }
 
-int motor_forward(int milliseconds,int pwm_value)
+int motor_forward(int pwm_value)
 {
 	softPwmWrite(RIGHT_MOTOR1,pwm_value);
 	softPwmWrite(RIGHT_MOTOR2,ZERO_PWM_VAL);
 	softPwmWrite(LEFT_MOTOR1,pwm_value);
 	softPwmWrite(LEFT_MOTOR2,ZERO_PWM_VAL);
-	delay(milliseconds);
-	motor_stop(10);
 	return 0;
 }
 
-int motor_back(int milliseconds,int pwm_value)
+int motor_back(int pwm_value)
 {
 	softPwmWrite(RIGHT_MOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(RIGHT_MOTOR2,pwm_value);
 	softPwmWrite(LEFT_MOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(LEFT_MOTOR2,pwm_value);
-	delay(milliseconds);
-	motor_stop(10);
 	return 0;
 }
 
-int motor_right(int milliseconds,int pwm_value)
+int motor_right(int pwm_value)
 {
 	softPwmWrite(RIGHT_MOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(RIGHT_MOTOR2,pwm_value);
 	softPwmWrite(LEFT_MOTOR1,pwm_value);
 	softPwmWrite(LEFT_MOTOR2,ZERO_PWM_VAL);
-	delay(milliseconds);
-	motor_stop(10);
 	return 0;
 }
 
-int motor_left(int milliseconds,int pwm_value)
+int motor_left(int pwm_value)
 {
 	softPwmWrite(RIGHT_MOTOR1,pwm_value);
 	softPwmWrite(RIGHT_MOTOR2,ZERO_PWM_VAL);
 	softPwmWrite(LEFT_MOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(LEFT_MOTOR2,pwm_value);
-	delay(milliseconds);
-	motor_stop(10);
 	return 0;
 }
