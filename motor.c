@@ -18,6 +18,7 @@ int pwm_initializer()
 	{
 		printf("setup faied");
 	}
+	pwmSetMode(PWM_MODE_MS);
 	//soft pwm initialize
 	softPwmCreate(RIGHT_MOTOR1,INITIAL_PWM_VAL,PWM_RANGE);
 	softPwmCreate(RIGHT_MOTOR2,INITIAL_PWM_VAL,PWM_RANGE);
