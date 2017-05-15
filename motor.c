@@ -14,9 +14,9 @@ static const int ZERO_PWM_VAL = 0;
 int pwm_initializer()
 {
 	//wiring Pi initialize
-	if(wiringPiSetupGpio() != 0)
+	if(wiringPiSetupGpio()!=0)
 	{
-		printf("setup faied");
+		printf("motor_setup_failed");
 	}
 	pwmSetMode(PWM_MODE_MS);
 	//soft pwm initialize
