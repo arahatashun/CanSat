@@ -4,7 +4,7 @@ LIBS =-lwiringPi -lm -lgps
 objs = test.o motor.o compass.o mitibiki.o
 
 a.out: $(objs)
-	gcc -Wall -O2 -o a.out $(objs) $(LIBS)
+	gcc -g -Wall -O2 -o a.out $(objs) $(LIBS)
 test.o: test.c
 	gcc -c test.c
 motor.o: motor.c
