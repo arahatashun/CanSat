@@ -7,11 +7,13 @@
 #include "motor.h"
 
 //note: seikei toukei ni izon
-
+static const int turn_milliseconds = 150;
+static const int after_turn_milliseconds = 2000;
 static const double target_latitude = 35.716956;//ido
 static const double target_longitude = 139.759936;//keido
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
+
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
 
 //シグナルハンドラ
@@ -62,9 +64,9 @@ int decide_route()
   {
     printf("moving left\n");
     motor_right(60);
-    delay(150);
+    delay(turn_miliseconds);
     motor_forward(100);
-    delay(2000);
+    delay(after_turn_milliseconds);
     delta_angle=update_angle();
   }
 
@@ -72,9 +74,9 @@ int decide_route()
   {
     printf("moving right\n");
     motor_left(60);
-    delay(150);
+    delay(turn_miliseconds);
     motor_forward(100);
-    delay(2000);
+    delay(after_turn_milliseconds);
     delta_angle=update_angle();
   }
 
@@ -91,7 +93,7 @@ int main()
     decide_route();
     printf("moving forward\n");
     motor_forward(100);
-    delay(1000);
+    delay(5000);
   }
   return 0;
 }
