@@ -18,7 +18,7 @@ loc_t data;//gpsのデータを確認するものをグローバル変数宣言
 void handler(int signum)
 {
   motor_stop();
-  delay(100)
+  delay(100);
   exit(1);
 }
 
