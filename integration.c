@@ -62,9 +62,9 @@ int decide_route()
   {
     printf("moving left\n");
     motor_right(60);
-    delay(300);
+    delay(150);
     motor_forward(100);
-    delay(3000);
+    delay(5000);
     delta_angle=update_angle();
   }
 
@@ -72,9 +72,9 @@ int decide_route()
   {
     printf("moving right\n");
     motor_left(60);
-    delay(300);
+    delay(150);
     motor_forward(100);
-    delay(3000);
+    delay(5000);
     delta_angle=update_angle();
   }
 
