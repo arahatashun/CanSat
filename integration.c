@@ -85,8 +85,8 @@ int main()
   signal(SIGINT, handler);
   while(1)
   {
-    decide_route()
-    delay(1000)
+    decide_route();
+    delay(1000);
   }
   return 0;
 }
