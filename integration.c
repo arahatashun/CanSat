@@ -64,7 +64,7 @@ int decide_route()
     motor_right(60);
     delay(150);
     motor_forward(100);
-    delay(5000);
+    delay(2000);
     delta_angle=update_angle();
   }
 
@@ -74,7 +74,7 @@ int decide_route()
     motor_left(60);
     delay(150);
     motor_forward(100);
-    delay(5000);
+    delay(2000);
     delta_angle=update_angle();
   }
 
