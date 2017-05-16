@@ -76,7 +76,7 @@ int decide_route()
     delay(1000);
     delta_angle=update_angle();
   }
-
+  
   return 0;
 }
 
@@ -88,6 +88,8 @@ int main()
   while(1)
   {
     decide_route();
+    printf("moving forward\n");
+    motor_forward(100);
     delay(1000);
   }
   return 0;
