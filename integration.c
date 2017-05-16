@@ -41,7 +41,7 @@ int update_angle()
 {
   gps_location(&data);
   printf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
-  printf("speed:%f\naltidude:%f\ncourse:%f\n",data.speed,data.altidude,data.course);
+  printf("speed:%f\naltitude:%f\ncourse:%f\n",data.speed,data.altitude,data.course);
   double angle_to_go = 0;//進むべき方角
   angle_to_go = calc_target_angle(data.latitude,data.longitude);
   double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
