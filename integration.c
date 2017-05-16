@@ -3,7 +3,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <gps.h>
-#include <wiringPi>
+#include <wiringPi.h>
 #include "motor.h"
 
 //note: seikei toukei ni izon
