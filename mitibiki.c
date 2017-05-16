@@ -2,8 +2,8 @@
 #include <math.h>
 #include <gps.h>
 //note: seikei toukei ni izon
-static const double target_latitude = 35.7133352;//ido
-static const double target_longitude = 139.7599809;//keido
+static const double target_latitude = 35.716956;//ido
+static const double target_longitude = 139.759936;//keido
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
 //構造体で角度と距離返す方がいいかもしれないs
