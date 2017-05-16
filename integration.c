@@ -18,6 +18,7 @@ loc_t data;//gpsのデータを確認するものをグローバル変数宣言
 void handler(int signum)
 {
   motor_stop();
+  delay(100)
   exit(1);
 }
 
@@ -61,9 +62,9 @@ int decide_route()
   {
     printf("moving left\n");
     motor_left(60);
-    delay(500);
+    delay(300);
     motor_forward(100);
-    delay(1000);
+    delay(3000);
     delta_angle=update_angle();
   }
 
@@ -71,9 +72,9 @@ int decide_route()
   {
     printf("moving right\n");
     motor_right(60);
-    delay(500);
+    delay(300);
     motor_forward(100);
-    delay(1000);
+    delay(3000);
     delta_angle=update_angle();
   }
 
