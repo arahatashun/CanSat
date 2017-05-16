@@ -76,7 +76,7 @@ int decide_route()
     delay(1000);
     delta_angle=update_angle();
   }
-  
+
   return 0;
 }
 
