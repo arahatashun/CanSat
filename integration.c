@@ -67,7 +67,7 @@ int decide_route()
     delta_angle=update_angle();
   }
 
-  while((180 < delta_angle && delta_angle <= 360)||(-180 < delta_angle && delta_angle < -30)）
+  while((180 < delta_angle && delta_angle <= 360)||(-180 < delta_angle && delta_angle < -30))
   {
     printf("moving right\n");
     motor_right(60);
