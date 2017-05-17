@@ -17,9 +17,9 @@ int main()
   signal(SIGINT, handler);
   pwm_initializer();
   motor_forward(60);
-  delay(5000)
-  motor_left(50);
-  delay(5000)
+  delay(5000);
   motor_right(50);
-  delay(5000)
+  delay(5000);
+  motor_left(50);
+  delay(5000);
 }
