@@ -7,6 +7,7 @@
 void handler(int signum)
 {
   motor_stop();
+  delay(100);
   exit(1);
 }
 
@@ -16,9 +17,9 @@ int main()
   signal(SIGINT, handler);
   pwm_initializer();
   motor_forward(60);
-  delay(50000)
+  delay(5000)
   motor_left(50);
-  delay(50000)
+  delay(5000)
   motor_right(50);
-  delay(50000)
+  delay(5000)
 }
