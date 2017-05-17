@@ -108,7 +108,7 @@ int decide_route()
   {
     printf("moving left\n");
     motor_right(60);
-    delay(turn_miliseconds);
+    delay(turn_milliseconds);
     motor_forward(100);
     delay(after_turn_milliseconds);
     delta_angle=update_angle();
