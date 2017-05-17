@@ -15,6 +15,12 @@ static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
 
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
+//デカルト座標
+typedef struct cartesian_coordinates{
+  double x;
+  double y;
+  double z;
+}cartesian_coord;
 
 //シグナルハンドラ
 void handler(int signum)
@@ -23,7 +29,37 @@ void handler(int signum)
   delay(100);
   exit(1);
 }
-
+//経度と緯度をデカルト座標に変換
+static cartesian_coord latlng_to_xyz(double lat,double lon)
+{
+  double rlat = 0;
+  double rlng = 0;
+  double coslat = 0;
+  rlat = lat*PI/180;
+  rlng = lon*PI/180;
+  coslat = cos(rlat);
+  cartesian_coord tmp;
+  tmp.x =coslat*cos(rlng);
+  tmp.y = coslat*sin(rlng);
+  tmp.z = sin(rlat);
+  return tmp;
+}
+//距離を計算
+static double dist_on_sphere(cartesian_coord target, cartesian_coord current_position)
+{
+  double dot_product_x = 0;
+  double dot_product_y = 0;
+  double dot_product_z = 0;
+  double dot_product_sum = 0;
+  double distance = 0;
+  dot_product_x = target.x*current_position.x;
+  dot_product_y = target.y*current_position.y;
+  dot_product_z = target.z*current_position.z;
+  dot_product_sum =dot_product_x+dot_product_y+dot_product_z;
+  distance = acos(dot_product_sum)*EARTH_RADIUS;
+  printf("distance : %f\n",distance);
+  return distance;
+}
 /*
     GPSの座標と目的地の座標から進む方向を決める
 */
@@ -49,7 +85,11 @@ int update_angle()
   angle_to_go = calc_target_angle(data.latitude,data.longitude);
   double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
   delta_angle = data.course - angle_to_go;
-  printf("%f\n",delta_angle);
+  printf("delta_angle:%f\n",delta_angle);
+  target = latlng_to_xyz(target_latitude,target_longitude);
+  current_position = latlng_to_xyz(data.latitude, data.longitude);
+  distance = dist_on_sphere(target,current_position);
+  printf("distance :%f\n",distance);
   return delta_angle;
 }
 /*
