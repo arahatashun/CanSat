@@ -22,6 +22,9 @@ typedef struct cartesian_coordinates{
   double z;
 }cartesian_coord;
 
+cartesian_coord current_position;
+cartesian_coord target_position;
+
 //シグナルハンドラ
 void handler(int signum)
 {
@@ -86,9 +89,10 @@ int update_angle()
   double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
   delta_angle = data.course - angle_to_go;
   printf("delta_angle:%f\n",delta_angle);
-  target = latlng_to_xyz(target_latitude,target_longitude);
+  target_position = latlng_to_xyz(target_latitude,target_longitude);
   current_position = latlng_to_xyz(data.latitude, data.longitude);
-  distance = dist_on_sphere(target,current_position);
+  double distance = 0;
+  distance = dist_on_sphere(target_position,current_position);
   printf("distance :%f\n",distance);
   return delta_angle;
 }
@@ -114,7 +118,7 @@ int decide_route()
   {
     printf("moving right\n");
     motor_left(60);
-    delay(turn_miliseconds);
+    delay(turn_milliseconds);
     motor_forward(100);
     delay(after_turn_milliseconds);
     delta_angle=update_angle();
