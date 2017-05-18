@@ -1,4 +1,5 @@
 #include "xbee.h"
+#include "xbee_uart.h"
 #include<stdio.h>
 
 static byte com=0xB0;                              // 拡張IOコネクタの場合は0xA0
