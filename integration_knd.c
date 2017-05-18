@@ -87,9 +87,7 @@ int update_angle()
   double angle_to_go = 0;//進むべき方角
   angle_to_go = calc_target_angle(data.latitude,data.longitude);
   double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
-  double compass_angle = 0;
-  compass_get_angle(&compass_angle);
-  delta_angle = compass_angle - angle_to_go;
+  delta_angle = compass_get_angle() - angle_to_go;
   printf("delta_angle:%f\n",delta_angle);
   target_position = latlng_to_xyz(target_latitude,target_longitude);
   current_position = latlng_to_xyz(data.latitude, data.longitude);
@@ -99,7 +97,7 @@ int update_angle()
   return delta_angle;
 }
 /*
-  進む方角の差が30未満もしくは-30以上ま右回転で調整
+  進む方角の差が30以上もしくは-30以下で右回転で調整、30以内もしくは-30以上で前進
 */
 int decide_route()
 {
