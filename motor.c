@@ -41,7 +41,7 @@ int motor_stop()
 
 int motor_forward(int pwm_value)
 {
-	printf("MOTOR forward\n", );
+	printf("MOTOR forward\n");
 	softPwmWrite(RIGHT_MOTOR1,pwm_value);
 	softPwmWrite(RIGHT_MOTOR2,ZERO_PWM_VAL);
 	softPwmWrite(LEFT_MOTOR1,pwm_value);
@@ -51,7 +51,7 @@ int motor_forward(int pwm_value)
 
 int motor_back(int pwm_value)
 {
-	printf("MOTOR back\n", );
+	printf("MOTOR back\n");
 	softPwmWrite(RIGHT_MOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(RIGHT_MOTOR2,pwm_value);
 	softPwmWrite(LEFT_MOTOR1,ZERO_PWM_VAL);
@@ -71,7 +71,7 @@ int motor_right(int pwm_value)
 
 int motor_left(int pwm_value)
 {
-	printf("MOTOR left\n", );
+	printf("MOTOR left\n");
 	softPwmWrite(RIGHT_MOTOR1,pwm_value);
 	softPwmWrite(RIGHT_MOTOR2,ZERO_PWM_VAL);
 	softPwmWrite(LEFT_MOTOR1,ZERO_PWM_VAL);
