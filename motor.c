@@ -3,8 +3,8 @@
 #include <softPwm.h>
 #include "motor.h"
 
-static const int LEFT_MOTOR1 = 17;//GPIO17
-static const int LEFT_MOTOR2 = 27;//GPIO27
+static const int LEFT_MOTOR1 = 27;//GPIO27
+static const int LEFT_MOTOR2 = 17;//GPIO17
 static const int RIGHT_MOTOR1 = 23;//GPIO23
 static const int RIGHT_MOTOR2 = 24;//GPIO24
 static const int PWM_RANGE = 100;
@@ -38,7 +38,7 @@ int motor_stop()
 	return 0;
 }
 
-int motor_right(int pwm_value)
+int motor_forward(int pwm_value)
 {
 	softPwmWrite(RIGHT_MOTOR1,pwm_value);
 	softPwmWrite(RIGHT_MOTOR2,ZERO_PWM_VAL);
@@ -47,7 +47,7 @@ int motor_right(int pwm_value)
 	return 0;
 }
 
-int motor_left(int pwm_value)
+int motor_back(int pwm_value)
 {
 	softPwmWrite(RIGHT_MOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(RIGHT_MOTOR2,pwm_value);
@@ -56,7 +56,7 @@ int motor_left(int pwm_value)
 	return 0;
 }
 
-int motor_back(int pwm_value)
+int motor_right(int pwm_value)
 {
 	softPwmWrite(RIGHT_MOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(RIGHT_MOTOR2,pwm_value);
@@ -65,7 +65,7 @@ int motor_back(int pwm_value)
 	return 0;
 }
 
-int motor_forward(int pwm_value)
+int motor_left(int pwm_value)
 {
 	softPwmWrite(RIGHT_MOTOR1,pwm_value);
 	softPwmWrite(RIGHT_MOTOR2,ZERO_PWM_VAL);
