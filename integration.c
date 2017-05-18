@@ -98,8 +98,8 @@ int angle_gps(double *angle_course)
 	double longitude_after = 0;
 	latitude_after = data.latitude;
 	longitude_after = data.longitude;
-	lat_offset = latitude_after - latitude_before;
-	lon_offset = longitude_after - longitude_before;
+	double lat_offset = latitude_after - latitude_before;
+	double lon_offset = longitude_after - longitude_before;
 	going_angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;//移動中の角度
 	printf("GPS going_angle:%f\n",going_angle);
 	*angle_course = going_angle;
