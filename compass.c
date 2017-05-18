@@ -82,6 +82,7 @@ int compass_initializer()
 }
 
 int compass_get_angle(double *angle)
+//ポインタで角度を渡す
 {
 	/* read X_MSB */
 	short x = 0;
