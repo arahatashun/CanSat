@@ -2,12 +2,12 @@
 #include <math.h>
 #include <gps.h>
 //note: seikei toukei ni izon
-static const double target_latitude = 35.7133352;//ido
-static const double target_longitude = 139.7599809;//keido
+static const double target_latitude = 35.716956;//ido
+static const double target_longitude = 139.759936;//keido
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
 //構造体で角度と距離返す方がいいかもしれないs
-static loc_t data;
+loc_t data;
 
 typedef struct cartesian_coordinates{
   double x;
@@ -46,7 +46,7 @@ static cartesian_coord latlng_to_xyz(double lat,double lon)
 {
   double rlat = 0;
   double rlng = 0;
-  double coslar = 0;
+  double coslat = 0;
   rlat = lat*PI/180;
   rlng = lon*PI/180;
   coslat = cos(rlat);

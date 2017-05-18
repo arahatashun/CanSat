@@ -5,6 +5,7 @@ int main()
 	compass_initializer();
 	while (1)
   {
-		compass_get_angle();
+		double angle;
+		compass_get_angle(&angle);
 	}
 }
