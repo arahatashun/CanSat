@@ -81,7 +81,7 @@ int compass_initializer()
 	return 0;
 }
 
-double compass_get_angle()
+int compass_get_angle(double *angle)
 {
 	/* read X_MSB */
 	short x = 0;
@@ -91,7 +91,7 @@ double compass_get_angle()
 	x = read_out(fd, x_msb_reg, x_lsb_reg);
 	y = read_out(fd, y_msb_reg, y_lsb_reg);
 	z = read_out(fd, z_msb_reg, z_lsb_reg);
-	angle = calc_compass_angle(x,y);
-	printf("x:%d,y:%d,z:%d,angle:%f\n",x,y,z,angle);
-	return angle;
+	*angle = calc_compass_angle(x,y);
+	printf("COMPASS x:%d,y:%d,z:%d,angle:%f\n",x,y,z,*angle);
+	return 0;
 }

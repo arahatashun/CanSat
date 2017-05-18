@@ -88,7 +88,7 @@ int update_angle()
 	time_t current_time;//時間を取得
 	time(&current_time);
 	double delta_time = difftime(current_time,start_time);
-	printf("timestamp%f\n",delta_time);
+	printf("timestamp:%f\n",delta_time);
 	gps_location(&data);
 	printf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
 	printf("speed:%f\naltitude:%f\ncourse:%f\n",data.speed,data.altitude,data.course);
