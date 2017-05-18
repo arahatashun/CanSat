@@ -15,7 +15,7 @@ static const double target_latitude = 35.716956;//ido
 static const double target_longitude = 139.759936;//keido
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
-static const int gps_latency = 1500//gps角度取得のための時間感覚
+static const int gps_latency = 1500;//gps角度取得のための時間感覚
 time_t start_time;//開始時刻のグローバル変数宣言
 
 
@@ -83,7 +83,7 @@ double calc_target_angle(double lat,double lon)
 	return angle;
 }
 //gpsの緯度経度二回分から角度計算
-int angle_gps(&angle_course)
+int angle_gps(double *angle_course)
 {
 	gps_location(&data);
 	double latitude_before = 0;
