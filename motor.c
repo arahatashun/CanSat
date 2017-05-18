@@ -61,7 +61,7 @@ int motor_back(int pwm_value)
 
 int motor_right(int pwm_value)
 {
-	printf("MOTOR right\n", );
+	printf("MOTOR right\n");
 	softPwmWrite(RIGHT_MOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(RIGHT_MOTOR2,pwm_value);
 	softPwmWrite(LEFT_MOTOR1,pwm_value);
