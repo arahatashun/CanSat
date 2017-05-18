@@ -61,6 +61,7 @@ int compass_initializer()
 	if(fd == -1)
 	{
 		printf("wiringPiI2CSetup error\n");
+		return -1;
 	}
 	else
 	{
@@ -72,7 +73,9 @@ int compass_initializer()
 	{
 		printf("write error register mode_reg\n");
 		return -1;
-	}else{
+	}
+	else
+	{
 		printf("write register:mode_reg\n");
 	}
 	return 0;
