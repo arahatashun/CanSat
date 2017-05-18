@@ -45,6 +45,7 @@ static const int TSL2561_REGISTER_CHAN1_LOW = 0x8E;
 static const int TSL2561_REGISTER_CHAN1_HIGH = 0x8F;
 //Delay getLux function
 static const int LUXDELAY = 500;
+static const int LIGHT_THRESHOLD = 50;  //光センサー閾値
 
 
 //グローバルデータ宣言(not const)
@@ -57,11 +58,10 @@ static uint16_t ir ;    //CH1 photodiode:sensitive primarily to infared light
 static int getLux();
 
 
-
 int luxsensor_initializer(){
   // Enable the device
     fd = wiringPiI2CSetup(TSL2561_ADDR_FLOAT);
-    wiringPiI2CWriteReg8(fd, TSL2561_COMMAND_BIT, TSL2561_CONTROL_POWERON); 
+    wiringPiI2CWriteReg8(fd, TSL2561_COMMAND_BIT, TSL2561_CONTROL_POWERON);
     return 0;
 }
 
@@ -83,26 +83,39 @@ static int getLux(){
 }
 
 int calculateLux(){
-    int ratio =0;
+  int ratio =0;
 	double lux =0;
 	double p =0;
-	
+
 	ratio = getLux();
-    double p = pow(ratio,1.4);
-    if ((ratio >= 0) & (ratio <= 0.52)){
-            lux = (0.0315 * visible_and_ir) - (0.0593 * visible_and_ir * p);
+  double p = pow(ratio,1.4);
+  if ((ratio >= 0) & (ratio <= 0.52)){
+    lux = (0.0315 * visible_and_ir) - (0.0593 * visible_and_ir * p);
 			}
-    else if (ratio <= 0.65){
-            lux = (0.0229 * visible_and_ir) - (0.0291 * ir);
+  else if (ratio <= 0.65){
+    lux = (0.0229 * visible_and_ir) - (0.0291 * ir);
 			}
-    else if (ratio <= 0.80){
-            lux = (0.0157 * visible_and_ir) - (0.018 * ir);
+  else if (ratio <= 0.80){
+    lux = (0.0157 * visible_and_ir) - (0.018 * ir);
 			}
-   else if (ratio <= 1.3){
-            lux = (0.00338 * visible_and_ir) - (0.0026 * ir);
+  else if (ratio <= 1.3){
+    lux = (0.00338 * visible_and_ir) - (0.0026 * ir);
 			}
-   else if (ratio > 1.3){
-            lux = 0;
+  else if (ratio > 1.3){
+    lux = 0;
 			}
    return lux;
+}
+
+int islight(){
+  double lux=0;
+  lux = calculate_lux();
+  if(lux>50){
+    xbee_printf("light");
+    return 1;
+  }
+  else{
+    xbee_printf("dark");
+    return 0;
+  }
 }
