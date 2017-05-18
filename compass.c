@@ -81,7 +81,7 @@ int compass_initializer()
 	return 0;
 }
 
-int compass_get_angle(double *angle)
+int compass_get_angle(double *compass_angle)
 //ポインタで角度を渡す
 {
 	/* read X_MSB */
@@ -92,7 +92,7 @@ int compass_get_angle(double *angle)
 	x = read_out(fd, x_msb_reg, x_lsb_reg);
 	y = read_out(fd, y_msb_reg, y_lsb_reg);
 	z = read_out(fd, z_msb_reg, z_lsb_reg);
-	*angle = calc_compass_angle(x,y);
-	printf("COMPASS x:%d,y:%d,z:%d,angle:%f\n",x,y,z,*angle);
+	*compass_angle = calc_compass_angle(x,y);
+	printf("COMPASS x:%d,y:%d,z:%d,angle:%f\n",x,y,z,*compass_angle);
 	return 0;
 }
