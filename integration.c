@@ -1,7 +1,8 @@
 #include <stdio.h>
-#include <math.h>
+#include <time.h>
 #include <signal.h>
 #include <stdlib.h>
+#include <math.h>
 #include <gps.h>
 #include <wiringPi.h>
 #include "motor.h"
@@ -14,6 +15,8 @@ static const double target_latitude = 35.716956;//ido
 static const double target_longitude = 139.759936;//keido
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
+time_t start_time;//開始時刻のグローバル変数宣言
+
 
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
 //デカルト座標
@@ -82,6 +85,10 @@ double calc_target_angle(double lat,double lon)
 /*gpsのデータを更新する*/
 int update_angle()
 {
+  time_t current_time;//時間を取得
+  time(&current_time);
+  double delta_time = difftime(current_time,start_time);
+  printf("timestamp%f\n",delta_time);
   gps_location(&data);
   printf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
   printf("speed:%f\naltitude:%f\ncourse:%f\n",data.speed,data.altitude,data.course);
@@ -130,6 +137,7 @@ int decide_route()
 
 int main()
 {
+  time(&start_time);
   pwm_initializer();
   gps_init();
   signal(SIGINT, handler);
