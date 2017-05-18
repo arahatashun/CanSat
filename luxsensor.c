@@ -4,13 +4,15 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "luxsensor.h"
+#include "xbee_uart.h"
+#include "xbee.h"
 
 //グローバルデータ宣言(const)
-/* //change adress:default 0x39
+//change adress:default 0x39
    static const int TSL2561_ADDR_LOW = 0x29;
    static const int TSL2561_ADDR_FLOAT = 0x39;  //default adress
    static const int TSL2561_ADDR_HIGH  = 0x49;
- */
+ 
 static const int TSL2561_CONTROL_POWERON = 0x03;
 static const int TSL2561_CONTROL_POWEROFF = 0x00;
 
@@ -38,7 +40,7 @@ static const int TSL2561_REGISTER_TIMING = 0x81;
    static const int TSL2561_REGISTER_INTERRUPT = 0x06;
    static const int TSL2561_REGISTER_CRC = 0x08;
    static const int TSL2561_REGISTER_ID = 0x0A;
- */
+*/
 static const int TSL2561_REGISTER_CHAN0_LOW = 0x8C;
 static const int TSL2561_REGISTER_CHAN0_HIGH = 0x8D;
 static const int TSL2561_REGISTER_CHAN1_LOW = 0x8E;
@@ -87,7 +89,7 @@ int calculateLux(){
 	double lux =0;
 	double p =0;
 	ratio = getLux();
-	double p = pow(ratio,1.4);
+	p = pow(ratio,1.4);
 	if ((ratio >= 0) & (ratio <= 0.52)) {
 		lux = (0.0315 * visible_and_ir) - (0.0593 * visible_and_ir * p);
 	}
