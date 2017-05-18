@@ -9,7 +9,7 @@
 
 //note: seikei toukei ni izon
 static const int turn_milliseconds = 150;//回転するミリ数
-static const int after_turn_milliseconds = 2000;//回転後直進するミリ数
+static const int after_turn_milliseconds = 3000;//回転後直進するミリ数
 static const int turn_power = 60;//turnするpower
 static const double target_latitude = 35.716956;//ido
 static const double target_longitude = 139.759936;//keido
