@@ -19,7 +19,7 @@ static const int z_lsb_reg = 0x06;
 static const int y_msb_reg = 0x07;
 static const int y_lsb_reg = 0x08;
 static const double PI = 3.14159265;
-int fd;
+int fd = 0;
 
 static short read_out(int file,int msb_reg, int lsb_reg)
 {
@@ -58,6 +58,15 @@ int compass_initializer()
 {
 	/* WHO AM I */
 	fd = wiringPiI2CSetup(devid);
+	if(fd == -1)
+	{
+		printf("wiringPiI2CSetup error\n");
+	}
+	else
+	{
+		printf("wiringPiI2CSetup success\n");
+	}
+
 	/* start senser */
 	if(wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous)!=0)
 	{
@@ -71,7 +80,7 @@ int compass_initializer()
 
 double compass_get_angle()
 {
-  /* read X_MSB */
+	/* read X_MSB */
 	short x = 0;
 	short y = 0;
 	short z = 0;
