@@ -108,15 +108,13 @@ int decide_route()
 
   if(-30 <= delta_angle && delta_angle <= 30)
   {
-    printf("moving forward\n");
     motor_forward(100);
     delay(2000);
   }
 
   else
   {
-    printf("moving right\n");
-    motor_left(turn_power);
+    motor_right(turn_power);
     delay(turn_milliseconds);
   }
 
