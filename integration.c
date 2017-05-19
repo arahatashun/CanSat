@@ -141,10 +141,10 @@ int decide_route()
 		motor_left(turn_power);
 		if(delta_angle > 0)
 		{
-			delay((delta_angle/30)*turn_milliseconds);
+			delay((int)(delta_angle/30)*turn_milliseconds);
 		}else
 		{
-			delay(((delta_angle+360)/30)*turn_milliseconds);
+			delay((int)((delta_angle+360)/30)*turn_milliseconds);
 		}
 		motor_forward(100);
 		delta_angle=update_angle();
@@ -155,10 +155,10 @@ int decide_route()
 		motor_right(turn_power);
 		if(delta_angle > 0)
 		{
-			delay(((360-delta_angle)/30)*turn_milliseconds);
+			delay((int)((360-delta_angle)/30)*turn_milliseconds);
 		}else
 		{
-			delay((-delta_angle/30)*turn_milliseconds);
+			delay((int)(-delta_angle/30)*turn_milliseconds);
 		}
 		motor_forward(100);
 		delta_angle=update_angle();
