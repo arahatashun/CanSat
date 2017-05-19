@@ -9,7 +9,7 @@
 
 //note: seikei toukei ni izon
 static const int turn_milliseconds = 150;//回転するミリ数
-static const int after_turn_milliseconds = 3000;//回転後直進するミリ数
+static const int after_turn_milliseconds = 1500;//回転後直進するミリ数
 static const int turn_power = 60;//turnするpower
 static const double target_latitude = 35.716956;//ido
 static const double target_longitude = 139.759936;//keido
@@ -92,7 +92,7 @@ int angle_gps(double *angle_course)
 	longitude_before = data.longitude;
 	printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
 	printf("GPS speed:%f\nGPS altitude:%f\n",data.speed,data.altitude);
-	delay(gps_latency);//1.5秒まつ
+	delay(after_turn_milliseconds);
 	gps_location(&data);
 	double latitude_after = 0;
 	double longitude_after = 0;
@@ -141,7 +141,6 @@ int decide_route()
 		motor_left(turn_power);
 		delay(turn_milliseconds);
 		motor_forward(100);
-		delay(after_turn_milliseconds);
 		delta_angle=update_angle();
 	}
 
@@ -150,7 +149,6 @@ int decide_route()
 		motor_right(turn_power);
 		delay(turn_milliseconds);
 		motor_forward(100);
-		delay(after_turn_milliseconds);
 		delta_angle=update_angle();
 	}
 
