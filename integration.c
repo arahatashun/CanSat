@@ -8,7 +8,7 @@
 #include "motor.h"
 
 //note: seikei toukei ni izon
-static const int turn_milliseconds = 150;//回転するミリ数
+static const int turn_milliseconds = 150;//30度回転するミリ秒
 static const int after_turn_milliseconds = 1500;//回転後直進するミリ数
 static const int turn_power = 60;//turnするpower
 static const double target_latitude = 35.716956;//ido
@@ -139,7 +139,7 @@ int decide_route()
 	while((30 <= delta_angle && delta_angle <= 180)||(-330 <= delta_angle && delta_angle <= -180))
 	{
 		motor_left(turn_power);
-		delay(turn_milliseconds);
+		delay((fabs(delta_angle)/30)*turn_milliseconds);
 		motor_forward(100);
 		delta_angle=update_angle();
 	}
@@ -147,7 +147,7 @@ int decide_route()
 	while((180 < delta_angle && delta_angle <= 30)||(-180 < delta_angle && delta_angle < -30))
 	{
 		motor_right(turn_power);
-		delay(turn_milliseconds);
+		delay((fabs(delta_angle)/30)*turn_milliseconds);
 		motor_forward(100);
 		delta_angle=update_angle();
 	}
