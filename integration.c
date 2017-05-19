@@ -106,9 +106,9 @@ int angle_gps(double *angle_course)
 	return 0;
 }
 /*
-  gpsのデータを更新する
-  delta_angleは現在の角度-進むべき向き
-*/
+   gpsのデータを更新する
+   delta_angleは現在の角度-進むべき向き
+ */
 int update_angle()
 {
 	time_t current_time;//時間を取得
@@ -139,19 +139,30 @@ int decide_route()
 	while((30 <= delta_angle && delta_angle <= 180)||(-330 <= delta_angle && delta_angle <= -180))
 	{
 		motor_left(turn_power);
-		delay((fabs(delta_angle)/45)*turn_milliseconds);
+		if(delta_angle > 0)
+		{
+			delay((delta_angle/30)*turn_milliseconds);
+		}else
+		{
+			delay(((delta_angle+360)/30)*turn_milliseconds);
+		}
 		motor_forward(100);
 		delta_angle=update_angle();
 	}
 
-	while((180 < delta_angle && delta_angle <= 30)||(-180 < delta_angle && delta_angle < -30))
+	while((180 < delta_angle && delta_angle <= 330)||(-180 < delta_angle && delta_angle < -30))
 	{
 		motor_right(turn_power);
-		delay((fabs(delta_angle)/30)*turn_milliseconds);
+		if(delta_angle > 0)
+		{
+			delay(((360-delta_angle)/30)*turn_milliseconds);
+		}else
+		{
+			delay((-delta_angle/30)*turn_milliseconds);
+		}
 		motor_forward(100);
 		delta_angle=update_angle();
 	}
-
 	return 0;
 }
 
