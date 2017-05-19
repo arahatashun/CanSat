@@ -3,10 +3,10 @@
 #include <softPwm.h>
 #include "motor.h"
 
-static const int LEFT_MOTOR1 = 27;//GPIO27
-static const int LEFT_MOTOR2 = 17;//GPIO17
-static const int RIGHT_MOTOR1 = 23;//GPIO23
-static const int RIGHT_MOTOR2 = 24;//GPIO24
+static const int LEFT_MOTOR1 = 23;//GPIO23
+static const int LEFT_MOTOR2 = 24;//GPIO24
+static const int RIGHT_MOTOR1 = 27;//GPIO27
+static const int RIGHT_MOTOR2 = 17;//GPIO17
 static const int PWM_RANGE = 100;
 static const int INITIAL_PWM_VAL = 0;
 static const int ZERO_PWM_VAL = 0;
