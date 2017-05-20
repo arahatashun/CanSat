@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <math.h>
+#include <errno.h>
 
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
@@ -66,7 +67,8 @@ int compass_initializer()
 	else
 	{
 		printf("WARNING! compass wiringPiI2CSetup error\n");
-		printf("%d\n",fd);
+		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
+		return -1;
 	}
 
 	/* start senser */
