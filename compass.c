@@ -58,14 +58,15 @@ int compass_initializer()
 {
 	/* WHO AM I */
 	fd = wiringPiI2CSetup(devid);
-	if(fd == -1)
+	if(fd == 0)
 	{
-		printf("wiringPiI2CSetup error\n");
-		return -1;
+		printf("wiringPiI2CSetup success\n");
+		return 0;
 	}
 	else
 	{
-		printf("wiringPiI2CSetup success\n");
+		printf("WARNING! compass wiringPiI2CSetup error\n");
+		printf("%d\n",fd);
 	}
 
 	/* start senser */
