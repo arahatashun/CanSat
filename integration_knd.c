@@ -87,7 +87,7 @@ int update_angle()
   double angle_to_go = 0;//進むべき方角
   angle_to_go = calc_target_angle(data.latitude,data.longitude);
   double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
-  /*double compass_angle = 0;*/
+  double compass_angle_knd;
   compass_get_angle(&compass_angle_knd);
   delta_angle = compass_angle_knd - angle_to_go;
   printf("delta_angle:%f\n",delta_angle);
