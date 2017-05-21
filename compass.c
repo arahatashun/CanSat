@@ -21,6 +21,7 @@ static const int y_msb_reg = 0x07;
 static const int y_lsb_reg = 0x08;
 static const double PI = 3.14159265;
 int fd = 0;
+int WPI2CWReg8 = 0;
 
 static short read_out(int file,int msb_reg, int lsb_reg)
 {
@@ -71,9 +72,11 @@ int compass_initializer()
 	}
 
 	/* start senser */
-	if(wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous)!=0)
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
+	if(WPI2CWReg8 == -1)
 	{
 		printf("write error register mode_reg\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPII2CReg8)
 		return -1;
 	}
 	else
