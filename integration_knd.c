@@ -87,9 +87,9 @@ int update_angle()
   double angle_to_go = 0;//進むべき方角
   angle_to_go = calc_target_angle(data.latitude,data.longitude);
   double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
-  double compass_angle = 0;
-  compass_get_angle(&compass_angle);
-  delta_angle = compass_angle - angle_to_go;
+  double compass_angle_knd;
+  compass_get_angle(&compass_angle_knd);
+  delta_angle = compass_angle_knd - angle_to_go;
   printf("delta_angle:%f\n",delta_angle);
   target_position = latlng_to_xyz(target_latitude,target_longitude);
   current_position = latlng_to_xyz(data.latitude, data.longitude);
@@ -105,17 +105,22 @@ int decide_route()
 {
   double delta_angle = 0;
   delta_angle=update_angle();
-
-  if(-30 <= delta_angle && delta_angle <= 30)
+  double min_angle = -30;
+  double max_angle = 30;
+  if(min_angle <= delta_angle && delta_angle <= max_angle)
   {
     motor_forward(100);
-    delay(2000);
+    delay(1000);
+    motor_stop();
+    delay(3000);
   }
 
   else
   {
     motor_right(turn_power);
-    delay(turn_milliseconds);
+    delay(100);
+    motor_stop();
+    delay(3000);
   }
 
   return 0;
