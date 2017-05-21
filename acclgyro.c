@@ -103,7 +103,7 @@ static int set_acclgyro(Acclgyro *acclgyro_data)  //acclgyroの値を全て読�
 	return 0;
 }
 
-void print_acclgyro(Acclgyro *acclgyro_data)　　//六軸センサーの値を画面に出力
+void print_acclgyro(Acclgyro *acclgyro_data) //六軸センサーの値を画面に出力
 {
 	set_acclgyro(acclgyro_data);
 	printf("acclX_scaled: %f\n", acclgyro_data->acclX_scaled);
