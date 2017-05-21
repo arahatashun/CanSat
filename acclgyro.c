@@ -38,17 +38,17 @@ static int fd;
 
 //関数プロトタイプ宣言(static)
 static int read_word_2c(int addr);
-/*
+
 double dist(double a,double b);
 double get_y_rotation(double x,double y,double z);
 double get_x_rotation(double x,double y,double z);
-*/
+
 static int accl_and_rotation_read(Acclgyro *data);    //acgは構造体オブジェクトをさすポインタ
 static int gyro_read(Acclgyro *data);
 static int set_acclgyro(Acclgyro *data);    //integrate accl_read,gyro_read,rotation_read
-/*
+
 void print_acclgyro(Acclgyro *data);    //print acclgyro parameter
-*/
+
 
 
 
@@ -62,7 +62,7 @@ static int read_word_2c(int addr)
 	return val;
 }
 
-/*
+
 double dist(double a, double b)
 {
 	return sqrt((a*a) + (b*b));
@@ -81,7 +81,7 @@ double get_x_rotation(double x, double y, double z)
 	radians = atan2(y, dist(x, z));
 	return (radians * (180.0 / M_PI));
 }
-*/
+
 
 static int accl_and_rotation_read(Acclgyro *data)
 {
@@ -95,10 +95,10 @@ static int accl_and_rotation_read(Acclgyro *data)
 	data->acclX_scaled = acclX / convert_to_G;
 	data->acclY_scaled = acclY / convert_to_G;
 	data->acclZ_scaled = acclZ / convert_to_G;
-/*
+
 	data->x_rotation = get_x_rotation(acg->acclX_scaled, acg->acclY_scaled, acg->acclZ_scaled);
 	data>y_rotation = get_y_rotation(acg->acclX_scaled, acg->acclY_scaled, acg->acclZ_scaled);
-*/
+
 	return 0;
 }
 
@@ -123,7 +123,7 @@ static int set_acclgyro(Acclgyro *data)
 	return 0;
 }
 
-/*
+
 void print_acclgyro(Acclgyro *data)
 {
 	set_acclgyro(acg);
@@ -136,7 +136,7 @@ void print_acclgyro(Acclgyro *data)
 	printf("gyroY_scaled: %f\n", data->gyroY_scaled);
 	printf("gyroZ_scaled: %f\n", data->gyroZ_scaled);
 }
-*/
+
 
 //if reverse,return 1
 
