@@ -94,7 +94,7 @@ int compass_get_angle(double *compass_angle)
 
 	if(WPI2CWReg8 == -1)
 	{
-		printf('write error register mode_reg\n');
+		printf("write error register mode_reg\n");
 	}
 	short x = 0;
 	short y = 0;
