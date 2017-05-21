@@ -90,7 +90,12 @@ int compass_get_angle(double *compass_angle)
 //ポインタで角度を渡す
 {
 	/* read X_MSB */
-	wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
+
+	if(WPI2CWReg8 == -1)
+	{
+		printf('write error register mode_reg\n');
+	}
 	short x = 0;
 	short y = 0;
 	short z = 0;
