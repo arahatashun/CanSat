@@ -118,7 +118,7 @@ int decide_route()
   {
     motor_right(turn_power);
     delay(100);
-    motorstop();
+    motor_stop();
     delay(3000);
   }
 
