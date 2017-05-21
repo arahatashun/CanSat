@@ -96,6 +96,8 @@ int compass_get_angle(double *compass_angle)
 	{
 		printf("write error register mode_reg\n");
 		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		errno = -WPI2CWReg8;
+		printf("errno=%d: %s\n", errno, strerror(errno));
 	}
 	else
 	{
