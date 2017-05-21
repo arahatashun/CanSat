@@ -106,7 +106,7 @@ int decide_route()
   double delta_angle = 0;
   delta_angle=update_angle();
 
-  if(double(-30) <= delta_angle && delta_angle <= double(30))
+  if(double　-30 <= delta_angle && delta_angle <= double　30)
   {
     motor_forward(100);
     delay(1000);
