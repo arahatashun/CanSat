@@ -69,6 +69,7 @@ int compass_initializer()
 	else
 	{
 			printf("wiringPiI2CSetup success\n");
+			printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
 	}
 
 	/* start senser */
