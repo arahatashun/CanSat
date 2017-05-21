@@ -73,7 +73,7 @@ int compass_initializer()
 	}
 
 	/* start senser */
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
+	 /*WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
 	if(WPI2CWReg8 == -1)
 	{
 		printf("write error register mode_reg\n");
@@ -83,7 +83,7 @@ int compass_initializer()
 	else
 	{
 		printf("write register:mode_reg\n");
-	}
+	}*/
 	return 0;
 }
 
@@ -91,6 +91,16 @@ int compass_get_angle(double *compass_angle)
 //ポインタで角度を渡す
 {
 	/* read X_MSB */
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
+	if(WPI2CWReg8 == -1)
+	{
+		printf("write error register mode_reg\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+	}
+	else
+	{
+		printf("write register:mode_reg\n");
+	}
 	short x = 0;
 	short y = 0;
 	short z = 0;
