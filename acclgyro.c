@@ -18,23 +18,8 @@ static const int gyroZ_reg = 0x47;
 static const double convert_to_G = 16384.0;
 static const double convert_to_degpers = 131.0;
 
-
-//構造体宣言(typedef)
-typedef struct acclgyro{
-	double acclX_scaled;//the values of accleration
-	double acclY_scaled;
-	double acclZ_scaled;
-	double gyroX_scaled;
-	double gyroY_scaled;
-	double gyroZ_scaled;//the values of gyroscope
-	double x_rotation;
-	double y_rotation;//XY-axis rotation
-} Acclgyro;
-
-
 //グローバルデータ宣言(not const)
 static int fd;
-
 
 //関数プロトタイプ宣言(static)
 static int read_word_2c(int addr);
@@ -92,7 +77,7 @@ static int accl_and_rotation_read(Acclgyro *acclgyro_data)  //加速度とx,y方
 	acclgyro_data->acclZ_scaled = acclZ / convert_to_G;
 
 	acclgyro_data->x_rotation = get_x_rotation(acclgyro_data->acclX_scaled, acclgyro_data->acclY_scaled, acclgyro_data->acclZ_scaled);
-	acclgyro_data->y_rotation = get_y_rotation(acclgyro_data)->acclX_scaled, acclgyro_data->acclY_scaled, acclgyro_data->acclZ_scaled);
+	acclgyro_data->y_rotation = get_y_rotation(acclgyro_data->acclX_scaled, acclgyro_data->acclY_scaled, acclgyro_data->acclZ_scaled);
 
 	return 0;
 }
@@ -117,7 +102,6 @@ static int set_acclgyro(Acclgyro *acclgyro_data)  //acclgyroの値を全て読�
 	gyro_read(acclgyro_data);
 	return 0;
 }
-
 
 void print_acclgyro(Acclgyro *acclgyro_data)　　//六軸センサーの値を画面に出力
 {
