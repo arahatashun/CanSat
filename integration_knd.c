@@ -109,13 +109,17 @@ int decide_route()
   if(-30 <= delta_angle && delta_angle <= 30)
   {
     motor_forward(100);
-    delay(2000);
+    delay(1000);
+    motor_stop();
+    delay(3000);
   }
 
   else
   {
     motor_right(turn_power);
-    delay(turn_milliseconds);
+    delay(100);
+    motorstop();
+    delay(3000);
   }
 
   return 0;
