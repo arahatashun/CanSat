@@ -38,21 +38,16 @@ static int fd;
 
 //関数プロトタイプ宣言(static)
 static int read_word_2c(int addr);
-
 double dist(double a,double b);
 double get_y_rotation(double x,double y,double z);
 double get_x_rotation(double x,double y,double z);
-
-static int accl_and_rotation_read(Acclgyro *data);    //acgは構造体オブジェクトをさすポインタ
-static int gyro_read(Acclgyro *data);
-static int set_acclgyro(Acclgyro *data);    //integrate accl_read,gyro_read,rotation_read
-
-void print_acclgyro(Acclgyro *data);    //print acclgyro parameter
+static int accl_and_rotation_read(Acclgyro *acclgyro_data);    //acgは構造体オブジェクトをさすポインタ
+static int gyro_read(Acclgyro *acclgyro_data);
+static int set_acclgyro(Acclgyro *acclgyro_data);    //integrate accl_read,gyro_read,rotation_read
 
 
 
-
-static int read_word_2c(int addr)
+static int read_word_2c(int addr)  //レジスタの値を読み取る
 {
 	int val = 0;
 	val = wiringPiI2CReadReg8(fd, addr);
@@ -83,7 +78,7 @@ double get_x_rotation(double x, double y, double z)
 }
 
 
-static int accl_and_rotation_read(Acclgyro *data)
+static int accl_and_rotation_read(Acclgyro *acclgyro_data)  //加速度とx,y方向の回転角を読む
 {
 	int acclX = 0;
 	int acclY = 0;
@@ -92,53 +87,50 @@ static int accl_and_rotation_read(Acclgyro *data)
 	acclY = read_word_2c(acclY_reg);
 	acclZ = read_word_2c(acclZ_reg);
 
-	data->acclX_scaled = acclX / convert_to_G;
-	data->acclY_scaled = acclY / convert_to_G;
-	data->acclZ_scaled = acclZ / convert_to_G;
+	acclgyro_data->acclX_scaled = acclX / convert_to_G;
+	acclgyro_data->acclY_scaled = acclY / convert_to_G;
+	acclgyro_data->acclZ_scaled = acclZ / convert_to_G;
 
-	data->x_rotation = get_x_rotation(acg->acclX_scaled, acg->acclY_scaled, acg->acclZ_scaled);
-	data>y_rotation = get_y_rotation(acg->acclX_scaled, acg->acclY_scaled, acg->acclZ_scaled);
+	acclgyro_data->x_rotation = get_x_rotation(acclgyro_data->acclX_scaled, acclgyro_data->acclY_scaled, acclgyro_data->acclZ_scaled);
+	acclgyro_data->y_rotation = get_y_rotation(acclgyro_data)->acclX_scaled, acclgyro_data->acclY_scaled, acclgyro_data->acclZ_scaled);
 
 	return 0;
 }
 
-static int gyro_read(Acclgyro *data)
+static int gyro_read(Acclgyro *acclgyro_data)  //データが格納されているAcclgyro型の構造体acclgyro_dataにアクセス
 {
-	int gxroX=0;
+	int gyroX=0;
 	int gyroY=0;
 	int gyroZ=0;
 	gyroX = read_word_2c(gyroX_reg);
 	gyroY = read_word_2c(gyroY_reg);
 	gyroZ = read_word_2c(gyroZ_reg);
-	data->gyroX_scaled = gyroX / convert_to_degpers;
-	data->gyroY_scaled = gyroY / convert_to_degpers;
-	data->gyroZ_scaled = gyroZ / convert_to_degpers;
+	acclgyro_data->gyroX_scaled = gyroX / convert_to_degpers;
+	acclgyro_data->gyroY_scaled = gyroY / convert_to_degpers;
+	acclgyro_data->gyroZ_scaled = gyroZ / convert_to_degpers;
 }
 
-static int set_acclgyro(Acclgyro *data)
+static int set_acclgyro(Acclgyro *acclgyro_data)  //acclgyroの値を全て読み取る
 {
 	//set value
-	accl_and_rotation_read(data);
-	gyro_read(data);
+	accl_and_rotation_read(acclgyro_data);
+	gyro_read(acclgyro_data);
 	return 0;
 }
 
 
-void print_acclgyro(Acclgyro *data)
+void print_acclgyro(Acclgyro *acclgyro_data)　　//六軸センサーの値を画面に出力
 {
-	set_acclgyro(acg);
-	printf("acclX_scaled: %f\n", data->acclX_scaled);
-	printf("acclY_scaled: %f\n", data->acclY_scaled);
-	printf("acclZ_scaled: %f\n", data->acclZ_scaled);
-	printf("X rotation: %f\n", data->x_rotation);
-	printf("Y rotation: %f\n", data->y_rotation);
-	printf("gyroX_scaled: %f\n", data->gyroX_scaled);
-	printf("gyroY_scaled: %f\n", data->gyroY_scaled);
-	printf("gyroZ_scaled: %f\n", data->gyroZ_scaled);
+	set_acclgyro(acclgyro_data);
+	printf("acclX_scaled: %f\n", acclgyro_data->acclX_scaled);
+	printf("acclY_scaled: %f\n", acclgyro_data->acclY_scaled);
+	printf("acclZ_scaled: %f\n", acclgyro_data->acclZ_scaled);
+	printf("X rotation: %f\n", acclgyro_data->x_rotation);
+	printf("Y rotation: %f\n", acclgyro_data->y_rotation);
+	printf("gyroX_scaled: %f\n", acclgyro_data->gyroX_scaled);
+	printf("gyroY_scaled: %f\n", acclgyro_data->gyroY_scaled);
+	printf("gyroZ_scaled: %f\n", acclgyro_data->gyroZ_scaled);
 }
-
-
-//if reverse,return 1
 
 int acclgyro_initializer()
 {
@@ -147,17 +139,18 @@ int acclgyro_initializer()
 	return 0;
 }
 
-int z_posture(Acclgyro *data)
+//if reverse,return 1
+int is_reverse(Acclgyro *acclgyro_data)
 {
-	set_acclgyro(data);
-	if(acg->acclZ_scaled < 0)
+	set_acclgyro(acclgyro_data);
+	if(acclgyro_data->acclZ_scaled < 0)
 	{
-		printf("G:%f z_posture:reverse\n",data->acclZ_scaled);
-		return -1;
+		printf("G:%f z_posture:reverse\n",acclgyro_data->acclZ_scaled);
+		return 1;
 	}
 	else
 	{
-		printf("G:%f z_posture:normal\n",data->acclZ_scaled);
+		printf("G:%f z_posture:normal\n",acclgyro_data->acclZ_scaled);
 		return 0;
 	}
 }
