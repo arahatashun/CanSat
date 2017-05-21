@@ -76,7 +76,7 @@ int compass_initializer()
 	if(WPI2CWReg8 == -1)
 	{
 		printf("write error register mode_reg\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPII2CReg8)
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CReg8);
 		return -1;
 	}
 	else
