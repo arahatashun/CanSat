@@ -68,22 +68,22 @@ int compass_initializer()
 	}
 	else
 	{
-			printf("wiringPiI2CSetup success\n");
-			printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
+		printf("wiringPiI2CSetup success\n");
+		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
 	}
 
 	/* start senser */
-	 /*WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
-	if(WPI2CWReg8 == -1)
-	{
-		printf("write error register mode_reg\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		return -1;
-	}
-	else
-	{
-		printf("write register:mode_reg\n");
-	}*/
+	/*WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
+	   if(WPI2CWReg8 == -1)
+	   {
+	       printf("write error register mode_reg\n");
+	       printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+	       return -1;
+	   }
+	   else
+	   {
+	       printf("write register:mode_reg\n");
+	   }*/
 	return 0;
 }
 
