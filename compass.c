@@ -53,6 +53,7 @@ static double calc_compass_angle(short x,short y)
 	{
 		angle_return = angle_calc2;
 	}
+    angle_return = 360.0 - angle_return;//地磁気センサーの裏表を変えたことによる訂正
 	return angle_return;
 }
 
