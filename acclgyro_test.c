@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <wiringPiI2C.h>
-#include "acclgyro.h" #includea
+#include "acclgyro.h"
 
 int main(){
 	Acclgyro acclgyro_data; //オブジェクト生成

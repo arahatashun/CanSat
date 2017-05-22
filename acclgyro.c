@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <wiringPiI2C.h>
-#include"acclgyro.h"
+#include "acclgyro.h"
 
 
 //グローバルデータ宣言(const)
@@ -23,9 +23,9 @@ static int fd;
 
 //関数プロトタイプ宣言(static)
 static int read_word_2c(int addr);
-double dist(double a,double b);
-double get_y_rotation(double x,double y,double z);
-double get_x_rotation(double x,double y,double z);
+static double dist(double a,double b);
+static double get_y_rotation(double x,double y,double z);
+static double get_x_rotation(double x,double y,double z);
 static int accl_and_rotation_read(Acclgyro *acclgyro_data);    //acgは構造体オブジェクトをさすポインタ
 static int gyro_read(Acclgyro *acclgyro_data);
 static int set_acclgyro(Acclgyro *acclgyro_data);    //integrate accl_read,gyro_read,rotation_read
@@ -43,19 +43,19 @@ static int read_word_2c(int addr)  //レジスタの値を読み取る
 }
 
 
-double dist(double a, double b)
+static double dist(double a, double b)
 {
 	return sqrt((a*a) + (b*b));
 }
 
-double get_y_rotation(double x, double y, double z)
+static double get_y_rotation(double x, double y, double z)
 {
 	double radians;
 	radians = atan2(x, dist(y, z));
 	return -(radians * (180.0 / M_PI));
 }
 
-double get_x_rotation(double x, double y, double z)
+static double get_x_rotation(double x, double y, double z)
 {
 	double radians;
 	radians = atan2(y, dist(x, z));
@@ -103,7 +103,7 @@ static int set_acclgyro(Acclgyro *acclgyro_data)  //acclgyroの値を全て読�
 	return 0;
 }
 
-void print_acclgyro(Acclgyro *acclgyro_data) //六軸センサーの値を画面に出力
+int print_acclgyro(Acclgyro *acclgyro_data) //六軸センサーの値を画面に出力
 {
 	set_acclgyro(acclgyro_data);
 	printf("acclX_scaled: %f\n", acclgyro_data->acclX_scaled);
@@ -114,6 +114,7 @@ void print_acclgyro(Acclgyro *acclgyro_data) //六軸センサーの値を画面
 	printf("gyroX_scaled: %f\n", acclgyro_data->gyroX_scaled);
 	printf("gyroY_scaled: %f\n", acclgyro_data->gyroY_scaled);
 	printf("gyroZ_scaled: %f\n", acclgyro_data->gyroZ_scaled);
+    return 0;
 }
 
 int acclgyro_initializer()
