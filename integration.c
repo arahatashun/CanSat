@@ -8,7 +8,7 @@
 #include "motor.h"
 
 //note: seikei toukei ni izon
-static const int turn_milliseconds = 150;//45度回転するミリ秒
+static const int turn_milliseconds = 30;//45度回転するミリ秒 変えました 元は150ms
 static const int after_turn_milliseconds = 1500;//回転後直進するミリ数
 static const int turn_power = 60;//turnするpower
 static const double target_latitude = 35.716956;//ido
