@@ -131,7 +131,7 @@ double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 }
 /*
    gpsのデータを更新する
-   delta_angleは現在の角度-進むべき向き
+   delta_angleは現在の角度-進むべき向きを-180~180になるように調整したもの
  */
 int update_angle()
 {
