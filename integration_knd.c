@@ -86,7 +86,7 @@ double calc_target_angle(double lat,double lon)
 double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 {
     double delta_angle_cld = 0;
-    delta_angle_cld = going_angle_cld - gps_angle_cld;
+    delta_angle_cld = gps_angle_cld - going_angle_cld;
     if(-360 <= delta_angle_cld && delta_angle_cld <= -180)
     {
         delta_angle_cld = 360.0 - going_angle_cld + gps_angle_cld;
