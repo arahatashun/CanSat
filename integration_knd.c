@@ -89,8 +89,24 @@ int update_angle()
   double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
   double compass_angle_knd;
   compass_get_angle(&compass_angle_knd);
-  delta_angle = compass_angle_knd - angle_to_go;
-  printf("delta_angle:%f\n",delta_angle);
+  delta_angle = angle_to_go - compass_angle_knd;
+  if(-360 <= delta_angle && delta_angle <= -180)
+  {
+    delta_angle = 360.0 + compass_angle - angle_to_go;
+  }
+  else if(-180 < delta_angle  && delta_angle < 0)
+  {
+    delta_angle = delta_angle;
+  }
+  else if(0 <= delta_angle && delta_angle <= 180)
+  {
+    delta_angle = compass_angle_knd - angle_to_go;
+  }
+  else
+  {
+    delta_angle = angle_to_go - comnapss_angle_knd - 360.0;
+  }
+    printf("delta_angle:%f\n",delta_angle);//目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを-180~180で表示
   target_position = latlng_to_xyz(target_latitude,target_longitude);
   current_position = latlng_to_xyz(data.latitude, data.longitude);
   double distance = 0;
