@@ -120,7 +120,7 @@ int update_angle()
 	double angle_to_go = 0;//進むべき方角
 	angle_to_go = calc_target_angle(data.latitude,data.longitude);
 	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
-	delta_angle = angle_course - angle_to_go;
+	delta_angle = angle_to_go  - angle_course;
     if(-360 <= delta_angle && delta_angle <= -180)
     {
         delta_angle = 360.0 - angle_course + angle_to_go;
