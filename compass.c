@@ -115,3 +115,57 @@ int compass_get_angle(double *compass_angle)
 	printf("COMPASS x:%d,y:%d,z:%d,angle:%f\n",x,y,z,*compass_angle);
 	return 0;
 }
+
+/*以下は近藤が自分の実験用に勝手に作りました。
+上のコードは変えてません。
+*/
+
+int compass_initializer_knd()
+{
+	/* WHO AM I */
+	fd = wiringPiI2CSetup(devid);
+	if(fd == -1)
+	{
+		printf("WARNING! compass wiringPiI2CSetup error\n");
+		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
+		return -1;
+	}
+	else
+	{
+		printf("wiringPiI2CSetup success\n");
+		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
+	}
+
+	/* start senser */
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
+	   if(WPI2CWReg8 == -1)
+	   {
+	       printf("write error register mode_reg\n");
+	       printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+	       return -1;
+	   }
+	   else
+	   {
+	       printf("write register:mode_reg\n");
+	   }
+	return 0;
+}
+
+short get_xcompass()
+{
+	short x = 0;
+	x = read_out(fd, x_msb_reg, x_lsb_reg);
+	return x;
+}
+short get_ycompass()
+{
+	short y = 0;
+	y = read_out(fd, y_msb_reg, y_lsb_reg);
+	return y;
+}
+short get_zcompass()
+{
+	short z = 0;
+	z = read_out(fd, z_msb_reg, z_lsb_reg);
+	return z;
+}
