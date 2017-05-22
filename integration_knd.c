@@ -80,6 +80,32 @@ double calc_target_angle(double lat,double lon)
   printf("GPS target_angle : %f\n",angle);
   return angle;
 }
+/*
+ delta_angleを計算
+*/
+double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
+{
+    double delta_angle_cld = 0;
+    delta_angle_cld = going_angle_cld - gps_angle_cld;
+    if(-360 <= delta_angle_cld && delta_angle_cld <= -180)
+    {
+        delta_angle_cld = 360.0 - going_angle_cld + gps_angle_cld;
+    }
+    else if(-180 < delta_angle_cld  && delta_angle_cld < 0)
+    {
+        delta_angle_cld = delta_angle_cld;
+    }
+    else if(0 <= delta_angle_cld && delta_angle_cld <= 180)
+    {
+        delta_angle_cld = delta_angle_cld;
+    }
+    else
+    {
+        delta_angle_cld = -360.0 + gps_angle_cld - going_angle_cld;
+    }
+    
+    return delta_angle_cld;
+}
 
 /*gpsと地磁気のデータを更新する*/
 int update_angle()
@@ -95,24 +121,8 @@ int update_angle()
   double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
   double compass_angle_knd;
   compass_get_angle(&compass_angle_knd);
-  delta_angle = angle_to_go - compass_angle_knd;
-  if(-360 <= delta_angle && delta_angle <= -180)
-  {
-    delta_angle = 360.0 - compass_angle_knd + angle_to_go;
-  }
-  else if(-180 < delta_angle  && delta_angle < 0)
-  {
-    delta_angle = delta_angle;
-  }
-  else if(0 <= delta_angle && delta_angle <= 180)
-  {
-    delta_angle = delta_angle;
-  }
-  else
-  {
-    delta_angle = -360.0 + angle_to_go - compass_angle_knd;
-  }
-    printf("delta_angle:%f\n",delta_angle);//目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを-180~180で表示 目的方角が右なら値は正
+  delta_angle = cal_delta_angle(compass_angle_knd,angle_to_go);
+  printf("delta_angle:%f\n",delta_angle);//目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを-180~180で表示 目的方角が右なら値は正とする
   target_position = latlng_to_xyz(target_latitude,target_longitude);
   current_position = latlng_to_xyz(data.latitude, data.longitude);
   double distance = 0;
