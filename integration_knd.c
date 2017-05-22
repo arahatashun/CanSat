@@ -104,7 +104,7 @@ int update_angle()
   }
   else
   {
-    delta_angle = angle_to_go - comnapss_angle_knd - 360.0;
+    delta_angle = angle_to_go - comapss_angle_knd - 360.0;
   }
     printf("delta_angle:%f\n",delta_angle);//目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを-180~180で表示
   target_position = latlng_to_xyz(target_latitude,target_longitude);
