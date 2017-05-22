@@ -112,7 +112,7 @@ int decide_route()
     motor_forward(100);
     delay(1000);
     motor_stop();
-    delay(3000);
+    delay(5000);
   }
 
   else
@@ -120,7 +120,7 @@ int decide_route()
     motor_right(turn_power);
     delay(100);
     motor_stop();
-    delay(3000);
+    delay(5000);
   }
 
   return 0;
