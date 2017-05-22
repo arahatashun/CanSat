@@ -92,7 +92,7 @@ int update_angle()
   delta_angle = angle_to_go - compass_angle_knd;
   if(-360 <= delta_angle && delta_angle <= -180)
   {
-    delta_angle = 360.0 + compass_angle - angle_to_go;
+    delta_angle = 360.0 + compass_angle_knd - angle_to_go;
   }
   else if(-180 < delta_angle  && delta_angle < 0)
   {
