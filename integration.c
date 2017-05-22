@@ -106,7 +106,7 @@ int angle_gps(double *angle_course)
 	return 0;
 }
 
-int cal_delta_angle(double going_angle_cld, double gps_angle_cld)
+double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 {
     double delta_angle_cld = 0;
     delta_angle_cld = going_angle_cld - gps_angle_cld;
@@ -144,7 +144,7 @@ int update_angle()
 	double angle_to_go = 0;//進むべき方角
 	angle_to_go = calc_target_angle(data.latitude,data.longitude);
 	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
-    cal_delta_angle(angle_course,angle_to_go);
+    delta_angle = cal_delta_angle(angle_course,angle_to_go);
     printf("GPS delta_angle:%f\n",delta_angle);//目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを-180~180で表示 目的方角が右なら値は正
 	target_position = latlng_to_xyz(target_latitude,target_longitude);
 	current_position = latlng_to_xyz(data.latitude, data.longitude);
