@@ -123,7 +123,7 @@ int update_angle()
 	delta_angle = angle_course - angle_to_go;
     if(-360 <= delta_angle && delta_angle <= -180)
     {
-        delta_angle = 360.0 - compass_angle_knd + angle_to_go;
+        delta_angle = 360.0 - angle_course + angle_to_go;
     }
     else if(-180 < delta_angle  && delta_angle < 0)
     {
@@ -135,7 +135,7 @@ int update_angle()
     }
     else
     {
-        delta_angle = -360.0 + angle_to_go - compass_angle_knd;
+        delta_angle = -360.0 + angle_to_go - angle_course;
     }
     printf("GPS delta_angle:%f\n",delta_angle);//目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを-180~180で表示 目的方角が右なら値は正
 	target_position = latlng_to_xyz(target_latitude,target_longitude);
