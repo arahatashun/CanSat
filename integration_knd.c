@@ -13,7 +13,7 @@ static const int turn_milliseconds = 150;//回転するミリ数
 static const int turn_power = 60;//turnするpower
 static const double target_latitude = 35.716956;//ido
 static const double target_longitude = 139.759936;//keido
-static const double PI = 3.14159265;
+static const double PI = 3.14159265359;
 static const double EARTH_RADIUS = 6378137;
 time_t start_time;//開始時刻のグローバル変数宣言
 
@@ -103,7 +103,7 @@ double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
     {
         delta_angle_cld = -360.0 + gps_angle_cld - going_angle_cld;
     }
-    
+
     return delta_angle_cld;
 }
 
