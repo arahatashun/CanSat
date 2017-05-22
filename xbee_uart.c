@@ -1,4 +1,4 @@
-#include "xbee.h"
+#include "xbee_lib.h"
 #include "xbee_uart.h"
 #include<stdio.h>
 
@@ -23,4 +23,9 @@ int xbee_printf(char *input){
   puts(input);
   xbee_uart(dev,input);
   return 0;
+}
+
+int main(){
+  xbee_initializer();
+  xbee_printf("hello");
 }

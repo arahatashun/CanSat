@@ -3,7 +3,7 @@
 #ifndef XBEE_UART
 #define XBEE_UART
 
-int xbee_initializer()
-int xbee_printf()
+int xbee_initializer();
+int xbee_printf();
 
 #endif
