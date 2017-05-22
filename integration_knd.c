@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include <math.h>
 #include <signal.h>
 #include <stdlib.h>
@@ -14,6 +15,7 @@ static const double target_latitude = 35.716956;//ido
 static const double target_longitude = 139.759936;//keido
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
+time_t start_time;//開始時刻のグローバル変数宣言
 
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
 //デカルト座標
@@ -75,13 +77,17 @@ double calc_target_angle(double lat,double lon)
   lat_offset = target_latitude - lat;
   lon_offset = target_longitude - lon;
   angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;
-  printf("target_angle : %f\n",angle);
+  printf("GPS target_angle : %f\n",angle);
   return angle;
 }
 
 /*gpsと地磁気のデータを更新する*/
 int update_angle()
 {
+  time_t current_time;//時間を取得
+  time(&current_time);
+  double delta_time = difftime(current_time,start_time);
+  printf("OS timestamp:%f\n",delta_time);
   gps_location(&data);
   printf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
   double angle_to_go = 0;//進むべき方角

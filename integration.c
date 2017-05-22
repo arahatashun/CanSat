@@ -145,8 +145,8 @@ int update_angle()
 	return delta_angle;
 }
 /*
-   進む方角の差が30未満もしくは330以上まで調整
- */
+   進む方角が-180から-30の時にその角度差に応じて左回転、30~180の時その角度さに応じて右回転
+*/
 int decide_route()
 {
 	double delta_angle = 0;
