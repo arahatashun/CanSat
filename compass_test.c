@@ -1,5 +1,5 @@
 #include "compass.h"
-"include <wiringPi.h>
+#include <wiringPi.h>
 
 int main()
 {
