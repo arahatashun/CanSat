@@ -46,9 +46,9 @@ static cartesian_coord latlng_to_xyz(double lat,double lon)
 }
 
 //距離を計算
-double dist_on_sphere(double target_lat,double target_lon,double current_lat, double current_lon)
+double dist_on_sphere(double current_lat, double current_lon)
 {
-  cartesian_coord target = latlng_to_xyz(target_lat,target_lon);
+  cartesian_coord target = latlng_to_xyz(target_latitude,target_longitude);
   cartesian_coord current_position = latlng_to_xyz(current_lat, current_lon)
   double dot_product_x = 0;
   double dot_product_y = 0;

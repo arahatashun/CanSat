@@ -93,7 +93,7 @@ int update_angle()
 	/*目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを-180~180で表示
 	目的方角が右なら値は正*/
 	double distance = 0;
-	distance = dist_on_sphere(target_latitude,target_longitude,data.latitude,data.longitude);
+	distance = dist_on_sphere(data.latitude,data.longitude);
 	return delta_angle;
 }
 /*
