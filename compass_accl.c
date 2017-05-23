@@ -46,14 +46,14 @@ int main()
       printf("psi = %f\n", psi_degree);
       printf("sin(phi) = %f\n", sin(phi_radian));
       printf("cos(phi) = %f\n", cos(phi_radian));
-      atan_y =acclz_knd*sin(phi_radian);
+      atan_y =acclz_knd * sin(phi_radian);
       /*　-10000*accly_knd*cos(phi_radian)
       atan_x = acclx_knd*cos(psi_radian) + accly_knd*sin(psi_radian)*sin(phi_radian) + acclz_knd*sin(psi_radian)*cos(phi_radian);
       printf("atan_y = %f", atan_y);
       printf("atan_x = %f", atan_x);*/
-      printf("atan_y = %f", atan_y);
-      atan_y = acclz_knd*cos(phi_radian);
-      printf("atan_y = %f", atan_y);
+      printf("atan_y = %f\n", atan_y);
+      atan_y = accly_knd * cos(phi_radian);
+      printf("atan_y = %f\n", atan_y);
       theta_degree = atan2(atan_y, atan_x)*(180.0/PI)+ 180.0;
       printf("theta = %f\n", theta_degree);
       delay(1000);
