@@ -32,32 +32,30 @@ int main()
       xcompass_knd = (double)get_xcompass();
       ycompass_knd = (double)get_ycompass();
       zcompass_knd = (double)get_zcompass();
-      printf("acclx = %lf\n", acclx_knd);
-      printf("accly = %lf\n", accly_knd);
-      printf("acclz = %lf\n", acclz_knd);
-      printf("compassx = %lf\n", xcompass_knd);
-      printf("compassy = %lf\n", ycompass_knd);
-      printf("compassz = %lf\n", zcompass_knd);
+      printf("acclx = %f\n", acclx_knd);
+      printf("accly = %f\n", accly_knd);
+      printf("acclz = %f\n", acclz_knd);
+      printf("compassx = %f\n", xcompass_knd);
+      printf("compassy = %f\n", ycompass_knd);
+      printf("compassz = %f\n", zcompass_knd);
       phi_radian = atan2(accly_knd, acclz_knd);
       psi_radian = atan2(-acclx_knd, accly_knd*sin(phi_radian) + acclz_knd*cos(phi_radian));
       phi_degree = phi_radian*180.0/PI;
       psi_degree = psi_radian*180.0/PI;
-      printf("phi = %lf\n", phi_degree);
-      printf("psi = %lf\n", psi_degree);
-      printf("sin(phi) = %lf\n", sin(phi_radian));
-      printf("cos(phi) = %lf\n", cos(phi_radian));
-      atan_y = 10000*acclz_knd*sin(phi_radian);/*- 10000*accly_knd*cos(phi_radian)
+      printf("phi = %f\n", phi_degree);
+      printf("psi = %f\n", psi_degree);
+      printf("sin(phi) = %f\n", sin(phi_radian));
+      printf("cos(phi) = %f\n", cos(phi_radian));
+      atan_y =acclz_knd*sin(phi_radian);
+    　　/*　-10000*accly_knd*cos(phi_radian)
       atan_x = acclx_knd*cos(psi_radian) + accly_knd*sin(psi_radian)*sin(phi_radian) + acclz_knd*sin(psi_radian)*cos(phi_radian);
-      printf("atan_y = %lf", atan_y);
-      printf("atan_x = %lf", atan_x);*/
-      printf("atan_y = %lf", atan_y);
-      atan_y = 2.0;
-      printf("atan_y = %lf", atan_y);
-      atan_y = accly_knd*cos(phi_radian)*10000;
-      printf("atan_y = %lf", atan_y);
-        
+      printf("atan_y = %f", atan_y);
+      printf("atan_x = %f", atan_x);*/
+      printf("atan_y = %f", atan_y);
+      atan_y = accly_knd*cos(phi_radian);
+      printf("atan_y = %f", atan_y);
       theta_degree = atan2(atan_y, atan_x)*(180.0/PI)+ 180.0;
-      printf("theta = %lf\n", theta_degree);
+      printf("theta = %f\n", theta_degree);
         delay(1000);
     }
     return 0;
