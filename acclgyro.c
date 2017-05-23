@@ -144,21 +144,21 @@ int is_reverse(Acclgyro *acclgyro_data)
  上記の飯山のコードは変更してません。
  */
 
-static int get_acclx()
+int get_acclx()
 {
     int acclx = 0;
     acclx = read_word_2c(acclX_reg);
     return accxl;
 }
 
-static int get_accly()
+int get_accly()
 {
     int accly = 0;
     accly = read_word_2c(acclY_reg);
     return accly;
 }
 
-static int get_acclz()
+int get_acclz()
 {
     int acclz = 0;
     acclz = read_word_2c(acclY_reg);
