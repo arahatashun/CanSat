@@ -21,8 +21,8 @@ int main()
     double psi_radian = 0;
     double phi_degree = 0;
     double psi_degree = 0;
-    double atan_y;
-    double atan_x;
+    double atan_y = 0;
+    double atan_x = 0;
     double theta_degree = 0;
     while(1)
     {
@@ -45,7 +45,7 @@ int main()
       printf("phi = %lf\n", phi_degree);
       printf("psi = %lf\n", psi_degree);
       printf("sin(phi) = %lf\n", sin(phi_radian));
-      printf("sin(psi) = %lf\n", sin(psi_radian));
+      printf("cos(phi) = %lf\n", cos(phi_radian));
       atan_y = acclz_knd*sin(phi_radian) - accly_knd*cos(phi_radian);
       atan_x = acclx_knd*cos(psi_radian) + accly_knd*sin(psi_radian)*sin(phi_radian) + acclz_knd*sin(psi_radian)*cos(phi_radian);
       printf("atan_y = %lf", atan_y);
