@@ -15,7 +15,8 @@ static const double target_latitude = 35.716956;//ido
 static const double target_longitude = 139.759936;//keido
 static const double PI = 3.14159265359;
 static const double EARTH_RADIUS = 6378137;
-static const int gps_latency = 1500;//gps角度取得のための時間感覚
+static const int gps_latency = 2300;//gps角度取得のための時間感覚
+static const int forward_power = 50;
 time_t start_time;//開始時刻のグローバル変数宣言
 
 
@@ -164,7 +165,7 @@ int decide_route()
 	{
 		motor_left(turn_power);
 		delay((int)((-delta_angle/30)*turn_milliseconds));
-		motor_forward(100);
+		motor_forward(forward_power);
 		delta_angle=update_angle();
 	}
 
@@ -172,7 +173,7 @@ int decide_route()
 	{
 		motor_right(turn_power);
         delay((int)((delta_angle/30)*turn_milliseconds));
-		motor_forward(100);
+		motor_forward(forward_power);
 		delta_angle=update_angle();
 	}
 	return 0;
@@ -186,7 +187,7 @@ int main()
 	signal(SIGINT, handler);
 	while(1)
 	{
-		motor_forward(100);
+		motor_forward(forward_power);
 		delay(3000);
 		decide_route();
 	}
