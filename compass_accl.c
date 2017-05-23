@@ -21,8 +21,8 @@ int main()
     double psi_radian = 0;
     double phi_degree = 0;
     double psi_degree = 0;
-    double atan_y = 0;
-    double atan_x = 0;
+    double atan_y;
+    double atan_x;
     double theta_degree = 0;
     while(1)
     {
