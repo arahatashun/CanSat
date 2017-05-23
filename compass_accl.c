@@ -5,7 +5,7 @@
 #include <wiringPiI2C.h>
 
 static const double PI = 3.14159265359;
-
+static const double convert_to_G = 16384.0;
 
 int main()
 {
@@ -26,9 +26,9 @@ int main()
     double theta_degree = 0;
     while(1)
     {
-      acclx_knd = (double)get_acclx();
-      accly_knd = (double)get_accly();
-      acclz_knd = (double)get_acclz();
+      acclx_knd = (double)get_acclx()/convert_to_G;
+      accly_knd = (double)get_accly()/convert_to_G;
+      acclz_knd = (double)get_acclz()/convert_to_G;
       xcompass_knd = (double)get_xcompass();
       ycompass_knd = (double)get_ycompass();
       zcompass_knd = (double)get_zcompass();
