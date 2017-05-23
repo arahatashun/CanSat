@@ -26,7 +26,7 @@ static int read_word_2c(int addr);
 static double dist(double a,double b);
 static double get_y_rotation(double x,double y,double z);
 static double get_x_rotation(double x,double y,double z);
-int accl_and_rotation_read(Acclgyro *acclgyro_data);    //acgは構造体オブジェクトをさすポインタ
+static int accl_and_rotation_read(Acclgyro *acclgyro_data);    //acgは構造体オブジェクトをさすポインタ
 static int gyro_read(Acclgyro *acclgyro_data);
 static int set_acclgyro(Acclgyro *acclgyro_data);    //integrate accl_read,gyro_read,rotation_read
 
@@ -63,7 +63,7 @@ static double get_x_rotation(double x, double y, double z)
 }
 
 
-int accl_and_rotation_read(Acclgyro *acclgyro_data)  //加速度とx,y方向の回転角を読む
+static int accl_and_rotation_read(Acclgyro *acclgyro_data)  //加速度とx,y方向の回転角を読む
 {
 	int acclX = 0;
 	int acclY = 0;
@@ -139,3 +139,29 @@ int is_reverse(Acclgyro *acclgyro_data)
 		return 0;
 	}
 }
+
+/*以下近藤が自分の実験のために勝手に追加しました。
+ 上記の飯山のコードは変更してません。
+ */
+
+static int get_acclx()
+{
+    int acclx = 0;
+    acclx = read_word_2c(acclX_reg);
+    return accxl;
+}
+
+static int get_accly()
+{
+    int accly = 0;
+    accly = read_word_2c(acclY_reg);
+    return accly;
+}
+
+static int get_acclz()
+{
+    int acclz = 0;
+    acclz = read_word_2c(acclY_reg);
+    return acclz;
+}
+

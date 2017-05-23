@@ -2,12 +2,12 @@
 #include "acclgyro.h"
 #include <math.h>
 #include <stdio.h>
+#include <wiringPiI2C.h>
 
 static const double PI = 3.14159265359;
 
 int main()
 {
-    Acclgyro acclgyro_data; //オブジェクト生成
   	acclgyro_initializer();
     compass_initializer_knd();
     double acclx_knd = 0;
@@ -23,10 +23,9 @@ int main()
     double theta_degree = 0;
     while(1)
     {
-      accl_and_rotation_read(&acclgyro_data);
-      acclx_knd = acclgyro_data->acclX_scaled;
-      accly_knd = acclgyro_data->acclY_scaled;
-      acclz_knd = acclgyro_data->acclZ_scaled;
+      acclx_knd = (double)get_acclx();
+      accly_knd = (double)get_accly();
+      acclz_knd = (double)get_acclz();
       xcompass_knd = (double)get_xcompass();
       ycompass_knd = (double)get_ycompass();
       zcompass_knd = (double)get_zcompass();
@@ -44,5 +43,7 @@ int main()
       printf("phi = %lf", psi_degree);
       theta_degree = atan2(acclz_knd*sin(phi_radian) - accly_knd*cos(phi_radian), acclx_knd*cos(psi_radian) + accly_knd*sin(psi_radian)*sin(phi_radian) + acclz_knd*sin(psi_radian)*cos(phi_radian)) * 180.0/PI + 180.0;
       printf("theta = %lf", psi_degree);
+        delay(1000);
     }
+    return 0;
 }
