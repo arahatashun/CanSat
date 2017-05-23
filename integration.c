@@ -5,84 +5,26 @@
 #include <math.h>
 #include <gps.h>
 #include <wiringPi.h>
+#include "mitibiki.h"
 #include "motor.h"
 
-//note: seikei toukei ni izon
 static const int turn_milliseconds = 30;//45度回転するミリ秒 変えました 元は150ms
 static const int after_turn_milliseconds = 1500;//回転後直進するミリ数
 static const int turn_power = 60;//turnするpower
-static const double target_latitude = 35.716956;//ido
-static const double target_longitude = 139.759936;//keido
-static const double PI = 3.14159265359;
-static const double EARTH_RADIUS = 6378137;
 static const int gps_latency = 2300;//gps角度取得のための時間感覚
 static const int forward_power = 50;
+
 time_t start_time;//開始時刻のグローバル変数宣言
-
-
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
-//デカルト座標
-typedef struct cartesian_coordinates {
-	double x;
-	double y;
-	double z;
-}cartesian_coord;
 
-cartesian_coord current_position;
-cartesian_coord target_position;
-
-//シグナルハンドラ
+//モーター用シグナルハンドラ
 void handler(int signum)
 {
 	motor_stop();
 	delay(100);
 	exit(1);
 }
-//経度と緯度をデカルト座標に変換
-static cartesian_coord latlng_to_xyz(double lat,double lon)
-{
-	double rlat = 0;
-	double rlng = 0;
-	double coslat = 0;
-	rlat = lat*PI/180;
-	rlng = lon*PI/180;
-	coslat = cos(rlat);
-	cartesian_coord tmp;
-	tmp.x =coslat*cos(rlng);
-	tmp.y = coslat*sin(rlng);
-	tmp.z = sin(rlat);
-	return tmp;
-}
-//距離を計算
-static double dist_on_sphere(cartesian_coord target, cartesian_coord current_position)
-{
-	double dot_product_x = 0;
-	double dot_product_y = 0;
-	double dot_product_z = 0;
-	double dot_product_sum = 0;
-	double distance = 0;
-	dot_product_x = target.x*current_position.x;
-	dot_product_y = target.y*current_position.y;
-	dot_product_z = target.z*current_position.z;
-	dot_product_sum =dot_product_x+dot_product_y+dot_product_z;
-	distance = acos(dot_product_sum)*EARTH_RADIUS;
-	printf("GPS distance : %f\n",distance);
-	return distance;
-}
-/*
-    GPSの座標と目的地の座標から進む方向を決める
- */
-double calc_target_angle(double lat,double lon)
-{
-	double lat_offset = 0;
-	double lon_offset = 0;
-	double angle = 0;
-	lat_offset = target_latitude - lat;
-	lon_offset = target_longitude - lon;
-	angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;
-	printf("GPS target_angle: %f\n",angle);
-	return angle;
-}
+
 //gpsの緯度経度二回分から角度計算
 int angle_gps(double *angle_course)
 {
@@ -93,7 +35,7 @@ int angle_gps(double *angle_course)
 	longitude_before = data.longitude;
 	printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
 	printf("GPS speed:%f\nGPS altitude:%f\n",data.speed,data.altitude);
-	delay(after_turn_milliseconds);
+	delay(gps_latency);
 	gps_location(&data);
 	double latitude_after = 0;
 	double longitude_after = 0;
@@ -109,26 +51,26 @@ int angle_gps(double *angle_course)
 
 double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 {
-    double delta_angle_cld = 0;
-    delta_angle_cld = gps_angle_cld - going_angle_cld;
-    if(-360 <= delta_angle_cld && delta_angle_cld <= -180)
-    {
-        delta_angle_cld = 360.0 - going_angle_cld + gps_angle_cld;
-    }
-    else if(-180 < delta_angle_cld  && delta_angle_cld < 0)
-    {
-        delta_angle_cld = delta_angle_cld;
-    }
-    else if(0 <= delta_angle_cld && delta_angle_cld <= 180)
-    {
-        delta_angle_cld = delta_angle_cld;
-    }
-    else
-    {
-        delta_angle_cld = -360.0 + gps_angle_cld - going_angle_cld;
-    }
+	double delta_angle_cld = 0;
+	delta_angle_cld = gps_angle_cld - going_angle_cld;
+	if(-360 <= delta_angle_cld && delta_angle_cld <= -180)
+	{
+		delta_angle_cld = 360.0 - going_angle_cld + gps_angle_cld;
+	}
+	else if(-180 < delta_angle_cld  && delta_angle_cld < 0)
+	{
+		delta_angle_cld = delta_angle_cld;
+	}
+	else if(0 <= delta_angle_cld && delta_angle_cld <= 180)
+	{
+		delta_angle_cld = delta_angle_cld;
+	}
+	else
+	{
+		delta_angle_cld = -360.0 + gps_angle_cld - going_angle_cld;
+	}
 
-    return delta_angle_cld;
+	return delta_angle_cld;
 }
 /*
    gpsのデータを更新する
@@ -145,17 +87,17 @@ int update_angle()
 	double angle_to_go = 0;//進むべき方角
 	angle_to_go = calc_target_angle(data.latitude,data.longitude);
 	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
-    delta_angle = cal_delta_angle(angle_course,angle_to_go);
-    printf("GPS delta_angle:%f\n",delta_angle);//目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを-180~180で表示 目的方角が右なら値は正
-	target_position = latlng_to_xyz(target_latitude,target_longitude);
-	current_position = latlng_to_xyz(data.latitude, data.longitude);
+	delta_angle = cal_delta_angle(angle_course,angle_to_go);
+	printf("GPS delta_angle:%f\n",delta_angle);
+	/*目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを-180~180で表示
+	目的方角が右なら値は正*/
 	double distance = 0;
-	distance = dist_on_sphere(target_position,current_position);
+	distance = dist_on_sphere(target_latitude,target_longitude,data.latitude,data.longitude);
 	return delta_angle;
 }
 /*
    進む方角が-180から-30の時にその角度差に応じて左回転、30~180の時その角度さに応じて右回転
-*/
+ */
 int decide_route()
 {
 	double delta_angle = 0;
@@ -172,7 +114,7 @@ int decide_route()
 	while(30 < delta_angle && delta_angle <= 180)
 	{
 		motor_right(turn_power);
-        delay((int)((delta_angle/30)*turn_milliseconds));
+		delay((int)((delta_angle/30)*turn_milliseconds));
 		motor_forward(forward_power);
 		delta_angle=update_angle();
 	}
@@ -188,7 +130,6 @@ int main()
 	while(1)
 	{
 		motor_forward(forward_power);
-		delay(3000);
 		decide_route();
 	}
 	return 0;
