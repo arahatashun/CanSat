@@ -44,6 +44,8 @@ int main()
       psi_degree = psi_radian*180.0/PI;
       printf("phi = %lf\n", phi_degree);
       printf("psi = %lf\n", psi_degree);
+      printf("sin(phi) = %lf\n", sin(phi_radian));
+      printf("sin(psi) = %lf\n", sin(psi_radian));
       atan_y = acclz_knd*sin(phi_radian) - accly_knd*cos(phi_radian);
       atan_x = acclx_knd*cos(psi_radian) + accly_knd*sin(psi_radian)*sin(phi_radian) + acclz_knd*sin(psi_radian)*cos(phi_radian);
       printf("atan_y = %lf", atan_y);
