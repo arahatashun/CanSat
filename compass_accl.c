@@ -53,6 +53,8 @@ int main()
       printf("atan_y = %lf", atan_y);
       atan_y = 2.0;
       printf("atan_y = %lf", atan_y);
+      atan_y = *accly_knd*cos(phi_radian)*10000;
+      printf("atan_y = %lf", atan_y);
         
       theta_degree = atan2(atan_y, atan_x)*(180.0/PI)+ 180.0;
       printf("theta = %lf\n", theta_degree);
