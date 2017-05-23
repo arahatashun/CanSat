@@ -23,9 +23,10 @@ int main()
     double theta_degree = 0;
     while(1)
     {
-      acclx_knd = (double)get_acclx();
-      accly_knd = (double)get_accly();
-      acclz_knd = (double)get_acclz();
+      accl_and_rotation_read(Acclgyro *acclgyro_data);
+      acclx_knd = acclgyro_data->acclX_scaled;
+      accly_knd = acclgyro_data->acclY_scaled;
+      acclz_knd = acclgyro_data->acclZ_scaled;
       xcompass_knd = (double)get_xcompass();
       ycompass_knd = (double)get_ycompass();
       zcompass_knd = (double)get_zcompass();

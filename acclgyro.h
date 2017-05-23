@@ -15,13 +15,9 @@ typedef struct acclgyro {
   double y_rotation;//XY-axis rotation
 } Acclgyro;
 
+int accl_and_rotation_read(Acclgyro *acclgyro_data);
 int acclgyro_initializer();   //initialization
 int print_acclgyro(Acclgyro *acclgyro_data);    //六軸センサーの値を返す
 int is_reverse(Acclgyro *acclgyro_data);  //反転していたら1を返す
-
-/*以下は近藤が自分の実験用に勝手に宣言しました。*/
-int get_acclx();
-int get_accly();
-int get_acclz();
 
 #endif
