@@ -21,6 +21,8 @@ int main()
     double psi_radian = 0;
     double phi_degree = 0;
     double psi_degree = 0;
+    double atan_y = 0;
+    double atan_x = 0;
     double theta_degree = 0;
     while(1)
     {
@@ -42,7 +44,9 @@ int main()
       psi_degree = psi_radian*180.0/PI;
       printf("phi = %lf\n", phi_degree);
       printf("psi = %lf\n", psi_degree);
-      theta_degree = atan2(acclz_knd*sin(phi_radian) - accly_knd*cos(phi_radian), acclx_knd*cos(psi_radian) + accly_knd*sin(psi_radian)*sin(phi_radian) + acclz_knd*sin(psi_radian)*cos(phi_radian)) * (180/PI)+ 180;
+      atan_y = acclz_knd*sin(phi_radian) - accly_knd*cos(phi_radian);
+      atan_x = acclx_knd*cos(psi_radian) + accly_knd*sin(psi_radian)*sin(phi_radian) + acclz_knd*sin(psi_radian)*cos(phi_radian);
+      theta_degree = atan2(atan_y, atan_x)*(180.0/PI)+ 180.0;
       printf("theta = %lf\n", theta_degree);
         delay(1000);
     }
