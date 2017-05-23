@@ -37,9 +37,9 @@ int main()
       printf("compassy = %lf", ycompass_knd);
       printf("compassz = %lf", zcompass_knd);
       phi_radian = atan2(accly_knd, acclz_knd);
-      psi_radian = atan2(-acclx_knd, accly_knd*sin(theta) + acclz_knd*cos(theta));
-      phi_degree = atan2(accly_knd, acclz_knd)*180.0/PI;
-      psi_degree = atan2(-acclx_knd, accly_knd*sin(theta) + acclz_knd*cos(theta))*180.0/PI;
+      psi_radian = atan2(-acclx_knd, accly_knd*sin(phi) + acclz_knd*cos(phi));
+      phi_degree = phi_radian*180.0/PI;
+      psi_degree = psi_radian*180.0/PI;
       printf("theta = %lf", phi_degree);
       printf("phi = %lf", psi_degree);
       theta = atan2(acclz_knd*sin(phi_radian) - accly_knd*cos(phi_radian), acclx_knd*cos(psi_radian) + accly_knd*sin(psi_radian)*sin(phi_radian) + acclz_knd*sin(psi_radian)*cos(phi_radian)) * 180.0/PI + 180.0);
