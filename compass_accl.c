@@ -46,6 +46,8 @@ int main()
       printf("psi = %lf\n", psi_degree);
       atan_y = acclz_knd*sin(phi_radian) - accly_knd*cos(phi_radian);
       atan_x = acclx_knd*cos(psi_radian) + accly_knd*sin(psi_radian)*sin(phi_radian) + acclz_knd*sin(psi_radian)*cos(phi_radian);
+      printf("atan_y = %lf", atan_y);
+      printf("atan_x = %lf", atan_x);
       theta_degree = atan2(atan_y, atan_x)*(180.0/PI)+ 180.0;
       printf("theta = %lf\n", theta_degree);
         delay(1000);
