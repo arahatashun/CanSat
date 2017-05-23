@@ -1,4 +1,5 @@
 #include "compass.h"
+"include <wiringPi.h>
 
 int main()
 {
@@ -7,5 +8,6 @@ int main()
   {
 		double angle;
 		compass_get_angle(&angle);
+        delay(1000);
 	}
 }
