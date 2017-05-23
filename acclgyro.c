@@ -148,7 +148,7 @@ int get_acclx()
 {
     int acclx = 0;
     acclx = read_word_2c(acclX_reg);
-    return accxl;
+    return acclx;
 }
 
 int get_accly()
