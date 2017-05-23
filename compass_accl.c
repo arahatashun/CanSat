@@ -43,7 +43,7 @@ int main()
       psi_degree = psi_radian*180.0/PI;
       printf("theta = %lf", phi_degree);
       printf("phi = %lf", psi_degree);
-      theta = atan2(acclz_knd*sin(phi_radian) - accly_knd*cos(phi_radian), acclx_knd*cos(psi_radian) + accly_knd*sin(psi_radian)*sin(phi_radian) + acclz_knd*sin(psi_radian)*cos(phi_radian)) * 180.0/PI + 180.0);
+      theta = atan2(acclz_knd*sin(phi_radian) - accly_knd*cos(phi_radian), acclx_knd*cos(psi_radian) + accly_knd*sin(psi_radian)*sin(phi_radian) + acclz_knd*sin(psi_radian)*cos(phi_radian)) * 180.0/PI + 180.0;
       printf("theta = %lf", psi_degree);
     }
 }
