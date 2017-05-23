@@ -7,6 +7,7 @@ static const double PI = 3.14159265359;
 
 int main()
 {
+    Acclgyro acclgyro_data; //オブジェクト生成
   	acclgyro_initializer();
     compass_initializer_knd();
     double acclx_knd = 0;
