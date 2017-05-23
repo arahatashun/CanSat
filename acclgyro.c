@@ -26,7 +26,7 @@ static int read_word_2c(int addr);
 static double dist(double a,double b);
 static double get_y_rotation(double x,double y,double z);
 static double get_x_rotation(double x,double y,double z);
-static int accl_and_rotation_read(Acclgyro *acclgyro_data);    //acgは構造体オブジェクトをさすポインタ
+int accl_and_rotation_read(Acclgyro *acclgyro_data);    //acgは構造体オブジェクトをさすポインタ
 static int gyro_read(Acclgyro *acclgyro_data);
 static int set_acclgyro(Acclgyro *acclgyro_data);    //integrate accl_read,gyro_read,rotation_read
 
