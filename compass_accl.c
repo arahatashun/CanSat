@@ -42,7 +42,7 @@ int main()
       printf("theta = %lf\n", phi_degree);
       printf("phi = %lf\n", psi_degree);
       theta_degree = atan2(acclz_knd*sin(phi_radian) - accly_knd*cos(phi_radian), acclx_knd*cos(psi_radian) + accly_knd*sin(psi_radian)*sin(phi_radian) + acclz_knd*sin(psi_radian)*cos(phi_radian)) * 180.0/PI + 180.0;
-      printf("theta = %lf\n", psi_degree);
+      printf("theta = %lf\n", theta_degree);
         delay(1000);
     }
     return 0;
