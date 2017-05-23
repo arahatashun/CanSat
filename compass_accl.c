@@ -24,7 +24,7 @@ int main()
     double theta_degree = 0;
     while(1)
     {
-      accl_and_rotation_read(acclgyro_data);
+      accl_and_rotation_read(&acclgyro_data);
       acclx_knd = acclgyro_data->acclX_scaled;
       accly_knd = acclgyro_data->acclY_scaled;
       acclz_knd = acclgyro_data->acclZ_scaled;
