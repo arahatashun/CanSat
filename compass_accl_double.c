@@ -43,8 +43,8 @@ int main()
       psi_radian = atan2(-acclx_knd, accly_knd*sin(phi_radian) + acclz_knd*cos(phi_radian));
       phi_degree = phi_radian*180.0/PI;
       psi_degree = psi_radian*180.0/PI;
-      printf("theta = %f\n", phi_degree);
-      printf("phi = %f\n", psi_degree);
+      printf("phi_degree = %f\n", phi_degree);
+      printf("psi_degree = %f\n", psi_degree);
       y1 = acclz_knd*sin(phi_radian);
       y2 = accly_knd*cos(phi_radian);
       x1 = acclx_knd*cos(psi_radian);
@@ -61,7 +61,7 @@ int main()
         printf("x3の値は%fです。\n", x3);
       printf("x3のアドレスは%pです。\n", &x3);
       theta_degree = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI + 180.0;
-      printf("theta = %lf", theta_degree);
+      printf("theta_degree = %lf", theta_degree);
         delay(1000);
     }
 }
