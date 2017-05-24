@@ -8,12 +8,12 @@
 #include "motor.h"
 
 //note: seikei toukei ni izon
-static const int turn_milliseconds = 150;//45度回転するミリ秒
+static const int turn_milliseconds = 30;//45度回転するミリ秒 変えました 元は150ms
 static const int after_turn_milliseconds = 1500;//回転後直進するミリ数
 static const int turn_power = 60;//turnするpower
 static const double target_latitude = 35.716956;//ido
 static const double target_longitude = 139.759936;//keido
-static const double PI = 3.14159265;
+static const double PI = 3.14159265359;
 static const double EARTH_RADIUS = 6378137;
 static const int gps_latency = 1500;//gps角度取得のための時間感覚
 time_t start_time;//開始時刻のグローバル変数宣言
@@ -105,9 +105,33 @@ int angle_gps(double *angle_course)
 	*angle_course = going_angle;
 	return 0;
 }
+
+double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
+{
+    double delta_angle_cld = 0;
+    delta_angle_cld = gps_angle_cld - going_angle_cld;
+    if(-360 <= delta_angle_cld && delta_angle_cld <= -180)
+    {
+        delta_angle_cld = 360.0 - going_angle_cld + gps_angle_cld;
+    }
+    else if(-180 < delta_angle_cld  && delta_angle_cld < 0)
+    {
+        delta_angle_cld = delta_angle_cld;
+    }
+    else if(0 <= delta_angle_cld && delta_angle_cld <= 180)
+    {
+        delta_angle_cld = delta_angle_cld;
+    }
+    else
+    {
+        delta_angle_cld = -360.0 + gps_angle_cld - going_angle_cld;
+    }
+
+    return delta_angle_cld;
+}
 /*
    gpsのデータを更新する
-   delta_angleは現在の角度-進むべき向き
+   delta_angleは現在の角度-進むべき向きを-180~180になるように調整したもの
  */
 int update_angle()
 {
@@ -120,23 +144,7 @@ int update_angle()
 	double angle_to_go = 0;//進むべき方角
 	angle_to_go = calc_target_angle(data.latitude,data.longitude);
 	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
-	delta_angle = angle_course - angle_to_go;
-    if(-360 <= delta_angle && delta_angle <= -180)
-    {
-        delta_angle = 360.0 - compass_angle_knd + angle_to_go;
-    }
-    else if(-180 < delta_angle  && delta_angle < 0)
-    {
-        delta_angle = delta_angle;
-    }
-    else if(0 <= delta_angle && delta_angle <= 180)
-    {
-        delta_angle = delta_angle;
-    }
-    else
-    {
-        delta_angle = -360.0 + angle_to_go - compass_angle_knd;
-    }
+    delta_angle = cal_delta_angle(angle_course,angle_to_go);
     printf("GPS delta_angle:%f\n",delta_angle);//目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを-180~180で表示 目的方角が右なら値は正
 	target_position = latlng_to_xyz(target_latitude,target_longitude);
 	current_position = latlng_to_xyz(data.latitude, data.longitude);
@@ -145,8 +153,8 @@ int update_angle()
 	return delta_angle;
 }
 /*
-   進む方角の差が30未満もしくは330以上まで調整
- */
+   進む方角が-180から-30の時にその角度差に応じて左回転、30~180の時その角度さに応じて右回転
+*/
 int decide_route()
 {
 	double delta_angle = 0;
