@@ -22,6 +22,10 @@ int main()
     double phi_degree = 0;
     double psi_degree = 0;
     double y1 = 0;
+    double y2 = 0;
+    double x1 = 0;
+    double x2 = 0;
+    double x3 = 0;
     double theta_degree = 0;
     while(1)
     {
@@ -59,7 +63,7 @@ int main()
       print("x2のアドレスは%pです。\n", &x2);
         print("x3の値は%fです。\n", x3);
       print("x3のアドレスは%pです。\n", &x3);
-      theta = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI + 180.0;
-      printf("theta = %lf", psi_degree);
+      theta_degree = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI + 180.0;
+      printf("theta = %lf", theta_degree);
     }
 }
