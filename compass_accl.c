@@ -54,11 +54,11 @@ int main()
       printf("atan_y = %f", atan_y);
       printf("atan_x = %f", atan_x);*/
         
-      printf("atan_y = %f\n", atan_y_1);
+      printf("atan_y_1 = %f\n", atan_y_1);
       delay(100);
       atan_y_2= accly_knd * cos(phi_radian);
       delay(100);
-      printf("atan_y = %f\n", atan_y_2);
+      printf("atan_y_2 = %f\n", atan_y_2);
       /*theta_degree = atan2(atan_y_1, atan_x)*(180.0/PI)+ 180.0;
       printf("theta = %f\n", theta_degree);*/
       delay(1000);
