@@ -67,8 +67,11 @@
 
 #define TIMER_SEC	time1s256() 	// TIMER_SECのカウントアップの代わり
 
+typedef unsigned char byte;
 
 //グローバル変数宣言(static)----------------------------------------------
+static int ComFd;                                   // シリアル用ファイルディスクリプタ
+static struct termios ComTio_Bk;                    // 現シリアル端末設定保持用の構造体
 static byte PACKET_ID = 0;							//送信パケット番号
 static byte ADR_DEST[]= 	{0x00,0x13,0xA2,0x00,0x00,0x00,0x00,0x00};	//宛先のIEEEアドレス(変更可)
 //ショートアドレス／本ライブラリでの宛先指定はIEEEのみを使う
@@ -140,8 +143,10 @@ byte xbee_init( const byte port ){
 	byte j;		// jは色々
 	byte k=0;	// kはリセット成功可否フラグ,戻り値
 	byte address[8];		//={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+	fprintf(stderr,"start initializer");
 	if( port != 0 ){   //4992
 		j = sci_init( port );		// シリアル初期化
+		fprintf(stderr,"finished sci_init")
 		}else{
 				// ポート検索
 				for( i=10 ; i>0; i--){
@@ -166,6 +171,7 @@ byte xbee_init( const byte port ){
 		}
 		if(k==0){
 				exit(-1);
+				fprintf(stderr,"exit");
 		}else{	// k>0 すなわち reset成功時  以下、kは使用しないこと（戻り値にする）
 			xbee_myaddress( address );	// 自分自身のアドレスを取得
 		}
@@ -339,15 +345,18 @@ byte xbee_myaddress( byte *address ){
 		}
 		*/
 		data[0]=0x00;
+		fprintf(stderr,"s3");
 		if( xbee_tx_rx( "ATSH",data,0) ){
 			for(i=0;i<4;i++){
 				address[i]=data[8+i];
 			}
+			fprintf(stderr,"s4");
 			data[0]=0x00;
 			if( xbee_tx_rx( "ATSL",data,0) ){
 				for(i=0;i<4;i++){
 					address[4+i]=data[8+i];
 				}
+				fprintf(stderr,"s5");
 				ret=1;
 			}
 		}
