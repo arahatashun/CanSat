@@ -167,6 +167,7 @@ byte xbee_init( const byte port ){
 		else for(j=0;j<i;j++){
 			fprintf(stderr,"start reset\n");
 			k=xbee_reset();	// 0だとシリアル異常
+			fprintf(stderr,"k:%d",k)
 			if( k ) break;
 			wait_millisec(1000);
 		}
@@ -315,6 +316,36 @@ byte xbee_reset( void ){
 	sci_write_check();
 	sci_clear();						// シリアル異常をクリア
 	DEVICE_TYPE = 0x20; 				// タイプ名を初期化
+	wait_millisec(100);
+			ret = xbee_tx_rx( "ATVR", value ,0 );
+			if( ret > 0){
+					DEVICE_TYPE = value[8];
+					if( DEVICE_TYPE != ZB_TYPE_COORD &&
+						DEVICE_TYPE != ZB_TYPE_ROUTER &&
+						DEVICE_TYPE != ZB_TYPE_ENDDEV){ // VRの確認
+							fprintf( stderr,"EXIT:XBEE NOT IN API MODE" );
+							exit(-1);
+					}
+			}
+			wait_millisec(1000);
+			}
+		}
+			wait_millisec(100);
+			ret = xbee_tx_rx( "ATFR", value ,0 );
+			if( ret == 0){
+					fprintf( stderr,"EXIT:CANNOT RESET XBEE" );
+					exit(-1);
+			}
+			wait_millisec(3000);				// リセット指示後3秒後に起動
+			sci_clear();						// 再起動のメッセージをクリア
+		//	while( xbee_at_rx( value ) == 0 );	// パケットの破棄（永久ループの懸念がある）
+			value[0] = 0x01;					// API MODE=1に設定
+			xbee_tx_rx("ATAP", value , 1 );
+			value[0] = 0x05;					// RSSI LEDを点灯
+			xbee_tx_rx("ATP0", value , 1 );
+			wait_millisec(500);
+			value[0] = 0x01;					// RSSI LEDを受信強度に戻す
+			xbee_tx_rx("ATP0", value , 1 );
 	return( ret );
 }
 
