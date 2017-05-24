@@ -64,27 +64,24 @@ int main()
       printf("sin(phi) = %f\n", sin(phi_radian));
       printf("cos(phi) = %f\n", cos(phi_radian));
         
-      atan_y_1 = (int) (1000000*acclz_knd);
+      atan_y_1 = (int) (1000000*zcompass_knd);
       atan_y_2 = (int) (1000000*sin(phi_radian));
       atan_y_3 = atan_y_1 * atan_y_2;
       printf("atan_y_1 * atan_y_2 = %d\n", atan_y_3);
-      /*
-      atan_x = acclx_knd*cos(psi_radian) + accly_knd*sin(psi_radian)*sin(phi_radian) + acclz_knd*sin(psi_radian)*cos(phi_radian);
-       */
-      atan_y_4 =(int) 1000000*accly_knd;
+      atan_y_4 =(int) 1000000*ycompass_knd;
       atan_y_5 =(int) 1000000*cos(phi_radian);
       atan_y_6 = atan_y_4 * atan_y_5;
       printf("atan_y_4 * atan_y_5 = %d\n", atan_y_6);
       atan_y = (double) (atan_y_3 - atan_y_6);
       printf("atan_y_3 - atan_y_6 = %f\n", atan_y);
-      atan_x_1 = (int) (1000*acclx_knd);
+      atan_x_1 = (int) (1000*xcompass_knd);
       atan_x_2 = (int) (1000*cos(psi_radian));
       atan_x_3 = atan_x_1 * atan_x_2;
-      atan_x_4 = (int) (100*accly_knd);
+      atan_x_4 = (int) (100*ycompass_knd);
       atan_x_5 = (int) (100*sin(psi_radian));
       atan_x_6 = (int) (100*sin(phi_radian));
       atan_x_7 = atan_x_4 * atan_x_5 * atan_x_6;
-      atan_x_8 = (int) (100*acclz_knd);
+      atan_x_8 = (int) (100*zcompass_knd);
       atan_x_9 = (int) (100*sin(psi_radian));
       atan_x_10 = (int) (100*cos(phi_radian));
       atan_x_11 = atan_x_7 * atan_x_8 * atan_x_9;
