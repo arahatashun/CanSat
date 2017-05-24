@@ -50,16 +50,16 @@ int main()
       x1 = acclx_knd*cos(psi_radian);
       x2 = accly_knd*sin(psi_radian)*sin(phi_radian);
       x3 = acclz_knd*sin(psi_radian)*cos(phi_radian);
-      print("y1の値は%fです。\n", y1);
-      print("y1のアドレスは%pです。\n", &y1);
-        print("y2の値は%fです。\n", y2);
-      print("y2のアドレスは%pです。\n", &y2);
-        print("x1の値は%fです。\n", x1);
-      print("x1のアドレスは%pです。\n", &x1);
-        print("x2の値は%fです。\n", x2);
-      print("x2のアドレスは%pです。\n", &x2);
-        print("x3の値は%fです。\n", x3);
-      print("x3のアドレスは%pです。\n", &x3);
+      printf("y1の値は%fです。\n", y1);
+      printf("y1のアドレスは%pです。\n", &y1);
+        printf("y2の値は%fです。\n", y2);
+      printf("y2のアドレスは%pです。\n", &y2);
+        printf("x1の値は%fです。\n", x1);
+      printf("x1のアドレスは%pです。\n", &x1);
+        printf("x2の値は%fです。\n", x2);
+      printf("x2のアドレスは%pです。\n", &x2);
+        printf("x3の値は%fです。\n", x3);
+      printf("x3のアドレスは%pです。\n", &x3);
       theta_degree = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI + 180.0;
       printf("theta = %lf", theta_degree);
     }
