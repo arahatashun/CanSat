@@ -45,11 +45,11 @@ int main()
       psi_degree = psi_radian*180.0/PI;
       printf("phi_degree = %f\n", phi_degree);
       printf("psi_degree = %f\n", psi_degree);
-      y1 = acclz_knd*sin(phi_radian);
-      y2 = accly_knd*cos(phi_radian);
-      x1 = acclx_knd*cos(psi_radian);
-      x2 = accly_knd*sin(psi_radian)*sin(phi_radian);
-      x3 = acclz_knd*sin(psi_radian)*cos(phi_radian);
+      y1 = zcompass_knd*sin(phi_radian);
+      y2 = ycompass_knd*cos(phi_radian);
+      x1 = xcompass_knd*cos(psi_radian);
+      x2 = ycompass_knd*sin(psi_radian)*sin(phi_radian);
+      x3 = zcompass_knd*sin(psi_radian)*cos(phi_radian);
       printf("y1の値は%fです。\n", y1);
       printf("y1のアドレスは%pです。\n", &y1);
         printf("y2の値は%fです。\n", y2);
