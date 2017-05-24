@@ -43,9 +43,9 @@ int main()
     double theta_degree = 0;
     while(1)
     {
-      acclx_knd = (double)get_acclx()/convert_to_G;
-      accly_knd = (double)get_accly()/convert_to_G;
-      acclz_knd = (double)get_acclz()/convert_to_G;
+      acclx_knd = (double)get_acclx()/convert_to_G*0.1 + acclx_knd*0.9;
+      accly_knd = (double)get_accly()/convert_to_G*0.1 + accly_knd*0.9;
+      acclz_knd = (double)get_acclz()/convert_to_G*0.1 + acclz_knd*0.9;
       xcompass_knd = (double)get_xcompass();
       ycompass_knd = (double)get_ycompass();
       zcompass_knd = (double)get_zcompass();
