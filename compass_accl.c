@@ -24,7 +24,7 @@ int main()
     double atan_y_1 = 0;
     double atan_y_2 = 0;
     double atan_y_3 = 0;
-    dobule atan_y_4 = 0;
+    double atan_y_4 = 0;
     double atan_x = 0;
     double theta_degree = 0;
     while(1)
