@@ -143,10 +143,10 @@ byte xbee_init( const byte port ){
 	byte j;		// jは色々
 	byte k=0;	// kはリセット成功可否フラグ,戻り値
 	byte address[8];		//={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-	fprintf(stderr,"start initializer");
+	fprintf(stderr,"start initializer\n");
 	if( port != 0 ){   //4992
 		j = sci_init( port );		// シリアル初期化
-		fprintf(stderr,"finished sci_init")
+		fprintf(stderr,"finished sci_init\n")
 		}else{
 				// ポート検索
 				for( i=10 ; i>0; i--){
@@ -165,14 +165,16 @@ byte xbee_init( const byte port ){
 		k=1;
 		if(i==0) while( !xbee_reset() ) wait_millisec(1000);
 		else for(j=0;j<i;j++){
+			fprintf(stderr,"start reset\n")
 			k=xbee_reset();	// 0だとシリアル異常
 			if( k ) break;
 			wait_millisec(1000);
 		}
 		if(k==0){
 				exit(-1);
-				fprintf(stderr,"exit");
+				fprintf(stderr,"exit\n");
 		}else{	// k>0 すなわち reset成功時  以下、kは使用しないこと（戻り値にする）
+			fprintf(stderr,"start adress\n")
 			xbee_myaddress( address );	// 自分自身のアドレスを取得
 		}
 	return(k);
