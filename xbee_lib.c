@@ -317,9 +317,11 @@ byte xbee_reset( void ){
 	sci_clear();						// シリアル異常をクリア
 	DEVICE_TYPE = 0x20; 				// タイプ名を初期化
 	wait_millisec(100);
-			ret = xbee_tx_rx( "ATVR", value ,0 );  //ATVR 端末のversionを読み取る
-			for(i=0;i<4;i++){
+			int i=0;
+            for(i=0;i<4;i++){
+                ret=xbee_tx_rx("ATVR",value,0);
 				if( ret > 0){
+                    fprintf(stderr,"get ATVR");
 					DEVICE_TYPE = value[8];
 					if( DEVICE_TYPE != ZB_TYPE_COORD &&
 						DEVICE_TYPE != ZB_TYPE_ROUTER &&
@@ -327,7 +329,8 @@ byte xbee_reset( void ){
 							fprintf( stderr,"EXIT:XBEE NOT IN API MODE" );
 							exit(-1);
 					}
-				}
+                    else break;
+                }
 				else{
 					if(i=3){
 					//3回トライしてもret=0
