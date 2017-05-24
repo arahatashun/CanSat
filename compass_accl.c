@@ -76,7 +76,7 @@ int main()
       printf("atan_x_1 + atan_x_2 + atan_x_3 = %f", atan_x);
         
       theta_degree = atan2(atan_y, atan_x)*(180.0/PI)+ 180.0;
-      printf("theta = %f\n", theta_degree);*/
+      printf("theta = %f\n", theta_degree);
       delay(1000);
     }
     return 0;
