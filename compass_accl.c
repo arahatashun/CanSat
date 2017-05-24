@@ -27,6 +27,7 @@ int main()
     int atan_y_4 = 0;
     int atan_y_5 = 0;
     int atan_y_6 = 0;
+    int atan_y_7 = 0;
     double atan_x = 0;
     double theta_degree = 0;
     while(1)
@@ -52,9 +53,9 @@ int main()
       printf("sin(phi) = %f\n", sin(phi_radian));
       printf("cos(phi) = %f\n", cos(phi_radian));
       atan_y_1 = (int) (100000*acclz_knd);
-      printf("100000 * %f = %d\n", acclz_knd, atan_y_1);
+      /*printf("100000 * %f = %d\n", acclz_knd, atan_y_1);*/
       atan_y_2 = (int) (100000*sin(phi_radian));
-      printf("100000 * %f = %d\n", sin(phi_radian), atan_y_2);
+      /*printf("100000 * %f = %d\n", sin(phi_radian), atan_y_2);*/
       atan_y_3 = atan_y_1 * atan_y_2;
       printf("atan_y_1 * atan_y_2 = %d\n", atan_y_3);
       /*　-10000*accly_knd*cos(phi_radian)
@@ -62,11 +63,13 @@ int main()
       printf("atan_y = %f", atan_y);
       printf("atan_x = %f", atan_x);*/
       atan_y_4 =(int) 100000*accly_knd;
-      printf("100000 * %f = %d\n", accly_knd, atan_y_4);
+      /*printf("100000 * %f = %d\n", accly_knd, atan_y_4);*/
       atan_y_5 =(int) 100000*cos(phi_radian);
-      printf("100000 * %f = %d\n", cos(phi_radian), atan_y_5);
+      /*printf("100000 * %f = %d\n", cos(phi_radian), atan_y_5);*/
       atan_y_6 = atan_y_4 * atan_y_5;
       printf("atan_y_4 * atan_y_5 = %d\n", atan_y_6);
+      atan_y_7 = atan_y_3 - atan_y_6;
+      printf("atan_y_3 - atan_y_6 = %d\n", atan_y_7);
       /*theta_degree = atan2(atan_y_1, atan_x)*(180.0/PI)+ 180.0;
       printf("theta = %f\n", theta_degree);*/
       delay(1000);
