@@ -11,7 +11,7 @@ int main()
 {
   	acclgyro_initializer();
     compass_initializer_knd();
-    double acclx_knd = 0;
+    /*double acclx_knd = 0;
     double accly_knd = 0;
     double acclz_knd = 0;
     double xcompass_knd = 0;
@@ -32,9 +32,31 @@ int main()
     int atan_x_2 = 0;
     int atan_x_3 = 0;
     double atan_x = 0;
-    double theta_degree = 0;
+    double theta_degree = 0;*/
     while(1)
     {
+        double acclx_knd = 0;
+        double accly_knd = 0;
+        double acclz_knd = 0;
+        double xcompass_knd = 0;
+        double ycompass_knd = 0;
+        double zcompass_knd = 0;
+        double phi_radian = 0;
+        double psi_radian = 0;
+        double phi_degree = 0;
+        double psi_degree = 0;
+        int atan_y_1 = 0;
+        int atan_y_2 = 0;
+        int atan_y_3 = 0;
+        int atan_y_4 = 0;
+        int atan_y_5 = 0;
+        int atan_y_6 = 0;
+        double atan_y = 0;
+        int atan_x_1 = 0;
+        int atan_x_2 = 0;
+        int atan_x_3 = 0;
+        double atan_x = 0;
+        double theta_degree = 0;
       acclx_knd = (double)get_acclx()/convert_to_G;
       accly_knd = (double)get_accly()/convert_to_G;
       acclz_knd = (double)get_acclz()/convert_to_G;
