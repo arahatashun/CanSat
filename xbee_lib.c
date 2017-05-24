@@ -167,7 +167,7 @@ byte xbee_init( const byte port ){
 		else for(j=0;j<i;j++){
 			fprintf(stderr,"start reset\n");
 			k=xbee_reset();	// 0だとシリアル異常
-			fprintf(stderr,"k:%d",k)
+			fprintf(stderr,"k:%d",k);
 			if( k ) break;
 			wait_millisec(1000);
 		}
@@ -328,8 +328,6 @@ byte xbee_reset( void ){
 					}
 			}
 			wait_millisec(1000);
-			}
-		}
 			wait_millisec(100);
 			ret = xbee_tx_rx( "ATFR", value ,0 );
 			if( ret == 0){
