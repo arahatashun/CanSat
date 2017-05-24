@@ -62,5 +62,6 @@ int main()
       printf("x3のアドレスは%pです。\n", &x3);
       theta_degree = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI + 180.0;
       printf("theta = %lf", theta_degree);
+        delay(1000);
     }
 }
