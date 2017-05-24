@@ -4,10 +4,9 @@
 #include <stdio.h>
 
 static const double PI = 3.14159265359;
-
+static const double convert_to_G = 16384.0;
 int main()
 {
-    Acclgyro acclgyro_data; //オブジェクト生成
   	acclgyro_initializer();
     compass_initializer_knd();
     double acclx_knd = 0;
@@ -18,7 +17,6 @@ int main()
     double zcompass_knd = 0;
     double phi_radian = 0;
     double psi_radian = 0;
-    double theta_radian = 0;
     double phi_degree = 0;
     double psi_degree = 0;
     double y1 = 0;
@@ -29,10 +27,9 @@ int main()
     double theta_degree = 0;
     while(1)
     {
-      accl_and_rotation_read(&acclgyro_data);
-      acclx_knd = acclgyro_data->acclX_scaled;
-      accly_knd = acclgyro_data->acclY_scaled;
-      acclz_knd = acclgyro_data->acclZ_scaled;
+      acclx_knd = (double)get_acclx()/convert_to_G*0.1 + acclx_knd*0.9;
+      accly_knd = (double)get_accly()/convert_to_G*0.1 + accly_knd*0.9;
+      acclz_knd = (double)get_acclz()/convert_to_G*0.1 + acclz_knd*0.9;
       xcompass_knd = (double)get_xcompass();
       ycompass_knd = (double)get_ycompass();
       zcompass_knd = (double)get_zcompass();
