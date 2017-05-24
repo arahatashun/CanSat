@@ -406,7 +406,7 @@ byte xbee_myaddress( byte *address ){
 		return( ret );
 }
 
-
+/*
 /* (ドライバ)ATコマンドの送信＋受信 */
 byte xbee_tx_rx(const char *at, byte *data, byte len){
 /*
@@ -459,6 +459,7 @@ byte xbee_tx_rx(const char *at, byte *data, byte len){
 	if( err ){
 	wait_millisec( 1000 );		// 応答待ち状態で、次々にコマンドを送るとXBeeモジュールが非応答になる対策
   }
+	fprintf(stderr,"error:%d",err);
 	return( !err );
 }
 
@@ -624,6 +625,7 @@ byte xbee_at_rx(byte *data){
 		}
 	return( ret );
 }
+
 
 byte sci_read(byte timeout){
 			/* 受信の有無の判断にFDの待ち受け関数selectを使用する。
