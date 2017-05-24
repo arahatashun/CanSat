@@ -81,11 +81,11 @@ int main()
       atan_x_2 = (int) (1000*cos(psi_radian));
       atan_x_3 = atan_x_1 * atan_x_2;
       atan_x_4 = (int) (100*accly_knd);
-      atan_y_5 = (int) (100*sin(psi_radian));
+      atan_x_5 = (int) (100*sin(psi_radian));
       atan_x_6 = (int) (100*sin(phi_radian));
       atan_x_7 = atan_x_4 * atan_x_5 * atan_x_6;
       atan_x_8 = (int) (100*acclz_knd);
-      atan_y_9 = (int) (100*sin(psi_radian));
+      atan_x_9 = (int) (100*sin(psi_radian));
       atan_x_10 = (int) (100*cos(phi_radian));
       atan_x_11 = atan_x_7 * atan_x_8 * atan_x_9;
       atan_x = (double) (atan_x_3 + atan_x_7 + atan_x_11);
