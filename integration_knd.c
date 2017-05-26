@@ -203,21 +203,19 @@ int decide_route()
 {
   double delta_angle = 0;
   delta_angle=update_angle();
-  double min_angle = -30;
-  double max_angle = 30;
-  if(min_angle <= delta_angle && delta_angle <= max_angle)
+  if(180 <= delta_angle && delta_angle <= -30)
   {
-    motor_forward(100);
-    delay(1000);
-    motor_stop();
-    delay(5000);
+    motor_left(turn_power);
+    delay((int)((-delta_angle/30)*turn_milliseconds));
   }
-
+  if(30 <= delta_angle && delta_angle <= 180)
+  {
+      motor_right(turn_power);
+      delay((int)((delta_angle/30)*turn_milliseconds));
+    }
   else
   {
-    motor_right(turn_power);
-    delay(100);
-    motor_stop();
+    motor_forward(100);
     delay(5000);
   }
 
