@@ -173,6 +173,14 @@ double cal_compass_theta()
 	return theta_degree;
 }
 
+double get_distance()
+{
+	gps_location(&data);
+	target_position = latlng_to_xyz(target_latitude,target_longitude);
+	current_position = latlng_to_xyz(data.latitude, data.longitude);
+	distance = dist_on_sphere(target_position,current_position);
+	return distance;
+}
 /*gpsと地磁気のデータを更新する*/
 int update_angle()
 {
@@ -185,7 +193,7 @@ int update_angle()
 	double angle_to_go = 0;//進むべき方角
 	angle_to_go = calc_target_angle(data.latitude,data.longitude);
 	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
-	double compass_angle_knd;
+	double compass_angle_knd = 0;
 	compass_angle_knd = cal_compass_theta();
 	delta_angle = cal_delta_angle(compass_angle_knd,angle_to_go);
 	printf("delta_angle:%f\n",delta_angle);//目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを-180~180で表示 目的方角が右なら値は正とする
@@ -204,6 +212,14 @@ int update_angle()
 int decide_route()
 {
 	double delta_angle = 0;
+	double dist_to_goal = 0;
+	dist_to_goal =get_distance();
+	if(dist_to_goal < 5.0)
+	{
+		motor_stop();
+		delay(10000);
+	}
+
 	delta_angle=update_angle();
 	if(-180 <= delta_angle && delta_angle <= -30)
 	{
