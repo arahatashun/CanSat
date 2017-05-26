@@ -207,16 +207,24 @@ int decide_route()
   {
     motor_left(turn_power);
     delay((int)((-delta_angle/30)*turn_milliseconds));
+    motor_stop();
+      delay(1000);
   }
   if(30 <= delta_angle && delta_angle <= 180)
   {
       motor_right(turn_power);
       delay((int)((delta_angle/30)*turn_milliseconds));
+      motor_stop();
+      delay(1000);
+
     }
   else
   {
     motor_forward(100);
-    delay(5000);
+    delay(1000);
+      motor_stop();
+      delay(1000);
+
   }
 
   return 0;
