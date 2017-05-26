@@ -1,5 +1,3 @@
-// acclgyro.c
-
 #include <stdio.h>
 #include <math.h>
 #include <wiringPiI2C.h>
@@ -114,7 +112,7 @@ int print_acclgyro(Acclgyro *acclgyro_data) //六軸センサーの値を画面�
 	printf("gyroX_scaled: %f\n", acclgyro_data->gyroX_scaled);
 	printf("gyroY_scaled: %f\n", acclgyro_data->gyroY_scaled);
 	printf("gyroZ_scaled: %f\n", acclgyro_data->gyroZ_scaled);
-    return 0;
+	return 0;
 }
 
 int acclgyro_initializer()
@@ -141,27 +139,26 @@ int is_reverse(Acclgyro *acclgyro_data)
 }
 
 /*以下近藤が自分の実験のために勝手に追加しました。
- 上記の飯山のコードは変更してません。
+   上記の飯山のコードは変更してません。
  */
 
 int get_acclx()
 {
-    int acclx = 0;
-    acclx = read_word_2c(acclX_reg);
-    return acclx;
+	int acclx = 0;
+	acclx = read_word_2c(acclX_reg);
+	return acclx;
 }
 
 int get_accly()
 {
-    int accly = 0;
-    accly = read_word_2c(acclY_reg);
-    return accly;
+	int accly = 0;
+	accly = read_word_2c(acclY_reg);
+	return accly;
 }
 
 int get_acclz()
 {
-    int acclz = 0;
-    acclz = read_word_2c(acclZ_reg);
-    return acclz;
+	int acclz = 0;
+	acclz = read_word_2c(acclZ_reg);
+	return acclz;
 }
-

@@ -2,10 +2,8 @@
 #include <stdint.h>
 #include <math.h>
 #include <errno.h>
-
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
-
 #include "compass.h"
 
 static const int angle_of_deviation = -7;
@@ -53,7 +51,6 @@ static double calc_compass_angle(short x,short y)
 	{
 		angle_return = angle_calc2;
 	}
-    //angle_return = 360.0 - angle_return;//地磁気センサーの裏表を変えたことによる訂正
 	return angle_return;
 }
 
@@ -73,18 +70,6 @@ int compass_initializer()
 		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
 	}
 
-	/* start senser */
-	/*WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
-	   if(WPI2CWReg8 == -1)
-	   {
-	       printf("write error register mode_reg\n");
-	       printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-	       return -1;
-	   }
-	   else
-	   {
-	       printf("write register:mode_reg\n");
-	   }*/
 	return 0;
 }
 
@@ -117,10 +102,10 @@ int compass_get_angle(double *compass_angle)
 }
 
 /*以下は近藤が自分の実験用に勝手に作りました。
-上のコードは変えてません。
-*/
+   上のコードは変えてません。
+ */
 
-int compass_initializer_knd()
+int compass_initializer_2()
 {
 	/* WHO AM I */
 	fd = wiringPiI2CSetup(devid);
@@ -138,16 +123,16 @@ int compass_initializer_knd()
 
 	/* start senser */
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
-	   if(WPI2CWReg8 == -1)
-	   {
-	       printf("write error register mode_reg\n");
-	       printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-	       return -1;
-	   }
-	   else
-	   {
-	       printf("write register:mode_reg\n");
-	   }
+	if(WPI2CWReg8 == -1)
+	{
+		printf("write error register mode_reg\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		return -1;
+	}
+	else
+	{
+		printf("write register:mode_reg\n");
+	}
 	return 0;
 }
 
