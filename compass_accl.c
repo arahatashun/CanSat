@@ -5,6 +5,22 @@
 
 static const double PI = 3.14159265359;
 static const double convert_to_G = 16384.0;
+
+double cal_theta(theta_atan2)
+{
+    double theta = 0;
+    theta = theta_atan2;
+    if(theta < 0)
+    {
+        theta = -theta;
+    }
+    else
+    {
+        theta = -theta + 360.0;
+    }
+    return theta;
+}
+
 int main()
 {
   	acclgyro_initializer();
@@ -50,13 +66,14 @@ int main()
       x1 = xcompass_knd*cos(psi_radian);
       x2 = ycompass_knd*sin(psi_radian)*sin(phi_radian);
       x3 = zcompass_knd*sin(psi_radian)*cos(phi_radian);
-      printf("y1の値は%fです。\n", y1);
-        printf("y2の値は%fです。\n", y2);
-        printf("x1の値は%fです。\n", x1);
-        printf("x2の値は%fです。\n", x2);
-        printf("x3の値は%fです。\n", x3);
-      theta_degree = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI + 180.0;
+      /*printf("y1の値は%fです。\n", y1);
+      printf("y2の値は%fです。\n", y2);
+      printf("x1の値は%fです。\n", x1);
+      printf("x2の値は%fです。\n", x2);
+      printf("x3の値は%fです。\n", x3);*/
+      theta_degree = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI;
+      theta_degre = cal_theta(theta_angle);
       printf("theta_degree = %f\n", theta_degree);
-        delay(1000);
+      delay(1000);
     }
 }
