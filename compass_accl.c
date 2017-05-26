@@ -12,11 +12,11 @@ double cal_theta(theta_atan2)
     theta = theta_atan2;
     if(theta < 0)
     {
-        theta = -theta;
+        theta = (-1.0)*theta;
     }
     else
     {
-        theta = -theta + 360.0;
+        theta = (-1.0)*theta + 360;
     }
     return theta;
 }
@@ -66,11 +66,6 @@ int main()
       x1 = xcompass_knd*cos(psi_radian);
       x2 = ycompass_knd*sin(psi_radian)*sin(phi_radian);
       x3 = zcompass_knd*sin(psi_radian)*cos(phi_radian);
-      /*printf("y1の値は%fです。\n", y1);
-      printf("y2の値は%fです。\n", y2);
-      printf("x1の値は%fです。\n", x1);
-      printf("x2の値は%fです。\n", x2);
-      printf("x3の値は%fです。\n", x3);*/
       theta_degree = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI;
       theta_degree = cal_theta(theta_degree);
       printf("theta_degree = %f\n", theta_degree);
