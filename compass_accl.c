@@ -72,7 +72,7 @@ int main()
       printf("x2の値は%fです。\n", x2);
       printf("x3の値は%fです。\n", x3);*/
       theta_degree = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI;
-      theta_degre = cal_theta(theta_angle);
+      theta_degree = cal_theta(theta_degree);
       printf("theta_degree = %f\n", theta_degree);
       delay(1000);
     }
