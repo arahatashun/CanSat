@@ -197,7 +197,9 @@ int update_angle()
 	return delta_angle;
 }
 /*
-   進む方角の差が30以上もしくは-30以下で右回転で調整、30以内もしくは-30以上で前進
+   目的方角が自分から見て右に３０度以上ずれていたら右回転、
+   目的方角が自分から見て左に３０度以上ずれていたら左回転、
+   30以内もしくは-30以上で前進
  */
 int decide_route()
 {
@@ -206,21 +208,21 @@ int decide_route()
 	if(-180 <= delta_angle && delta_angle <= -30)
 	{
 		motor_left(turn_power);
-		delay((int)((-delta_angle/30)*turn_milliseconds));
+		delay(200);
 		motor_stop();
 		delay(1000);
 	}
 	if(30 <= delta_angle && delta_angle <= 180)
 	{
 		motor_right(turn_power);
-		delay((int)((delta_angle/30)*turn_milliseconds));
+		delay(200);
 		motor_stop();
 		delay(1000);
 
 	}
 	else
 	{
-	  motor_forward(100);
+		motor_forward(100);
 		delay(1000);
 		motor_stop();
 		delay(1000);
@@ -235,7 +237,7 @@ int main()
 	acclgyro_initializer();
 	pwm_initializer();
 	gps_init();
-	compass_initializer_knd();
+	compass_initializer_2();
 	signal(SIGINT, handler);
 	while(1)
 	{
