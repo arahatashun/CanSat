@@ -8,7 +8,7 @@
 #include "mitibiki.h"
 #include "motor.h"
 
-static const int turn_milliseconds = 50;//30度回転する
+static const int turn_milliseconds =80;//30度回転する
 //static const int after_turn_milliseconds = 1500;//回転後直進するミリ数
 static const int turn_power = 60;//turnするpower
 static const int gps_latency = 3300;//gps角度取得のための時間感覚
@@ -29,9 +29,11 @@ void handler(int signum)
 //gpsの緯度経度二回分から角度計算
 int angle_gps(double *angle_course)
 {
+	printf("gps_on\n");
 	gps_init();
 	gps_location(&data);
 	gps_off();
+	printf("gps_off\n");
 	double latitude_before = 0;
 	double longitude_before = 0;
 	latitude_before = data.latitude;
@@ -39,9 +41,11 @@ int angle_gps(double *angle_course)
 	printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
 	printf("GPS speed:%f\nGPS altitude:%f\n",data.speed,data.altitude);
 	delay(gps_latency);
+	printf("gps_on\n");
 	gps_init();
 	gps_location(&data);
 	gps_off();
+	printf("gps_off\n");
 	double latitude_after = 0;
 	double longitude_after = 0;
 	latitude_after = data.latitude;
