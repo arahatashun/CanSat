@@ -111,7 +111,7 @@ double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 }
 
 /* 地磁気の方角を計算*/
-double cal_theta(theta_atan2)
+double cal_theta(double theta_atan2)
 {
     double theta = 0;
     theta = theta_atan2;
