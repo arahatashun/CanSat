@@ -203,7 +203,7 @@ int decide_route()
 {
   double delta_angle = 0;
   delta_angle=update_angle();
-  if(180 <= delta_angle && delta_angle <= -30)
+  if(-180 <= delta_angle && delta_angle <= -30)
   {
     motor_left(turn_power);
     delay((int)((-delta_angle/30)*turn_milliseconds));
