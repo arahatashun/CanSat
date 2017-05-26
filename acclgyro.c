@@ -161,7 +161,7 @@ int get_accly()
 int get_acclz()
 {
     int acclz = 0;
-    acclz = read_word_2c(acclY_reg);
+    acclz = read_word_2c(acclZ_reg);
     return acclz;
 }
 
