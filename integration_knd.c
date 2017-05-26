@@ -117,11 +117,11 @@ double cal_theta(theta_atan2)
     theta = theta_atan2;
     if(theta < 0)
     {
-        theta = (-1.0)*theta;
+        theta =  360 - ((-1.0)*theta);
     }
     else
     {
-        theta = (-1.0)*theta + 360;
+        theta = 360 -((-1.0)*theta + 360);
     }
     return theta;
 }
