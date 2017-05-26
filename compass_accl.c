@@ -6,9 +6,9 @@
 static const double PI = 3.14159265359;
 static const double convert_to_G = 16384.0;
 
-double cal_theta(theta_atan2)
+double cal_theta(double theta_atan2)
 {
-    double theta = 0;
+    double theta;
     theta = theta_atan2;
     if(theta < 0)
     {
