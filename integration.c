@@ -8,10 +8,10 @@
 #include "mitibiki.h"
 #include "motor.h"
 
-static const int turn_milliseconds = 30;//45度回転するミリ秒 変えました 元は150ms
-static const int after_turn_milliseconds = 1500;//回転後直進するミリ数
+static const int turn_milliseconds = 50;//30度回転する
+//static const int after_turn_milliseconds = 1500;//回転後直進するミリ数
 static const int turn_power = 60;//turnするpower
-static const int gps_latency = 2300;//gps角度取得のための時間感覚
+static const int gps_latency = 3300;//gps角度取得のための時間感覚
 static const int forward_power = 50;
 static const double PI = 3.14159265;
 
