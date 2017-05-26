@@ -3,8 +3,7 @@
 #include <gps.h>
 #include "mitibiki.h"
 //note: seikei toukei ni izon
-static const double target_latitude = 35.716956;//緯度
-static const double target_longitude = 139.759936;//経度
+
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
 
@@ -46,7 +45,7 @@ static cartesian_coord latlng_to_xyz(double lat,double lon)
 }
 
 //距離を計算
-double dist_on_sphere(double current_lat, double current_lon)
+double dist_on_sphere(double target_latitude, double target_longitude,double current_lat, double current_lon)
 {
 	cartesian_coord target = latlng_to_xyz(target_latitude,target_longitude);
 	cartesian_coord current_position = latlng_to_xyz(current_lat, current_lon);
@@ -60,6 +59,5 @@ double dist_on_sphere(double current_lat, double current_lon)
 	dot_product_z = target.z*current_position.z;
 	dot_product_sum =dot_product_x+dot_product_y+dot_product_z;
 	distance = fabs(acos(dot_product_sum)*EARTH_RADIUS);
-	printf("distance : %f\n",distance);
 	return distance;
 }
