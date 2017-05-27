@@ -10,7 +10,7 @@ xbeelux_test01.o : xbeelux_test01.c
 	#これは実験用ソースファイル
 
 luxsensor.o: luxsensor.c
-	gcc -c luxsensor.c -o luxsensor.o -lwiringPi
+	gcc -c luxsensor.c -o luxsensor.o -lwiringPi -lm 
 
 xbee_uart.o: xbee_uart.c
 	gcc -c xbee_uart.c -o xbee_uart.o
@@ -19,7 +19,7 @@ xbee_lib.o : xbee_lib.c
 	gcc -c xbee_lib.c -o xbee_lib.o
 
 xbeelux_test01.o : luxsensor.h xbee_uart.h
-luxsensor.o : luxsensor.h xbee_uart.h
+luxsensor.o : luxsensor.h xbee_uart.h wiringPi.h wiringPiI2C.h
 xbee_uart.o : xbee_uart.h xbee_lib.h
 xbee_lib.o: xbee_lib.h
 
