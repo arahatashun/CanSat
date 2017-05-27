@@ -8,7 +8,7 @@
 #include "mitibiki.h"
 #include "motor.h"
 
-static const int turn_milliseconds =80;//30度回転する
+static const int turn_milliseconds =60;//30度回転する
 static const int turn_power = 60;//turnするpower
 static const int gps_latency = 3300;//gps角度取得のための時間感覚
 static const int forward_power = 50;
