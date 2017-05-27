@@ -261,7 +261,7 @@ int stock_GPS(int n, double GPS_list[2][10])
 /*
    stack判定用
  */
-int stack_action(GPS_list[2][10])
+int stack_action(double GPS_list[2][10])
 {
 	int c = 0;                    //stackカウンター stackしたらc=0
 	int i, j;
