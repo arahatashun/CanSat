@@ -26,8 +26,10 @@ int pwm_initializer()
 	softPwmCreate(LEFT_MOTOR2,INITIAL_PWM_VAL,PWM_RANGE);
 	return 0;
 }
-/*pwm_valueは0~100の値をとる。
-内部でthreadingしてることに注意
+
+/*
+    pwm_valueは0~100の値をとる。
+    内部でthreadingしてることに注意
 */
 int motor_stop()
 {
