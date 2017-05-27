@@ -9,7 +9,6 @@
 #include "motor.h"
 
 static const int turn_milliseconds =80;//30度回転する
-//static const int after_turn_milliseconds = 1500;//回転後直進するミリ数
 static const int turn_power = 60;//turnするpower
 static const int gps_latency = 3300;//gps角度取得のための時間感覚
 static const int forward_power = 50;
@@ -38,8 +37,8 @@ int angle_gps(double *angle_course)
 	double longitude_before = 0;
 	latitude_before = data.latitude;
 	longitude_before = data.longitude;
-	printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
-	printf("GPS speed:%f\nGPS altitude:%f\n",data.speed,data.altitude);
+	//printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
+	//printf("GPS speed:%f\nGPS altitude:%f\n",data.speed,data.altitude);
 	delay(gps_latency);
 	printf("gps_on\n");
 	gps_init();
