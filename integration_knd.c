@@ -316,8 +316,8 @@ int main()
 		{
 			for(j = i+1; j<10; j++)
 			{
-				printf("delta_movement :%f\n", pow((GPS_list[i]-GPS_list[j]), 2) +
-				       pow((GPS_list[i+10]-GPS_list[j+10]), 2));
+				printf("delta_movement :%f\n", pow((GPS_value[i]-GPS_value[j]), 2) +
+				       pow((GPS_value[i+10]-GPS_value[j+10]), 2));
 			}
 		}
 		delay(1000);
