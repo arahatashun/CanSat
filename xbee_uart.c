@@ -24,8 +24,3 @@ int xbee_printf(char *input){
   xbee_uart(dev,input);
   return 0;
 }
-
-int main(){
-  xbee_initializer();
-  xbee_printf("hello");
-}
