@@ -9,10 +9,10 @@
 
 //グローバルデータ宣言(const)
 //change adress:default 0x39
-   static const int TSL2561_ADDR_LOW = 0x29;
-   static const int TSL2561_ADDR_FLOAT = 0x39;  //default adress
-   static const int TSL2561_ADDR_HIGH  = 0x49;
- 
+static const int TSL2561_ADDR_LOW = 0x29;
+static const int TSL2561_ADDR_FLOAT = 0x39;  //default adress
+static const int TSL2561_ADDR_HIGH  = 0x49;
+
 static const int TSL2561_CONTROL_POWERON = 0x03;
 static const int TSL2561_CONTROL_POWEROFF = 0x00;
 
