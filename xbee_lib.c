@@ -72,13 +72,12 @@ typedef unsigned char byte;
 //グローバル変数宣言(static)----------------------------------------------
 static int ComFd;                                   // シリアル用ファイルディスクリプタ
 static struct termios ComTio_Bk;                    // 現シリアル端末設定保持用の構造体
-static byte PACKET_ID = 0;							//送信パケット番号
 static byte ADR_DEST[]= 	{0x00,0x13,0xA2,0x00,0x00,0x00,0x00,0x00};	//宛先のIEEEアドレス(変更可)
 //ショートアドレス／本ライブラリでの宛先指定はIEEEのみを使う
+static byte PACKET_ID = 0;							//送信パケット番号
 static byte SADR_DEST[]=	{0xFF,0xFE};			//ブロード(ショート)アドレス
 /* XBeeのデバイスタイプ ATVRの上２ケタ */
 static byte DEVICE_TYPE = ZB_TYPE_COORD;			// Coord=0x21 Router=23 ED=29 Wi-Fi=10
-static int xbeeComFd;
 /* IEEEアドレス(最小限の通信対象をライブラリ側で保持する)／複数のデバイスへの対応はアプリ側で行う*/
 static byte ADR_FROM[]= 	{0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0xFF};	//差出人のIEEEアドレス(変更可)
 static byte xbee_com_port;
@@ -93,7 +92,7 @@ byte time1s256();
 byte sci_init(byte port);
 int open_serial_port(char *modem_dev);
 char read_serial_port(void);
-int gets_serial_port(char *data,int len);
+// int gets_serial_port(char *data,int len);
 int write_serial_port(char *data,byte len);
 int puts_serial_port(char *data);
 int close_serial_port(void);
@@ -106,8 +105,8 @@ byte xbee_myaddress( byte *address );
 byte xbee_tx_rx(const char *at, byte *data, byte len);
 byte xbee_at_tx(const char *at, const byte *value, const byte value_len);
 byte xbee_at_rx(byte *data);
-byte sci_read(byte timeout);
-byte sci_write( char *data, byte len );
+/*byte sci_read(byte timeout);
+byte sci_write( char *data, byte len );*/
 //以上がxbee_init関連関数群
 
 //xbee_atnj関連関数群
@@ -125,6 +124,30 @@ void xbee_address(const byte *address);
 //byte xbee_uart(const byte *address, const char *in);
 byte xbee_putstr( const char *s );
 
+enum xbee_sensor_type{ LIGHT,TEMP,HUMIDITY,WATT,BATT,PRESS,VALUE,TIMES,NA };	// センサタイプの型
+enum xbee_port_type{ DISABLE=0, VENDER=1, AIN=2, DIN=3, DOUT_L=4, DOUT_H=5 };
+															// GPIOの設定の型
+/*typedef struct{
+		byte MODE;				// 受信モード(Frame Type)
+		byte FROM[8];			// 送信元IEEEアドレス
+		byte SHORT[2];			// 送信元ショートアドレス
+		byte AT[2]; 			// ATコマンド
+		byte ID;				// 応答パケットID(Frame ID)
+		byte STATUS;			// 応答結果(0:OK 1:ERROR)／AT結果／UART状態
+		union { 				// GPIOデータ
+			byte BYTE[2];
+			struct {
+				byte D0 :1; byte D1 :1; byte D2 :1; byte D3 :1; // BYTE[1]
+				byte D4 :1; byte D5 :1; byte D6 :1; byte D7 :1;
+				byte	:1; byte	:1; byte D10:1; byte D11:1; // BYTE[0]
+				byte D12:1; byte	:1; byte	:1; byte	:1;
+			} PORT;
+		} GPI;
+		unsigned int ADCIN[4];	// ADCデータ
+		byte ZCL[6];			// [0]送信元EndPoint, [1]宛先EndPoint, [2-3]クラスタID, [4-5]プロファイルID
+		byte DATA[CALL_SIZE];	// ペイロードデータ／ZCLヘッダ＋受信データ
+	} XBEE_RESULT;
+*/
 
 //関数本体---------------------------------------------------------------
 void wait_millisec(unsigned int ms){
@@ -191,7 +214,7 @@ int open_serial_port(char *modem_dev){
     speed_t speed = B9600;                          // 通信速度の設定 9600 bps
     ComFd=open(modem_dev, O_RDWR|O_NONBLOCK);       // シリアルポートのオープン
     if(ComFd >= 0){                                 // オープン成功時
-    //  printf("com=%s\n",modem_dev);               // 成功したシリアルポートを表示
+        printf("com=%s\n",modem_dev);               // 成功したシリアルポートを表示
         tcgetattr(ComFd, &ComTio_Bk);               // 現在のシリアル端末設定状態を保存
         ComTio.c_iflag = 0;                         // シリアル入力設定の初期化
         ComTio.c_oflag = 0;                         // シリアル出力設定の初期化
@@ -219,7 +242,7 @@ char read_serial_port(void){
     return c;                                       // 戻り値＝受信データ(文字変数c)
 }
 
-int gets_serial_port( char *data, int len ){
+/*int gets_serial_port( char *data, int len ){
     int i;
     for(i=0;i<len-1;i++){
         data[i]=read_serial_port();
@@ -230,6 +253,7 @@ int gets_serial_port( char *data, int len ){
     data[i]=0;
     return i;
 }
+*/
 
 int write_serial_port( char *data, byte len ){
     int i;
@@ -318,10 +342,10 @@ byte xbee_reset( void ){
 	DEVICE_TYPE = 0x20; 				// タイプ名を初期化
 	wait_millisec(100);
 			int i=0;
-            for(i=0;i<4;i++){
-                ret=xbee_tx_rx("ATVR",value,0);
+      for(i=0;i<4;i++){
+        ret=xbee_tx_rx("ATVR",value,0);
 				if( ret > 0){
-                    fprintf(stderr,"get ATVR");
+					fprintf(stderr,"get ATVR");
 					DEVICE_TYPE = value[8];
 					if( DEVICE_TYPE != ZB_TYPE_COORD &&
 						DEVICE_TYPE != ZB_TYPE_ROUTER &&
@@ -329,8 +353,8 @@ byte xbee_reset( void ){
 							fprintf( stderr,"EXIT:XBEE NOT IN API MODE" );
 							exit(-1);
 					}
-                    else break;
-                }
+					else break;
+				}
 				else{
 					if(i=3){
 					//3回トライしてもret=0
@@ -359,13 +383,13 @@ byte xbee_reset( void ){
 	return( ret );
 }
 
-byte sci_write_check(void){
-			tcdrain( xbeeComFd );
+byte sci_write_check(void){ //送信された出力が実際に端末に送信されるまで待機
+			tcdrain( ComFd );
 			return( 1 );
 }
 
 void sci_clear(void){
-				tcflush(xbeeComFd,TCIOFLUSH);
+				tcflush(ComFd,TCIFLUSH);
 }
 
 //以下アドレス取得関数群
@@ -420,7 +444,7 @@ byte xbee_tx_rx(const char *at, byte *data, byte len){
 注意：本コマンドは応答待ちを行うので干渉によるパケット損失があります。
 */
 
-	byte err,retry;
+	byte err,retry;		//errの値が0であれば、成功
 	byte r_dat = 10;	// AT=0、RAT=10、TX=未定	リモートATと通常ATの応答値dataの代入位置の差
 	byte r_at = 1;		// AT=0、RAT=1				 リモートの可否
 	unsigned int wait_add = 0;
@@ -432,8 +456,8 @@ byte xbee_tx_rx(const char *at, byte *data, byte len){
 			r_dat = 10; r_at=1;
 			if( at[3] == 'W' && at[4] == 'R' ) wait_add = 100;	// RATWR 120～1200ms
 		}
-		if( xbee_at_tx( at ,data ,len ) > 0){
-			err = 12;							// 受信なしエラー
+		if( xbee_at_tx( at ,data ,len ) > 0){  //送信は成功
+			err = 12;							// 受信なしエラー 受信すればこれが0になる
 			for( retry = 10 ; ( retry > 0 && err != 0 ) ; retry-- ){
 				wait_millisec( 10 + (unsigned int)r_dat );	// 応答時間待ち AT 10～100ms / RAT 20～200ms
 				if( wait_add != 0 ){
@@ -447,13 +471,14 @@ byte xbee_tx_rx(const char *at, byte *data, byte len){
 							)
 						){
 						if( data[7+r_dat] == 0x00 ){
-							err=0;
+							err=0;	//受信成功
 						}else err = data[7+r_dat];	// ATのERRORコード (AT:data[7] RAT:data[17])
-					}else{				// 受信したパケットIDまたはATコマンドが相違しているとき
+					}
+					else{				// 受信したパケットIDまたはATコマンドが相違しているとき
 					}
 				}
 			}
-		}else				err = 11;				// 送信失敗
+		}else				err = 11;				// そもそも送信失敗
 		wait_millisec(1);	// 直前のコマンド応答がすぐに返った時にキャッシュに貯めれないことを防止する
 
 	if( err ){
@@ -477,6 +502,14 @@ byte xbee_at_tx(const char *at, const byte *value, const byte value_len){
 	static byte ADR_DEST[]= 	{0x00,0x13,0xA2,0x00,0x00,0x00,0x00,0x00};	//宛先のIEEEアドレス(変更可)
 	ショートアドレス／本ライブラリでの宛先指定はIEEEのみを使う
 	static byte SADR_DEST[]=	{0xFF,0xFE};			//ブロード(ショート)アドレス
+
+	APIフレーム
+	1バイト目(data_api[0])=0x7E
+	2バイト目(data_api[1])= length上位
+	3バイト目(data_api[2])= length下位
+	4バイト目(data_api[3])=通信モード ATコマンド0x08 Remoteコマンド 0x17
+	以下データ
+	最後にチェックサム
 */
 
 	char data_api[API_TXSIZE];
@@ -489,7 +522,7 @@ byte xbee_at_tx(const char *at, const byte *value, const byte value_len){
 	if( PACKET_ID == 0xFF ){
 		PACKET_ID=0x01;
 	}else{
-		PACKET_ID++;
+		PACKET_ID++;  //デフォルトは0なのでPacket_ID = 0x01になる
 	}
 	len=0;
 		switch( at[0] ){
@@ -549,7 +582,7 @@ byte xbee_at_tx(const char *at, const byte *value, const byte value_len){
 		}
 		if( len ){
 			data_api[0]=(char)0x7E; 			// デリミタ
-			data_api[1]=(char)0x00; 			// パケット長の上位(送らない前程)
+			data_api[1]=(char)0x00; 			// パケット長の上位(送らない前提(パケット長は短いと仮定))
 			for( i=3 ; i < data_position ; i++) check -= (byte)data_api[i];
 			if( value_len > 0 ){
 				for( i=0 ; i<value_len; i++){
@@ -559,11 +592,11 @@ byte xbee_at_tx(const char *at, const byte *value, const byte value_len){
 				}
 			}
 			data_api[2]    =(char)len;
-			data_api[len+3]=(char)check;
+			data_api[len+3]=(char)check;    //チェックサムをフレームの最後に挿入
 				check = sci_write_check();		// 以降 checkはシリアルバッファ確認に使用する
 				/*シリアルデータ送信 */
 				if(  check > 0 ){
-					if( sci_write( data_api, (byte)(len+4) ) == 0 ){
+					if( write_serial_port( data_api, (byte)(len+4) ) == 0 ){
 							wait_millisec( 100 );
 							close_serial_port();			// シリアルを閉じる
 							wait_millisec( 300 );
@@ -575,7 +608,7 @@ byte xbee_at_tx(const char *at, const byte *value, const byte value_len){
 								printf("RESET serial\n");
 							}
 							wait_millisec( 300 );
-							sci_write( data_api, (byte)(len+4) );	// 再送信
+							write_serial_port( data_api, (byte)(len+4) );	// 再送信
 					}
 					ret=len+3;
 				}else{
@@ -599,10 +632,10 @@ byte xbee_at_rx(byte *data){
 	byte ret=0;
 
 	/* 受信処理 */
-		data[0] = sci_read( 1 );				// 1ms待ち受けで受信
+		data[0] = read_serial_port();				// 1ms待ち受けで受信
 		if( data[0] == 0x7E ) { 				// 期待デリミタ0x7E時
 			for( i=1;i<=2;i++ ){
-					data[i] = sci_read( 50 );
+					data[i] = read_serial_port();
 			}
 			if(data[1] == 0x00) len = data[2];
 			else len = 0xFF - 4;		// API長が255バイトまでの制約(本来は64KB)
@@ -610,11 +643,11 @@ byte xbee_at_rx(byte *data){
 			leni = (unsigned int)data[1] * 256 + (unsigned int)data[2] - (unsigned int)len;
 				// 通常は0。lenが本来の容量よりも少ない場合に不足分が代入されれる
 			for( i=0 ; i <= len ; i++){ // i = lenはチェックサムを入力する
-				data[i+3] = sci_read( 50 );
+				data[i+3] = read_serial_port();
 				if( i != len) check -= data[i+3];	// チェックサムのカウント
 			}
 			while( leni > 0 ){
-				data[len+3] = sci_read( 50 );	// データの空読み(lenは固定)
+				data[len+3] = read_serial_port();	// データの空読み(lenは固定)
 				if( leni != 1 ) {
 					check -= data[len+3];		// leni=0の時はCheck sumなので減算しない
 				}
@@ -626,22 +659,22 @@ byte xbee_at_rx(byte *data){
 	return( ret );
 }
 
-
+/*
 byte sci_read(byte timeout){
 			/* 受信の有無の判断にFDの待ち受け関数selectを使用する。
 			参考文献
 			http://linuxjm.sourceforge.jp/html/LDP_man-pages/man2/select.2.html
-			*/
+
 				byte c;
 				struct timeval tv;
 				fd_set readfds;
 
 				FD_ZERO(&readfds);
-				FD_SET( xbeeComFd , &readfds);
+				FD_SET( ComFd , &readfds);
 				tv.tv_sec = 0;
-					tv.tv_usec = timeout*1000;
-				if( select( (xbeeComFd+1), &readfds, NULL, NULL ,&tv ) ){
-					read(xbeeComFd,(char *)&c,1);
+				tv.tv_usec = timeout*1000;
+				if( select( (ComFd+1), &readfds, NULL, NULL ,&tv ) ){
+					read(ComFd,(char *)&c,1);
 				}else{
 					c = 0x00;
 				}
@@ -652,14 +685,14 @@ byte sci_write( char *data, byte len ){
 	byte ret=1; // 戻り値 0でエラー
 		byte i;
 		for(i=0;i<len;i++){
-			if(write(xbeeComFd,&data[i],1) != 1){
+			if(write(ComFd,&data[i],1) != 1){
 				fprintf(stderr,"sci_write ERR:d[%02d]=0x%02x\n",i,(byte)data[i]);
 				ret = 0;
 				}
 		}
 	return( ret );
 }
-
+*/
 
 //xbee_init関連関数群はここまで
 
