@@ -17,7 +17,7 @@ xbee.o : xbee.c
 	gcc -c xbee.c -o xbee.o
 
 xbee_light_test01.o : luxsensor.h xbee_uart.h
-luxsensor.o : luxsensor.h xbee_uart.h wiringPi.h
+luxsensor.o : luxsensor.h xbee_uart.h 
 xbee_uart.o : xbee_uart.h xbee.h
 xbee.o: xbee.h
 
