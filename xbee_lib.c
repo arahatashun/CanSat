@@ -198,7 +198,6 @@ byte xbee_init( const byte port ){
 				exit(-1);
 				fprintf(stderr,"exit\n");
 		}else{	// k>0 すなわち reset成功時  以下、kは使用しないこと（戻り値にする）
-			fprintf(stderr,"start adress\n");
 			xbee_myaddress( address );	// 自分自身のアドレスを取得
 		}
 	return(k);
@@ -417,13 +416,11 @@ byte xbee_myaddress( byte *address ){
 			for(i=0;i<4;i++){
 				address[i]=data[8+i];
 			}
-			fprintf(stderr,"s4");
 			data[0]=0x00;
 			if( xbee_tx_rx( "ATSL",data,0) ){
 				for(i=0;i<4;i++){
 					address[4+i]=data[8+i];
 				}
-				fprintf(stderr,"s5");
 				ret=1;
 			}
 		}
@@ -484,7 +481,6 @@ byte xbee_tx_rx(const char *at, byte *data, byte len){
 	if( err ){
 	wait_millisec( 1000 );		// 応答待ち状態で、次々にコマンドを送るとXBeeモジュールが非応答になる対策
   }
-	fprintf(stderr,"error:%d",err);
 	return( !err );
 }
 
