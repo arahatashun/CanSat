@@ -11,8 +11,8 @@
 
 //note: seikei toukei ni izon
 static const int turn_power = 60;//turnするpower
-static const double target_latitude = 35.713930;//ido
-static const double target_longitude = 139.759739;//keido
+static const double target_latitude = 35.715259;//ido
+static const double target_longitude = 139.759302;//keido
 static const double PI = 3.14159265359;
 static const double convert_to_G = 16384.0;
 static const double EARTH_RADIUS = 6378137;
