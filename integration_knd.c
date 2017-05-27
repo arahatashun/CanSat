@@ -248,6 +248,9 @@ int decide_route()
 	return 0;
 }
 
+/*
+   GPS_の値を10回分確保
+ */
 int stock_GPS(int n, double GPS_list[2][10])
 {
 	gps_location(&data);
@@ -255,9 +258,12 @@ int stock_GPS(int n, double GPS_list[2][10])
 	GPS_list[1][n] = data.longitude;
 	return 0;
 }
-
+/*
+   stack判定用
+ */
 int stack_action(GPS_list[2][10])
 {
+	int c = 0;                    //stackカウンター stackしたらc=0
 	for(i = 0; i < 10; i++)
 	{
 		for(j = i; j<10; j++)
@@ -282,9 +288,9 @@ NOSTACK:
 		delay(3000);
 	}
 }
+
 int main()
 {
-	int c = 0;                    //stackカウンター stackしたらc=0
 	double GPS_value[2][10];
 	acclgyro_initializer();
 	pwm_initializer();
