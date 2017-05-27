@@ -256,6 +256,32 @@ int stock_GPS(int n, double GPS_list[2][10])
 	return 0;
 }
 
+int stack_action(GPS_list[2][10])
+{
+	for(i = 0; i < 10; i++)
+	{
+		for(j = i; j<10; j++)
+		{
+			if(fabs(GPS_list[0][i]-GPS_list[0][j]) > 0.001
+			   || fabs(GPS_list[1][i]-GPS_list[1][j]) > 0.001)
+			{
+				c = 1;
+				goto NOSTACK;
+			}
+		}
+	}
+NOSTACK:
+	if(c==0)
+	{
+		printf("get stacked");
+		motor_right(100);
+		delay(1000);
+		motor_left(100);
+		delay(1000);
+		motor_forward(100);
+		delay(3000);
+	}
+}
 int main()
 {
 	int c = 0;                    //stackカウンター stackしたらc=0
@@ -277,32 +303,8 @@ int main()
 			printf("%dth latitude :%f\n", i, GPS_value[0][i])
 			printf("%dth longitude :%f\n", i, GPS_value[1][i])
 		}
-
 		delay(1000);
-
-		for(i = 0; i < 10; i++)
-		{
-			for(j = i; j<10; j++)
-			{
-				if(fabs(GPS_value[0][i]-GPSvalue[0][j]) > 0.001
-				   || fabs(GPS_value[1][i]-GPSvalue[1][j]) > 0.001)
-				{
-					c = 1;
-					goto NOSTACK;
-				}
-			}
-		}
-NOSTACK:
-		if(c==0)
-		{
-			printf("get stacked");
-			motor_right(100);
-			delay(1000);
-			motor_left(100);
-			delay(1000);
-			motor_forward(100);
-			delay(3000);
-		}
+		stack_action(GPS_list[2][10]);
 	}
 	return 0;
 }
