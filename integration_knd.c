@@ -132,6 +132,9 @@ double cal_theta(double theta_atan2)
 	return theta;
 }
 
+/*
+   地磁気からマシンの向いている角度を計算
+ */
 double cal_compass_theta()
 {
 	double acclx_knd = 0;
