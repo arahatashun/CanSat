@@ -13,6 +13,7 @@
 static const int turn_power = 60;//turnするpower
 static const double target_latitude = 35.715259;//ido
 static const double target_longitude = 139.759302;//keido
+static const int angle_of_deviation = -7;
 static const double PI = 3.14159265359;
 static const double convert_to_G = 16384.0;
 static const double EARTH_RADIUS = 6378137;
@@ -122,6 +123,12 @@ double cal_theta(double theta_atan2)
 	{
 		theta = 360 -((-1.0)*theta + 360);
 	}
+	theta = theta + angle_of_deviation;
+	if(theta < 0)
+	{
+		theta = theta + 360;
+	}
+
 	return theta;
 }
 
