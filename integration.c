@@ -55,7 +55,7 @@ int angle_gps(double *angle_course)
 	printf("speed:\n"speed_cource);
 	if( speed_cource < 0.1)
 	{
-		printf("WARNING stack")
+		printf("WARNING stack");
 		return -2;
 	}
 	return 0;
