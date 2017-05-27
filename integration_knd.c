@@ -308,8 +308,8 @@ int main()
 		{
 			printf("%dth latitude :%f\n", i, GPS_value[0][i])
 			printf("%dth longitude :%f\n", i, GPS_value[1][i])
-			printf("distsnce moved: %f\n",(GPS_list[0][i]-GPS_list[0][j])**2 +
-			       (GPS_list[1][i]-GPS_list[1][j])**2);
+			printf("distsnce moved: %f\n",(GPS_value[0][i]-GPS_value[0][j])**2 +
+			       (GPS_value[1][i]-GPS_value[1][j])**2);
 
 		}
 		delay(1000);
