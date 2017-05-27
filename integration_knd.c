@@ -268,8 +268,8 @@ int stack_action(GPS_list[2][10])
 	{
 		for(j = i; j<10; j++)
 		{
-			if((GPS_list[0][i]-GPS_list[0][j])**2 +
-			   (GPS_list[1][i]-GPS_list[1][j])**2 > 0.001)
+			if((pow((GPS_list[0][i]-GPS_list[0][j]), 2) +
+			    pow((GPS_list[1][i]-GPS_list[1][j]), 2)) > 0.001)
 			{
 				c = 1;
 				goto NOSTACK;
@@ -308,9 +308,8 @@ int main()
 		{
 			printf("%dth latitude :%f\n", i, GPS_value[0][i]);
 			printf("%dth longitude :%f\n", i, GPS_value[1][i]);
-			printf("distsnce moved: %f\n",(GPS_value[0][i]-GPS_value[0][j])**2 +
-			       (GPS_value[1][i]-GPS_value[1][j])**2);
-
+			printf("distsnce moved: %f\n",pow((GPS_value[0][i]-GPS_value[0][j]), 2) +
+			       pow((GPS_value[1][i]-GPS_value[1][j]), 2));
 		}
 		delay(1000);
 		stack_action(GPS_value[2][10]);
