@@ -23,5 +23,4 @@ int is_reverse(Acclgyro *acclgyro_data);  //反転していたら1を返す
 int get_acclx();
 int get_accly();
 int get_acclz();
-
 #endif
