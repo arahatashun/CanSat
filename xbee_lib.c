@@ -105,8 +105,7 @@ byte xbee_myaddress( byte *address );
 byte xbee_tx_rx(const char *at, byte *data, byte len);
 byte xbee_at_tx(const char *at, const byte *value, const byte value_len);
 byte xbee_at_rx(byte *data);
-/*byte sci_read(byte timeout);
-byte sci_write( char *data, byte len );*/
+
 //以上がxbee_init関連関数群
 
 //xbee_atnj関連関数群
@@ -127,27 +126,6 @@ byte xbee_putstr( const char *s );
 enum xbee_sensor_type{ LIGHT,TEMP,HUMIDITY,WATT,BATT,PRESS,VALUE,TIMES,NA };	// センサタイプの型
 enum xbee_port_type{ DISABLE=0, VENDER=1, AIN=2, DIN=3, DOUT_L=4, DOUT_H=5 };
 															// GPIOの設定の型
-/*typedef struct{
-		byte MODE;				// 受信モード(Frame Type)
-		byte FROM[8];			// 送信元IEEEアドレス
-		byte SHORT[2];			// 送信元ショートアドレス
-		byte AT[2]; 			// ATコマンド
-		byte ID;				// 応答パケットID(Frame ID)
-		byte STATUS;			// 応答結果(0:OK 1:ERROR)／AT結果／UART状態
-		union { 				// GPIOデータ
-			byte BYTE[2];
-			struct {
-				byte D0 :1; byte D1 :1; byte D2 :1; byte D3 :1; // BYTE[1]
-				byte D4 :1; byte D5 :1; byte D6 :1; byte D7 :1;
-				byte	:1; byte	:1; byte D10:1; byte D11:1; // BYTE[0]
-				byte D12:1; byte	:1; byte	:1; byte	:1;
-			} PORT;
-		} GPI;
-		unsigned int ADCIN[4];	// ADCデータ
-		byte ZCL[6];			// [0]送信元EndPoint, [1]宛先EndPoint, [2-3]クラスタID, [4-5]プロファイルID
-		byte DATA[CALL_SIZE];	// ペイロードデータ／ZCLヘッダ＋受信データ
-	} XBEE_RESULT;
-*/
 
 //関数本体---------------------------------------------------------------
 void wait_millisec(unsigned int ms){
@@ -188,9 +166,7 @@ byte xbee_init( const byte port ){
 		k=1;
 		if(i==0) while( !xbee_reset() ) wait_millisec(1000);
 		else for(j=0;j<i;j++){
-			fprintf(stderr,"start reset\n");
 			k=xbee_reset();	// 0だとシリアル異常
-			fprintf(stderr,"k:%d",k);
 			if( k ) break;
 			wait_millisec(1000);
 		}
@@ -240,19 +216,6 @@ char read_serial_port(void){
     if(select(ComFd+1, &ComReadFds, 0, 0, &tv)) read(ComFd, &c, 1); // データを受信
     return c;                                       // 戻り値＝受信データ(文字変数c)
 }
-
-/*int gets_serial_port( char *data, int len ){
-    int i;
-    for(i=0;i<len-1;i++){
-        data[i]=read_serial_port();
-        if(data[i] == 0 || data[i] == '\r' || data[i] == '\n' ){
-            break;
-        }
-    }
-    data[i]=0;
-    return i;
-}
-*/
 
 int write_serial_port( char *data, byte len ){
     int i;
@@ -344,7 +307,6 @@ byte xbee_reset( void ){
       for(i=0;i<4;i++){
         ret=xbee_tx_rx("ATVR",value,0);
 				if( ret > 0){
-					fprintf(stderr,"get ATVR");
 					DEVICE_TYPE = value[8];
 					if( DEVICE_TYPE != ZB_TYPE_COORD &&
 						DEVICE_TYPE != ZB_TYPE_ROUTER &&
@@ -411,7 +373,6 @@ byte xbee_myaddress( byte *address ){
 		}
 		*/
 		data[0]=0x00;
-		fprintf(stderr,"s3");
 		if( xbee_tx_rx( "ATSH",data,0) ){
 			for(i=0;i<4;i++){
 				address[i]=data[8+i];
@@ -655,40 +616,6 @@ byte xbee_at_rx(byte *data){
 	return( ret );
 }
 
-/*
-byte sci_read(byte timeout){
-			/* 受信の有無の判断にFDの待ち受け関数selectを使用する。
-			参考文献
-			http://linuxjm.sourceforge.jp/html/LDP_man-pages/man2/select.2.html
-
-				byte c;
-				struct timeval tv;
-				fd_set readfds;
-
-				FD_ZERO(&readfds);
-				FD_SET( ComFd , &readfds);
-				tv.tv_sec = 0;
-				tv.tv_usec = timeout*1000;
-				if( select( (ComFd+1), &readfds, NULL, NULL ,&tv ) ){
-					read(ComFd,(char *)&c,1);
-				}else{
-					c = 0x00;
-				}
-				return( c );
-}
-
-byte sci_write( char *data, byte len ){
-	byte ret=1; // 戻り値 0でエラー
-		byte i;
-		for(i=0;i<len;i++){
-			if(write(ComFd,&data[i],1) != 1){
-				fprintf(stderr,"sci_write ERR:d[%02d]=0x%02x\n",i,(byte)data[i]);
-				ret = 0;
-				}
-		}
-	return( ret );
-}
-*/
 
 //xbee_init関連関数群はここまで
 
