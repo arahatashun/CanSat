@@ -268,8 +268,8 @@ int stack_action(GPS_list[2][10])
 	{
 		for(j = i; j<10; j++)
 		{
-			if(fabs(GPS_list[0][i]-GPS_list[0][j]) > 0.001
-			   || fabs(GPS_list[1][i]-GPS_list[1][j]) > 0.001)
+			if((GPS_list[0][i]-GPS_list[0][j])**2 +
+			   (GPS_list[1][i]-GPS_list[1][j])**2 > 0.001)
 			{
 				c = 1;
 				goto NOSTACK;
