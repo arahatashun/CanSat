@@ -306,14 +306,14 @@ int main()
 		}
 		for(i = 0; i< 10; i++)
 		{
-			printf("%dth latitude :%f\n", i, GPS_value[0][i])
-			printf("%dth longitude :%f\n", i, GPS_value[1][i])
+			printf("%dth latitude :%f\n", i, GPS_value[0][i]);
+			printf("%dth longitude :%f\n", i, GPS_value[1][i]);
 			printf("distsnce moved: %f\n",(GPS_value[0][i]-GPS_value[0][j])**2 +
 			       (GPS_value[1][i]-GPS_value[1][j])**2);
 
 		}
 		delay(1000);
-		stack_action(GPS_list[2][10]);
+		stack_action(GPS_value[2][10]);
 	}
 	return 0;
 }
