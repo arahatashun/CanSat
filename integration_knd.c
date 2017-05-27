@@ -312,6 +312,14 @@ int main()
 			printf("%dth latitude :%f\n", i, GPS_value[i]);
 			printf("%dth longitude :%f\n", i, GPS_value[i+10]);
 		}
+		for(i = 0; i < 10; i++)
+		{
+			for(j = i+1; j<10; j++)
+			{
+				printf("delta_movement :",pow((GPS_list[i]-GPS_list[j]), 2) +
+				       pow((GPS_list[i+10]-GPS_list[j+10]), 2));
+			}
+		}
 		delay(1000);
 		stack_action(GPS_value);
 	}
