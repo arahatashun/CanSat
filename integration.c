@@ -37,7 +37,7 @@ int angle_gps(double *angle_course)
 	double longitude_before = 0;
 	latitude_before = data.latitude;
 	longitude_before = data.longitude;
-	//printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
+	printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
 	//printf("GPS speed:%f\nGPS altitude:%f\n",data.speed,data.altitude);
 	delay(gps_latency);
 	printf("gps_on\n");
@@ -49,6 +49,7 @@ int angle_gps(double *angle_course)
 	double longitude_after = 0;
 	latitude_after = data.latitude;
 	longitude_after = data.longitude;
+	printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_after, longitude_after);
 	double lat_offset = latitude_after - latitude_before;
 	double lon_offset = longitude_after - longitude_before;
 	double going_angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;//移動中の角度
