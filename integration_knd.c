@@ -10,10 +10,9 @@
 #include "acclgyro.h"
 
 //note: seikei toukei ni izon
-static const int turn_milliseconds = 150;//回転するミリ数
 static const int turn_power = 60;//turnするpower
-static const double target_latitude = 35.716956;//ido
-static const double target_longitude = 139.759936;//keido
+static const double target_latitude = 35.717891;//ido
+static const double target_longitude = 139.761475;//keido
 static const double PI = 3.14159265359;
 static const double convert_to_G = 16384.0;
 static const double EARTH_RADIUS = 6378137;
@@ -179,6 +178,7 @@ double get_distance()
 	target_position = latlng_to_xyz(target_latitude,target_longitude);
 	current_position = latlng_to_xyz(data.latitude, data.longitude);
 	distance = dist_on_sphere(target_position,current_position);
+	printf("distance :%f\n",distance);
 	return distance;
 }
 /*gpsと地磁気のデータを更新する*/
@@ -214,10 +214,10 @@ int decide_route()
 	double delta_angle = 0;
 	double dist_to_goal = 0;
 	dist_to_goal =get_distance();
-	if(dist_to_goal < 5.0)
+	if(dist_to_goal < 5)
 	{
 		motor_stop();
-		delay(10000);
+		delay(100000);
 	}
 
 	delta_angle=update_angle();
@@ -248,8 +248,18 @@ int decide_route()
 	return 0;
 }
 
+int stock_GPS(int n, double GPS_list[2][10])
+{
+	gps_location(&data);
+	GPS_list[0][n] = data.latitude;
+	GPS_list[1][n] = data.longitude;
+	return 0;
+}
+
 int main()
 {
+	int c = 0;                    //stackカウンター stackしたらc=0
+	double GPS_value[2][10];
 	acclgyro_initializer();
 	pwm_initializer();
 	gps_init();
@@ -257,7 +267,42 @@ int main()
 	signal(SIGINT, handler);
 	while(1)
 	{
-		decide_route();
+		for(i = 0; i< 10; i++)
+		{
+			stock_GPS(i, GPS_value);
+			decide_route();
+		}
+		for(i = 0; i< 10; i++)
+		{
+			printf("%dth latitude :%f\n", i, GPS_value[0][i])
+			printf("%dth longitude :%f\n", i, GPS_value[1][i])
+		}
+
+		delay(1000);
+
+		for(i = 0; i < 10; i++)
+		{
+			for(j = i; j<10; j++)
+			{
+				if(fabs(GPS_value[0][i]-GPSvalue[0][j]) > 0.001
+				   || fabs(GPS_value[1][i]-GPSvalue[1][j]) > 0.001)
+				{
+					c = 1;
+					goto NOSTACK;
+				}
+			}
+		}
+NOSTACK:
+		if(c==0)
+		{
+			printf("get stacked");
+			motor_right(100);
+			delay(1000);
+			motor_left(100);
+			delay(1000);
+			motor_forward(100);
+			delay(3000);
+		}
 	}
 	return 0;
 }
