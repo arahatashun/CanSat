@@ -251,26 +251,26 @@ int decide_route()
 /*
    GPS_の値を10回分確保
  */
-int stock_GPS(int n, double GPS_list[2][10])
+int stock_GPS(int n, double GPS_list[20])
 {
 	gps_location(&data);
-	GPS_list[0][n] = data.latitude;
-	GPS_list[1][n] = data.longitude;
+	GPS_list[n] = data.latitude;
+	GPS_list[n+10] = data.longitude;
 	return 0;
 }
 /*
    stack判定用
  */
-int stack_action(double GPS_list[2][10])
+int stack_action(double GPS_list[20])
 {
 	int c = 0;                    //stackカウンター stackしたらc=0
 	int i, j;
 	for(i = 0; i < 10; i++)
 	{
-		for(j = i; j<10; j++)
+		for(j = i+1; j<10; j++)
 		{
-			if((pow((GPS_list[0][i]-GPS_list[0][j]), 2) +
-			    pow((GPS_list[1][i]-GPS_list[1][j]), 2)) > 0.001)
+			if((pow((GPS_list[i]-GPS_list[j]), 2) +
+			    pow((GPS_list[i+10]-GPS_list[j+10]), 2)) > 0.001)
 			{
 				c = 1;
 				goto NOSTACK;
@@ -292,7 +292,7 @@ NOSTACK:
 
 int main()
 {
-	double GPS_value[2][10];
+	double GPS_value[20];
 	int i;
 	acclgyro_initializer();
 	pwm_initializer();
@@ -309,11 +309,11 @@ int main()
 		}
 		for(i = 0; i< 10; i++)
 		{
-			printf("%dth latitude :%f\n", i, GPS_value[0][i]);
-			printf("%dth longitude :%f\n", i, GPS_value[1][i]);
+			printf("%dth latitude :%f\n", i, GPS_value[i]);
+			printf("%dth longitude :%f\n", i, GPS_value[i+10]);
 		}
 		delay(1000);
-		stack_action(GPS_value[2][10]);
+		stack_action(GPS_value[20]);
 	}
 	return 0;
 }
