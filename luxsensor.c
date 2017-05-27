@@ -5,7 +5,7 @@
 #include <wiringPiI2C.h>
 #include "luxsensor.h"
 #include "xbee_uart.h"
-#include "xbee.h"
+#include "xbee_lib.h"
 
 //グローバルデータ宣言(const)
 //change adress:default 0x39
@@ -112,11 +112,11 @@ int islight(){
   double lux=0;
   lux = calculateLux();
   if(lux>LIGHT_THRESHOLD){
-    xbee_printf("light");
+    xbee_printf("light\n");
     return 1;
   }
   else{
-    xbee_printf("dark");
+    xbee_printf("dark\n");
     return 0;
   }
 }
