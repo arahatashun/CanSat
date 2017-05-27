@@ -271,7 +271,7 @@ int stack_action(double GPS_list[])
 		for(j = i+1; j<10; j++)
 		{
 			if(fabs(GPS_list[i]-GPS_list[j]) +
-			   fabs(GPS_list[i+10]-GPS_list[j+10]) > 0.0002)
+			   fabs(GPS_list[i+10]-GPS_list[j+10]) > 0.0001)
 			{
 				c = 1;
 				goto NOSTACK;
