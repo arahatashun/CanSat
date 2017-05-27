@@ -174,6 +174,7 @@ double cal_compass_theta()
 
 double get_distance()
 {
+	double distance = 0;
 	gps_location(&data);
 	target_position = latlng_to_xyz(target_latitude,target_longitude);
 	current_position = latlng_to_xyz(data.latitude, data.longitude);
@@ -251,7 +252,7 @@ int decide_route()
 /*
    GPS_の値を10回分確保
  */
-int stock_GPS(int n, double GPS_list[20])
+int stock_GPS(int n, double GPS_list[])
 {
 	gps_location(&data);
 	GPS_list[n] = data.latitude;
@@ -261,7 +262,7 @@ int stock_GPS(int n, double GPS_list[20])
 /*
    stack判定用
  */
-int stack_action(double GPS_list[20])
+int stack_action(double GPS_list[])
 {
 	int c = 0;                    //stackカウンター stackしたらc=0
 	int i, j;
@@ -301,7 +302,6 @@ int main()
 	signal(SIGINT, handler);
 	while(1)
 	{
-
 		for(i = 0; i< 10; i++)
 		{
 			stock_GPS(i, GPS_value);
@@ -313,7 +313,7 @@ int main()
 			printf("%dth longitude :%f\n", i, GPS_value[i+10]);
 		}
 		delay(1000);
-		stack_action(GPS_value[20]);
+		stack_action(GPS_value);
 	}
 	return 0;
 }
