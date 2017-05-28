@@ -5,7 +5,7 @@
 
 static const double PI = 3.14159265359;
 static const double convert_to_G = 16384.0;
-
+static const int angle_of_deviation = -7;
 /*
    ロール角を計算
  */
@@ -38,6 +38,24 @@ double cal_theta(double theta_atan2)
 	return theta;
 }
 
+double cal_deviated_angle(double theta_degree)
+{
+	double true_theta = 0;
+	true_theta = theta_degree + angle_of_deviation;
+	if (true_theta > 360)
+	{
+		true_theta = true_theta - 360;
+	}
+	else if(true_theta<0)
+	{
+		true_theta = true_theta+ 360;
+	}
+	else
+	{
+		true_theta = true_theta;
+	}
+	return true_theta;
+}
 int main()
 {
 	double acclx = 0;
@@ -90,6 +108,7 @@ int main()
 		x3 = zcompass*sin(psi_radian)*cos(phi_radian);
 		theta_degree = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI;
 		theta_degree = cal_theta(theta_degree);
+		theta_degree = cal_deviated_angle(theta_degree);
 		printf("theta_degree = %f\n", theta_degree);
 		delay(1000);
 	}
