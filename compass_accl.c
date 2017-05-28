@@ -38,6 +38,9 @@ double cal_theta(double theta_atan2)
 	return theta;
 }
 
+/*
+   偏角-7を考慮
+ */
 double cal_deviated_angle(double theta_degree)
 {
 	double true_theta = 0;
