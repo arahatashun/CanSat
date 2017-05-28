@@ -30,6 +30,13 @@ typedef struct cartesian_coordinates {
 cartesian_coord current_position;
 cartesian_coord target_position;
 
+typedef struct GPS_stack_decide {
+	double latitiude;
+	double longitude;
+}GPS_stack;
+
+GPS_stack GPS_value[10];
+
 //シグナルハンドラ
 void handler(int signum)
 {
@@ -297,17 +304,17 @@ int decide_route()
 /*
    GPS_の値を10回分確保
  */
-int stock_GPS(int n, double GPS_list[])
+int stock_GPS(int n)
 {
 	gps_location(&data);
-	GPS_list[n] = data.latitude;
-	GPS_list[n+10] = data.longitude;
+	GPS_value[n].latitude = data.latitude;
+	GPS_value[n].longitude = data.longitude;
 	return 0;
 }
 /*
    stack判定用
  */
-int stack_action(double GPS_list[])
+int stack_action()
 {
 	int c = 0;                    //stackカウンター stackしたらc=0
 	int i, j;
@@ -315,8 +322,8 @@ int stack_action(double GPS_list[])
 	{
 		for(j = i+1; j<10; j++)
 		{
-			if(fabs(GPS_list[i]-GPS_list[j]) +
-			   fabs(GPS_list[i+10]-GPS_list[j+10]) > 0.0001)
+			if(fabs(GPS_list[i].latitude-GPS_list[j].latitude) +
+			   fabs(GPS_list[i].longitude-GPS_list[j].longitude) > 0.0001)
 			{
 				c = 1;
 				goto NOSTACK;
@@ -354,15 +361,15 @@ int main()
 		}
 		for(i = 0; i< 10; i++)
 		{
-			printf("%dth latitude :%f\n", i, GPS_value[i]);
-			printf("%dth longitude :%f\n", i, GPS_value[i+10]);
+			printf("%dth latitude :%f\n", i, GPS_value[i].latitude);
+			printf("%dth longitude :%f\n", i, GPS_value[i].longitude);
 		}
 		for(i = 0; i < 10; i++)
 		{
 			for(j = i+1; j<10; j++)
 			{
-				printf("delta_movement :%f\n", fabs(GPS_value[i]-GPS_value[j]) +
-				       fabs(GPS_value[i+10]-GPS_value[j+10]));
+				printf("delta_movement :%f\n", fabs(GPS_value[i].latitude-GPS_value[j].latitude) +
+				       fabs(GPS_value[i].longitude-GPS_value[j].longitude));
 			}
 		}
 		delay(1000);
