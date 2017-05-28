@@ -19,8 +19,20 @@ int xbee_initializer(){
   return 0;
 }
 
-int xbee_printf(char *input){
+int xbee_print_char(char *input){
   puts(input);
-  xbee_uart(dev,input);
+  xbee_uart_char(dev,input);
+  return 0;
+}
+
+int xbee_print_int(int input){
+  printf("%d\n",input);
+  xbee_uart_int(dev,input);
+  return 0;
+}
+
+int xbee_print_double(double input){
+  printf("%4.f\n",input);
+  xbee_uart_double(dev,input);
   return 0;
 }

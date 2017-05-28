@@ -111,13 +111,14 @@ int calculateLux(){
 int islight(){
   double lux=0;
   lux = calculateLux();
-  xbee_printf("lux:%d",lux);
+  xbee_print_char("lux:");
+  xbee_print_double(lux);
   if(lux>LIGHT_THRESHOLD){
-    xbee_printf("light\n");
+    xbee_print_char("light\n");
     return 1;
   }
   else{
-    xbee_printf("dark\n");
+    xbee_print_char("dark\n");
     return 0;
   }
 }

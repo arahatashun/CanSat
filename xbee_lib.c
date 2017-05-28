@@ -121,7 +121,15 @@ void xbee_address(const byte *address);
 
 //xbee_uart関連関数群
 //byte xbee_uart(const byte *address, const char *in);
-byte xbee_putstr( const char *s );
+byte xbee_putch( const char c );
+byte xbee_putstr( const char *s ); //文字列を送る
+
+void xbee_disp_1( int x );
+void xbee_disp_2( int x );
+void xbee_disp_3( int x );
+void xbee_disp_5( int x );
+void xbee_putint(int x); //int型のデータを送る
+void xbee_putdouble(double x); //double型のデータを送る
 
 enum xbee_sensor_type{ LIGHT,TEMP,HUMIDITY,WATT,BATT,PRESS,VALUE,TIMES,NA };	// センサタイプの型
 enum xbee_port_type{ DISABLE=0, VENDER=1, AIN=2, DIN=3, DOUT_L=4, DOUT_H=5 };
@@ -317,7 +325,7 @@ byte xbee_reset( void ){
 					else break;
 				}
 				else{
-					if(i=3){
+					if(i==3){
 					//3回トライしてもret=0
 					fprintf( stderr,"EXIT:NO RESPONCE FROM XBEE" );
 					exit(-1);
@@ -388,7 +396,6 @@ byte xbee_myaddress( byte *address ){
 		return( ret );
 }
 
-/*
 /* (ドライバ)ATコマンドの送信＋受信 */
 byte xbee_tx_rx(const char *at, byte *data, byte len){
 /*
@@ -746,7 +753,7 @@ void xbee_address(const byte *address){
 }
 
 //以下xbee_uart関連関数群
-byte xbee_uart(const byte *address, const char *in){
+byte xbee_uart_char(const byte *address, const char *in){
 /*
 	入力：byte *address = 宛先(子機)アドレス
 	　　　char *in = 送信するテキスト文字。最大文字数はAPI_TXSIZE-1
@@ -756,6 +763,30 @@ byte xbee_uart(const byte *address, const char *in){
 	xbee_address( address );						// 宛先のアドレスを設定
 	if( xbee_putstr(in) > 0 ) ret = PACKET_ID;
 	return( ret );
+}
+
+void xbee_uart_int(const byte *address,int in){
+/*
+	入力:byte *adress = 宛先(子機)アドレス
+	    int in = 送信するint型の数字。
+	出力:戻り値 = 送信パケット番号PACKET_ID,0x00は失敗
+*/
+	byte ret=0;
+	xbee_address( address );						// 宛先のアドレスを設定
+}
+
+void xbee_uart_double(const byte *address,double in){
+	//double型を有効数字4桁で送信
+	byte ret=0;
+	xbee_address( address );						// 宛先のアドレスを設定
+}
+
+byte xbee_putch( const char c ){
+	byte data[2];
+	byte len;
+	data[0] = (byte)c;
+	if( xbee_at_tx( "TX", data , 1) == 0 ) len=0; else len=1;
+	return( len );
 }
 
 byte xbee_putstr( const char *s ){
@@ -774,4 +805,164 @@ byte xbee_putstr( const char *s ){
 	data[i] = 0x00;
 	if( xbee_at_tx( "TX", data , i) == 0) i=0;
 	return( i );
+}
+
+void xbee_disp_1( int x ){
+	char s[2];
+	if(x<0){
+		x = -x;
+		s[0] = '-';
+	}
+	else s[0] = ' ';
+	unsigned int x_u = (unsigned int)x;
+	if		(x_u<10)	s[1]=((char)(x_u+0x30));
+	else			s[1]='X';
+}
+
+void xbee_disp_2(int x ){
+	char s[4];
+	if(x<0){
+		x = -x;
+		s[0] = '-';
+	}
+	else s[0] = ' ';
+	unsigned int x_u = (unsigned int)x;
+	unsigned int y;
+	if (x<100){
+		y=x_u/10; s[1]=(char)(y+0x30); x_u-=(y*10);
+		s[2]=(char)(x_u+0x30);
+		s[3]='\0';
+		if( s[1]=='0' ){
+			s[1]=' ';
+		}
+		xbee_putstr( s );
+	}else xbee_putstr("XX");
+}
+
+void xbee_disp_3(int x){
+	char s[5];
+	if(x<0){
+		x = -x;
+		s[0] = '-';
+	}
+	else s[0] = ' ';
+	unsigned int x_u = (unsigned int)x;
+	unsigned int y;
+	if (x_u<1000){
+		y=x_u/100; s[1]=(char)(y+0x30); x_u-=(y*100);
+		y=x_u/10;  s[2]=(char)(y+0x30); x_u-= (y*10);
+		s[3]=(char)(x_u+0x30);
+		s[4]='\0';
+		if( s[1]=='0' ){
+			s[1]=' ';
+			if( s[2]=='0' ){
+				s[2]=' ';
+			}
+		}
+		xbee_putstr( s );
+	}else xbee_putstr("XXX");
+}
+
+void xbee_disp_5(int x){
+	char s[7];
+	if(x<0){
+		x = -x;
+		s[0] = '-';
+	}
+	else s[0] = ' ';
+	unsigned int x_u = (unsigned int)x;
+	unsigned int y;
+	if (x_u<=65535){
+		y=x_u/10000; s[1]=(char)(y+0x30); x_u-=(y*10000);
+		y=x_u/1000;  s[2]=(char)(y+0x30); x_u-= (y*1000);
+		y=x_u/100;   s[3]=(char)(y+0x30); x_u-=  (y*100);
+		y=x_u/10;    s[4]=(char)(y+0x30); x_u-=   (y*10);
+		s[5]=(char)(x_u+0x30);
+		s[6]='\0';
+		if( s[1]=='0' ){
+			s[1]=' ';
+			if( s[2]=='0' ){
+				s[2]=' ';
+				if( s[3]=='0' ){
+					s[3]=' ';
+					if( s[4]=='0' ){
+						s[4]=' ';
+					}
+				}
+			}
+		}
+		xbee_putstr( s );
+	}else xbee_putstr("65535");
+}
+
+void xbee_putint(int x){
+	if(-10 <x || x<10) xbee_disp_1(x);
+	else if(-100 <x || x<100) xbee_disp_2(x);
+	else if(-1000 <x || x<1000) xbee_disp_3(x);
+	else xbee_disp_5(x);
+}
+
+void xbee_putdouble(double x){    //有効数字4桁まで表示 0.001<x<1000
+	char s[7]; //符号(+-)+数字+小数点(.)+(\0)
+	if(x<0){
+		x = -x;
+		s[0] = '-'; //先頭に-を挿入
+	}
+	else s[0] = ' ';
+
+	unsigned int x_uint = 0;
+	unsigned int x_1000 = 0; //x_unitの1000の位
+	unsigned int x_100 = 0; //100以上の位
+	unsigned int x_10 = 0; //10以上の位
+	unsigned int x_1 = 0; //1以上の位
+	unsigned int x_else = 0; //上記で表示されなかった残り
+	unsigned int y;
+	int x_int = 0;
+
+	if(x<10){   //ex:1.567
+		x = 1000*x;
+		x_uint = (unsigned int)x;   //xを1000倍してunsigned intに変換
+		y=x_uint/1000;  s[1]=(char)(y+0x30); x_uint-= (y*1000);
+		s[2] = '.';
+		y=x_uint/100;   s[3]=(char)(y+0x30); x_uint-=  (y*100);
+		y=x_uint/10;    s[4]=(char)(y+0x30); x_uint-=   (y*10);
+		s[5]=(char)(x+0x30);
+		s[6]='\0';
+		if( s[1]=='0' ){
+			s[1]=' ';
+			if( s[3]=='0' ){
+				s[3]=' ';
+				if( s[4]=='0' ){
+					s[4]=' ';
+				}
+			}
+		}
+	xbee_putstr( s );
+	}
+	else if(x<100){  //ex:15.67
+		x = 100*x;
+		x_uint = (unsigned int)x;   //xを1000倍してunsigned intに変換
+		y=x_uint/1000;  s[1]=(char)(y+0x30); x_uint-= (y*1000);
+		y=x_uint/100;   s[2]=(char)(y+0x30); x_uint-=  (y*100);
+		s[3] = '.';
+		y=x_uint/10;    s[4]=(char)(y+0x30); x_uint-=   (y*10);
+		s[5]=(char)(x+0x30);
+		s[6]='\0';
+		xbee_putstr( s );
+	}
+	else if(x<1000){ //ex:156.7
+		x = 10*x;
+		x_uint = (unsigned int)x;   //xを1000倍してunsigned intに変換
+		y=x_uint/1000;  s[1]=(char)(y+0x30); x_uint-= (y*1000);
+		y=x_uint/100;   s[2]=(char)(y+0x30); x_uint-=  (y*100);
+		y=x_uint/10;    s[3]=(char)(y+0x30); x_uint-=   (y*10);
+		s[4] = '.';
+		s[5]=(char)(x+0x30);
+		s[6]='\0';
+		xbee_putstr( s );
+	}
+	else{ //ex:1567
+		x_int = (int)x;
+		xbee_putint(x_int);
+	}
 }
