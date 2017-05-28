@@ -2,11 +2,11 @@
 .PHONY:clean
 
 xbeelux_test01: xbeelux_test01.o luxsensor.o xbee_uart.o xbee_lib.o
-	gcc xbeelux_test01.o luxsensor.o xbee_uart.o xbee_lib.o -o xbeelux_test01
+	gcc xbeelux_test01.o luxsensor.o xbee_uart.o xbee_lib.o -o xbeelux_test01 -lwiringPi -lm
 	#これは実行ファイル
 
 xbeelux_test01.o : xbeelux_test01.c
-	gcc -c xbeelux_test01.c -o xbeelux_test01.o
+	gcc -c xbeelux_test01.c -o xbeelux_test01.o -lwiringPi -lm
 	#これは実験用ソースファイル
 
 luxsensor.o: luxsensor.c
