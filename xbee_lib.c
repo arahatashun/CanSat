@@ -810,7 +810,7 @@ byte xbee_putstr( const char *s ){
 }
 
 void xbee_disp_1( int x ){
-	char s[2];
+	char s[3];
 	if(x<0){
 		x = -x;
 		s[0] = '-';
@@ -819,6 +819,7 @@ void xbee_disp_1( int x ){
 	unsigned int x_u = (unsigned int)x;
 	if		(x_u<10)	s[1]=((char)(x_u+0x30));
 	else			s[1]='X';
+	s[2]='\0'
 	xbee_putstr(s);
 }
 

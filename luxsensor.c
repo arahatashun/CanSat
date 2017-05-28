@@ -113,6 +113,7 @@ int islight(){
   lux = calculateLux();
   xbee_print_char("lux:");
   xbee_print_double(lux);
+	xbee_print_char("\n");
   if(lux>LIGHT_THRESHOLD){
     xbee_print_char("light\n");
     return 1;
