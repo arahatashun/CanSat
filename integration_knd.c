@@ -113,36 +113,64 @@ double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 /* 地磁気の方角を計算*/
 double cal_theta(double theta_atan2)
 {
-	double theta = 0;
+	double theta;
 	theta = theta_atan2;
 	if(theta < 0)
 	{
-		theta =  360 - ((-1.0)*theta);
+		theta = 360 + theta;
 	}
 	else
 	{
-		theta = 360 -((-1.0)*theta + 360);
+		theta = theta;
 	}
-	theta = theta + angle_of_deviation;
-	if(theta < 0)
-	{
-		theta = theta + 360;
-	}
-
 	return theta;
+}
+
+/*
+   ロール角を計算
+ */
+double cal_roll(double y,double z)
+{
+	return atan2(y,z);
+}
+/*
+   ピッチ角を計算
+ */
+double cal_pitch(double x,double y,double z,double phi)
+{
+	return atan2(-x, y*sin(phi) + z*cos(phi));
+}
+
+double cal_deviated_angle(double theta_degree)
+{
+	double true_theta = 0;
+	true_theta = theta_degree + angle_of_deviation;
+	if (true_theta > 360)
+	{
+		true_theta = true_theta - 360;
+	}
+	else if(true_theta<0)
+	{
+		true_theta = true_theta+ 360;
+	}
+	else
+	{
+		true_theta = true_theta;
+	}
+	return true_theta;
 }
 
 /*
    地磁気からマシンの向いている角度を計算
  */
-double cal_compass_theta()
+double cal_compass_theta(Acclgyro *acclgyro_data,Cmps *compass_data)
 {
-	double acclx_knd = 0;
-	double accly_knd = 0;
-	double acclz_knd = 0;
-	double xcompass_knd = 0;
-	double ycompass_knd = 0;
-	double zcompass_knd = 0;
+	double acclx = 0;
+	double accly = 0;
+	double acclz = 0;
+	double xcompass = 0;
+	double ycompass = 0;
+	double zcompass = 0;
 	double phi_radian = 0;
 	double psi_radian = 0;
 	double phi_degree = 0;
@@ -153,31 +181,34 @@ double cal_compass_theta()
 	double x2 = 0;
 	double x3 = 0;
 	double theta_degree = 0;
-	acclx_knd = (double)get_acclx()/convert_to_G*0.1 + acclx_knd*0.9;
-	accly_knd = (double)get_accly()/convert_to_G*0.1 + accly_knd*0.9;
-	acclz_knd = (double)get_acclz()/convert_to_G*0.1 + acclz_knd*0.9;
-	xcompass_knd = (double)get_xcompass();
-	ycompass_knd = (double)get_ycompass();
-	zcompass_knd = (double)get_zcompass();
-	printf("acclx = %f\n", acclx_knd);
-	printf("accly = %f\n", accly_knd);
-	printf("acclz = %f\n", acclz_knd);
-	printf("compassx = %f\n", xcompass_knd);
-	printf("compassy = %f\n", ycompass_knd);
-	printf("compassz = %f\n", zcompass_knd);
-	phi_radian = atan2(accly_knd, acclz_knd);
-	psi_radian = atan2(-acclx_knd, accly_knd*sin(phi_radian) + acclz_knd*cos(phi_radian));
+	accl_and_rotation_read(&acclgyro_data);
+	compass_read(&compass_data);
+	acclx = (double) acclgyro_data.acclX_scaled/convert_to_G*0.1 + acclx*0.9;
+	accly = (double) acclgyro_data.acclY_scaled/convert_to_G*0.1 + accly*0.9;
+	acclz = (double) acclgyro_data.acclZ_scaled/convert_to_G*0.1 + acclz*0.9;
+	xcompass = (double)compass_data.compassx_value;
+	ycompass = (double)compass_data.compassy_value;
+	zcompass = (double)compass_data.compassz_value;
+	printf("acclx = %f\n", acclx);
+	printf("accly = %f\n", accly);
+	printf("acclz = %f\n", acclz);
+	printf("compassx = %f\n", xcompass);
+	printf("compassy = %f\n", ycompass);
+	printf("compassz = %f\n", zcompass);
+	phi_radian = cal_roll(accly, acclz);
+	psi_radian = cal_pitch(acclx, accly, acclz, phi_radian);
 	phi_degree = phi_radian*180.0/PI;
 	psi_degree = psi_radian*180.0/PI;
 	printf("phi_degree = %f\n", phi_degree);
 	printf("psi_degree = %f\n", psi_degree);
-	y1 = zcompass_knd*sin(phi_radian);
-	y2 = ycompass_knd*cos(phi_radian);
-	x1 = xcompass_knd*cos(psi_radian);
-	x2 = ycompass_knd*sin(psi_radian)*sin(phi_radian);
-	x3 = zcompass_knd*sin(psi_radian)*cos(phi_radian);
+	y1 = zcompass*sin(phi_radian);
+	y2 = ycompass*cos(phi_radian);
+	x1 = xcompass*cos(psi_radian);
+	x2 = ycompass*sin(psi_radian)*sin(phi_radian);
+	x3 = zcompass*sin(psi_radian)*cos(phi_radian);
 	theta_degree = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI;
 	theta_degree = cal_theta(theta_degree);
+	theta_degree = cal_deviated_angle(theta_degree);
 	printf("theta_degree = %f\n", theta_degree);
 	return theta_degree;
 }
@@ -308,7 +339,9 @@ int main()
 	acclgyro_initializer();
 	pwm_initializer();
 	gps_init();
-	compass_initializer_2();
+	compass_initializer();
+	Acclgyro acclgyro_data;
+	Cmps compass_data;
 	signal(SIGINT, handler);
 	while(1)
 	{
