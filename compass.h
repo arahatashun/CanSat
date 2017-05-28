@@ -1,13 +1,15 @@
 #ifndef COMPASS_H
 #define COMPASS_H
 
+//構造体宣言(typedef)
+typedef struct cmps {
+  double compassx_value;//the values of compassx
+  double compassy_value;
+  double compassz_value;
+} Cmps;
+
+int compass_read(Cmps *compass_data);
 int compass_initializer();
 int compass_get_angle();
 
-/*以下は近藤が自分の実験用に勝手に追記しました。
-*/
-int compass_initializer_knd();
-short get_xcompass();
-short get_ycompass();
-short get_zcompass();
 #endif

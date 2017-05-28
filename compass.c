@@ -21,6 +21,25 @@ static const double PI = 3.14159265;
 int fd = 0;
 int WPI2CWReg8 = 0;
 
+int compass_initializer()
+{
+	//I2c setup
+	fd = wiringPiI2CSetup(devid);
+	if(fd == -1)
+	{
+		printf("WARNING! compass wiringPiI2CSetup error\n");
+		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
+		return -1;
+	}
+	else
+	{
+		printf("compass wiringPiI2CSetup success\n");
+		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
+	}
+
+	return 0;
+}
+
 static short read_out(int file,int msb_reg, int lsb_reg)
 {
 	uint8_t msb = 0;
@@ -32,52 +51,36 @@ static short read_out(int file,int msb_reg, int lsb_reg)
 	return i;
 }
 
-static double calc_compass_angle(short x,short y)
+int compass_read(Cmps *compass_data)
 {
-	double angle_calc1 = 0;
-	double angle_calc2 = 0;
-	double angle_return = 0;
-	angle_calc1 = atan2((double)-y, (double)-x)*(180/PI) + 180;
-	angle_calc2 = angle_calc1 + angle_of_deviation;
-	if (angle_calc2 > 360)
+	//WriteReg8
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
+	if(WPI2CWReg8 == -1)
 	{
-		angle_return = angle_calc2 - 360;
-	}
-	else if(angle_calc2<0)
-	{
-		angle_return = angle_calc2 + 360;
+		printf("Compass write error register mode_reg\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		errno = -WPI2CWReg8;
+		printf("errno=%d: %s\n", errno, strerror(errno));
 	}
 	else
 	{
-		angle_return = angle_calc2;
-	}
-	return angle_return;
-}
-
-int compass_initializer()
-{
-	/* WHO AM I */
-	fd = wiringPiI2CSetup(devid);
-	if(fd == -1)
-	{
-		printf("WARNING! compass wiringPiI2CSetup error\n");
-		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
-		return -1;
-	}
-	else
-	{
-		printf("wiringPiI2CSetup success\n");
-		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
+		printf("Compass write register:mode_reg\n");
 	}
 
+	short x = 0;
+	short y = 0;
+	short z = 0;
+	compass_data->compassx_value = read_out(fd, x_msb_reg, x_lsb_reg);
+	compass_data->compassy_value = read_out(fd, y_msb_reg, y_lsb_reg);
+	compass_data->compassz_value = read_out(fd, z_msb_reg, z_lsb_reg);
 	return 0;
 }
 
-int compass_get_angle(double *compass_angle)
 //ポインタで角度を渡す
+int compass_get_angle(double *compass_angle)
 {
-	/* read X_MSB */
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
+	//WriteReg8
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
 	if(WPI2CWReg8 == -1)
 	{
 		printf("write error register mode_reg\n");
@@ -101,56 +104,24 @@ int compass_get_angle(double *compass_angle)
 	return 0;
 }
 
-/*以下は近藤が自分の実験用に勝手に作りました。
-   上のコードは変えてません。
- */
-
-int compass_initializer_2()
+static double calc_compass_angle(short x,short y)
 {
-	/* WHO AM I */
-	fd = wiringPiI2CSetup(devid);
-	if(fd == -1)
+	double angle_calc1 = 0;
+	double angle_calc2 = 0;
+	double angle_return = 0;
+	angle_calc1 = atan2((double)-y, (double)-x)*(180/PI) + 180;
+	angle_calc2 = angle_calc1 + angle_of_deviation;
+	if (angle_calc2 > 360)
 	{
-		printf("WARNING! compass wiringPiI2CSetup error\n");
-		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
-		return -1;
+		angle_return = angle_calc2 - 360;
+	}
+	else if(angle_calc2<0)
+	{
+		angle_return = angle_calc2 + 360;
 	}
 	else
 	{
-		printf("wiringPiI2CSetup success\n");
-		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
+		angle_return = angle_calc2;
 	}
-
-	/* start senser */
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
-	if(WPI2CWReg8 == -1)
-	{
-		printf("write error register mode_reg\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		return -1;
-	}
-	else
-	{
-		printf("write register:mode_reg\n");
-	}
-	return 0;
-}
-
-short get_xcompass()
-{
-	short x = 0;
-	x = read_out(fd, x_msb_reg, x_lsb_reg);
-	return x;
-}
-short get_ycompass()
-{
-	short y = 0;
-	y = read_out(fd, y_msb_reg, y_lsb_reg);
-	return y;
-}
-short get_zcompass()
-{
-	short z = 0;
-	z = read_out(fd, z_msb_reg, z_lsb_reg);
-	return z;
+	return angle_return;
 }

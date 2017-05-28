@@ -3,10 +3,11 @@
 #include <wiringPiI2C.h>
 #include "acclgyro.h"
 
-
 //グローバルデータ宣言(const)
 static const int devid = 0x68;    //I2C adress manual p45
 static const int power_management_reg = 0x6B;    //manual p40
+static const int mode_continuous = 0x00;
+static const int mode_single = 0x01;
 static const int acclX_reg = 0x3B;    //manual p7
 static const int acclY_reg = 0x3D;
 static const int acclZ_reg = 0x3F;
@@ -16,19 +17,37 @@ static const int gyroZ_reg = 0x47;
 static const double convert_to_G = 16384.0;
 static const double convert_to_degpers = 131.0;
 
-//グローバルデータ宣言(not const)
-static int fd;
+int fd = 0;
+int WPI2CWReg8 = 0;
 
 //関数プロトタイプ宣言(static)
 static int read_word_2c(int addr);
 static double dist(double a,double b);
 static double get_y_rotation(double x,double y,double z);
 static double get_x_rotation(double x,double y,double z);
-static int accl_and_rotation_read(Acclgyro *acclgyro_data);    //acgは構造体オブジェクトをさすポインタ
-static int gyro_read(Acclgyro *acclgyro_data);
+int accl_and_rotation_read(Acclgyro *acclgyro_data);    //acgは構造体オブジェクトをさすポインタ
+int gyro_read(Acclgyro *acclgyro_data);
 static int set_acclgyro(Acclgyro *acclgyro_data);    //integrate accl_read,gyro_read,rotation_read
 
-
+/*
+   ６軸センサー初期化
+ */
+int acclgyro_initializer()
+{
+	fd = wiringPiI2CSetup(devid);
+	if(fd == -1)
+	{
+		printf("WARNING! acclgyro wiringPiI2CSetup error\n");
+		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
+		return -1;
+	}
+	else
+	{
+		printf("acclgyro wiringPiI2CSetup success\n");
+		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
+	}
+	return 0;
+}
 
 static int read_word_2c(int addr)  //レジスタの値を読み取る
 {
@@ -61,8 +80,20 @@ static double get_x_rotation(double x, double y, double z)
 }
 
 
-static int accl_and_rotation_read(Acclgyro *acclgyro_data)  //加速度とx,y方向の回転角を読む
+int accl_and_rotation_read(Acclgyro *acclgyro_data)  //加速度とx,y方向の回転角を読む
 {
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
+	if(WPI2CWReg8 == -1)
+	{
+		printf("acclgyro write error register mode_reg\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		errno = -WPI2CWReg8;
+		printf("errno=%d: %s\n", errno, strerror(errno));
+	}
+	else
+	{
+		printf("acclgyro write register:mode_reg\n");
+	}
 	int acclX = 0;
 	int acclY = 0;
 	int acclZ = 0;
@@ -80,8 +111,23 @@ static int accl_and_rotation_read(Acclgyro *acclgyro_data)  //加速度とx,y方
 	return 0;
 }
 
-static int gyro_read(Acclgyro *acclgyro_data)  //データが格納されているAcclgyro型の構造体acclgyro_dataにアクセス
+/*
+   データが格納されているAcclgyro型の構造体acclgyro_dataにアクセス
+ */
+int gyro_read(Acclgyro *acclgyro_data)
 {
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
+	if(WPI2CWReg8 == -1)
+	{
+		printf("acclgyro write error register mode_reg\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		errno = -WPI2CWReg8;
+		printf("errno=%d: %s\n", errno, strerror(errno));
+	}
+	else
+	{
+		printf("acclgyro write register:mode_reg\n");
+	}
 	int gyroX=0;
 	int gyroY=0;
 	int gyroZ=0;
@@ -115,13 +161,6 @@ int print_acclgyro(Acclgyro *acclgyro_data) //六軸センサーの値を画面�
 	return 0;
 }
 
-int acclgyro_initializer()
-{
-	fd = wiringPiI2CSetup(devid);
-	wiringPiI2CWriteReg8(fd,power_management_reg,0x00); //disable sleep mode
-	return 0;
-}
-
 //if reverse,return 1
 int is_reverse(Acclgyro *acclgyro_data)
 {
@@ -136,29 +175,4 @@ int is_reverse(Acclgyro *acclgyro_data)
 		printf("G:%f z_posture:normal\n",acclgyro_data->acclZ_scaled);
 		return 0;
 	}
-}
-
-/*以下近藤が自分の実験のために勝手に追加しました。
-   上記の飯山のコードは変更してません。
- */
-
-int get_acclx()
-{
-	int acclx = 0;
-	acclx = read_word_2c(acclX_reg);
-	return acclx;
-}
-
-int get_accly()
-{
-	int accly = 0;
-	accly = read_word_2c(acclY_reg);
-	return accly;
-}
-
-int get_acclz()
-{
-	int acclz = 0;
-	acclz = read_word_2c(acclZ_reg);
-	return acclz;
 }
