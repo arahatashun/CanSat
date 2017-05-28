@@ -163,7 +163,7 @@ double cal_deviated_angle(double theta_degree)
 /*
    地磁気からマシンの向いている角度を計算
  */
-double cal_compass_theta(Acclgyro *acclgyro_data,Cmps *compass_data)
+double cal_compass_theta()
 {
 	double acclx = 0;
 	double accly = 0;
@@ -181,6 +181,8 @@ double cal_compass_theta(Acclgyro *acclgyro_data,Cmps *compass_data)
 	double x2 = 0;
 	double x3 = 0;
 	double theta_degree = 0;
+	Acclgyro acclgyro_data;
+	Cmps compass_data;
 	accl_and_rotation_read(&acclgyro_data);
 	compass_read(&compass_data);
 	acclx = (double) acclgyro_data.acclX_scaled/convert_to_G*0.1 + acclx*0.9;
@@ -223,7 +225,9 @@ double get_distance()
 	printf("distance :%f\n",distance);
 	return distance;
 }
-/*gpsと地磁気のデータを更新する*/
+/*
+   gpsと地磁気のデータを更新する
+ */
 int update_angle()
 {
 	time_t current_time;//時間を取得
@@ -235,8 +239,8 @@ int update_angle()
 	double angle_to_go = 0;//進むべき方角
 	angle_to_go = calc_target_angle(data.latitude,data.longitude);
 	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
-	double compass_angle_knd = 0;
-	compass_angle_knd = cal_compass_theta();
+	double compass_angle = 0;
+	compass_angle = cal_compass_theta();
 	delta_angle = cal_delta_angle(compass_angle_knd,angle_to_go);
 	printf("delta_angle:%f\n",delta_angle);//目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを-180~180で表示 目的方角が右なら値は正とする
 	target_position = latlng_to_xyz(target_latitude,target_longitude);
@@ -340,8 +344,6 @@ int main()
 	pwm_initializer();
 	gps_init();
 	compass_initializer();
-	Acclgyro acclgyro_data;
-	Cmps compass_data;
 	signal(SIGINT, handler);
 	while(1)
 	{
