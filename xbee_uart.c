@@ -32,7 +32,7 @@ int xbee_print_int(int input){
 }
 
 int xbee_print_double(double input){
-  printf("%4.f\n",input);
+  printf("%f\n",input);
   xbee_uart_double(dev,input);
   return 0;
 }

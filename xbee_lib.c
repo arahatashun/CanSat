@@ -773,12 +773,14 @@ void xbee_uart_int(const byte *address,int in){
 */
 	byte ret=0;
 	xbee_address( address );						// 宛先のアドレスを設定
+	xbee_putint(in);
 }
 
 void xbee_uart_double(const byte *address,double in){
 	//double型を有効数字4桁で送信
 	byte ret=0;
 	xbee_address( address );						// 宛先のアドレスを設定
+	xbee_putdouble(in);
 }
 
 byte xbee_putch( const char c ){
@@ -817,6 +819,7 @@ void xbee_disp_1( int x ){
 	unsigned int x_u = (unsigned int)x;
 	if		(x_u<10)	s[1]=((char)(x_u+0x30));
 	else			s[1]='X';
+	xbee_putstr(s);
 }
 
 void xbee_disp_2(int x ){
