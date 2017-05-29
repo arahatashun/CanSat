@@ -1,14 +1,23 @@
 //xbee_luxsensor test program
 
+<<<<<<< HEAD
 #include"luxsensor.h"
 #include"xbee_uart.h"
 
+=======
+#include "luxsensor.h"
+#include <xbeeuart.h>
+#include <wiringPi.h>
+#include <wiringPiI2C.h>
+#include <math.h>
+#include <stdio.h>
+>>>>>>> pid
 
 int main(){
-    xbee_initializer();
-    luxsensor_initializer();
-    while(1){
-    islight();
-    }
-    return 0;
-   }
+	xbee_initializer();
+	luxsensor_initializer();
+	while(1) {
+		islight();
+	}
+	return 0;
+}

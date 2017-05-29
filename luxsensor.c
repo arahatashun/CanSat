@@ -4,8 +4,7 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "luxsensor.h"
-#include "xbee_uart.h"
-#include "xbee_lib.h"
+
 
 //グローバルデータ宣言(const)
 //change adress:default 0x39
@@ -40,7 +39,7 @@ static const int TSL2561_REGISTER_TIMING = 0x81;
    static const int TSL2561_REGISTER_INTERRUPT = 0x06;
    static const int TSL2561_REGISTER_CRC = 0x08;
    static const int TSL2561_REGISTER_ID = 0x0A;
-*/
+ */
 static const int TSL2561_REGISTER_CHAN0_LOW = 0x8C;
 static const int TSL2561_REGISTER_CHAN0_HIGH = 0x8D;
 static const int TSL2561_REGISTER_CHAN1_LOW = 0x8E;
@@ -109,17 +108,17 @@ int calculateLux(){
 }
 
 int islight(){
-  double lux=0;
-  lux = calculateLux();
-  xbee_print_char("lux:");
-  xbee_print_double(lux);
+	double lux=0;
+	lux = calculateLux();
+	xbee_print_char("lux:");
+	xbee_print_double(lux);
 	xbee_print_char("\n");
-  if(lux>LIGHT_THRESHOLD){
-    xbee_print_char("light\n");
-    return 1;
-  }
-  else{
-    xbee_print_char("dark\n");
-    return 0;
-  }
+	if(lux>LIGHT_THRESHOLD) {
+		xbee_print_char("light\n");
+		return 1;
+	}
+	else{
+		xbee_print_char("dark\n");
+		return 0;
+	}
 }
