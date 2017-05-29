@@ -43,27 +43,6 @@ static cartesian_coord latlng_to_xyz(double lat,double lon)
 	tmp.y = coslat*sin(rlng);
 	tmp.z = sin(rlat);
 	return tmp;
-<<<<<<< HEAD
-}
-
-//距離を計算
-double dist_on_sphere(double current_lat, double current_lon)
-{
-	cartesian_coord target = latlng_to_xyz(target_latitude,target_longitude);
-	cartesian_coord current_position = latlng_to_xyz(current_lat, current_lon);
-	double dot_product_x = 0;
-	double dot_product_y = 0;
-	double dot_product_z = 0;
-	double dot_product_sum = 0;
-	double distance = 0;
-	dot_product_x = target.x*current_position.x;
-	dot_product_y = target.y*current_position.y;
-	dot_product_z = target.z*current_position.z;
-	dot_product_sum =dot_product_x+dot_product_y+dot_product_z;
-	distance = fabs(acos(dot_product_sum)*EARTH_RADIUS);
-	printf("distance : %f\n",distance);
-	return distance;
-=======
 }
 
 //距離を計算
@@ -106,5 +85,4 @@ double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 		delta_angle_cld = -360.0 + gps_angle_cld - going_angle_cld;
 	}
 	return delta_angle_cld;
->>>>>>> origin/testcagalli
 }
