@@ -38,7 +38,6 @@ int angle_gps(double *angle_course)
 	latitude_before = data.latitude;
 	longitude_before = data.longitude;
 	printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
-	//printf("GPS speed:%f\nGPS altitude:%f\n",data.speed,data.altitude);
 	delay(gps_latency);
 	printf("gps_on\n");
 	gps_init();
@@ -57,6 +56,7 @@ int angle_gps(double *angle_course)
 	*angle_course = going_angle;
 	return 0;
 }
+
 
 double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 {
@@ -78,9 +78,9 @@ double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 	{
 		delta_angle_cld = -360.0 + gps_angle_cld - going_angle_cld;
 	}
-
 	return delta_angle_cld;
 }
+
 /*
    gpsのデータを更新する
    delta_angleは現在の角度-進むべき向きを-180~180になるように調整したもの
@@ -98,15 +98,20 @@ int update_angle()
 	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
 	delta_angle = cal_delta_angle(angle_course,angle_to_go);
 	printf("GPS delta_angle:%f\n",delta_angle);
-	/*目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを-180~180で表示
-	   目的方角が右なら値は正*/
+	/*
+		目的地の方角を0として今のマシンの方角がそれから
+		どれだけずれているかを-180~180で表示
+	  目的方角が右なら値は正
+	*/
 	double distance = 0;
 	distance = dist_on_sphere(data.latitude,data.longitude);
 	return delta_angle;
 }
+
+
 /*
    進む方角が-180から-30の時にその角度差に応じて左回転、30~180の時その角度さに応じて右回転
- */
+*/
 int decide_route()
 {
 	double delta_angle = 0;
