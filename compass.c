@@ -125,3 +125,44 @@ int compass_get_angle(double *compass_angle)
 	printf("COMPASS x:%d,y:%d,z:%d,angle:%f\n",x,y,z,*compass_angle);
 	return 0;
 }
+
+
+/*
+   integrationで6軸から地磁気の向きを出すときの調整
+ */
+double cal_theta(double theta_atan2)
+{
+	double theta;
+	theta = theta_atan2;
+	if(theta < 0)
+	{
+		theta = 360 + theta;
+	}
+	else
+	{
+		theta = theta;
+	}
+	return theta;
+}
+
+/*
+   偏角を考慮
+ */
+double cal_deviated_angle(double theta_degree)
+{
+	double true_theta = 0;
+	true_theta = theta_degree + angle_of_deviation;
+	if (true_theta > 360)
+	{
+		true_theta = true_theta - 360;
+	}
+	else if(true_theta<0)
+	{
+		true_theta = true_theta+ 360;
+	}
+	else
+	{
+		true_theta = true_theta;
+	}
+	return true_theta;
+}

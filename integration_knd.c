@@ -21,15 +21,6 @@ static const double EARTH_RADIUS = 6378137;
 time_t start_time;//開始時刻のグローバル変数宣言
 
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
-//デカルト座標
-/*typedef struct cartesian_coordinates {
-        double x;
-        double y;
-        double z;
-   }cartesian_coord;
-
-   cartesian_coord current_position;
-   cartesian_coord target_position;*/
 
 typedef struct GPS_stack_decide {
 	double latitude;
@@ -48,54 +39,6 @@ void handler(int signum)
 	delay(100);
 	exit(1);
 }
-//経度と緯度をデカルト座標に変換
-/*static cartesian_coord latlng_to_xyz(double lat,double lon)
-   {
-        double rlat = 0;
-        double rlng = 0;
-        double coslat = 0;
-        rlat = lat*PI/180;
-        rlng = lon*PI/180;
-        coslat = cos(rlat);
-        cartesian_coord tmp;
-        tmp.x =coslat*cos(rlng);
-        tmp.y = coslat*sin(rlng);
-        tmp.z = sin(rlat);
-        return tmp;
-   }
- */
-//距離を計算
-/*static double dist_on_sphere(cartesian_coord target, cartesian_coord current_position)
-   {
-        double dot_product_x = 0;
-        double dot_product_y = 0;
-        double dot_product_z = 0;
-        double dot_product_sum = 0;
-        double distance = 0;
-        dot_product_x = target.x*current_position.x;
-        dot_product_y = target.y*current_position.y;
-        dot_product_z = target.z*current_position.z;
-        dot_product_sum =dot_product_x+dot_product_y+dot_product_z;
-        distance = acos(dot_product_sum)*EARTH_RADIUS;
-        printf("distance : %f\n",distance);
-        return distance;
-   }*/
-/*
-    GPSの座標と目的地の座標から進む方向を決める
- */
-
-/*double calc_target_angle(double lat,double lon)
-   {
-        double lat_offset = 0;
-        double lon_offset = 0;
-        double angle = 0;
-        lat_offset = target_latitude - lat;
-        lon_offset = target_longitude - lon;
-        angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;
-        printf("GPS target_angle : %f\n",angle);
-        return angle;
-   }
- */
 
 /*
    delta_angleを計算
@@ -124,22 +67,6 @@ double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 	return delta_angle_cld;
 }
 
-/* 地磁気の方角を計算*/
-double cal_theta(double theta_atan2)
-{
-	double theta;
-	theta = theta_atan2;
-	if(theta < 0)
-	{
-		theta = 360 + theta;
-	}
-	else
-	{
-		theta = theta;
-	}
-	return theta;
-}
-
 /*
    ロール角を計算
  */
@@ -154,26 +81,6 @@ double cal_pitch(double x,double y,double z,double phi)
 {
 	return atan2(-x, y*sin(phi) + z*cos(phi));
 }
-
-double cal_deviated_angle(double theta_degree)
-{
-	double true_theta = 0;
-	true_theta = theta_degree + angle_of_deviation;
-	if (true_theta > 360)
-	{
-		true_theta = true_theta - 360;
-	}
-	else if(true_theta<0)
-	{
-		true_theta = true_theta+ 360;
-	}
-	else
-	{
-		true_theta = true_theta;
-	}
-	return true_theta;
-}
-
 /*
    地磁気からマシンの向いている角度を計算
  */
@@ -227,13 +134,7 @@ double cal_compass_theta()
 	return theta_degree;
 }
 
-double get_distance()
-{
-	double distance = 0;
-	gps_location(&data);
-	distance = dist_on_sphere(data.latitude,data.latitude);
-	return distance;
-}
+dist_on_sphere(double current_lat, double current_lon)
 /*
    gpsと地磁気のデータを更新する
  */
@@ -270,7 +171,8 @@ int decide_route()
 {
 	double delta_angle = 0;
 	double dist_to_goal = 0;
-	dist_to_goal =get_distance();
+	gps_location(&data);
+	dist_to_goal =dist_on_sphere(data.latitude, data.longitude);
 	if(dist_to_goal < 5)
 	{
 		motor_stop();
