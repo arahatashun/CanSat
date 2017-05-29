@@ -1,12 +1,10 @@
-//acclgyro_test.c
-
 #include <stdio.h>
 #include <math.h>
 #include <wiringPiI2C.h>
 #include "acclgyro.h"
 
 int main(){
-	Acclgyro acclgyro_data; //オブジェクト生成
+	Acclgyro acclgyro_data; //構造体オブジェクト生成
 	acclgyro_initializer();
 	while(1)
 	{

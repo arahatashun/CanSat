@@ -1,15 +1,24 @@
 #include <stdio.h>
 #include <math.h>
 #include <inttypes.h>
+#include <errno.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "luxsensor.h"
+<<<<<<< HEAD
 
+=======
+/*#include "xbee_uart.h"
+ #include "xbee.h"*/
+>>>>>>> origin/testcagalli
 
-//グローバルデータ宣言(const)
 //change adress:default 0x39
 static const int TSL2561_ADDR_LOW = 0x29;
+<<<<<<< HEAD
 static const int TSL2561_ADDR_FLOAT = 0x39;  //default adress
+=======
+static const int TSL2561_ADDR_FLOAT = 0x39;     //default adress
+>>>>>>> origin/testcagalli
 static const int TSL2561_ADDR_HIGH  = 0x49;
 
 static const int TSL2561_CONTROL_POWERON = 0x03;
@@ -31,6 +40,8 @@ static const int TSL2561_BLOCK_BIT = 0x10;   // 1 = using block read/write
 
 static const int TSL2561_REGISTER_CONTROL = 0x00;
 static const int TSL2561_REGISTER_TIMING = 0x81;
+
+/*xbee用宣言*/
 /*
    static const int TSL2561_REGISTER_THRESHHOLDL_LOW = 0x02;
    static const int TSL2561_REGISTER_THRESHHOLDL_HIGH = 0x03;
@@ -50,7 +61,8 @@ static const int LIGHT_THRESHOLD = 50;  //光センサー閾値
 
 
 //グローバルデータ宣言(not const)
-static int fd;   //output of wiringPi setup
+static int fd = 0;   //output of wiringPi setup
+static int WPI2CWReg8 = 0;
 static uint16_t visible_and_ir;        //CH0 photodiode:sensitive to both visible and infrared light
 static uint16_t ir;     //CH1 photodiode:sensitive primarily to infared light
 
@@ -59,19 +71,33 @@ static uint16_t ir;     //CH1 photodiode:sensitive primarily to infared light
 static int getLux();
 
 
-int luxsensor_initializer(){
-	// Enable the device
+int luxsensor_initializer()
+{
+	//I2c setup
 	fd = wiringPiI2CSetup(TSL2561_ADDR_FLOAT);
+	if(fd == -1)
+	{
+		printf("WARNING! luxsensor wiringPiI2CSetup error\n");
+		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
+		return -1;
+	}
+	else
+	{
+		printf("luxsensor wiringPiI2CSetup success\n");
+		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
+	}
 	wiringPiI2CWriteReg8(fd, TSL2561_COMMAND_BIT, TSL2561_CONTROL_POWERON);
 	return 0;
 }
 
-int luxsensor_close(){
+int luxsensor_close()
+{
 	wiringPiI2CWriteReg8(fd, TSL2561_COMMAND_BIT, TSL2561_CONTROL_POWEROFF);
 	return 0;
 }
 
-static int getLux(){
+static int getLux()
+{
 	// Set timing (101 mSec)
 	wiringPiI2CWriteReg8(fd, TSL2561_REGISTER_TIMING, TSL2561_GAIN_AUTO);
 	//Wait for the conversion to complete
@@ -83,7 +109,8 @@ static int getLux(){
 	return ir / visible_and_ir;
 }
 
-int calculateLux(){
+int calculateLux()
+{
 	int ratio =0;
 	double lux =0;
 	double p =0;
@@ -107,6 +134,7 @@ int calculateLux(){
 	return lux;
 }
 
+<<<<<<< HEAD
 int islight(){
 	double lux=0;
 	lux = calculateLux();
@@ -122,3 +150,18 @@ int islight(){
 		return 0;
 	}
 }
+=======
+/*xbee用関数　*/
+/*int islight(){
+        double lux=0;
+        lux = calculateLux();
+        if(lux>LIGHT_THRESHOLD) {
+                xbee_printf("light");
+                return 1;
+        }
+        else{
+                xbee_printf("dark");
+                return 0;
+        }
+   }*/
+>>>>>>> origin/testcagalli

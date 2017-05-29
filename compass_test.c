@@ -3,7 +3,7 @@
 
 int main()
 {
-	compass_initializer_2();
+	compass_initializer();
 	while (1)
 	{
 		double angle;
