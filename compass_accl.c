@@ -86,9 +86,9 @@ int main()
 	{
 		accl_and_rotation_read(&acclgyro_data);
 		compass_read(&compass_data);
-		acclx = (double) acclgyro_data.acclX_scaled/convert_to_G*0.1 + acclx*0.9;
-		accly = (double) acclgyro_data.acclY_scaled/convert_to_G*0.1 + accly*0.9;
-		acclz = (double) acclgyro_data.acclZ_scaled/convert_to_G*0.1 + acclz*0.9;
+		acclx = (double) acclgyro_data.acclX_scaled*0.1 + acclx*0.9;
+		accly = (double) acclgyro_data.acclY_scaled*0.1 + accly*0.9;
+		acclz = (double) acclgyro_data.acclZ_scaled*0.1 + acclz*0.9;
 		xcompass = (double)compass_data.compassx_value;
 		ycompass = (double)compass_data.compassy_value;
 		zcompass = (double)compass_data.compassz_value;
