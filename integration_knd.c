@@ -18,10 +18,13 @@ static const int angle_of_deviation = -7;
 static const double PI = 3.14159265359;
 static const double convert_to_G = 16384.0;
 static const double EARTH_RADIUS = 6378137;
-time_t start_time;//開始時刻のグローバル変数宣言
 
+time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
 
+/*
+   GPSの値を格納するための構造体を宣言
+ */
 typedef struct GPS_stack_decide {
 	double latitude;
 	double longitude;
@@ -29,8 +32,8 @@ typedef struct GPS_stack_decide {
 
 GPS_stack GPS_value[10];
 
-Acclgyro acclgyro_data;
-Cmps compass_data;
+Acclgyro acclgyro_data; //６軸センサーの構造体を宣言
+Cmps compass_data;      //地磁気の構造体を宣言
 
 //シグナルハンドラ
 void handler(int signum)
@@ -40,47 +43,6 @@ void handler(int signum)
 	exit(1);
 }
 
-/*
-   delta_angleを計算
- */
-double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
-{
-	double delta_angle_cld = 0;
-	delta_angle_cld = gps_angle_cld - going_angle_cld;
-	if(-360 <= delta_angle_cld && delta_angle_cld <= -180)
-	{
-		delta_angle_cld = 360.0 - going_angle_cld + gps_angle_cld;
-	}
-	else if(-180 < delta_angle_cld  && delta_angle_cld < 0)
-	{
-		delta_angle_cld = delta_angle_cld;
-	}
-	else if(0 <= delta_angle_cld && delta_angle_cld <= 180)
-	{
-		delta_angle_cld = delta_angle_cld;
-	}
-	else
-	{
-		delta_angle_cld = -360.0 + gps_angle_cld - going_angle_cld;
-	}
-
-	return delta_angle_cld;
-}
-
-/*
-   ロール角を計算
- */
-double cal_roll(double y,double z)
-{
-	return atan2(y,z);
-}
-/*
-   ピッチ角を計算
- */
-double cal_pitch(double x,double y,double z,double phi)
-{
-	return atan2(-x, y*sin(phi) + z*cos(phi));
-}
 /*
    地磁気からマシンの向いている角度を計算
  */
@@ -228,7 +190,7 @@ int stack_action()
 		for(j = i+1; j<10; j++)
 		{
 			if(fabs(GPS_value[i].latitude-GPS_value[j].latitude) +
-			   fabs(GPS_value[i].longitude-GPS_value[j].longitude) > 0.00001)
+			   fabs(GPS_value[i].longitude-GPS_value[j].longitude) > 0.00001)  //ここのパラメータをいじってスタック判定
 			{
 				c = 1;
 				goto NOSTACK;
