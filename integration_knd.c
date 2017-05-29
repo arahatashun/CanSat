@@ -347,11 +347,12 @@ NOSTACK:
 int main()
 {
 	int i,j;
+	time(&start_time);
+	signal(SIGINT, handler);
 	acclgyro_initializer();
 	pwm_initializer();
 	gps_init();
 	compass_initializer();
-	signal(SIGINT, handler);
 	while(1)
 	{
 		for(i = 0; i< 10; i++)
