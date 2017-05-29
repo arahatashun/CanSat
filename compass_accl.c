@@ -5,59 +5,7 @@
 
 static const double PI = 3.14159265359;
 static const int angle_of_deviation = -7;
-/*
-   ロール角を計算
- */
-double cal_roll(double y,double z)
-{
-	return atan2(y,z);
-}
-/*
-   ピッチ角を計算
- */
-double cal_pitch(double x,double y,double z,double phi)
-{
-	return atan2(-x, y*sin(phi) + z*cos(phi));
-}
-/*
-   下のmain関数で得られたtheta_degreeを実際の角度(0~360)に変換
- */
-double cal_theta(double theta_atan2)
-{
-	double theta;
-	theta = theta_atan2;
-	if(theta < 0)
-	{
-		theta = 360 + theta;
-	}
-	else
-	{
-		theta = theta;
-	}
-	return theta;
-}
 
-/*
-   偏角-7を考慮
- */
-double cal_deviated_angle(double theta_degree)
-{
-	double true_theta = 0;
-	true_theta = theta_degree + angle_of_deviation;
-	if (true_theta > 360)
-	{
-		true_theta = true_theta - 360;
-	}
-	else if(true_theta<0)
-	{
-		true_theta = true_theta+ 360;
-	}
-	else
-	{
-		true_theta = true_theta;
-	}
-	return true_theta;
-}
 int main()
 {
 	double acclx = 0;
