@@ -5,20 +5,12 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "luxsensor.h"
-<<<<<<< HEAD
-
-=======
 /*#include "xbee_uart.h"
  #include "xbee.h"*/
->>>>>>> origin/testcagalli
 
 //change adress:default 0x39
 static const int TSL2561_ADDR_LOW = 0x29;
-<<<<<<< HEAD
-static const int TSL2561_ADDR_FLOAT = 0x39;  //default adress
-=======
 static const int TSL2561_ADDR_FLOAT = 0x39;     //default adress
->>>>>>> origin/testcagalli
 static const int TSL2561_ADDR_HIGH  = 0x49;
 
 static const int TSL2561_CONTROL_POWERON = 0x03;
@@ -134,23 +126,6 @@ int calculateLux()
 	return lux;
 }
 
-<<<<<<< HEAD
-int islight(){
-	double lux=0;
-	lux = calculateLux();
-	xbee_print_char("lux:");
-	xbee_print_double(lux);
-	xbee_print_char("\n");
-	if(lux>LIGHT_THRESHOLD) {
-		xbee_print_char("light\n");
-		return 1;
-	}
-	else{
-		xbee_print_char("dark\n");
-		return 0;
-	}
-}
-=======
 /*xbee用関数　*/
 /*int islight(){
         double lux=0;
@@ -164,4 +139,3 @@ int islight(){
                 return 0;
         }
    }*/
->>>>>>> origin/testcagalli
