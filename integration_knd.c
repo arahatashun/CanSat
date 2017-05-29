@@ -231,10 +231,7 @@ double get_distance()
 {
 	double distance = 0;
 	gps_location(&data);
-	target_position = latlng_to_xyz(target_latitude,target_longitude);
-	current_position = latlng_to_xyz(data.latitude, data.longitude);
-	distance = dist_on_sphere(target_position,current_position);
-	printf("distance :%f\n",distance);
+	distance = dist_on_sphere(data.latitude,data.latitude);
 	return distance;
 }
 /*
