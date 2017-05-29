@@ -6,7 +6,7 @@ RM=/bin/rm
 
 CFLAGS=-g3 -Wall -lm
 
-BUILD_DIR=../build
+BUILD_DIR=~/build
 
 all: init
 	${CC} ${CFLAGS} -I. -c -o ${BUILD_DIR}/xbee_uart.o xbee_uart.c
