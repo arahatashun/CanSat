@@ -43,8 +43,6 @@ void handler(int signum)
 	exit(1);
 }
 
-	return delta_angle_cld;
-}
 /*
    ロール角を計算
  */
