@@ -6,6 +6,7 @@
 //グローバルデータ宣言(const)
 static const int devid = 0x68;    //I2C adress manual p45
 static const int power_management_reg = 0x6B;    //manual p40
+static const int mode_reg = 0x02;
 static const int mode_continuous = 0x00;
 static const int mode_single = 0x01;
 static const int acclX_reg = 0x3B;    //manual p7
