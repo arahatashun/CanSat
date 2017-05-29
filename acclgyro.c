@@ -59,7 +59,6 @@ static int read_word_2c(int addr)  //レジスタの値を読み取る
 	return val;
 }
 
-
 static double dist(double a, double b)
 {
 	return sqrt((a*a) + (b*b));
@@ -175,4 +174,19 @@ int is_reverse(Acclgyro *acclgyro_data)
 		printf("G:%f z_posture:normal\n",acclgyro_data->acclZ_scaled);
 		return 0;
 	}
+}
+
+/*
+   ロール角を計算
+ */
+double cal_roll(double y,double z)
+{
+	return atan2(y,z);
+}
+/*
+   ピッチ角を計算
+ */
+double cal_pitch(double x,double y,double z,double phi)
+{
+	return atan2(-x, y*sin(phi) + z*cos(phi));
 }
