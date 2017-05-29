@@ -4,7 +4,6 @@
 #include <stdio.h>
 
 static const double PI = 3.14159265359;
-static const double convert_to_G = 16384.0;
 static const int angle_of_deviation = -7;
 /*
    ロール角を計算

@@ -85,7 +85,7 @@ static double get_x_rotation(double x, double y, double z)
 
 int accl_and_rotation_read(Acclgyro *acclgyro_data)  //加速度とx,y方向の回転角を読む
 {
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,power_management_reg,mode_single);
 	if(WPI2CWReg8 == -1)
 	{
 		printf("acclgyro write error register mode_reg\n");
@@ -119,7 +119,7 @@ int accl_and_rotation_read(Acclgyro *acclgyro_data)  //加速度とx,y方向の�
  */
 int gyro_read(Acclgyro *acclgyro_data)
 {
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,power_management_reg,mode_single);
 	if(WPI2CWReg8 == -1)
 	{
 		printf("acclgyro write error register mode_reg\n");
