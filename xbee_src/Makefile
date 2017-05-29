@@ -9,9 +9,9 @@ CFLAGS=-g3 -Wall -lm
 BUILD_DIR=~/build
 
 all: init
-	${CC} ${CFLAGS} -I. -c -o ${BUILD_DIR}/xbee_uart.o xbee_uart.c
-	${CC} ${CFLAGS} -I. -c -o ${BUILD_DIR}/xbee_lib.o xbee_lib.c
-	${AR} -rsc ${BUILD_DIR}/libxbee.a ${BUILD_DIR}/xbee_uart.o ${BUILD_DIR}/xbee_lib.o
+	${CC} ${CFLAGS} -I. -c -o ${BUILD_DIR}/xbeeuart.o xbeeuart.c
+	${CC} ${CFLAGS} -I. -c -o ${BUILD_DIR}/xbeelib.o xbeelib.c
+	${AR} -rsc ${BUILD_DIR}/libxbee.a ${BUILD_DIR}/xbeeuart.o ${BUILD_DIR}/xbeelib.o
 	${CP} *.h ${BUILD_DIR}
 
 init:
@@ -19,7 +19,7 @@ init:
 
 install:
 		ln -s `pwd`/${BUILD_DIR}/libxbee.a /usr/lib/libxbee.a
-		ln -s `pwd`/${BUILD_DIR}/xbee_uart.h /usr/include/xbee_uart.h
+		ln -s `pwd`/${BUILD_DIR}/xbeeuart.h /usr/include/xbeeuart.h
 
 clean:
 	${RM} ${BUILD_DIR}/*
