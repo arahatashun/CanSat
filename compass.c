@@ -166,27 +166,3 @@ double cal_deviated_angle(double theta_degree)
 	}
 	return true_theta;
 }
-
-double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
-{
-	double delta_angle_cld = 0;
-	delta_angle_cld = gps_angle_cld - going_angle_cld;
-	if(-360 <= delta_angle_cld && delta_angle_cld <= -180)
-	{
-		delta_angle_cld = 360.0 - going_angle_cld + gps_angle_cld;
-	}
-	else if(-180 < delta_angle_cld  && delta_angle_cld < 0)
-	{
-		delta_angle_cld = delta_angle_cld;
-	}
-	else if(0 <= delta_angle_cld && delta_angle_cld <= 180)
-	{
-		delta_angle_cld = delta_angle_cld;
-	}
-	else
-	{
-		delta_angle_cld = -360.0 + gps_angle_cld - going_angle_cld;
-	}
-
-	return delta_angle_cld;
-}
