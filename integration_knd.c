@@ -31,7 +31,7 @@ cartesian_coord current_position;
 cartesian_coord target_position;
 
 typedef struct GPS_stack_decide {
-	double latitiude;
+	double latitude;
 	double longitude;
 }GPS_stack;
 
