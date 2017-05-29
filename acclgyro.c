@@ -88,14 +88,14 @@ int accl_and_rotation_read(Acclgyro *acclgyro_data)  //加速度とx,y方向の�
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,power_management_reg,mode_single);
 	if(WPI2CWReg8 == -1)
 	{
-		printf("acclgyro write error register mode_reg\n");
+		printf("acclgyro write error register power_management_reg\n");
 		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
 		errno = -WPI2CWReg8;
 		printf("errno=%d: %s\n", errno, strerror(errno));
 	}
 	else
 	{
-		printf("acclgyro write register:mode_reg\n");
+		printf("acclgyro write register:power_management_reg\n");
 	}
 	int acclX = 0;
 	int acclY = 0;
@@ -122,14 +122,14 @@ int gyro_read(Acclgyro *acclgyro_data)
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,power_management_reg,mode_single);
 	if(WPI2CWReg8 == -1)
 	{
-		printf("acclgyro write error register mode_reg\n");
+		printf("acclgyro write error register power_management_reg\n");
 		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
 		errno = -WPI2CWReg8;
 		printf("errno=%d: %s\n", errno, strerror(errno));
 	}
 	else
 	{
-		printf("acclgyro write register:mode_reg\n");
+		printf("acclgyro write register:power_management_reg\n");
 	}
 	int gyroX=0;
 	int gyroY=0;
