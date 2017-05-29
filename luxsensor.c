@@ -95,7 +95,6 @@ static double getLux()
 	//Reads visible + IR diode from the I2C device auto
 	visible_and_ir = wiringPiI2CReadReg16(fd, TSL2561_REGISTER_CHAN0_LOW);
 	ir = wiringPiI2CReadReg16(fd, TSL2561_REGISTER_CHAN1_LOW);
-	printf("visible_and_ir = %d", visible_and_ir);
 	// Disable the device
 	return ir / visible_and_ir;
 }

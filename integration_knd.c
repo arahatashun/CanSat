@@ -37,6 +37,9 @@ typedef struct GPS_stack_decide {
 
 GPS_stack GPS_value[10];
 
+Acclgyro acclgyro_data;
+Cmps compass_data;
+
 //シグナルハンドラ
 void handler(int signum)
 {
@@ -188,8 +191,6 @@ double cal_compass_theta()
 	double x2 = 0;
 	double x3 = 0;
 	double theta_degree = 0;
-	Acclgyro acclgyro_data;
-	Cmps compass_data;
 	accl_and_rotation_read(&acclgyro_data);
 	compass_read(&compass_data);
 	acclx = (double) acclgyro_data.acclX_scaled/convert_to_G*0.1 + acclx*0.9;
