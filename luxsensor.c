@@ -101,7 +101,7 @@ static int getLux()
 
 int calculateLux()
 {
-	int ratio =0;
+	double ratio =0;
 	double lux =0;
 	double p =0;
 	ratio = getLux();
