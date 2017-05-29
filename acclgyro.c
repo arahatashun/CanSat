@@ -5,10 +5,8 @@
 #include <wiringPiI2C.h>
 #include "acclgyro.h"
 
-//グローバルデータ宣言(const)
 static const int devid = 0x68;    //I2C adress manual p45
 static const int power_management_reg = 0x6B;    //manual p40
-static const int mode_reg = 0x02;
 static const int mode_continuous = 0x00;
 static const int mode_single = 0x01;
 static const int acclX_reg = 0x3B;    //manual p7
@@ -19,7 +17,6 @@ static const int gyroY_reg = 0x45;
 static const int gyroZ_reg = 0x47;
 static const double convert_to_G = 16384.0;
 static const double convert_to_degpers = 131.0;
-
 static int fd = 0;
 static int WPI2CWReg8 = 0;
 
