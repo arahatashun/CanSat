@@ -248,7 +248,7 @@ int update_angle()
 	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
 	double compass_angle = 0;
 	compass_angle = cal_compass_theta();
-	delta_angle = cal_delta_angle(compass_angle_knd,angle_to_go);
+	delta_angle = cal_delta_angle(compass_angle,angle_to_go);
 	printf("delta_angle:%f\n",delta_angle);//目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを-180~180で表示 目的方角が右なら値は正とする
 	target_position = latlng_to_xyz(target_latitude,target_longitude);
 	current_position = latlng_to_xyz(data.latitude, data.longitude);
@@ -322,8 +322,8 @@ int stack_action()
 	{
 		for(j = i+1; j<10; j++)
 		{
-			if(fabs(GPS_list[i].latitude-GPS_list[j].latitude) +
-			   fabs(GPS_list[i].longitude-GPS_list[j].longitude) > 0.0001)
+			if(fabs(GPS_value[i].latitude-GPS_value[j].latitude) +
+			   fabs(GPS_value[i].longitude-GPS_value[j].longitude) > 0.0001)
 			{
 				c = 1;
 				goto NOSTACK;
@@ -356,7 +356,7 @@ int main()
 	{
 		for(i = 0; i< 10; i++)
 		{
-			stock_GPS(i, GPS_value);
+			stock_GPS(i);
 			decide_route();
 		}
 		for(i = 0; i< 10; i++)
