@@ -58,7 +58,7 @@ static uint16_t ir;     //CH1 photodiode:sensitive primarily to infared light
 
 
 //関数プロトタイプ宣言(static)
-static int getLux();
+static double getLux();
 
 
 int luxsensor_initializer()
@@ -99,7 +99,7 @@ static double getLux()
 	return ir / visible_and_ir;
 }
 
-int calculateLux()
+double calculateLux()
 {
 	double ratio =0;
 	double lux =0;
