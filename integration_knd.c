@@ -42,6 +42,20 @@ void handler(int signum)
 	delay(100);
 	exit(1);
 }
+/*
+   ロール角を計算
+ */
+double cal_roll(double y,double z)
+{
+	return atan2(y,z);
+}
+/*
+   ピッチ角を計算
+ */
+double cal_pitch(double x,double y,double z,double phi)
+{
+	return atan2(-x, y*sin(phi) + z*cos(phi));
+}
 
 /*
    地磁気からマシンの向いている角度を計算

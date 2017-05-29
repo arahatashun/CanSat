@@ -18,6 +18,5 @@ int accl_and_rotation_read(Acclgyro *acclgyro_data);
 int gyro_read(Acclgyro *acclgyro_data);
 int print_acclgyro(Acclgyro *acclgyro_data);    //六軸センサーの値を返す
 int is_reverse(Acclgyro *acclgyro_data);  //反転していたら1を返す
-double cal_roll(double,double);
-double cal_pitch(double,double,double,double);
+
 #endif
