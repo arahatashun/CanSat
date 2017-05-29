@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "luxsensor.h"
 
-int int main()
+int main()
 {
 	luxsensor_initializer();
 	double lux_value = 0;
