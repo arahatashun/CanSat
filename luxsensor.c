@@ -60,7 +60,7 @@ static uint16_t ir;     //CH1 photodiode:sensitive primarily to infared light
 
 
 //関数プロトタイプ宣言(static)
-static double getLux();
+static int getLux();
 
 
 int luxsensor_initializer()
