@@ -18,8 +18,8 @@ static const int z_lsb_reg = 0x06;
 static const int y_msb_reg = 0x07;
 static const int y_lsb_reg = 0x08;
 static const double PI = 3.14159265;
-int fd = 0;
-int WPI2CWReg8 = 0;
+static int fd = 0;
+static int WPI2CWReg8 = 0;
 
 int compass_initializer()
 {

@@ -20,8 +20,8 @@ static const int gyroZ_reg = 0x47;
 static const double convert_to_G = 16384.0;
 static const double convert_to_degpers = 131.0;
 
-int fd = 0;
-int WPI2CWReg8 = 0;
+static int fd = 0;
+static int WPI2CWReg8 = 0;
 
 //関数プロトタイプ宣言(static)
 static int read_word_2c(int addr);
