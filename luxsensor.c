@@ -32,6 +32,8 @@ static const int TSL2561_BLOCK_BIT = 0x10;   // 1 = using block read/write
 
 static const int TSL2561_REGISTER_CONTROL = 0x00;
 static const int TSL2561_REGISTER_TIMING = 0x81;
+
+/*xbee用宣言*/
 /*
    static const int TSL2561_REGISTER_THRESHHOLDL_LOW = 0x02;
    static const int TSL2561_REGISTER_THRESHHOLDL_HIGH = 0x03;
@@ -86,7 +88,7 @@ int luxsensor_close()
 	return 0;
 }
 
-static double getLux()
+static int getLux()
 {
 	// Set timing (101 mSec)
 	wiringPiI2CWriteReg8(fd, TSL2561_REGISTER_TIMING, TSL2561_GAIN_AUTO);
@@ -99,9 +101,9 @@ static double getLux()
 	return ir / visible_and_ir;
 }
 
-double calculateLux()
+int calculateLux()
 {
-	double ratio =0;
+	int ratio =0;
 	double lux =0;
 	double p =0;
 	ratio = getLux();
@@ -124,6 +126,7 @@ double calculateLux()
 	return lux;
 }
 
+/*xbee用関数　*/
 /*int islight(){
         double lux=0;
         lux = calculateLux();
