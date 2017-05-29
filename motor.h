@@ -7,5 +7,6 @@ int motor_forward(int);
 int motor_back(int);
 int motor_right(int);
 int motor_left(int);
+int motor_rotate(int);
 
 #endif

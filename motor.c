@@ -80,3 +80,20 @@ int motor_left(int pwm_value)
 	softPwmWrite(LEFT_MOTOR2,pwm_value);
 	return 0;
 }
+
+/*
+	pwm_valueを-100~100に拡張したもの
+	負の時にleft,正の時にright
+*/
+int motor_rotate(int pwm_value)
+{
+	printf("motor rotate\n");
+	if(pwm_value>0)
+	{
+		motor_right(pwm_value);
+	}
+	else
+	{
+		motor_left(pwm_value);
+	}
+}
