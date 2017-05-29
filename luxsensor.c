@@ -86,7 +86,7 @@ int luxsensor_close()
 	return 0;
 }
 
-static int getLux()
+static double getLux()
 {
 	// Set timing (101 mSec)
 	wiringPiI2CWriteReg8(fd, TSL2561_REGISTER_TIMING, TSL2561_GAIN_AUTO);
