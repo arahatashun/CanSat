@@ -42,7 +42,7 @@ int compute_output(pid* pid_comp)
                       pid_comp->Ki * pid_comp->integral+//integral
                         pid_comp->Kd * pid_comp->differential;//differential
 
-  pid_limiter(&pid_comp);
+  pid_limiter(pid_comp);
   return 0;
 }
 
