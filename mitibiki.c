@@ -63,6 +63,7 @@ double dist_on_sphere(double current_lat, double current_lon)
 	printf("distance : %f\n",distance);
 	return distance;
 }
+
 double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 {
 	double delta_angle_cld = 0;
@@ -83,6 +84,3 @@ double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 	{
 		delta_angle_cld = -360.0 + gps_angle_cld - going_angle_cld;
 	}
-
-	return delta_angle_cld;
-}
