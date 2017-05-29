@@ -345,7 +345,6 @@ NOSTACK:
 
 int main()
 {
-	double GPS_value[20];
 	int i,j;
 	acclgyro_initializer();
 	pwm_initializer();
