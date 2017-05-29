@@ -8,6 +8,7 @@
 #include "compass.h"
 #include "motor.h"
 #include "acclgyro.h"
+#include "mitibiki.h"
 
 //note: seikei toukei ni izon
 static const int turn_power = 60;//turnするpower
@@ -21,14 +22,14 @@ time_t start_time;//開始時刻のグローバル変数宣言
 
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
 //デカルト座標
-typedef struct cartesian_coordinates {
-	double x;
-	double y;
-	double z;
-}cartesian_coord;
+/*typedef struct cartesian_coordinates {
+        double x;
+        double y;
+        double z;
+   }cartesian_coord;
 
-cartesian_coord current_position;
-cartesian_coord target_position;
+   cartesian_coord current_position;
+   cartesian_coord target_position;*/
 
 typedef struct GPS_stack_decide {
 	double latitude;
@@ -48,51 +49,54 @@ void handler(int signum)
 	exit(1);
 }
 //経度と緯度をデカルト座標に変換
-static cartesian_coord latlng_to_xyz(double lat,double lon)
-{
-	double rlat = 0;
-	double rlng = 0;
-	double coslat = 0;
-	rlat = lat*PI/180;
-	rlng = lon*PI/180;
-	coslat = cos(rlat);
-	cartesian_coord tmp;
-	tmp.x =coslat*cos(rlng);
-	tmp.y = coslat*sin(rlng);
-	tmp.z = sin(rlat);
-	return tmp;
-}
-
+/*static cartesian_coord latlng_to_xyz(double lat,double lon)
+   {
+        double rlat = 0;
+        double rlng = 0;
+        double coslat = 0;
+        rlat = lat*PI/180;
+        rlng = lon*PI/180;
+        coslat = cos(rlat);
+        cartesian_coord tmp;
+        tmp.x =coslat*cos(rlng);
+        tmp.y = coslat*sin(rlng);
+        tmp.z = sin(rlat);
+        return tmp;
+   }
+ */
 //距離を計算
-static double dist_on_sphere(cartesian_coord target, cartesian_coord current_position)
-{
-	double dot_product_x = 0;
-	double dot_product_y = 0;
-	double dot_product_z = 0;
-	double dot_product_sum = 0;
-	double distance = 0;
-	dot_product_x = target.x*current_position.x;
-	dot_product_y = target.y*current_position.y;
-	dot_product_z = target.z*current_position.z;
-	dot_product_sum =dot_product_x+dot_product_y+dot_product_z;
-	distance = acos(dot_product_sum)*EARTH_RADIUS;
-	printf("distance : %f\n",distance);
-	return distance;
-}
+/*static double dist_on_sphere(cartesian_coord target, cartesian_coord current_position)
+   {
+        double dot_product_x = 0;
+        double dot_product_y = 0;
+        double dot_product_z = 0;
+        double dot_product_sum = 0;
+        double distance = 0;
+        dot_product_x = target.x*current_position.x;
+        dot_product_y = target.y*current_position.y;
+        dot_product_z = target.z*current_position.z;
+        dot_product_sum =dot_product_x+dot_product_y+dot_product_z;
+        distance = acos(dot_product_sum)*EARTH_RADIUS;
+        printf("distance : %f\n",distance);
+        return distance;
+   }*/
 /*
     GPSの座標と目的地の座標から進む方向を決める
  */
-double calc_target_angle(double lat,double lon)
-{
-	double lat_offset = 0;
-	double lon_offset = 0;
-	double angle = 0;
-	lat_offset = target_latitude - lat;
-	lon_offset = target_longitude - lon;
-	angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;
-	printf("GPS target_angle : %f\n",angle);
-	return angle;
-}
+
+/*double calc_target_angle(double lat,double lon)
+   {
+        double lat_offset = 0;
+        double lon_offset = 0;
+        double angle = 0;
+        lat_offset = target_latitude - lat;
+        lon_offset = target_longitude - lon;
+        angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;
+        printf("GPS target_angle : %f\n",angle);
+        return angle;
+   }
+ */
+
 /*
    delta_angleを計算
  */
@@ -250,11 +254,13 @@ int update_angle()
 	double compass_angle = 0;
 	compass_angle = cal_compass_theta();
 	delta_angle = cal_delta_angle(compass_angle,angle_to_go);
-	printf("delta_angle:%f\n",delta_angle);//目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを-180~180で表示 目的方角が右なら値は正とする
-	target_position = latlng_to_xyz(target_latitude,target_longitude);
-	current_position = latlng_to_xyz(data.latitude, data.longitude);
+	printf("delta_angle:%f\n",delta_angle);
+	/*
+	   目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを
+	   -180~180で表示 目的方角が右なら値は正とする
+	 */
 	double distance = 0;
-	distance = dist_on_sphere(target_position,current_position);
+	distance = dist_on_sphere(data.latitude,data.longitude);
 	printf("distance :%f\n",distance);
 	return delta_angle;
 }
