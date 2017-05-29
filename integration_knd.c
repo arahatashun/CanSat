@@ -134,7 +134,6 @@ double cal_compass_theta()
 	return theta_degree;
 }
 
-dist_on_sphere(double current_lat, double current_lon)
 /*
    gpsと地磁気のデータを更新する
  */
