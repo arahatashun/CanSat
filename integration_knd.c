@@ -193,9 +193,9 @@ double cal_compass_theta()
 	double theta_degree = 0;
 	accl_and_rotation_read(&acclgyro_data);
 	compass_read(&compass_data);
-	acclx = (double) acclgyro_data.acclX_scaled/convert_to_G*0.1 + acclx*0.9;
-	accly = (double) acclgyro_data.acclY_scaled/convert_to_G*0.1 + accly*0.9;
-	acclz = (double) acclgyro_data.acclZ_scaled/convert_to_G*0.1 + acclz*0.9;
+	acclx = (double) acclgyro_data.acclX_scaled;
+	accly = (double) acclgyro_data.acclY_scaled;
+	acclz = (double) acclgyro_data.acclZ_scaled;
 	xcompass = (double)compass_data.compassx_value;
 	ycompass = (double)compass_data.compassy_value;
 	zcompass = (double)compass_data.compassz_value;
@@ -324,7 +324,7 @@ int stack_action()
 		for(j = i+1; j<10; j++)
 		{
 			if(fabs(GPS_value[i].latitude-GPS_value[j].latitude) +
-			   fabs(GPS_value[i].longitude-GPS_value[j].longitude) > 0.0001)
+			   fabs(GPS_value[i].longitude-GPS_value[j].longitude) > 0.00001)
 			{
 				c = 1;
 				goto NOSTACK;
