@@ -8,7 +8,7 @@ int main()
 	double lux_value = 0;
 	while(1)
 	{
-		lux_value = alculateLux();
+		lux_value = calcuateLux();
 		printf("lux :%f", lux_value);
 		delay(1000);
 	}
