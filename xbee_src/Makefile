@@ -17,7 +17,7 @@ all: init
 init:
 	${MKDIR} -p ${BUILD_DIR}
 
-	install:
+install:
 		ln -s `pwd`/${BUILD_DIR}/libxbee.a /usr/lib/libxbee.a
 		ln -s `pwd`/${BUILD_DIR}/xbee_uart.h /usr/include/xbee_uart.h
 
