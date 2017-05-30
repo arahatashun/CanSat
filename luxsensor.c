@@ -5,8 +5,6 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "luxsensor.h"
-/*#include "xbee_uart.h"
- #include "xbee.h"*/
 
 //change adress:default 0x39
 static const int TSL2561_ADDR_LOW = 0x29;
@@ -33,16 +31,6 @@ static const int TSL2561_BLOCK_BIT = 0x10;   // 1 = using block read/write
 static const int TSL2561_REGISTER_CONTROL = 0x00;
 static const int TSL2561_REGISTER_TIMING = 0x81;
 
-/*xbee用宣言*/
-/*
-   static const int TSL2561_REGISTER_THRESHHOLDL_LOW = 0x02;
-   static const int TSL2561_REGISTER_THRESHHOLDL_HIGH = 0x03;
-   static const int TSL2561_REGISTER_THRESHHOLDH_LOW = 0x04;
-   static const int TSL2561_REGISTER_THRESHHOLDH_HIGH = 0x05;
-   static const int TSL2561_REGISTER_INTERRUPT = 0x06;
-   static const int TSL2561_REGISTER_CRC = 0x08;
-   static const int TSL2561_REGISTER_ID = 0x0A;
- */
 static const int TSL2561_REGISTER_CHAN0_LOW = 0x8C;
 static const int TSL2561_REGISTER_CHAN0_HIGH = 0x8D;
 static const int TSL2561_REGISTER_CHAN1_LOW = 0x8E;
@@ -101,29 +89,3 @@ int getLux()
 	// Disable the device
 	return visible_and_ir*2;
 }
-
-/*double calculateLux()
-   {
-        double ratio =0;
-        double lux =0;
-        double p =0;
-        ratio = getLux();
-        p = pow(ratio,1.4);
-        if ((ratio >= 0) & (ratio <= 0.52)) {
-                lux = (0.0315 * visible_and_ir) - (0.0593 * visible_and_ir * p);
-        }
-        else if (ratio <= 0.65) {
-                lux = (0.0229 * visible_and_ir) - (0.0291 * ir);
-        }
-        else if (ratio <= 0.80) {
-                lux = (0.0157 * visible_and_ir) - (0.018 * ir);
-        }
-        else if (ratio <= 1.3) {
-                lux = (0.00338 * visible_and_ir) - (0.0026 * ir);
-        }
-        else if (ratio > 1.3) {
-                lux = 0;
-        }
-        return lux;
-   }
- */
