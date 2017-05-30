@@ -87,5 +87,6 @@ int main()
   char buffer[7] = "hoge";
   usb_println(buffer, 7);
   sleep(3);
+  //sprintf
   }
 }
