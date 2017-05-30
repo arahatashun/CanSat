@@ -16,7 +16,7 @@ void usb_init(void)
 
     if (usb_filestream == -1)
     {
-        //TODO error handling...
+        printf("error")//TODO error handling...
     }
 }
 
