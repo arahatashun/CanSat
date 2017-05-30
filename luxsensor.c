@@ -90,6 +90,7 @@ int luxsensor_close()
 
 int getLux()
 {
+	printf("fd = %d", fd);
 	// Set timing (101 mSec)
 	wiringPiI2CWriteReg8(fd, TSL2561_REGISTER_TIMING, TSL2561_GAIN_AUTO);
 	//Wait for the conversion to complete
