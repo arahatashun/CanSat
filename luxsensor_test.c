@@ -11,6 +11,6 @@ int main()
 		lux_value = getLux();
 		printf("lux :%d", lux_value);
 		delay(1000);
-		wiringPiI2CWriteReg8(fd, TSL2561_COMMAND_BIT, TSL2561_CONTROL_POWEROFF);
+		luxsensor_close();
 	}
 }
