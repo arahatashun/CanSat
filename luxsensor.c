@@ -77,14 +77,10 @@ int luxsensor_close()
 
 int getLux()
 {
-	printf("fd = %d", fd);
 	// Set timing (101 mSec)
 	wiringPiI2CWriteReg8(fd, TSL2561_REGISTER_TIMING, TSL2561_GAIN_AUTO);
 	//Wait for the conversion to complete
 	delay(LUXDELAY);
-	//Reads visible + IR diode from the I2C device auto
 	visible_and_ir = wiringPiI2CReadReg16(fd, TSL2561_REGISTER_CHAN0_LOW);
-	//ir = wiringPiI2CReadReg16(fd, TSL2561_REGISTER_CHAN1_LOW);
-	// Disable the device
-	return (int)visible_and_ir - 3;
+	return visible_and_ir;
 }
