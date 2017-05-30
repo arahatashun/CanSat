@@ -134,7 +134,7 @@ int decide_route()
 	double dist_to_goal = 0;
 	gps_location(&data);
 	dist_to_goal =dist_on_sphere(data.latitude, data.longitude);
-	if(dist_to_goal < 5)
+	if(dist_to_goal < 10)
 	{
 		motor_stop();
 		delay(100000);
@@ -190,7 +190,7 @@ int stack_action()
 		for(j = i+1; j<10; j++)
 		{
 			if(fabs(GPS_value[i].latitude-GPS_value[j].latitude) +
-			   fabs(GPS_value[i].longitude-GPS_value[j].longitude) > 0.00001)  //ここのパラメータをいじってスタック判定
+			   fabs(GPS_value[i].longitude-GPS_value[j].longitude) > 0.00003)  //ここのパラメータをいじってスタック判定
 			{
 				c = 1;
 				goto NOSTACK;
