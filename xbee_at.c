@@ -5,7 +5,7 @@
 #include <termios.h>
 #include <inttypes.h>
 #include <string.h>
-
+#include <errno.h>
 #include "xbee_at.h"
 
 int usb_filestream = -1;
@@ -42,7 +42,8 @@ void usb_println(const char *line, int len)
 
         int count = write(usb_filestream, cpstr, len+1);
         if (count < 0) {
-            printf("print error");//TODO: handle errors...
+            printf("errno=%d: %s\n",errno, strerror(errno));
+            printf("print error\n");//TODO: handle errors...
         }
         free(cpstr);
     }
@@ -82,7 +83,7 @@ int main()
   usb_config();
   while (1)
   {
-  char buffer[5] = "hoge";
-  usb_println(buffer, 5);
+  char buffer[7] = "hoge";
+  usb_println(buffer, 7);
   }
 }
