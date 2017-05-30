@@ -16,7 +16,7 @@ void usb_init(void)
 
     if (usb_filestream == -1)
     {
-        printf("error")//TODO error handling...
+        printf("error");//TODO error handling...
     }
 }
 
@@ -80,8 +80,9 @@ int main()
 {
   usb_init();
   usb_config();
-  while (1) {
+  while (1)
+  {
   char buffer[5] = "hoge";
   usb_println(buffer, 5);
-}
+  }
 }
