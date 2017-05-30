@@ -86,5 +86,5 @@ int getLux()
 	visible_and_ir = wiringPiI2CReadReg16(fd, TSL2561_REGISTER_CHAN0_LOW);
 	//ir = wiringPiI2CReadReg16(fd, TSL2561_REGISTER_CHAN1_LOW);
 	// Disable the device
-	return (int)visible_and_ir;
+	return (int)visible_and_ir - 3;
 }
