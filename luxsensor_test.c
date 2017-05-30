@@ -9,7 +9,7 @@ int main()
 	while(1)
 	{
 		lux_value = getLux();
-		printf("lux :%f", lux_value);
+		printf("lux :%d", lux_value);
 		delay(1000);
 	}
 }
