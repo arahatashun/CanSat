@@ -60,7 +60,7 @@ static uint16_t ir;     //CH1 photodiode:sensitive primarily to infared light
 
 
 //関数プロトタイプ宣言(static)
-static double getLux();
+static int getLux();
 
 
 int luxsensor_initializer()
@@ -101,27 +101,28 @@ int getLux()
 	return visible_and_ir*2;
 }
 
-double calculateLux()
-{
-	double ratio =0;
-	double lux =0;
-	double p =0;
-	ratio = getLux();
-	p = pow(ratio,1.4);
-	if ((ratio >= 0) & (ratio <= 0.52)) {
-		lux = (0.0315 * visible_and_ir) - (0.0593 * visible_and_ir * p);
-	}
-	else if (ratio <= 0.65) {
-		lux = (0.0229 * visible_and_ir) - (0.0291 * ir);
-	}
-	else if (ratio <= 0.80) {
-		lux = (0.0157 * visible_and_ir) - (0.018 * ir);
-	}
-	else if (ratio <= 1.3) {
-		lux = (0.00338 * visible_and_ir) - (0.0026 * ir);
-	}
-	else if (ratio > 1.3) {
-		lux = 0;
-	}
-	return lux;
-}
+/*double calculateLux()
+   {
+        double ratio =0;
+        double lux =0;
+        double p =0;
+        ratio = getLux();
+        p = pow(ratio,1.4);
+        if ((ratio >= 0) & (ratio <= 0.52)) {
+                lux = (0.0315 * visible_and_ir) - (0.0593 * visible_and_ir * p);
+        }
+        else if (ratio <= 0.65) {
+                lux = (0.0229 * visible_and_ir) - (0.0291 * ir);
+        }
+        else if (ratio <= 0.80) {
+                lux = (0.0157 * visible_and_ir) - (0.018 * ir);
+        }
+        else if (ratio <= 1.3) {
+                lux = (0.00338 * visible_and_ir) - (0.0026 * ir);
+        }
+        else if (ratio > 1.3) {
+                lux = 0;
+        }
+        return lux;
+   }
+ */
