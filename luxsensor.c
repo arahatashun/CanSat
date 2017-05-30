@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <math.h>
 #include <inttypes.h>
 #include <errno.h>
 #include <wiringPi.h>
@@ -17,7 +16,7 @@ static const int TSL2561_CONTROL_POWEROFF = 0x00;
 static const int TSL2561_GAIN_0X = 0x00;   //No gain
 static const int TSL2561_GAIN_AUTO = 0x01;
 static const int TSL2561_GAIN_1X = 0x02;
-static const int TSL2561_GAIN_16X = 0x02; // (0x10)
+static const int TSL2561_GAIN_16X = 0x12; // (0x10)
 static const int TSL2561_INTEGRATIONTIME_13MS = 0x00;   // 13.7ms
 static const int TSL2561_INTEGRATIONTIME_101MS = 0x01; // 101ms
 static const int TSL2561_INTEGRATIONTIME_402MS = 0x02; // 402ms
@@ -87,5 +86,5 @@ int getLux()
 	visible_and_ir = wiringPiI2CReadReg16(fd, TSL2561_REGISTER_CHAN0_LOW);
 	//ir = wiringPiI2CReadReg16(fd, TSL2561_REGISTER_CHAN1_LOW);
 	// Disable the device
-	return visible_and_ir*2;
+	return (int)visible_and_ir;
 }
