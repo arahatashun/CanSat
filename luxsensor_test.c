@@ -5,10 +5,10 @@
 int main()
 {
 	luxsensor_initializer();
-	double lux_value = 0;
+	int lux_value = 0;
 	while(1)
 	{
-		lux_value = calculateLux();
+		lux_value = getLux();
 		printf("lux :%f", lux_value);
 		delay(1000);
 	}
