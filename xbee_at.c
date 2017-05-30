@@ -42,7 +42,7 @@ void usb_println(const char *line, int len)
 
         int count = write(usb_filestream, cpstr, len+1);
         if (count < 0) {
-            //TODO: handle errors...
+            printf("print error")//TODO: handle errors...
         }
         free(cpstr);
     }
