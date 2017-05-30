@@ -146,7 +146,7 @@ double cal_theta(double theta_atan2)
 }
 
 /*
-   偏角を考慮
+   偏角を考慮を考慮して計算
  */
 double cal_deviated_angle(double theta_degree)
 {
