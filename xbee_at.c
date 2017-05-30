@@ -81,6 +81,6 @@ int main()
   usb_init();
   usb_config();
   char buffer[20];
-  usb_readln(buffer, 20);
-  printf("%s\n",&buffer);
+  buffer = "hoge";
+  usb_println(buffer, 20);
 }
