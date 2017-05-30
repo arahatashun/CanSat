@@ -80,7 +80,7 @@ int main()
 {
   usb_init();
   usb_config();
-  char buffer[20];
+  char buffer[5];
   buffer = "hoge";
-  usb_println(buffer, 20);
+  usb_println(buffer, 5);
 }
