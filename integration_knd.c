@@ -9,15 +9,19 @@
 #include "motor.h"
 #include "acclgyro.h"
 #include "mitibiki.h"
+#include "pid.h"
 
-//note: seikei toukei ni izon
-static const int turn_power = 60;//turnするpower
-static const double target_latitude = 35.715204;//ido
-static const double target_longitude = 139.759198;//keido
-static const int angle_of_deviation = -7;
 static const double PI = 3.14159265359;
 static const double convert_to_G = 16384.0;
 static const double EARTH_RADIUS = 6378137;
+
+//pid制御関連の変数
+pid *motor_com;//pid制御のための構造体のポインタ
+motor_com->Kp = 0.6;
+motor_com->Ki = 0.6;
+motor_com->Kd = 0.3;
+motor_com->setpoint = 0;
+
 
 time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
@@ -112,17 +116,18 @@ int update_angle()
 	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
 	double compass_angle = 0;
 	compass_angle = cal_compass_theta();
-	delta_angle = cal_delta_angle(compass_angle,angle_to_go);
-	printf("delta_angle:%f\n",delta_angle);
 	/*
 	   目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを
 	   -180~180で表示 目的方角が右なら値は正とする
 	 */
+	delta_angle = cal_delta_angle(compass_angle,angle_to_go);
+	printf("delta_angle:%f\n",delta_angle);
 	double distance = 0;
 	distance = dist_on_sphere(data.latitude,data.longitude);
 	printf("distance :%f\n",distance);
 	return delta_angle;
 }
+
 /*
    目的方角が自分から見て右に３０度以上ずれていたら右回転、
    目的方角が自分から見て左に３０度以上ずれていたら左回転、
@@ -140,7 +145,23 @@ int decide_route()
 		delay(100000);
 	}
 
-	delta_angle=update_angle();
+	while(1)
+	{
+		delta_angle=update_angle();
+		if(-20<delta_angle<20)
+		{
+			pid_initialize(motor_com);
+			break;
+		}
+		motor_com->input=delta_angle;
+		compute_output(motor_com);
+		motor_rotate(motor_com->output);
+		delay(20);
+		motor_stop();
+		delay(10);
+	}
+	
+	/*
 	if(-180 <= delta_angle && delta_angle <= -30)
 	{
 		motor_left(turn_power);
@@ -164,6 +185,7 @@ int decide_route()
 		delay(1000);
 
 	}
+	*/
 
 	return 0;
 }
