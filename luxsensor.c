@@ -49,7 +49,6 @@ static uint16_t ir;     //CH1 photodiode:sensitive primarily to infared light
 //関数プロトタイプ宣言(static)
 int getLux();
 
-
 int luxsensor_initializer()
 {
 	//I2c setup
