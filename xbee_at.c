@@ -6,6 +6,7 @@
 #include <inttypes.h>
 #include <string.h>
 #include <errno.h>
+#include <unistd.h>
 #include "xbee_at.h"
 
 int usb_filestream = -1;
@@ -85,5 +86,6 @@ int main()
   {
   char buffer[7] = "hoge";
   usb_println(buffer, 7);
+  sleep(3);
   }
 }
