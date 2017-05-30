@@ -128,17 +128,3 @@ double calculateLux()
 	}
 	return lux;
 }
-
-/*xbee用関数　*/
-/*int islight(){
-        double lux=0;
-        lux = calculateLux();
-        if(lux>LIGHT_THRESHOLD) {
-                xbee_printf("light");
-                return 1;
-        }
-        else{
-                xbee_printf("dark");
-                return 0;
-        }
-   }*/
