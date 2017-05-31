@@ -11,12 +11,7 @@
 #include "mitibiki.h"
 #include "pid.h"
 
-<<<<<<< HEAD
-//note: seikei toukei ni izon
-static const int turn_power = 60;//turnするpower
-static const int angle_of_deviation = -7;
-=======
->>>>>>> motor
+
 static const double PI = 3.14159265359;
 static const double EARTH_RADIUS = 6378137;
 
