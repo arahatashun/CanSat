@@ -16,12 +16,7 @@ static const double PI = 3.14159265359;
 static const double EARTH_RADIUS = 6378137;
 
 //pid制御関連の変数
-pid motor_com;//pid制御のための構造体
-motor_com.Kp = 0.6;
-motor_com.Ki = 0.6;
-motor_com.Kd = 0.3;
-motor_com.setpoint = 0;
-
+pid motor_com = {.Kp = 0.6, .Ki = 0.6, .Kd = 0.3, .setpoint = 0};;//pid制御のための構造体
 
 time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
