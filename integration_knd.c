@@ -16,11 +16,11 @@ static const double PI = 3.14159265359;
 static const double EARTH_RADIUS = 6378137;
 
 //pid制御関連の変数
-pid *motor_com;//pid制御のための構造体のポインタ
-motor_com->Kp = 0.6;
-motor_com->Ki = 0.6;
-motor_com->Kd = 0.3;
-motor_com->setpoint = 0;
+pid motor_com;//pid制御のための構造体
+motor_com.Kp = 0.6;
+motor_com.Ki = 0.6;
+motor_com.Kd = 0.3;
+motor_com.setpoint = 0;
 
 
 time_t start_time;//開始時刻のグローバル変数宣言
@@ -150,17 +150,17 @@ int decide_route()
 		delta_angle=update_angle();
 		if(-20<delta_angle<20)
 		{
-			pid_initialize(motor_com);
+			pid_initialize(&motor_com);
 			break;
 		}
-		motor_com->input=delta_angle;
-		compute_output(motor_com);
-		motor_rotate(motor_com->output);
+		motor_com.input=delta_angle;
+		compute_output(&motor_com);
+		motor_rotate(motor_com.output);
 		delay(20);
 		motor_stop();
 		delay(10);
 	}
-	
+
 	/*
 	if(-180 <= delta_angle && delta_angle <= -30)
 	{
