@@ -1,88 +1,88 @@
 #include <stdio.h>
 #include <math.h>
 #include <gps.h>
+#include "mitibiki.h"
 //note: seikei toukei ni izon
-static const double target_latitude = 35.716956;//ido
-static const double target_longitude = 139.759936;//keido
+static const double target_latitude = 35.716075;//緯度
+static const double target_longitude = 139.760009;//経度
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
-//構造体で角度と距離返す方がいいかもしれないs
-loc_t data;
 
-typedef struct cartesian_coordinates{
-  double x;
-  double y;
-  double z;
-}cartesian_coord;
 
-int mitibiki_initializer()
+//デカルト座標
+typedef struct cartesian_coordinates {
+	double x;
+	double y;
+	double z;
+} cartesian_coord;
+
+//GPSの座標と目的地の座標から進む方向を決める
+double calc_target_angle(double lat,double lon)
 {
-  gps_init();
-  return 0;
+	double lat_offset = 0;
+	double lon_offset = 0;
+	double angle = 0;
+	lat_offset = target_latitude - lat;
+	lon_offset = target_longitude - lon;
+	angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;
+	printf("target_angle : %f\n",angle);
+	return angle;
 }
 
-static double calc_gps_angle(double lat,double lon)
-{
-  double lat_offset = 0;
-  double lon_offset = 0;
-  double angle = 0;
-  lat_offset = target_latitude - lat;
-  lon_offset = target_longitude - lon;
-  angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;
-  printf("target_angle : %f\n",angle);
-  return angle;
-}
-
-double target_gps_angle()
-{
-  gps_location(&data);
-  printf("latitude:%f, longitude:%f\n", data.latitude, data.longitude);
-  double target_angle = 0;
-  target_angle = calc_gps_angle(data.latitude,data.longitude);
-  return target_angle;
-}
-
+//経度と緯度をデカルト座標に変換
 static cartesian_coord latlng_to_xyz(double lat,double lon)
 {
-  double rlat = 0;
-  double rlng = 0;
-  double coslat = 0;
-  rlat = lat*PI/180;
-  rlng = lon*PI/180;
-  coslat = cos(rlat);
-  cartesian_coord tmp;
-  tmp.x =coslat*cos(rlng);
-  tmp.y = coslat*sin(rlng);
-  tmp.z = sin(rlat);
-  return tmp;
+	double rlat = 0;
+	double rlng = 0;
+	double coslat = 0;
+	rlat = lat*PI/180;
+	rlng = lon*PI/180;
+	coslat = cos(rlat);
+	cartesian_coord tmp;
+	tmp.x =coslat*cos(rlng);
+	tmp.y = coslat*sin(rlng);
+	tmp.z = sin(rlat);
+	return tmp;
 }
 
-static double dist_on_sphere(cartesian_coord target, cartesian_coord current_position)
+//距離を計算
+double dist_on_sphere(double current_lat, double current_lon)
 {
-  double dot_product_x = 0;
-  double dot_product_y = 0;
-  double dot_product_z = 0;
-  double dot_product_sum = 0;
-  double distance = 0;
-  dot_product_x = target.x*current_position.x;
-  dot_product_y = target.y*current_position.y;
-  dot_product_z = target.z*current_position.z;
-  dot_product_sum =dot_product_x+dot_product_y+dot_product_z;
-  distance = acos(dot_product_sum)*EARTH_RADIUS;
-  printf("distance : %f\n",distance);
-  return distance;
+	cartesian_coord target = latlng_to_xyz(target_latitude,target_longitude);
+	cartesian_coord current_position = latlng_to_xyz(current_lat, current_lon);
+	double dot_product_x = 0;
+	double dot_product_y = 0;
+	double dot_product_z = 0;
+	double dot_product_sum = 0;
+	double distance = 0;
+	dot_product_x = target.x*current_position.x;
+	dot_product_y = target.y*current_position.y;
+	dot_product_z = target.z*current_position.z;
+	dot_product_sum =dot_product_x+dot_product_y+dot_product_z;
+	distance = fabs(acos(dot_product_sum)*EARTH_RADIUS);
+	printf("distance : %f\n",distance);
+	return distance;
 }
 
-double get_distace()
+double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 {
-  double distance = 0;
-  cartesian_coord target;
-  cartesian_coord current_position;
-  gps_location(&data);
-  printf("latitude:%f, longitude:%f\n", data.latitude, data.longitude);
-  target = latlng_to_xyz(target_latitude,target_longitude);
-  current_position = latlng_to_xyz(data.latitude, data.longitude);
-  distance = dist_on_sphere(target,current_position);
-  return distance;
-  //always positive value?
+	double delta_angle_cld = 0;
+	delta_angle_cld = gps_angle_cld - going_angle_cld;
+	if(-360 <= delta_angle_cld && delta_angle_cld <= -180)
+	{
+		delta_angle_cld = 360.0 - going_angle_cld + gps_angle_cld;
+	}
+	else if(-180 < delta_angle_cld  && delta_angle_cld < 0)
+	{
+		delta_angle_cld = delta_angle_cld;
+	}
+	else if(0 <= delta_angle_cld && delta_angle_cld <= 180)
+	{
+		delta_angle_cld = delta_angle_cld;
+	}
+	else
+	{
+		delta_angle_cld = -360.0 + gps_angle_cld - going_angle_cld;
+	}
+	return delta_angle_cld;
 }

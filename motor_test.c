@@ -22,6 +22,8 @@ int main()
   delay(5000);
   motor_left(50);
   delay(5000);
+  motor_back(50);
+  delay(1000);
   motor_stop();
   delay(100);
 }

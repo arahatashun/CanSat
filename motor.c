@@ -26,8 +26,10 @@ int pwm_initializer()
 	softPwmCreate(LEFT_MOTOR2,INITIAL_PWM_VAL,PWM_RANGE);
 	return 0;
 }
-/*pwm_valueは0~100の値をとる。
-内部でthreadingしてることに注意
+
+/*
+    pwm_valueは0~100の値をとる。
+    内部でthreadingしてることに注意
 */
 int motor_stop()
 {
@@ -77,4 +79,21 @@ int motor_left(int pwm_value)
 	softPwmWrite(LEFT_MOTOR1,ZERO_PWM_VAL);
 	softPwmWrite(LEFT_MOTOR2,pwm_value);
 	return 0;
+}
+
+/*
+	pwm_valueを-100~100に拡張したもの
+	負の時にleft,正の時にright
+*/
+int motor_rotate(int pwm_value)
+{
+	printf("motor rotate\n");
+	if(pwm_value>0)
+	{
+		motor_right(pwm_value);
+	}
+	else
+	{
+		motor_left(pwm_value);
+	}
 }

@@ -14,7 +14,7 @@
 #include <fcntl.h>
 #include <arpa/inet.h>
 
-#include "xbee_lib.h"
+#include "xbeelib.h"
 
 //define------------------------------------------------------------------
 #define 	TIME_DEL	3				// デリミタ検出のタイムアウト時間(秒)
