@@ -30,9 +30,11 @@ int angle_gps(double *angle_course)
 {
 	printf("gps_on\n");
 	gps_init();
+	printf("errno=%d: %s\n",errno, strerror(errno));
 	gps_location(&data);
 	gps_off();
 	printf("gps_off\n");
+	printf("errno=%d: %s\n",errno, strerror(errno));
 	double latitude_before = 0;
 	double longitude_before = 0;
 	latitude_before = data.latitude;
@@ -41,8 +43,10 @@ int angle_gps(double *angle_course)
 	delay(gps_latency);
 	printf("gps_on\n");
 	gps_init();
+	printf("errno=%d: %s\n",errno, strerror(errno));
 	gps_location(&data);
 	gps_off();
+	printf("errno=%d: %s\n",errno, strerror(errno));
 	printf("gps_off\n");
 	double latitude_after = 0;
 	double longitude_after = 0;
