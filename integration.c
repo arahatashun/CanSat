@@ -41,8 +41,6 @@ int angle_gps(double *angle_course)
 		gps_location(&data);
 		latitude_before = data.latitude;//latitude_beforeを更新
 		longitude_before = data.longitude;
-		extern Queue *gps_lat_ring;
-		extern Queue *gps_lon_ring;
 		enqueue(gps_lat_ring,data.latitude);
 		enqueue(gps_lon_ring,data.longitude);
 		printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
