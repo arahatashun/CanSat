@@ -63,7 +63,11 @@ double dist_on_sphere(double current_lat, double current_lon)
 	printf("distance : %f\n",distance);
 	return distance;
 }
-
+/*
+				目的地の方角を0として今のマシンの方角がそれから
+				どれだけずれているかを-180~180で表示
+				目的方角が右なら値は正
+ */
 double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 {
 	double delta_angle_cld = 0;

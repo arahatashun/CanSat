@@ -71,11 +71,6 @@ int update_angle()
 	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
 	delta_angle = cal_delta_angle(angle_course,angle_to_go);
 	printf("GPS delta_angle:%f\n",delta_angle);
-	/*
-	        目的地の方角を0として今のマシンの方角がそれから
-	        どれだけずれているかを-180~180で表示
-	   			目的方角が右なら値は正
-	 */
 	double distance = 0;
 	distance = dist_on_sphere(data.latitude,data.longitude);
 	return delta_angle;
