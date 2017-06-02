@@ -30,14 +30,16 @@ void handler(int signum)
 //gpsの緯度経度二回分から角度計算
 int angle_gps(double *angle_course)
 {
+	double latitude_befor;
+	double longitude_before;
 	//ring_bufferが三回分のデータを保持するまでぶん回す
 	while(!is_full(gps_lat_ring))
 	{
 	gps_location(&data);
-	double latitude_before = data.latitude;
-	double longitude_before = data.longitude;
+	latitude_before = data.latitude;
+	longitude_before = data.longitude;
 	enqueue(gps_lat_ring,data.latitude);
-	enqueue(gpa_lon_ring,dasta.longitude);
+	enqueue(gpa_lon_ring,data.longitude);
 	printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
 	delay(gps_latency);
   }
