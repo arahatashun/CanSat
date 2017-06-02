@@ -66,7 +66,7 @@ Pid *make_pid(void)
 	{
     free(pid);
 		printf("メモリ不足\n");
-		return -1;
+		return NULL;//segmantaion faultの可能性
 	}
 	return pid;
 }

@@ -20,7 +20,7 @@ Queue *make_queue(int n)
 		{
 			free(que);
 			printf("メモリ不足\n");
-			return NULL;
+			return NULL;//segmantaion fault起こす
 		}
 	}
 	return que;
