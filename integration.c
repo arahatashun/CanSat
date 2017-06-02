@@ -17,7 +17,8 @@ static const double PI = 3.14159265;
 
 time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
-extern Queue *gps_lat_ring;
+//extern Queue *gps_lat_ring;
+Queue *gps_lat_ring = make_queue(3);
 extern Queue *gps_lon_ring;
 //モーター用シグナルハンドラ
 void handler(int signum)
@@ -75,7 +76,7 @@ int update_angle()
 	/*
 	        目的地の方角を0として今のマシンの方角がそれから
 	        どれだけずれているかを-180~180で表示
-	   目的方角が右なら値は正
+	   			目的方角が右なら値は正
 	 */
 	double distance = 0;
 	distance = dist_on_sphere(data.latitude,data.longitude);
