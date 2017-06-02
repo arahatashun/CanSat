@@ -4,7 +4,7 @@
 /*
   pwmの値を~100から100に調整
 */
-int pid_limiter(pid* pid_limits)
+int pid_limiter(Pid* pid_limits)
 {
   if(pid_limits->output > 100)
   {
@@ -18,7 +18,7 @@ int pid_limiter(pid* pid_limits)
 }
 
 //outputを計算
-int compute_output(pid* pid_comp)
+int compute_output(Pid* pid_comp)
 {
   unsigned int now = millis();
   double error = pid_comp->setpoint - pid_comp->input;//目標値ー入力値:偏差
@@ -46,10 +46,26 @@ int compute_output(pid* pid_comp)
   return 0;
 }
 
-int pid_initialize(pid* pid_init)
+int pid_initialize(Pid* pid_init)
 {
   pid_init->lastTime = 0;
   pid_init->prev_error = 0;
   pid_init->integral = 0;
   pid_init->differential = 0;
+}
+
+Pid *make_pid(void)
+{
+	Pid *pid = malloc(sizeof(Pid));
+	if (pid != NULL)
+	{
+		pid_initialize(&pid);
+  }
+	else
+	{
+    free(pid);
+		printf("メモリ不足\n");
+		return -1;
+	}
+	return pid;
 }
