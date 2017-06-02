@@ -30,7 +30,7 @@ void handler(int signum)
 //gpsの緯度経度二回分から角度計算
 int angle_gps(double *angle_course)
 {
-	double latitude_befor;
+	double latitude_before;
 	double longitude_before;
 	//ring_bufferが三回分のデータを保持するまでぶん回す
 	while(!is_full(gps_lat_ring))
