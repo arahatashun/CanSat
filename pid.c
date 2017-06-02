@@ -60,7 +60,7 @@ Pid *make_pid(void)
 	Pid *pid = malloc(sizeof(Pid));
 	if (pid != NULL)
 	{
-		pid_initialize(&pid);
+		pid_initialize(pid);
   }
 	else
 	{
