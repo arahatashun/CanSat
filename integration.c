@@ -18,8 +18,7 @@ static const int gps_ring_len = 3;
 
 time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
-//extern Queue *gps_lat_ring;
-Queue *gps_lat_ring = make_queue(gps_ring_len);
+extern Queue *gps_lat_ring;
 extern Queue *gps_lon_ring;
 //モーター用シグナルハンドラ
 void handler(int signum)
@@ -117,8 +116,8 @@ int main()
 	gps_init();
 	pwm_initializer();
 	signal(SIGINT, handler);
-	Queue *gps_lat_ring = make_queue(3);
-	Queue *gps_lon_ring = make_queue(3);
+	Queue *gps_lat_ring = make_queue(gps_ring_len);
+	Queue *gps_lon_ring = make_queue(gps_ring_len);
 	while(1)
 	{
 		motor_forward(forward_power);
