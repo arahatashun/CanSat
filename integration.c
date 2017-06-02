@@ -7,6 +7,7 @@
 #include <wiringPi.h>
 #include "mitibiki.h"
 #include "motor.h"
+#include "ring_buffer.h"
 
 static const int turn_milliseconds =60;//30度回転する
 static const int turn_power = 60;//turnするpower
