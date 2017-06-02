@@ -33,9 +33,9 @@ int angle_gps(double *angle_course)
 	double latitude_before;
 	double longitude_before;
 	extern Queue *gps_lat_ring;
-	extern Queue *gps_lon_ring
+	extern Queue *gps_lon_ring;
 	//ring_bufferが三回分のデータを保持するまでぶん回す
-	while(is_full(gps_lat_ring)!=1)
+	while(!is_full(gps_lat_ring))
 	{
 		gps_location(&data);
 		latitude_before = data.latitude;//latitude_beforeを更新
