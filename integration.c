@@ -18,8 +18,8 @@ static const int gps_ring_len = 3;
 
 time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
-extern Queue *gps_lat_ring;
-extern Queue *gps_lon_ring;
+Queue *gps_lat_ring = NULL;
+Queue *gps_lon_ring = NULL;
 //モーター用シグナルハンドラ
 void handler(int signum)
 {
@@ -33,8 +33,6 @@ int angle_gps(double *angle_course)
 {
 	double latitude_before;
 	double longitude_before;
-	extern Queue *gps_lat_ring;
-	extern Queue *gps_lon_ring;
 	//ring_bufferが三回分のデータを保持するまでぶん回す
 	while(!is_full(gps_lat_ring))
 	{
