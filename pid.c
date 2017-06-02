@@ -1,4 +1,5 @@
 #include <wiringPi.h>
+#include <stdlib.h>
 #include "pid.h"
 
 /*
