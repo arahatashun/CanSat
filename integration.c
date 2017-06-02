@@ -35,17 +35,17 @@ int angle_gps(double *angle_course)
 	extern Queue *gps_lat_ring;
 	extern Queue *gps_lon_ring
 	//ring_bufferが三回分のデータを保持するまでぶん回す
-	while(!is_full(gps_lat_ring))
+	while(is_full(gps_lat_ring)!=1)
 	{
-	gps_location(&data);
-	latitude_before = data.latitude;//latitude_beforeを更新
-	longitude_before = data.longitude;
-	enqueue(gps_lat_ring,data.latitude);
-	enqueue(gps_lon_ring,data.longitude);
-	printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
-	delay(gps_latency);
-  }
-  double latitude_after = dequeue(gps_lat_ring);
+		gps_location(&data);
+		latitude_before = data.latitude;//latitude_beforeを更新
+		longitude_before = data.longitude;
+		enqueue(gps_lat_ring,data.latitude);
+		enqueue(gps_lon_ring,data.longitude);
+		printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
+		delay(gps_latency);
+	}
+	double latitude_after = dequeue(gps_lat_ring);
 	double longitude_after = dequeue(gps_lon_ring);
 	double lat_offset = latitude_after - latitude_before;
 	double lon_offset = longitude_after - longitude_before;
@@ -73,10 +73,10 @@ int update_angle()
 	delta_angle = cal_delta_angle(angle_course,angle_to_go);
 	printf("GPS delta_angle:%f\n",delta_angle);
 	/*
-		目的地の方角を0として今のマシンの方角がそれから
-		どれだけずれているかを-180~180で表示
-	  目的方角が右なら値は正
-	*/
+	        目的地の方角を0として今のマシンの方角がそれから
+	        どれだけずれているかを-180~180で表示
+	   目的方角が右なら値は正
+	 */
 	double distance = 0;
 	distance = dist_on_sphere(data.latitude,data.longitude);
 	return delta_angle;
@@ -85,7 +85,7 @@ int update_angle()
 
 /*
    進む方角が-180から-30の時にその角度差に応じて左回転、30~180の時その角度さに応じて右回転
-*/
+ */
 int decide_route()
 {
 	double delta_angle = 0;
