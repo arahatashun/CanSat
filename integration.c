@@ -16,8 +16,8 @@ static const double PI = 3.14159265;
 
 time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
-Queue *gps_lat_ring = make_queue(3);
-Queue *gps_lon_ring = make_queue(3);
+*gps_lat_ring = make_queue(3);
+*gps_lon_ring = make_queue(3);
 //モーター用シグナルハンドラ
 void handler(int signum)
 {
@@ -33,15 +33,15 @@ int angle_gps(double *angle_course)
 	while(!is_full(gps_lat_ring))
 	{
 	gps_location(&data);
-	latitude_before = data.latitude;
-	latitude_before = data.longitude;
+	double latitude_before = data.latitude;
+	double latitude_before = data.longitude;
 	enqueue(gps_lat_ring,data.latitude);
 	enqueue(gpa_lon_ring,dasta.longitude);
 	printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
 	delay(gps_latency);
   }
-  double latitude_before = dequeue(gps_lat_ring);
-	double longitude_before = dequeue(gps_lon_ring);
+  double latitude_after = dequeue(gps_lat_ring);
+	double longitude_after = dequeue(gps_lon_ring);
 	double lat_offset = latitude_after - latitude_before;
 	double lon_offset = longitude_after - longitude_before;
 	double going_angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;//移動中の角度
