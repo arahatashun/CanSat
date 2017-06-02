@@ -35,7 +35,7 @@ int angle_gps(double *angle_course)
 	{
 	gps_location(&data);
 	double latitude_before = data.latitude;
-	double latitude_before = data.longitude;
+	double longitude_before = data.longitude;
 	enqueue(gps_lat_ring,data.latitude);
 	enqueue(gpa_lon_ring,dasta.longitude);
 	printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
