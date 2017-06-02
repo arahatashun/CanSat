@@ -114,8 +114,8 @@ int main()
 	gps_init();
 	pwm_initializer();
 	signal(SIGINT, handler);
-	Queue *gps_lat_ring = make_queue(gps_ring_len);
-	Queue *gps_lon_ring = make_queue(gps_ring_len);
+	gps_lat_ring = make_queue(gps_ring_len);
+	gps_lon_ring = make_queue(gps_ring_len);
 	while(1)
 	{
 		motor_forward(forward_power);
