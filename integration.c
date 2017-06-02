@@ -16,8 +16,8 @@ static const double PI = 3.14159265;
 
 time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
-*gps_lat_ring = make_queue(3);
-*gps_lon_ring = make_queue(3);
+Queue *gps_lat_ring = make_queue(3);
+Queue *gps_lon_ring = make_queue(3);
 //モーター用シグナルハンドラ
 void handler(int signum)
 {
