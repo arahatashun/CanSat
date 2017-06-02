@@ -14,7 +14,7 @@ static const int turn_power = 60;//turnするpower
 static const int gps_latency = 1100;//gps角度取得のための時間感覚
 static const int forward_power = 50;
 static const double PI = 3.14159265;
-static const gps_ring_len = 3;
+static const int gps_ring_len = 3;
 
 time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
