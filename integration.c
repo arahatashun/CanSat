@@ -36,10 +36,10 @@ int angle_gps(double *angle_course)
 	while(!is_full(gps_lat_ring))
 	{
 	gps_location(&data);
-	latitude_before = data.latitude;
+	latitude_before = data.latitude;//latitude_beforeを更新
 	longitude_before = data.longitude;
 	enqueue(gps_lat_ring,data.latitude);
-	enqueue(gpa_lon_ring,data.longitude);
+	//enqueue(gps_lon_ring,data.longitude);
 	printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
 	delay(gps_latency);
   }
