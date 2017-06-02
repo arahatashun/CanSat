@@ -1,6 +1,8 @@
-#include <wiringPi.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <wiringPi.h>
 #include "pid.h"
+
 
 /*
   pwmの値を~100から100に調整
