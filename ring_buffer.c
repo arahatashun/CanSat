@@ -34,6 +34,7 @@ int queue_length(Queue *que)
 int is_full(Queue *que)
 {
 	return que->count == que->size;
+	//trueならば1を返す
 }
 
 //queueに追加
