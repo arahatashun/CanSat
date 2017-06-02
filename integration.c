@@ -10,13 +10,14 @@
 
 static const int turn_milliseconds =60;//30度回転する
 static const int turn_power = 60;//turnするpower
-static const int gps_latency = 3300;//gps角度取得のための時間感覚
+static const int gps_latency = 1100;//gps角度取得のための時間感覚
 static const int forward_power = 50;
 static const double PI = 3.14159265;
 
 time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
-
+Queue *gps_lat_ring = make_queue(3);
+Queue *gps_lon_ring = make_queue(3);
 //モーター用シグナルハンドラ
 void handler(int signum)
 {
@@ -28,31 +29,19 @@ void handler(int signum)
 //gpsの緯度経度二回分から角度計算
 int angle_gps(double *angle_course)
 {
-	printf("gps_on\n");
-	gps_init();
-	printf("errno=%d: %s\n",errno, strerror(errno));
+	//ring_bufferが三回分のデータを保持するまでぶん回す
+	while(!is_full(gps_lat_ring))
+	{
 	gps_location(&data);
-	gps_off();
-	printf("gps_off\n");
-	printf("errno=%d: %s\n",errno, strerror(errno));
-	double latitude_before = 0;
-	double longitude_before = 0;
 	latitude_before = data.latitude;
-	longitude_before = data.longitude;
+	latitude_before = data.longitude;
+	enqueue(gps_lat_ring,data.latitude);
+	enqueue(gpa_lon_ring,dasta.longitude);
 	printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
 	delay(gps_latency);
-	printf("gps_on\n");
-	gps_init();
-	printf("errno=%d: %s\n",errno, strerror(errno));
-	gps_location(&data);
-	gps_off();
-	printf("errno=%d: %s\n",errno, strerror(errno));
-	printf("gps_off\n");
-	double latitude_after = 0;
-	double longitude_after = 0;
-	latitude_after = data.latitude;
-	longitude_after = data.longitude;
-	printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_after, longitude_after);
+  }
+  double latitude_before = dequeue(gps_lat_ring);
+	double longitude_before = dequeue(gps_lon_ring);
 	double lat_offset = latitude_after - latitude_before;
 	double lon_offset = longitude_after - longitude_before;
 	double going_angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;//移動中の角度
@@ -117,6 +106,7 @@ int decide_route()
 
 int main()
 {
+	gps_init();
 	time(&start_time);
 	pwm_initializer();
 	signal(SIGINT, handler);
