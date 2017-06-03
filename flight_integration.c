@@ -111,7 +111,7 @@ static int gps_3axisstable(){
   gpsflight_lon_ring = make_queue(gps_ring_len);
   gpsflight_alt_ring = make_queue(gps_ring_len);
 
-  while(!is_full(&flight_gps_data)){
+  while(!is_full(gpsflight_lat_ring)){
   gps_location(&flight_gps_data);
   enqueue(gpsflight_lat_ring,flight_gps_data.latitude);
   enqueue(gpsflight_lon_ring,flight_gps_data.longitude);
@@ -142,7 +142,7 @@ static int gps_3axisstable(){
   double abslat = fabs(maxlat-minlat);
   double abslon = fabs(maxlon-minlon);
   double absalt = fabs(maxalt-minalt);
-  if(abslat<0.00003 && abslot<0.00003 && absalt<3){
+  if(abslat<0.00003 && abslon<0.00003 && absalt<3){
       return 1;
   }
   sleep(2);
@@ -153,7 +153,7 @@ static int gps_altstable(){
   //GPS高度の値が安定で1を返す、不安定で0を返す
   gpsflight_alt_ring = make_queue(gps_ring_len);
 
-  while(!is_full(&flight_gps_data)){
+  while(!is_full(gpsflight_alt_ring)){
   gps_location(&flight_gps_data);
   enqueue(gpsflight_alt_ring,flight_gps_data.altitude);
   sleep(2);
@@ -168,7 +168,7 @@ static int gps_altstable(){
     if(alti<minalt) minalt = alti;
     if(alti>maxalt) maxalt = alti;
   }
-  double absalt = fabs(maxalt,minalt);
+  double absalt = fabs(maxalt-minalt);
   if(absalt<3){
       return 1;
   }
@@ -188,12 +188,12 @@ int release(){
       release_complete = 1;
       timestamp();
       printf("release complete\n");
-      write_status(1.0)
+      write_status(1.0);
     }
     else if(get_difftime() > timeout_lux){
       lux_timeout_flag = 1;
       printf("timeout_lux;release_complete\n");
-      write_status(1.1)
+      write_status(1.1);
       break;
     }
     else if(islight() == 1) islight_counter++;
