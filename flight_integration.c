@@ -6,6 +6,7 @@
 // #include<xbeeuart.h> とりあえずxbee関係はコメントアウトしてあります
 #include<WiringPi.h>
 #include<unistd.h>
+#include<math.h>
 #include"luxsensor.h"
 #include"gut.h"
 #include"ring_buffer.h"

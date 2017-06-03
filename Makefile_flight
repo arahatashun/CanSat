@@ -1,0 +1,15 @@
+//Makefile_flight
+
+LIBS =-lwiringPi -lm -lgps
+objs0 = flight_integration.o gut.o luxsensor.o ringbuffer.o
+
+flight_integration.out: $(objs0)
+	gcc -g -Wall -O2 -o flight_integration.out $(objs0) $(LIBS)
+flight_integration.o: flight_integration.c
+	gcc -c flight_integration.c
+gut.o: gut.c
+	gcc -c gut.c
+luxsensor.o: lusensor.c
+	gcc -c luxsensor.c
+ringbuffer.o: ringbuffer.c
+	gcc -c ringbuffer.c
