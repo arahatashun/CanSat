@@ -237,7 +237,7 @@ int main()
 			}
 		}
 		delay(1000);
-		stack_action(GPS_value);
+		stack_action();
 	}
 	return 0;
 }
