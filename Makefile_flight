@@ -1,4 +1,4 @@
-//Makefile_flight
+#Makefile_flight
 
 LIBS =-lwiringPi -lm -lgps
 objs0 = flight_integration.o gut.o luxsensor.o ringbuffer.o

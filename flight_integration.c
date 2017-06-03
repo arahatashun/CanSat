@@ -4,13 +4,13 @@
 #include<time.h>
 #include<gps.h>
 // #include<xbeeuart.h> とりあえずxbee関係はコメントアウトしてあります
-#include<WiringPi.h>
+#include<wiringPi.h>
 #include<unistd.h>
 #include<math.h>
 #include"luxsensor.h"
 #include"gut.h"
 #include"ring_buffer.h"
-#include"flight.h"
+#include"flight_integration.h"
 
 time_t start_all_time; //全体の開始時刻 グローバル変数
 static loc_t flight_gps_data; //gpsデータ確認用 integration_kndのdataとの衝突を回避
