@@ -31,21 +31,21 @@ void handler(int signum)
 //gpsの緯度経度二回分から角度計算
 int angle_gps(double *angle_course)
 {
-	double latitude_before;
-	double longitude_before;
+	double latitude_after;
+	double longitude_after;
 	//ring_bufferが三回分のデータを保持するまでぶん回す
 	while(!is_full(gps_lat_ring))
 	{
 		gps_location(&data);
-		latitude_before = data.latitude;//latitude_beforeを更新
-		longitude_before = data.longitude;
+		latitude_after = data.latitude;//latitude_afterを更新
+		longitude_after = data.longitude;
 		enqueue(gps_lat_ring,data.latitude);
 		enqueue(gps_lon_ring,data.longitude);
-		printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_before, longitude_before);
+		printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_after, longitude_after);
 		delay(gps_latency);
 	}
-	double latitude_after = dequeue(gps_lat_ring);
-	double longitude_after = dequeue(gps_lon_ring);
+	double latitude_before = dequeue(gps_lat_ring);
+	double longitude_before = dequeue(gps_lon_ring);
 	double lat_offset = latitude_after - latitude_before;
 	double lon_offset = longitude_after - longitude_before;
 	double going_angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;//移動中の角度
