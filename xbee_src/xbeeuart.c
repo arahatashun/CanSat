@@ -20,14 +20,17 @@ int xbee_initializer(){
 }
 
 int xbee_print_char(char *input){
-  puts(input);
   xbee_uart_char(dev,input);
   return 0;
 }
 
 int xbee_print_int(int input){
-  printf("%d\n",input);
   xbee_uart_int(dev,input);
+  return 0;
+}
+
+int xbee_print_double(double input){
+  xbee_uart_double(dev,input);
   return 0;
 }
 
