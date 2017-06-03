@@ -14,7 +14,6 @@
 static const int turn_power = 60;//turnするpower
 static const int angle_of_deviation = -7;
 static const double PI = 3.14159265359;
-static const double EARTH_RADIUS = 6378137;
 
 time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
