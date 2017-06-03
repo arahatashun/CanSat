@@ -164,24 +164,9 @@ int decide_route()
 /*
    stack判定用
  */
-int stack_action()
+int stack_action(double delta_movement)
 {
-	int c = 0;                    //stackカウンター stackしたらc=0
-	int i, j;
-	for(i = 0; i < 10; i++)
-	{
-		for(j = i+1; j<10; j++)
-		{
-			if(fabs(gps_lat_ring->buff[i]-gps_lat_ring->buff[j]) +
-			   fabs(gps_lon_ring->buff[i]-gps_lon_ring->buff[j]) > 0.00003)  //ここのパラメータをいじってスタック判定
-			{
-				c = 1;
-				goto NOSTACK;
-			}
-		}
-	}
-NOSTACK:
-	if(c==0)
+	if(delta_movement < 0.00003)                  //ここのパラメータをいじってスタック判定
 	{
 		printf("get stacked");
 		motor_right(100);
@@ -191,12 +176,13 @@ NOSTACK:
 		motor_forward(100);
 		delay(3000);
 	}
+	return 0;
 }
 
 int main()
 {
-	int i,j;
-	double lati, longi;
+	int i;
+	double lati, longi, delta_movement;
 	time(&start_time);
 	signal(SIGINT, handler);
 	acclgyro_initializer();
@@ -211,16 +197,11 @@ int main()
 		{
 			decide_route();
 		}
-		for(i = 0; i < 10; i++)
-		{
-			for(j = i+1; j<10; j++)
-			{
-				printf("delta_movement :%f\n", fabs(gps_lat_ring->buff[i]-gps_lat_ring->buff[j]) +
-				       fabs(gps_lon_ring->buff[i]-gps_lon_ring->buff[j]));
-			}
-		}
+		delta_movement = fabs(gps_lat_ring->buff[0]-gps_lat_ring->buff[9]) +
+		                 fabs(gps_lon_ring->buff[0]-gps_lon_ring->buff[9]);
+		printf("delta_movement :%f\n", delta_movement);
 		delay(1000);
-		stack_action();
+		stack_action(delta_movement);
 		for(i = 0; i< 10; i++)
 		{
 			lati = dequeue(gps_lat_ring);
@@ -228,6 +209,7 @@ int main()
 			printf("%dth latitude :%f\n", i, lati);
 			printf("%dth longitude :%f\n", i, longi);
 		}
+		delay(3000);
 	}
 	return 0;
 }
