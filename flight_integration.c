@@ -69,7 +69,7 @@ int get_difftime(){
   return (int)delta_time/60; //minに直す
 }
 
-double write_status(int sequence){
+double write_status(double sequence){
   //ステータスファイルにシーケンスデータを書き込む
   if((fp = fopen("status","w")) == NULL){
     //ファイルが開けない
