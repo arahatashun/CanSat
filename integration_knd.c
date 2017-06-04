@@ -9,28 +9,22 @@
 #include "motor.h"
 #include "acclgyro.h"
 #include "mitibiki.h"
+#include "ring_buffer.h"
 
 //note: seikei toukei ni izon
 static const int turn_power = 60;//turnするpower
 static const int angle_of_deviation = -7;
 static const double PI = 3.14159265359;
-static const double EARTH_RADIUS = 6378137;
+static const int gps_ring_len = 10;
 
 time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
 
-/*
-   GPSの値を格納するための構造体を宣言
- */
-typedef struct GPS_stack_decide {
-	double latitude;
-	double longitude;
-}GPS_stack;
-
-GPS_stack GPS_value[10];
-
 Acclgyro acclgyro_data; //６軸センサーの構造体を宣言
 Cmps compass_data;      //地磁気の構造体を宣言
+
+Queue *gps_lat_ring = NULL;
+Queue *gps_lon_ring = NULL;
 
 //シグナルハンドラ
 void handler(int signum)
@@ -103,6 +97,8 @@ int update_angle()
 	double delta_time = difftime(current_time,start_time);
 	printf("OS timestamp:%f\n",delta_time);
 	gps_location(&data);
+	enqueue(gps_lat_ring,data.latitude);
+	enqueue(gps_lon_ring,data.longitude);
 	printf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
 	double angle_to_go = 0;//進むべき方角
 	angle_to_go = calc_target_angle(data.latitude,data.longitude);
@@ -166,36 +162,11 @@ int decide_route()
 }
 
 /*
-   GPS_の値を10回分確保
+   stack判定した時の行動
  */
-int stock_GPS(int n)
+int stack_action(double delta_movement)
 {
-	gps_location(&data);
-	GPS_value[n].latitude = data.latitude;
-	GPS_value[n].longitude = data.longitude;
-	return 0;
-}
-/*
-   stack判定用
- */
-int stack_action()
-{
-	int c = 0;                    //stackカウンター stackしたらc=0
-	int i, j;
-	for(i = 0; i < 10; i++)
-	{
-		for(j = i+1; j<10; j++)
-		{
-			if(fabs(GPS_value[i].latitude-GPS_value[j].latitude) +
-			   fabs(GPS_value[i].longitude-GPS_value[j].longitude) > 0.00003)  //ここのパラメータをいじってスタック判定
-			{
-				c = 1;
-				goto NOSTACK;
-			}
-		}
-	}
-NOSTACK:
-	if(c==0)
+	if(delta_movement < 0.00003)                  //ここのパラメータをいじってスタック判定
 	{
 		printf("get stacked");
 		motor_right(100);
@@ -205,39 +176,45 @@ NOSTACK:
 		motor_forward(100);
 		delay(3000);
 	}
+	return 0;
 }
 
 int main()
 {
-	int i,j;
+	int i;
+	double lati, longi, delta_movement;
 	time(&start_time);
 	signal(SIGINT, handler);
 	acclgyro_initializer();
 	pwm_initializer();
 	gps_init();
 	compass_initializer();
+	gps_lat_ring = make_queue(gps_ring_len);
+	gps_lon_ring = make_queue(gps_ring_len);
 	while(1)
 	{
-		for(i = 0; i< 10; i++)
+		while(!is_full(gps_lat_ring))
 		{
-			stock_GPS(i);
 			decide_route();
 		}
+		delta_movement = fabs(gps_lat_ring->buff[0]-gps_lat_ring->buff[9]) +
+		                 fabs(gps_lon_ring->buff[0]-gps_lon_ring->buff[9]);
+		printf("delta_movement :%f\n", delta_movement);
+		delay(1000);
+		stack_action(delta_movement);
 		for(i = 0; i< 10; i++)
 		{
-			printf("%dth latitude :%f\n", i, GPS_value[i].latitude);
-			printf("%dth longitude :%f\n", i, GPS_value[i].longitude);
+			lati = dequeue(gps_lat_ring);
+			longi = dequeue(gps_lon_ring);
+			printf("%dth latitude :%f\n", i, lati);
+			printf("%dth longitude :%f\n", i, longi);
 		}
-		for(i = 0; i < 10; i++)
-		{
-			for(j = i+1; j<10; j++)
-			{
-				printf("delta_movement :%f\n", fabs(GPS_value[i].latitude-GPS_value[j].latitude) +
-				       fabs(GPS_value[i].longitude-GPS_value[j].longitude));
-			}
-		}
+<<<<<<< HEAD
 		delay(1000);
 		stack_action();
+=======
+		delay(3000);
+>>>>>>> origin/intcagalli
 	}
 	return 0;
 }
