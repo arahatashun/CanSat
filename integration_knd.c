@@ -205,7 +205,7 @@ int main()
 		for(i = 0; i< 10; i++)
 		{
 			lati = dequeue(gps_lat_ring);
-			longi = dequeue(gps_lat_ring);
+			longi = dequeue(gps_lon_ring);
 			printf("%dth latitude :%f\n", i, lati);
 			printf("%dth longitude :%f\n", i, longi);
 		}
