@@ -12,13 +12,14 @@ typedef struct {
     double integral;
     double differential;
     double prev_error;//前の偏差
-} pid;
+} Pid;
 
-int pid_limiter(pid* pid_limits);
+int pid_limiter(Pid* pid_limits);
 
-int compute_output(pid* pid_comp);
+int compute_output(Pid* pid_comp);
 
-int pid_initialize(pid* pid_init);
+int pid_initialize(Pid* pid_init);
 
+Pid *make_pid(void);
 
 #endif

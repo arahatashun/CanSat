@@ -3,8 +3,13 @@
 #include <gps.h>
 #include "mitibiki.h"
 //note: seikei toukei ni izon
+<<<<<<< HEAD
 static const double target_latitude = 35.716986;//緯度
 static const double target_longitude = 139.759776;//経度
+=======
+static const double target_latitude = 35.715985;//緯度
+static const double target_longitude = 139.760297;//経度
+>>>>>>> pid
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
 
@@ -63,7 +68,11 @@ double dist_on_sphere(double current_lat, double current_lon)
 	printf("distance : %f\n",distance);
 	return distance;
 }
-
+/*
+				目的地の方角を0として今のマシンの方角がそれから
+				どれだけずれているかを-180~180で表示
+				目的方角が右なら値は正
+ */
 double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 {
 	double delta_angle_cld = 0;

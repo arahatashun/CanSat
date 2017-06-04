@@ -20,7 +20,7 @@ Queue *make_queue(int n)
 		{
 			free(que);
 			printf("メモリ不足\n");
-			return NULL;
+			return NULL;//segmantaion fault起こす
 		}
 	}
 	return que;
@@ -34,6 +34,7 @@ int queue_length(Queue *que)
 int is_full(Queue *que)
 {
 	return que->count == que->size;
+	//trueならば1を返す
 }
 
 //queueに追加
