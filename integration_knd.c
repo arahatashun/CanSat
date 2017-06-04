@@ -162,7 +162,7 @@ int decide_route()
 }
 
 /*
-   stack判定用
+   stack判定した時の行動
  */
 int stack_action(double delta_movement)
 {
