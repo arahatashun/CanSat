@@ -11,11 +11,10 @@
 #include "mitibiki.h"
 #include "ring_buffer.h"
 
-//note: seikei toukei ni izon
 static const int turn_power = 60;//turnするpower
-static const int angle_of_deviation = -7;
+static const int angle_of_deviation = -7; //地磁気の偏角を考慮
 static const double PI = 3.14159265359;
-static const int gps_ring_len = 10;
+static const int gps_ring_len = 10;//gpsのリングバッファの長さ
 
 time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
@@ -23,8 +22,8 @@ loc_t data;//gpsのデータを確認するものをグローバル変数宣言
 Acclgyro acclgyro_data; //６軸センサーの構造体を宣言
 Cmps compass_data;      //地磁気の構造体を宣言
 
-Queue *gps_lat_ring = NULL;
-Queue *gps_lon_ring = NULL;
+Queue *gps_lat_ring = NULL; //緯度を格納するキューを用意
+Queue *gps_lon_ring = NULL; //経度を格納するキューを用意
 
 //シグナルハンドラ
 void handler(int signum)
@@ -35,7 +34,7 @@ void handler(int signum)
 }
 
 /*
-   地磁気からマシンの向いている角度を計算
+   地磁気と６軸センサーからマシンの向いている角度を計算
  */
 double cal_compass_theta()
 {
@@ -88,7 +87,7 @@ double cal_compass_theta()
 }
 
 /*
-   gpsと地磁気のデータを更新する
+   gpsと地磁気のデータを一回分更新し、リングバッファに格納
  */
 int update_angle()
 {
@@ -96,15 +95,15 @@ int update_angle()
 	time(&current_time);
 	double delta_time = difftime(current_time,start_time);
 	printf("OS timestamp:%f\n",delta_time);
-	gps_location(&data);
-	enqueue(gps_lat_ring,data.latitude);
-	enqueue(gps_lon_ring,data.longitude);
+	gps_location(&data);                   //gpsデータ取得
+	enqueue(gps_lat_ring,data.latitude);   //緯度を格納
+	enqueue(gps_lon_ring,data.longitude);  //経度を格納
 	printf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
-	double angle_to_go = 0;//進むべき方角
-	angle_to_go = calc_target_angle(data.latitude,data.longitude);
-	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
-	double compass_angle = 0;
-	compass_angle = cal_compass_theta();
+	double angle_to_go = 0;//進むべき方角を代入するための変数
+	angle_to_go = calc_target_angle(data.latitude,data.longitude); //緯度と経度から進むべき方角を計算
+	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角を代入するための変数
+	double compass_angle = 0;//地磁気から今のマシンの向きを計算して代入するための変数 
+	compass_angle = cal_compass_theta();//地磁気と6軸の値からマシンの向いている方角を計算
 	delta_angle = cal_delta_angle(compass_angle,angle_to_go);
 	printf("delta_angle:%f\n",delta_angle);
 	/*
