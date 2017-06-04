@@ -1,4 +1,4 @@
-// flight_integration.c
+q// flight_integration.c
 
 #include<stdio.h>
 #include<time.h>
@@ -91,9 +91,9 @@ double read_status(){
     return -1;
   }
   else{
-    int last_sequence; //最後に到達したシーケンス番号
-    fscanf(fp, "%f", last_sequence);
-    printf("read_statusfile;start from sequence:%d\n", last_sequence);
+    double last_sequence; //最後に到達したシーケンス番号
+    fscanf(fp, "%lf",&last_sequence);
+    printf("read_statusfile;start from sequence:%f\n", last_sequence);
     return last_sequence;
   }
 }
@@ -205,6 +205,7 @@ int release(){
   //以上で放出判定完了
 
 int landing(){
+  printf("started landing fase\n");
   if(lux_timeout_flag == 1 || read_status() == 1.1){
     //時間切れした場合の処理 lux_timeoutフラグまたはstatusファイルの読み込みで判断
     while(!landing_complete){
@@ -248,6 +249,7 @@ int landing(){
 //以上で着地判定終了
 
 int casing_open(){
+  printf("started casing_open fase\n");
   cut_initializer();
   cut();
   timestamp();
