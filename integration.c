@@ -58,7 +58,7 @@ int angle_gps(double *angle_course)
    gpsのデータを更新する
    delta_angleは現在の角度-進むべき向きを-180~180になるように調整したもの
  */
-int update_angle()
+int update_angle(double *updated_angle)
 {
 	time_t current_time;//時間を取得
 	time(&current_time);
@@ -68,12 +68,12 @@ int update_angle()
 	angle_gps(&angle_course);
 	double angle_to_go = 0;//進むべき方角
 	angle_to_go = calc_target_angle(data.latitude,data.longitude);
-	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
-	delta_angle = cal_delta_angle(angle_course,angle_to_go);
-	printf("GPS delta_angle:%f\n",delta_angle);
+	*updated_angle = 0;//進むべき方角と現在の移動方向の差の角
+	*updated_angle = cal_delta_angle(angle_course,angle_to_go);
+	printf("GPS delta_angle:%f\n",*updated_angle);
 	double distance = 0;
 	distance = dist_on_sphere(data.latitude,data.longitude);
-	return delta_angle;
+	return 0;
 }
 
 
@@ -83,7 +83,7 @@ int update_angle()
 int decide_route()
 {
 	double delta_angle = 0;
-	delta_angle=update_angle();
+	update_angle(&delta_angle);
 
 	while((-180 <= delta_angle && delta_angle <= -30))
 	{
