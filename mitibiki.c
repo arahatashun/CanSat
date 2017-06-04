@@ -65,7 +65,7 @@ double dist_on_sphere(double current_lat, double current_lon)
 	return distance;
 }
 /*
-	目的地の方角を0として今のマシンの方角がそれから
+	マシンの方角を0として目的地の方角がそれから
 	どれだけずれているかを-180~180で表示
 	目的方角が右なら値は正
  */
