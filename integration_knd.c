@@ -106,10 +106,6 @@ int update_angle()
 	compass_angle = cal_compass_theta();//地磁気と6軸の値からマシンの向いている方角を計算
 	delta_angle = cal_delta_angle(compass_angle,angle_to_go);
 	printf("delta_angle:%f\n",delta_angle);
-	/*
-	   目的地の方角を0として今のマシンの方角がそれからどれだけずれているかを
-	   -180~180で表示 目的方角が右なら値は正とする
-	 */
 	double distance = 0;
 	distance = dist_on_sphere(data.latitude,data.longitude);
 	printf("distance :%f\n",distance);
