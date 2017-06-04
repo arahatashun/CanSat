@@ -38,14 +38,14 @@ void handler(int signum)
  */
 double cal_compass_theta()
 {
-	double acclx = 0;
+	double acclx = 0; //３xyz方向の加速度センサーの値を格納
 	double accly = 0;
 	double acclz = 0;
-	double xcompass = 0;
+	double xcompass = 0; //xyz方向の地磁気センサーの値を格納
 	double ycompass = 0;
 	double zcompass = 0;
-	double phi_radian = 0;
-	double psi_radian = 0;
+	double phi_radian = 0; //ロール角のdegree表示の値を格納
+	double psi_radian = 0; //ピッチ角のdegree表示の値を格納
 	double phi_degree = 0;
 	double psi_degree = 0;
 	double y1 = 0;
@@ -80,8 +80,8 @@ double cal_compass_theta()
 	x2 = ycompass*sin(psi_radian)*sin(phi_radian);
 	x3 = zcompass*sin(psi_radian)*cos(phi_radian);
 	theta_degree = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI;
-	theta_degree = cal_theta(theta_degree);
-	theta_degree = cal_deviated_angle(theta_degree);
+	theta_degree = cal_theta(theta_degree); //値域が0~360になるように計算
+	theta_degree = cal_deviated_angle(theta_degree); //偏角を調整
 	printf("theta_degree = %f\n", theta_degree);
 	return theta_degree;
 }
@@ -126,21 +126,21 @@ int decide_route()
 	double dist_to_goal = 0;
 	gps_location(&data);
 	dist_to_goal =dist_on_sphere(data.latitude, data.longitude);
-	if(dist_to_goal < 10)
+	if(dist_to_goal < 10) //ゴールまでの距離が10m以下なら100秒停止
 	{
 		motor_stop();
 		delay(100000);
 	}
 
 	delta_angle=update_angle();
-	if(-180 <= delta_angle && delta_angle <= -30)
+	if(-180 <= delta_angle && delta_angle <= -30) //ゴールの方角がマシンから見て左に30~180度の場合は左回転
 	{
 		motor_left(turn_power);
 		delay(100);
 		motor_stop();
 		delay(1000);
 	}
-	else if(30 <= delta_angle && delta_angle <= 180)
+	else if(30 <= delta_angle && delta_angle <= 180) //ゴールの方角がマシンから見て右に30~180度の場合は右回転
 	{
 		motor_right(turn_power);
 		delay(100);
