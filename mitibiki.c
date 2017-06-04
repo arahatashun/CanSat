@@ -3,13 +3,9 @@
 #include <gps.h>
 #include "mitibiki.h"
 //note: seikei toukei ni izon
-<<<<<<< HEAD
-static const double target_latitude = 35.716986;//緯度
-static const double target_longitude = 139.759776;//経度
-=======
+
 static const double target_latitude = 35.715985;//緯度
 static const double target_longitude = 139.760297;//経度
->>>>>>> pid
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
 
