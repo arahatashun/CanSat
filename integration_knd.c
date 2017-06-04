@@ -195,7 +195,6 @@ int main()
 	{
 		while(!is_full(gps_lat_ring))
 		{
-			printf("hello");
 			decide_route();
 		}
 		delta_movement = fabs(gps_lat_ring->buff[0]-gps_lat_ring->buff[9]) +
