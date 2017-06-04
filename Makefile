@@ -1,8 +1,9 @@
 # Makefile
 
 LIBS =-lwiringPi -lm -lgps
-objs0 = integration.o motor.o mitibiki.o
+objs0 = integration.o motor.o mitibiki.o pid.o
 objs1 = integration_knd.o motor.o mitibiki.o compass.o acclgyro.o
+
 integration.out: $(objs0)
 	gcc -g -Wall -O2 -o integration.out $(objs0) $(LIBS)
 knd.out: $(objs1)
@@ -19,3 +20,5 @@ acclgyro.o: acclgyro.c
 	gcc -c acclgyro.c
 motor.o: motor.c
 	gcc -c motor.c
+pid.o: pid.c
+	gcc -c pid.c
