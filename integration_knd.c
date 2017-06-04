@@ -209,12 +209,7 @@ int main()
 			printf("%dth latitude :%f\n", i, lati);
 			printf("%dth longitude :%f\n", i, longi);
 		}
-<<<<<<< HEAD
-		delay(1000);
-		stack_action();
-=======
 		delay(3000);
->>>>>>> origin/intcagalli
 	}
 	return 0;
 }
