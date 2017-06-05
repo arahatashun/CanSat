@@ -120,17 +120,11 @@ int decide_route()
 {
 	double delta_angle = 0;
 	double dist_to_goal = 0;
-	gps_location(&data);
-	dist_to_goal =dist_on_sphere(data.latitude, data.longitude);
-	if(dist_to_goal < 10) //ゴールまでの距離が10m以下なら100秒停止
-		update_angle(&delta_angle,&dist_to_goal);
-
-	if(dist_to_goal<1)
+	update_angle(&delta_angle,&dist_to_goal);
+	if(*dist_to_goal<10)
 	{
 		return -2;        //ゴールに着いた
 	}
-
-	delta_angle=update_angle(&delta_angle, &dist_to_goal);
 	if(-180 <= delta_angle && delta_angle <= -30) //ゴールの方角がマシンから見て左に30~180度の場合は左回転
 		if(-180 <= delta_angle && delta_angle <= -30)
 		{
