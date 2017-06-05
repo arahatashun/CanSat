@@ -12,6 +12,9 @@
 #include "ring_buffer.h"
 
 static const int turn_power = 60;//turnするpower
+static const int turn_milliseconds = 100;//turnするmilliseconds
+static const int forward_milliseconds = 100;//forwardするmilliseconds
+static const int stop_milliseconds = 100;//地磁気安定のためにstopするmilliseconds
 static const int angle_of_deviation = -7; //地磁気の偏角を考慮
 static const double PI = 3.14159265359;
 static const int gps_ring_len = 10;//gpsのリングバッファの長さ
@@ -105,7 +108,7 @@ int update_angle(double *delta_angle,double *distance)
 		                 fabs(data.longitude-dequeue(gps_lon_ring));
 		if(delta_movement<stack_threshold)
 		{
-			stack_action();
+			motor_stack();
 		}
 	}
 	return 0;
@@ -127,41 +130,23 @@ int decide_route()
 	if(-180 <= delta_angle && delta_angle <= -30) //ゴールの方角がマシンから見て左に30~180度の場合は左回転
 	{
 		motor_left(turn_power);
-		delay(100);
+		delay(turn_milliseconds);
 		motor_stop();
-		delay(1000);
+		delay(stop_milliseconds);
 	}
 	else if(30 <= delta_angle && delta_angle <= 180)         //ゴールの方角がマシンから見て右に30~180度の場合は右回転
 	{
 		motor_right(turn_power);
-		delay(100);
+		delay(turn_milliseconds);
 		motor_stop();
-		delay(1000);
+		delay(stop_milliseconds);
 	}
 	else
 	{
 		motor_forward(100);
-		delay(1000);
+		delay(forward_milliseconds);
 		motor_stop();
-		delay(1000);
-	}
-	return 0;
-}
-
-/*
-   stack判定した時の行動
- */
-int stack_action(double delta_movement)
-{
-	if(delta_movement < 0.00003)                  //ここのパラメータをいじってスタック判定
-	{
-		printf("get stacked");
-		motor_right(100);
-		delay(1000);
-		motor_left(100);
-		delay(1000);
-		motor_forward(100);
-		delay(3000);
+		delay(stop_milliseconds);
 	}
 	return 0;
 }

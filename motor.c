@@ -30,7 +30,7 @@ int pwm_initializer()
 /*
     pwm_valueは0~100の値をとる。
     内部でthreadingしてることに注意
-*/
+ */
 int motor_stop()
 {
 	printf("MOTOR stop\n");
@@ -82,9 +82,9 @@ int motor_left(int pwm_value)
 }
 
 /*
-	pwm_valueを-100~100に拡張したもの
-	負の時にleft,正の時にright
-*/
+        pwm_valueを-100~100に拡張したもの
+        負の時にleft,正の時にright
+ */
 int motor_rotate(int pwm_value)
 {
 	printf("motor rotate\n");
@@ -96,4 +96,16 @@ int motor_rotate(int pwm_value)
 	{
 		motor_left(pwm_value);
 	}
+	return 0;
+}
+int motor_stack()
+{
+	printf("get stacked\n");
+	motor_right(100);
+	delay(1000);
+	motor_left(100);
+	delay(1000);
+	motor_forward(100);
+	delay(1000);
+	return 0;
 }

@@ -9,4 +9,5 @@ int motor_right(int);
 int motor_left(int);
 int motor_rotate(int);
 
+int motor_stack();
 #endif
