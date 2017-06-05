@@ -64,11 +64,11 @@ int cal_compass_theta(double *theta_degree)
 	psi_degree = psi_radian*180.0/PI;
 	printf("phi_degree = %f\n", phi_degree);
 	printf("psi_degree = %f\n", psi_degree);
-	y1 = zcompass*sin(phi_radian);
-	y2 = ycompass*cos(phi_radian);
-	x1 = xcompass*cos(psi_radian);
-	x2 = ycompass*sin(psi_radian)*sin(phi_radian);
-	x3 = zcompass*sin(psi_radian)*cos(phi_radian);
+	y1 = compass_data.compassz_value*sin(phi_radian);
+	y2 = compass_data.compassy_value*cos(phi_radian);
+	x1 = compass_data.compassx_value*cos(psi_radian);
+	x2 = compass_data.compassy_value*sin(psi_radian)*sin(phi_radian);
+	x3 = compass_data.compassz_value*sin(psi_radian)*cos(phi_radian);
 	double theta_degree1 = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI;
 	double theta_degree2 = cal_theta(theta_degree1);//値域が0~360になるように計算
 	*theta_degree = cal_deviated_angle(theta_degree2);//偏角を調整
