@@ -95,10 +95,9 @@ int update_angle(double *delta_angle,double *distance)
 	cal_compass_theta(&compass_angle);
 	*delta_angle = 0;
 	*delta_angle = cal_delta_angle(compass_angle,angle_to_go);
-	printf("delta_angle:%f\n",delta_angle);
+	printf("delta_angle:%f\n",*delta_angle);
 	*distance = 0;
 	*distance = dist_on_sphere(data.latitude,data.longitude);
-	printf("distanceee :%f\n",distance);
 	if(queue_length(gps_lat_ring)==10)
 	{
 		double delta_movement;
