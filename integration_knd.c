@@ -18,7 +18,7 @@ static const int stop_milliseconds = 100;//地磁気安定のためにstopする
 static const int angle_of_deviation = -7; //地磁気の偏角を考慮
 static const double PI = 3.14159265359;
 static const int gps_ring_len = 10;//gpsのリングバッファの長さ
-static const double stack_threshold = 0.00003;
+static const double stack_threshold = 0.00003; //stack判定するときの閾値
 
 time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
@@ -44,21 +44,17 @@ int cal_compass_theta(double *theta_degree)
 {
 	acclgyro_value_initialize(&acclgyro_data);
 	compass_value_initialize(&compass_data);
-	double phi_rad = 0;//ロール角のrad表示の値を格納
-	double psi_rad = 0;//ピッチ角のrad表示の値を格納
 	print_acclgyro(&acclgyro_data);
 	print_compass(&compass_data);
+	double phi_rad = 0;//ロール角のrad表示の値を格納
+	double psi_rad = 0;//ピッチ角のrad表示の値を格納
 	phi_rad = cal_roll(acclgyro_data.acclY_scaled, acclgyro_data.acclZ_scaled);
 	psi_rad = cal_pitch(acclgyro_data.acclX_scaled, acclgyro_data.acclY_scaled, acclgyro_data.acclZ_scaled, phi_rad);
 	printf("phi_degree = %f\n", phi_rad*180.0/PI);
 	printf("psi_degree = %f\n", psi_rad*180.0/PI);
-	double theta_degree1 = cal_deg_acclcompass(compass_data.compassx_value,
-	                                           compass_data.compassy_value,
-	                                           compass_data.compassz_value,
-	                                           sin(phi_rad),
-	                                           sin(psi_rad),
-	                                           cos(phi_rad),
-	                                           cos(psi_rad));
+	double theta_degree1 = cal_deg_acclcompass(compass_data.compassx_value,compass_data.compassy_value,
+	                                           compass_data.compassz_value,sin(phi_rad),
+	                                           sin(psi_rad),cos(phi_rad),cos(psi_rad));
 	double theta_degree2 = cal_theta(theta_degree1);//値域が0~360になるように計算
 	*theta_degree = cal_deviated_angle(theta_degree2);//偏角を調整
 	printf("theta_degree = %f\n", *theta_degree);
@@ -111,6 +107,7 @@ int decide_route()
 	update_angle(&delta_angle,&dist_to_goal);
 	if(dist_to_goal<10)
 	{
+		printf("==========GOAL==========")
 		return -2;        //ゴールに着いた
 	}
 	if(-180 <= delta_angle && delta_angle <= -30) //ゴールの方角がマシンから見て左に30~180度の場合は左回転
