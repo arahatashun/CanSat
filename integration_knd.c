@@ -130,7 +130,7 @@ int decide_route()
 		return -2;        //ゴールに着いた
 	}
 
-	delta_angle=update_angle();
+	delta_angle=update_angle(&delta_angle, &dist_to_goal);
 	if(-180 <= delta_angle && delta_angle <= -30) //ゴールの方角がマシンから見て左に30~180度の場合は左回転
 		if(-180 <= delta_angle && delta_angle <= -30)
 		{
