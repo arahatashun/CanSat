@@ -159,11 +159,11 @@ int print_acclgyro(Acclgyro *acclgyro_data) //六軸センサーの値を画面�
 	printf("acclX_scaled: %f\n", acclgyro_data->acclX_scaled);
 	printf("acclY_scaled: %f\n", acclgyro_data->acclY_scaled);
 	printf("acclZ_scaled: %f\n", acclgyro_data->acclZ_scaled);
-	printf("X rotation: %f\n", acclgyro_data->x_rotation);
-	printf("Y rotation: %f\n", acclgyro_data->y_rotation);
-	printf("gyroX_scaled: %f\n", acclgyro_data->gyroX_scaled);
-	printf("gyroY_scaled: %f\n", acclgyro_data->gyroY_scaled);
-	printf("gyroZ_scaled: %f\n", acclgyro_data->gyroZ_scaled);
+	/*printf("X rotation: %f\n", acclgyro_data->x_rotation);
+	   printf("Y rotation: %f\n", acclgyro_data->y_rotation);
+	   printf("gyroX_scaled: %f\n", acclgyro_data->gyroX_scaled);
+	   printf("gyroY_scaled: %f\n", acclgyro_data->gyroY_scaled);
+	   printf("gyroZ_scaled: %f\n", acclgyro_data->gyroZ_scaled);*/
 	return 0;
 }
 
