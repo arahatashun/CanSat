@@ -93,7 +93,7 @@ int update_angle(double *delta_angle,double *distance)
 	double compass_angle = 0;//地磁気から今のマシンの向きを計算して代入するための変数
 	angle_to_go = calc_target_angle(data.latitude,data.longitude);
 	cal_compass_theta(&compass_angle);
-	*delta_angle= 0;
+	*delta_angle = 0;
 	*delta_angle = cal_delta_angle(compass_angle,angle_to_go);
 	printf("delta_angle:%f\n",delta_angle);
 	*distance = 0;
@@ -126,27 +126,26 @@ int decide_route()
 		return -2;        //ゴールに着いた
 	}
 	if(-180 <= delta_angle && delta_angle <= -30) //ゴールの方角がマシンから見て左に30~180度の場合は左回転
-		if(-180 <= delta_angle && delta_angle <= -30)
-		{
-			motor_left(turn_power);
-			delay(100);
-			motor_stop();
-			delay(1000);
-		}
-		else if(30 <= delta_angle && delta_angle <= 180)         //ゴールの方角がマシンから見て右に30~180度の場合は右回転
-		{
-			motor_right(turn_power);
-			delay(100);
-			motor_stop();
-			delay(1000);
-		}
-		else
-		{
-			motor_forward(100);
-			delay(1000);
-			motor_stop();
-			delay(1000);
-		}
+	{
+		motor_left(turn_power);
+		delay(100);
+		motor_stop();
+		elay(1000);
+	}
+	else if(30 <= delta_angle && delta_angle <= 180)         //ゴールの方角がマシンから見て右に30~180度の場合は右回転
+	{
+		motor_right(turn_power);
+		delay(100);
+		motor_stop();
+		delay(1000);
+	}
+	else
+	{
+		motor_forward(100);
+		delay(1000);
+		motor_stop();
+		delay(1000);
+	}
 	return 0;
 }
 
@@ -170,8 +169,6 @@ int stack_action(double delta_movement)
 
 int main()
 {
-	int i;
-	double lati, longi;
 	time(&start_time);
 	signal(SIGINT, handler);
 	acclgyro_initializer();
