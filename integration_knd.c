@@ -98,7 +98,7 @@ int update_angle(double *delta_angle,double *distance)
 	printf("delta_angle:%f\n",delta_angle);
 	*distance = 0;
 	*distance = dist_on_sphere(data.latitude,data.longitude);
-	printf("distance :%f\n",distance);
+	printf("distanceee :%f\n",distance);
 	if(queue_length(gps_lat_ring)==10)
 	{
 		double delta_movement;
