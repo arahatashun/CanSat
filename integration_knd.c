@@ -107,7 +107,7 @@ int decide_route()
 	update_angle(&delta_angle,&dist_to_goal);
 	if(dist_to_goal<10)
 	{
-		printf("==========GOAL==========")
+		printf("==========GOAL==========");
 		return -2;        //ゴールに着いた
 	}
 	if(-180 <= delta_angle && delta_angle <= -30) //ゴールの方角がマシンから見て左に30~180度の場合は左回転
