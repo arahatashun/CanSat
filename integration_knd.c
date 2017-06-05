@@ -130,7 +130,7 @@ int decide_route()
 		motor_left(turn_power);
 		delay(100);
 		motor_stop();
-		elay(1000);
+		delay(1000);
 	}
 	else if(30 <= delta_angle && delta_angle <= 180)         //ゴールの方角がマシンから見て右に30~180度の場合は右回転
 	{
