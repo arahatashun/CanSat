@@ -44,29 +44,21 @@ int cal_compass_theta(double *theta_degree)
 {
 	acclgyro_value_initialize(&acclgyro_data);
 	compass_value_initialize(&compass_data);
-	double phi_radian = 0; //ロール角のdegree表示の値を格納
-	double psi_radian = 0; //ピッチ角のdegree表示の値を格納
-	double phi_degree = 0;
-	double psi_degree = 0;
-	double y1 = 0;
-	double y2 = 0;
-	double x1 = 0;
-	double x2 = 0;
-	double x3 = 0;
+	double phi_rad = 0;//ロール角のrad表示の値を格納
+	double psi_rad = 0;//ピッチ角のrad表示の値を格納
 	print_acclgyro(&acclgyro_data);
 	print_compass(&compass_data);
-	phi_radian = cal_roll(acclgyro_data.acclY_scaled, acclgyro_data.acclZ_scaled);
-	psi_radian = cal_pitch(acclgyro_data.acclX_scaled, acclgyro_data.acclY_scaled, acclgyro_data.acclZ_scaled, phi_radian);
-	phi_degree = phi_radian*180.0/PI;
-	psi_degree = psi_radian*180.0/PI;
-	printf("phi_degree = %f\n", phi_degree);
-	printf("psi_degree = %f\n", psi_degree);
-	y1 = compass_data.compassz_value*sin(phi_radian);
-	y2 = compass_data.compassy_value*cos(phi_radian);
-	x1 = compass_data.compassx_value*cos(psi_radian);
-	x2 = compass_data.compassy_value*sin(psi_radian)*sin(phi_radian);
-	x3 = compass_data.compassz_value*sin(psi_radian)*cos(phi_radian);
-	double theta_degree1 = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI;
+	phi_rad = cal_roll(acclgyro_data.acclY_scaled, acclgyro_data.acclZ_scaled);
+	psi_rad = cal_pitch(acclgyro_data.acclX_scaled, acclgyro_data.acclY_scaled, acclgyro_data.acclZ_scaled, phi_radian);
+	printf("phi_degree = %f\n", phi_rad*180.0/PI);
+	printf("psi_degree = %f\n", psi_rad*180.0/PI);
+	double theta_degree1 = cal_deg_acclcompass(double compass_data.compassx_value,
+	                                           double compass_data.compassy_value,
+	                                           double compass_data.compassz_value,
+	                                           double sin(phi_rad),
+	                                           double sin(psi_rad),
+	                                           double cos(phi_rad),
+	                                           double cos_rad);
 	double theta_degree2 = cal_theta(theta_degree1);//値域が0~360になるように計算
 	*theta_degree = cal_deviated_angle(theta_degree2);//偏角を調整
 	printf("theta_degree = %f\n", *theta_degree);

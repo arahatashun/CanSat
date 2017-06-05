@@ -182,3 +182,21 @@ double cal_deviated_angle(double theta_degree)
 	}
 	return true_theta;
 }
+
+double cal_deg_acclcompass(double compassx_value, double compassy_value,
+                           double compassz_value, double sin_phi, double sin_psi,
+                           double cos_phi, double cos_psi)
+{
+	double y1 = 0;//y1~x3は見やすさと計算のために用意した物理的に意味はない変数
+	double y2 = 0;
+	double x1 = 0;
+	double x2 = 0;
+	double x3 = 0;
+
+	y1 = compassz_value*sin_phi;
+	y2 = compassy_value*cos_phi;
+	x1 = compassx_value*cos_psi;
+	x2 = compassy_value*sin_psi*sin_phi;
+	x3 = compassz_value*sin_psi*cos_phi;
+	return atan2(y1 - y2,x1 + x2 + x3)*180.0/PI;
+}
