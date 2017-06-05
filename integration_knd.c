@@ -15,7 +15,6 @@ static const int turn_power = 60;//turnするpower
 static const int angle_of_deviation = -7; //地磁気の偏角を考慮
 static const double PI = 3.14159265359;
 static const int gps_ring_len = 10;//gpsのリングバッファの長さ
-static const int gps_ring_len = 10;
 static const double stack_threshold = 0.00003;
 
 time_t start_time;//開始時刻のグローバル変数宣言
@@ -53,20 +52,14 @@ int cal_compass_theta(double *theta_degree)
 	double x3 = 0;
 	accl_and_rotation_read(&acclgyro_data);
 	compass_read(&compass_data);
-	acclx = (double) acclgyro_data.acclX_scaled;
-	accly = (double) acclgyro_data.acclY_scaled;
-	acclz = (double) acclgyro_data.acclZ_scaled;
-	xcompass = (double)compass_data.compassx_value;
-	ycompass = (double)compass_data.compassy_value;
-	zcompass = (double)compass_data.compassz_value;
-	printf("acclx = %f\n", acclx);
-	printf("accly = %f\n", accly);
-	printf("acclz = %f\n", acclz);
-	printf("compassx = %f\n", xcompass);
-	printf("compassy = %f\n", ycompass);
-	printf("compassz = %f\n", zcompass);
-	phi_radian = cal_roll(accly, acclz);
-	psi_radian = cal_pitch(acclx, accly, acclz, phi_radian);
+	printf("acclx = %f\n", acclgyro_data.acclX_scaled);
+	printf("accly = %f\n", acclgyro_data.acclY_scaled);
+	printf("acclz = %f\n", acclgyro_data.acclZ_scaled);
+	printf("compassx = %f\n", compass_data.compassx_value);
+	printf("compassy = %f\n", compass_data.compassy_value);
+	printf("compassz = %f\n", compass_data.compassz_value);
+	phi_radian = cal_roll(acclgyro_data.acclY_scaled, acclgyro_data.acclZ_scaled);
+	psi_radian = cal_pitch(acclgyro_data.acclX_scaled, acclgyro_data.acclY_scaled, acclgyro_data.acclZ_scaled, phi_radian);
 	phi_degree = phi_radian*180.0/PI;
 	psi_degree = psi_radian*180.0/PI;
 	printf("phi_degree = %f\n", phi_degree);
