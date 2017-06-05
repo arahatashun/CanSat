@@ -9,6 +9,7 @@ typedef struct cmps {
 } Cmps;
 
 int compass_read(Cmps *compass_data);
+int print_compass(Cmps *compass_data);
 int compass_initializer();
 int compass_value_initialize(Cmps *compass_init);
 int compass_get_angle();

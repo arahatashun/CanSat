@@ -53,14 +53,8 @@ int cal_compass_theta(double *theta_degree)
 	double x1 = 0;
 	double x2 = 0;
 	double x3 = 0;
-	accl_and_rotation_read(&acclgyro_data);
-	compass_read(&compass_data);
-	printf("acclx = %f\n", acclgyro_data.acclX_scaled);
-	printf("accly = %f\n", acclgyro_data.acclY_scaled);
-	printf("acclz = %f\n", acclgyro_data.acclZ_scaled);
-	printf("compassx = %f\n", compass_data.compassx_value);
-	printf("compassy = %f\n", compass_data.compassy_value);
-	printf("compassz = %f\n", compass_data.compassz_value);
+	print_acclgyro(&acclgyro_data);
+	print_compass(&compass_data);
 	phi_radian = cal_roll(acclgyro_data.acclY_scaled, acclgyro_data.acclZ_scaled);
 	psi_radian = cal_pitch(acclgyro_data.acclX_scaled, acclgyro_data.acclY_scaled, acclgyro_data.acclZ_scaled, phi_radian);
 	phi_degree = phi_radian*180.0/PI;

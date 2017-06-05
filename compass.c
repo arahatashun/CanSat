@@ -76,6 +76,15 @@ int compass_read(Cmps *compass_data)
 	return 0;
 }
 
+int print_compass(Cmps *compass_data)
+{
+	compass_read(&compasss_data);
+	printf("compassx = %f\n", compass_data.compassx_value);
+	printf("compassy = %f\n", compass_data.compassy_value);
+	printf("compassz = %f\n", compass_data.compassz_value);
+	return 0;
+}
+
 int compass_value_initialize(Cmps *compass_init)
 {
 	compass_init->compassx_value = 0;
