@@ -58,7 +58,7 @@ int cal_compass_theta(double *theta_degree)
 	                                           double sin(phi_rad),
 	                                           double sin(psi_rad),
 	                                           double cos(phi_rad),
-	                                           double cos_rad);
+	                                           double cos(psi_rad));
 	double theta_degree2 = cal_theta(theta_degree1);//値域が0~360になるように計算
 	*theta_degree = cal_deviated_angle(theta_degree2);//偏角を調整
 	printf("theta_degree = %f\n", *theta_degree);
