@@ -89,19 +89,9 @@ int update_angle(double *delta_angle,double *distance)
 	enqueue(gps_lat_ring,data.latitude);   //緯度を格納
 	enqueue(gps_lon_ring,data.longitude);  //経度を格納
 	printf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
-	double angle_to_go = 0;//進むべき方角を代入するための変数
-	angle_to_go = calc_target_angle(data.latitude,data.longitude); //緯度と経度から進むべき方角を計算
-	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角を代入するための変数
-	double compass_angle = 0;//地磁気から今のマシンの向きを計算して代入するための変数
-	compass_angle = cal_compass_theta();//地磁気と6軸の値からマシンの向いている方角を計算
-	delta_angle = cal_delta_angle(compass_angle,angle_to_go);
-	printf("delta_angle:%f\n",delta_angle);
-	double distance = 0;
-	distance = dist_on_sphere(data.latitude,data.longitude);
 	double angle_to_go = 0;//進むべき方角
+	double compass_angle = 0;//地磁気から今のマシンの向きを計算して代入するための変数
 	angle_to_go = calc_target_angle(data.latitude,data.longitude);
-	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
-	double compass_angle = 0;
 	cal_compass_theta(&compass_angle);
 	*delta_angle= 0;
 	*delta_angle = cal_delta_angle(compass_angle,angle_to_go);
