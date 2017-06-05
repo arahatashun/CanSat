@@ -49,16 +49,16 @@ int cal_compass_theta(double *theta_degree)
 	print_acclgyro(&acclgyro_data);
 	print_compass(&compass_data);
 	phi_rad = cal_roll(acclgyro_data.acclY_scaled, acclgyro_data.acclZ_scaled);
-	psi_rad = cal_pitch(acclgyro_data.acclX_scaled, acclgyro_data.acclY_scaled, acclgyro_data.acclZ_scaled, phi_radian);
+	psi_rad = cal_pitch(acclgyro_data.acclX_scaled, acclgyro_data.acclY_scaled, acclgyro_data.acclZ_scaled, phi_rad);
 	printf("phi_degree = %f\n", phi_rad*180.0/PI);
 	printf("psi_degree = %f\n", psi_rad*180.0/PI);
-	double theta_degree1 = cal_deg_acclcompass(double compass_data.compassx_value,
-	                                           double compass_data.compassy_value,
-	                                           double compass_data.compassz_value,
-	                                           double sin(phi_rad),
-	                                           double sin(psi_rad),
-	                                           double cos(phi_rad),
-	                                           double cos(psi_rad));
+	double theta_degree1 = cal_deg_acclcompass(compass_data.compassx_value,
+	                                           compass_data.compassy_value,
+	                                           compass_data.compassz_value,
+	                                           sin(phi_rad),
+	                                           sin(psi_rad),
+	                                           cos(phi_rad),
+	                                           cos(psi_rad));
 	double theta_degree2 = cal_theta(theta_degree1);//値域が0~360になるように計算
 	*theta_degree = cal_deviated_angle(theta_degree2);//偏角を調整
 	printf("theta_degree = %f\n", *theta_degree);
