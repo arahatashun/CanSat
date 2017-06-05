@@ -10,6 +10,7 @@ typedef struct cmps {
 
 int compass_read(Cmps *compass_data);
 int compass_initializer();
+int compass_value_initialize(Cmps *compass_init);
 int compass_get_angle();
 double cal_theta(double);
 double cal_deviated_angle(double);

@@ -15,6 +15,8 @@ static const int turn_power = 60;//turnするpower
 static const int angle_of_deviation = -7; //地磁気の偏角を考慮
 static const double PI = 3.14159265359;
 static const int gps_ring_len = 10;//gpsのリングバッファの長さ
+static const int gps_ring_len = 10;
+static const double stack_threshold = 0.00003;
 
 time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
@@ -36,14 +38,10 @@ void handler(int signum)
 /*
    地磁気と６軸センサーからマシンの向いている角度を計算
  */
-double cal_compass_theta()
+int cal_compass_theta(double *theta_degree)
 {
-	double acclx = 0; //３xyz方向の加速度センサーの値を格納
-	double accly = 0;
-	double acclz = 0;
-	double xcompass = 0; //xyz方向の地磁気センサーの値を格納
-	double ycompass = 0;
-	double zcompass = 0;
+	acclgyro_value_initialize(&acclgyro_data);
+	compass_value_initialize(&compass_data);
 	double phi_radian = 0; //ロール角のdegree表示の値を格納
 	double psi_radian = 0; //ピッチ角のdegree表示の値を格納
 	double phi_degree = 0;
@@ -53,7 +51,6 @@ double cal_compass_theta()
 	double x1 = 0;
 	double x2 = 0;
 	double x3 = 0;
-	double theta_degree = 0;
 	accl_and_rotation_read(&acclgyro_data);
 	compass_read(&compass_data);
 	acclx = (double) acclgyro_data.acclX_scaled;
@@ -79,17 +76,17 @@ double cal_compass_theta()
 	x1 = xcompass*cos(psi_radian);
 	x2 = ycompass*sin(psi_radian)*sin(phi_radian);
 	x3 = zcompass*sin(psi_radian)*cos(phi_radian);
-	theta_degree = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI;
-	theta_degree = cal_theta(theta_degree); //値域が0~360になるように計算
-	theta_degree = cal_deviated_angle(theta_degree); //偏角を調整
-	printf("theta_degree = %f\n", theta_degree);
-	return theta_degree;
+	double theta_degree1 = atan2(y1 - y2,x1 + x2 + x3)*180.0/PI;
+	double theta_degree2 = cal_theta(theta_degree1);//値域が0~360になるように計算
+	*theta_degree = cal_deviated_angle(theta_degree2);//偏角を調整
+	printf("theta_degree = %f\n", *theta_degree);
+	return 0;
 }
 
 /*
    gpsと地磁気のデータを一回分更新し、リングバッファに格納
  */
-int update_angle()
+int update_angle(double *delta_angle,double *distance)
 {
 	time_t current_time;//時間を取得
 	time(&current_time);
@@ -102,14 +99,34 @@ int update_angle()
 	double angle_to_go = 0;//進むべき方角を代入するための変数
 	angle_to_go = calc_target_angle(data.latitude,data.longitude); //緯度と経度から進むべき方角を計算
 	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角を代入するための変数
-	double compass_angle = 0;//地磁気から今のマシンの向きを計算して代入するための変数 
+	double compass_angle = 0;//地磁気から今のマシンの向きを計算して代入するための変数
 	compass_angle = cal_compass_theta();//地磁気と6軸の値からマシンの向いている方角を計算
 	delta_angle = cal_delta_angle(compass_angle,angle_to_go);
 	printf("delta_angle:%f\n",delta_angle);
 	double distance = 0;
 	distance = dist_on_sphere(data.latitude,data.longitude);
+	double angle_to_go = 0;//進むべき方角
+	angle_to_go = calc_target_angle(data.latitude,data.longitude);
+	double delta_angle = 0;//進むべき方角と現在の移動方向の差の角
+	double compass_angle = 0;
+	cal_compass_theta(&compass_angle);
+	*delta_angle= 0;
+	*delta_angle = cal_delta_angle(compass_angle,angle_to_go);
+	printf("delta_angle:%f\n",delta_angle);
+	*distance = 0;
+	*distance = dist_on_sphere(data.latitude,data.longitude);
 	printf("distance :%f\n",distance);
-	return delta_angle;
+	if(queue_length(gps_lat_ring)==10)
+	{
+		double delta_movement;
+		delta_movement = fabs(data.latitude-dequeue(gps_lat_ring)) +
+		                 fabs(data.longitude-dequeue(gps_lon_ring));
+		if(delta_movement<stack_threshold)
+		{
+			stack_action();
+		}
+	}
+	return 0;
 }
 /*
    目的方角が自分から見て右に３０度以上ずれていたら右回転、
@@ -123,36 +140,36 @@ int decide_route()
 	gps_location(&data);
 	dist_to_goal =dist_on_sphere(data.latitude, data.longitude);
 	if(dist_to_goal < 10) //ゴールまでの距離が10m以下なら100秒停止
+		update_angle(&delta_angle,&dist_to_goal);
+
+	if(dist_to_goal<1)
 	{
-		motor_stop();
-		delay(100000);
+		return -2;        //ゴールに着いた
 	}
 
 	delta_angle=update_angle();
 	if(-180 <= delta_angle && delta_angle <= -30) //ゴールの方角がマシンから見て左に30~180度の場合は左回転
-	{
-		motor_left(turn_power);
-		delay(100);
-		motor_stop();
-		delay(1000);
-	}
-	else if(30 <= delta_angle && delta_angle <= 180) //ゴールの方角がマシンから見て右に30~180度の場合は右回転
-	{
-		motor_right(turn_power);
-		delay(100);
-		motor_stop();
-		delay(1000);
-
-	}
-	else
-	{
-		motor_forward(100);
-		delay(1000);
-		motor_stop();
-		delay(1000);
-
-	}
-
+		if(-180 <= delta_angle && delta_angle <= -30)
+		{
+			motor_left(turn_power);
+			delay(100);
+			motor_stop();
+			delay(1000);
+		}
+		else if(30 <= delta_angle && delta_angle <= 180)         //ゴールの方角がマシンから見て右に30~180度の場合は右回転
+		{
+			motor_right(turn_power);
+			delay(100);
+			motor_stop();
+			delay(1000);
+		}
+		else
+		{
+			motor_forward(100);
+			delay(1000);
+			motor_stop();
+			delay(1000);
+		}
 	return 0;
 }
 
@@ -177,7 +194,7 @@ int stack_action(double delta_movement)
 int main()
 {
 	int i;
-	double lati, longi, delta_movement;
+	double lati, longi;
 	time(&start_time);
 	signal(SIGINT, handler);
 	acclgyro_initializer();
@@ -186,25 +203,6 @@ int main()
 	compass_initializer();
 	gps_lat_ring = make_queue(gps_ring_len);
 	gps_lon_ring = make_queue(gps_ring_len);
-	while(1)
-	{
-		while(!is_full(gps_lat_ring))
-		{
-			decide_route();
-		}
-		delta_movement = fabs(gps_lat_ring->buff[0]-gps_lat_ring->buff[9]) +
-		                 fabs(gps_lon_ring->buff[0]-gps_lon_ring->buff[9]);
-		printf("delta_movement :%f\n", delta_movement);
-		delay(1000);
-		stack_action(delta_movement);
-		for(i = 0; i< 10; i++)
-		{
-			lati = dequeue(gps_lat_ring);
-			longi = dequeue(gps_lon_ring);
-			printf("%dth latitude :%f\n", i, lati);
-			printf("%dth longitude :%f\n", i, longi);
-		}
-		delay(3000);
-	}
+	while(decide_route()!=-2) ;
 	return 0;
 }

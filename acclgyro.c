@@ -146,6 +146,13 @@ static int set_acclgyro(Acclgyro *acclgyro_data)  //acclgyroの値を全て読�
 	return 0;
 }
 
+int acclgyro_value_initialize(Acclgyro *acclgyro_init)
+{
+	acclgyro_init->acclX_scaled = 0;
+	acclgyro_init->acclY_scaled = 0;
+	acclgyro_init->acclZ_scaled = 0;
+}
+
 int print_acclgyro(Acclgyro *acclgyro_data) //六軸センサーの値を画面に出力
 {
 	set_acclgyro(acclgyro_data);

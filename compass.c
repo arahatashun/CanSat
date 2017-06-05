@@ -76,6 +76,13 @@ int compass_read(Cmps *compass_data)
 	return 0;
 }
 
+int compass_value_initialize(Cmps *compass_init)
+{
+	compass_init->compassx_value = 0;
+	compass_init->compassy_value = 0;
+	compass_init->compassz_value = 0;
+}
+
 static double calc_compass_angle(short x,short y)
 {
 	double angle_calc1 = 0;
