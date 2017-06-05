@@ -121,7 +121,7 @@ int decide_route()
 	double delta_angle = 0;
 	double dist_to_goal = 0;
 	update_angle(&delta_angle,&dist_to_goal);
-	if(*dist_to_goal<10)
+	if(dist_to_goal<10)
 	{
 		return -2;        //ゴールに着いた
 	}
