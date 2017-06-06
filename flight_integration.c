@@ -18,14 +18,27 @@ static loc_t flight_gps_data; //gpsデータ確認用 integration_kndのdataと�
 Queue *gpsflight_lat_ring = NULL; //緯度データ
 Queue *gpsflight_lon_ring = NULL; //経度データ
 Queue *gpsflight_alt_ring = NULL; //高度データ
-FILE *fp; //ファイル型ポインタfp
+FILE *statusfp; //ファイル型ポインタstatusfp
 
-static const int gps_ring_len = 10; //GPSの値を格納するリングバッファの長さ
-static const int timeout_lux = 60; //光センサー放出判定タイムアウト時間(min)
-static const int timeout_gpsstable = 80; //上記に失敗した場合、gpsの三軸安定で着地判定するが、そのタイムアウト時間(min)
-static const int timeout_altstable = 100; //着地判定(gps高度)タイムアウト時間(min)
+static const int GPS_RING_LEN = 10; //GPSの値を格納するリングバッファの長さ
+static const int TIMEOUT_LUX = 60; //光センサー放出判定タイムアウト時間(min)
+static const int TIMEOUT_GPSSTABLE = 80; //上記に失敗した場合、gpsの三軸安定で着地判定するが、そのタイムアウト時間(min)
+static const int TIMEOUT_ALTSTABLE = 100; //着地判定(gps高度)タイムアウト時間(min)
 
-//以下フラ
+static const int STS_INIT = 0; //ステータス0 最初
+static const int STS_RELEASECOMPLETE = 1.0; //ステータス1 放出判定終了
+static const int STS_RELEASETIMEOUT = 1.1 //ステータス1.1 放出判定時間切れ
+static const int STS_LANDINGCOMPLETE = 2; //ステータス2 着地判定終了
+static const int STS_CASINGOPENCOMPLETE = 3; //ステータス3 ケーシング展開終了
+
+static const int ABSLAT_THRESHOLD = 0.00003; //GPS緯度情報安定判定閾値
+static const int ABSLON_THRESHOLD = 0.00003; //GPS経度情報安定判定閾値
+static const int ABSALT_THRESHOLD = 3; //GPS高度情報安定判定閾値
+
+static const int GPS_3AXIS_INTERVAL = 2; //GPS高度取得間隔(gps_3axisstable内) second
+static const int GPS_ALT_INTERVAL = 2; //GPS高度取得間隔(gps_altstable内) second
+
+//以下フラグ
 int lux_timeout_flag = 0; //放出判定(luxセンサー)タイムアウトフラグ タイムアウトで1
 static int release_complete = 0; //放出判定フラグ 放出判定で1
 static int landing_complete = 0; //着地判定フラグ 着地判定で1
@@ -34,11 +47,11 @@ static int landing_complete = 0; //着地判定フラグ 着地判定で1
 static int flightsensor_setup();
 static int gps_3axisstable();
 static int gps_altstable();
-
+static int landing_timeout_ver();
+static int landing_lux_ver();
 
 int timer_setup(){
   //制御開始時刻を取得、画面に表示
-
   time(&start_all_time);
   printf("start_time: %s\n", ctime(&start_all_time));
   return 0;
@@ -71,29 +84,29 @@ int get_difftime(){
 
 double write_status(double sequence){
   //ステータスファイルにシーケンスデータを書き込む
-  if((fp = fopen("status","w")) == NULL){
+  if((statusfp = fopen("status","w")) == NULL){
     //ファイルが開けない
     printf("cannot open sequence file\n");
     return -1;
   }
   else{
-    fprintf(fp, "%lf\n",sequence);
+    fprintf(statusfp, "%lf\n",sequence);
     printf("write_statusfile;sequence:%lf\n", sequence);
-    fclose(fp);
+    fclose(statusfp);
     return 0;
   }
 }
 
 double read_status(){
   //ファイルに最後に書かれたシーケンスを読み取る。シーケンス番号をreturnする
-  if((fp = fopen("status","r")) == NULL){
+  if((statusfp = fopen("status","r")) == NULL){
     printf("nothing written in file\n");
     return -1;
   }
   else{
     double last_sequence; //最後に到達したシーケンス番号
-    fscanf(fp,"%lf",&last_sequence);
-    fclose(fp);
+    fscanf(statusfp,"%lf",&last_sequence);
+    fclose(statusfp);
     printf("read_statusfile;start from sequence:%lf\n", last_sequence);
     return last_sequence;
   }
@@ -108,12 +121,17 @@ static int flightsensor_setup(){
 
 static int gps_3axisstable(){
   //GPS3軸の値が安定で1を返す、不安定で0を返す
-  gpsflight_lat_ring = make_queue(gps_ring_len);
-  gpsflight_lon_ring = make_queue(gps_ring_len);
-  gpsflight_alt_ring = make_queue(gps_ring_len);
+  gpsflight_lat_ring = make_queue(GPS_RING_LEN);
+  gpsflight_lon_ring = make_queue(GPS_RING_LEN);
+  gpsflight_alt_ring = make_queue(GPS_RING_LEN);
 
   while(!is_full(gpsflight_lat_ring)){
   gps_location(&flight_gps_data);
+  //以下落下中ログデータ、時間緯度経度高度を送る
+  timestamp();
+  printf("latitude:%f longtitude:%f alttitude:%f\n",
+  flight_gps_data.latitude flight_gps_data.longtitude flight_gps_data.altitude);
+  //以上ログデータ
   enqueue(gpsflight_lat_ring,flight_gps_data.latitude);
   enqueue(gpsflight_lon_ring,flight_gps_data.longitude);
   enqueue(gpsflight_alt_ring,flight_gps_data.altitude);
@@ -126,7 +144,7 @@ static int gps_3axisstable(){
   double minalt=INF,maxalt=0;
 
   int i=0;
-  for(i=0;i<gps_ring_len;i++){
+  for(i=0;i<GPS_RING_LEN;i++){
     double lati=0;
     double loni=0;
     double alti=0;
@@ -143,7 +161,7 @@ static int gps_3axisstable(){
   double abslat = fabs(maxlat-minlat);
   double abslon = fabs(maxlon-minlon);
   double absalt = fabs(maxalt-minalt);
-  if(abslat<0.00003 && abslon<0.00003 && absalt<3){
+  if(abslat<ABSLAT_THRESHOLD && abslon<ABSLON_THRESHOLD && absalt<ABSALT_THRESHOLD){
       return 1;
   }
   sleep(2);
@@ -153,26 +171,30 @@ static int gps_3axisstable(){
 static int gps_altstable(){
   //GPS高度の値が安定で1を返す、不安定で0を返
   printf("enter_gpsaltsable\n");
-  gpsflight_alt_ring = make_queue(gps_ring_len);
+  gpsflight_alt_ring = make_queue(GPS_RING_LEN);
 
   while(!is_full(gpsflight_alt_ring)){
   gps_location(&flight_gps_data);
-  printf("gpsdata:%f\n",flight_gps_data.altitude);
+  //以下落下中ログデータ、時間緯度経度高度を送る
+  timestamp();
+  printf("latitude:%f longtitude:%f alttitude:%f\n",
+  flight_gps_data.latitude flight_gps_data.longtitude flight_gps_data.altitude);
+  //以上ログデータ
   enqueue(gpsflight_alt_ring,flight_gps_data.altitude);
-  sleep(2);
+  sleep(GPS_ALT_INTERVAL);
   }
 
   double INF = 10000;
   double minalt=INF,maxalt=0;
   int i=0;
-  for(i=0;i<gps_ring_len;i++){
+  for(i=0;i<GPS_RING_LEN;i++){
     double alti=0;
     alti=dequeue(gpsflight_alt_ring);
     if(alti<minalt) minalt = alti;
     if(alti>maxalt) maxalt = alti;
   }
   double absalt = fabs(maxalt-minalt);
-  if(absalt<3){
+  if(absalt<ABSALT_THRESHOLD){
       return 1;
   }
   sleep(2);
@@ -191,12 +213,12 @@ int release(){
       release_complete = 1;
       timestamp();
       printf("release complete\n");
-      write_status(1.0);
+      write_status(STS_RELEASECOMPLETE);
     }
-    else if(get_difftime() > timeout_lux){
+    else if(get_difftime() > TIMEOUT_LUX){
       lux_timeout_flag = 1;
-      printf("timeout_lux;release_complete\n");
-      write_status(1.1);
+      printf("TIMEOUT_LUX;release_complete\n");
+      write_status(STS_RELEASETIMEOUT);
       break;
     }
     else if(islight() == 1) islight_counter++;
@@ -208,31 +230,40 @@ int release(){
   //以上で放出判定完了
 
 
-int landing_timeout_ver(){
+static int landing_timeout_ver(){
   //時間切れした場合の処理 lux_timeoutフラグまたはstatusファイルの読み込みで判断
   printf("enter timeout_ver");
   while(!landing_complete){
-    if(get_difftime() > timeout_gpsstable){
+    if(get_difftime() > TIMEOUT_GPSSTABLE){
     timestamp();
-    printf("timeout_gpsstable;landing_complete\n");
+    printf("TIMEOUT_GPSSTABLE;landing_complete\n");
+    //着地地点ログ
+    printf("landing point: latitude:%f longtitude:%f alttitude:%f\n",
+    flight_gps_data.latitude flight_gps_data.longtitude flight_gps_data.altitude);
     landing_complete = 1;
     break;
     }
     else if(gps_3axisstable()){
     timestamp();
     printf("landing_complete(judged by 3 axis)\n");
+    //着地地点ログ
+    printf("landing point: latitude:%f longtitude:%f alttitude:%f\n",
+    flight_gps_data.latitude flight_gps_data.longtitude flight_gps_data.altitude);
     landing_complete = 1;
     }
   }
   return 0;
 }
 
-int landing_lux_ver(){
+static int landing_lux_ver(){
   //正常に照度センサーで放出判定できた場合の処理
   while(!landing_complete){
-    if(get_difftime() > timeout_altstable){
+    if(get_difftime() > TIMEOUT_ALTSTABLE){
       timestamp();
-      printf("timeout_altstable;landing_complete\n");
+      printf("TIMEOUT_ALTSTABLE;landing_complete\n");
+      //着地地点ログ
+      printf("landing point: latitude:%f longtitude:%f alttitude:%f\n",
+      flight_gps_data.latitude flight_gps_data.longtitude flight_gps_data.altitude);
       landing_complete = 1;
       break;
     }
@@ -241,6 +272,9 @@ int landing_lux_ver(){
       //ダブルチェック
       timestamp();
       printf("landing_complete(judged by altitude)\n");
+      //着地地点ログ
+      printf("landing point: latitude:%f longtitude:%f alttitude:%f\n",
+      flight_gps_data.latitude flight_gps_data.longtitude flight_gps_data.altitude);
       landing_complete = 1;
       }
     }
@@ -258,7 +292,7 @@ int landing(){
     //正常に照度センサーで放出判定できた場合の処理
     landing_lux_ver();
   }
-  write_status(2);
+  write_status(STS_LANDINGCOMPLETE);
   return 0;
 }
 //以上で着地判定終了
@@ -269,14 +303,14 @@ int casing_open(){
   cut();
   timestamp();
   printf("casing_open\n");
-  write_status(3);
+  write_status(STS_CASINGOPENCOMPLETE);
   return 0;
 }
 //以上でケーシング展開完了
 
 int main(){
   timer_setup(); //制御開始時刻を取得
-  write_status(0); //シーケンス0(制御スタート)をファイルに書き込む
+  write_status(STS_INIT); //シーケンス0(制御スタート)をファイルに書き込む
   release();
   landing();
   casing_open();
