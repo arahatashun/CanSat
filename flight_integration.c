@@ -227,6 +227,7 @@ int landing_timeout_ver(){
     landing_complete = 1;
     }
   }
+  return 0;
 }
 
 int landing_lux_ver(){
@@ -247,6 +248,7 @@ int landing_lux_ver(){
       }
     }
   }
+  return 0;
 }
 
 int landing(){
