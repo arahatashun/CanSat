@@ -158,11 +158,9 @@ static int gps_altstable(){
 
   while(!is_full(gpsflight_alt_ring)){
   gps_location(&flight_gps_data);
-  printf("gpsdata:%f",flight_gps_data.altitude);
+  printf("gpsdata:%f\n",flight_gps_data.altitude);
   enqueue(gpsflight_alt_ring,flight_gps_data.altitude);
   sleep(2);
-  printf("%dtimes",count);
-  count++;
   }
 
   double INF = 10000;

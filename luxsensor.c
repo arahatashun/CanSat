@@ -88,7 +88,7 @@ int islight(){
   int lux=0;
   lux = getLux();
   if(lux>LIGHT_THRESHOLD){
-		printf("light:%d",lux);
+		printf("light:%d\n",lux);
     return 1;
   }
   else{
