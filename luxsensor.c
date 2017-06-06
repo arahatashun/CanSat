@@ -36,7 +36,7 @@ static const int TSL2561_REGISTER_CHAN1_LOW = 0x8E;
 static const int TSL2561_REGISTER_CHAN1_HIGH = 0x8F;
 //Delay getLux function
 static const int LUXDELAY = 500;
-static const int LIGHT_THRESHOLD = 50;  //光センサー閾値
+static const int LIGHT_THRESHOLD = 10;  //光センサー閾値
 
 
 //グローバルデータ宣言(not const)
@@ -82,4 +82,16 @@ int getLux()
 	delay(LUXDELAY);
 	visible_and_ir = wiringPiI2CReadReg16(fd, TSL2561_REGISTER_CHAN0_LOW);
 	return visible_and_ir;
+}
+
+int islight(){
+  int lux=0;
+  lux = getLux();
+  if(lux>LIGHT_THRESHOLD){
+		printf("light:%d\n",lux);
+    return 1;
+  }
+  else{
+    return 0;
+  }
 }
