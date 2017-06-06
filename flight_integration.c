@@ -154,12 +154,15 @@ static int gps_altstable(){
   //GPS高度の値が安定で1を返す、不安定で0を返
   printf("enter_gpsaltsable");
   gpsflight_alt_ring = make_queue(gps_ring_len);
+  int count = 1;
 
-  while(!is_full(gpsflight_alt_ring)){
+  while(!is_full(gpsflight_alt_ring)){    
   gps_location(&flight_gps_data);
   printf("gpsdata:%f",flight_gps_data.altitude);
   enqueue(gpsflight_alt_ring,flight_gps_data.altitude);
   sleep(2);
+  printf("%dtimes",count);
+  count++;
   }
 
   double INF = 10000;
