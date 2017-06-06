@@ -27,7 +27,7 @@ static const int TIMEOUT_ALTSTABLE = 100; //着地判定(gps高度)タイムア�
 
 static const int STS_INIT = 0; //ステータス0 最初
 static const int STS_RELEASECOMPLETE = 1.0; //ステータス1 放出判定終了
-static const int STS_RELEASETIMEOUT = 1.1 //ステータス1.1 放出判定時間切れ
+static const int STS_RELEASETIMEOUT = 1.1; //ステータス1.1 放出判定時間切れ
 static const int STS_LANDINGCOMPLETE = 2; //ステータス2 着地判定終了
 static const int STS_CASINGOPENCOMPLETE = 3; //ステータス3 ケーシング展開終了
 
@@ -129,8 +129,8 @@ static int gps_3axisstable(){
   gps_location(&flight_gps_data);
   //以下落下中ログデータ、時間緯度経度高度を送る
   timestamp();
-  printf("latitude:%f longtitude:%f alttitude:%f\n",
-  flight_gps_data.latitude flight_gps_data.longtitude flight_gps_data.altitude);
+  printf("latitude:%f longitude:%f altitude:%f\n",
+  flight_gps_data.latitude,flight_gps_data.longitude,flight_gps_data.altitude);
   //以上ログデータ
   enqueue(gpsflight_lat_ring,flight_gps_data.latitude);
   enqueue(gpsflight_lon_ring,flight_gps_data.longitude);
@@ -177,8 +177,8 @@ static int gps_altstable(){
   gps_location(&flight_gps_data);
   //以下落下中ログデータ、時間緯度経度高度を送る
   timestamp();
-  printf("latitude:%f longtitude:%f alttitude:%f\n",
-  flight_gps_data.latitude flight_gps_data.longtitude flight_gps_data.altitude);
+  printf("latitude:%f longitude:%f altitude:%f\n",
+  flight_gps_data.latitude,flight_gps_data.longitude,flight_gps_data.altitude);
   //以上ログデータ
   enqueue(gpsflight_alt_ring,flight_gps_data.altitude);
   sleep(GPS_ALT_INTERVAL);
@@ -238,8 +238,8 @@ static int landing_timeout_ver(){
     timestamp();
     printf("TIMEOUT_GPSSTABLE;landing_complete\n");
     //着地地点ログ
-    printf("landing point: latitude:%f longtitude:%f alttitude:%f\n",
-    flight_gps_data.latitude flight_gps_data.longtitude flight_gps_data.altitude);
+    printf("landing point: latitude:%f longitude:%f alttitude:%f\n",
+    flight_gps_data.latitude,flight_gps_data.longitude,flight_gps_data.altitude);
     landing_complete = 1;
     break;
     }
@@ -247,8 +247,8 @@ static int landing_timeout_ver(){
     timestamp();
     printf("landing_complete(judged by 3 axis)\n");
     //着地地点ログ
-    printf("landing point: latitude:%f longtitude:%f alttitude:%f\n",
-    flight_gps_data.latitude flight_gps_data.longtitude flight_gps_data.altitude);
+    printf("landing point: latitude:%f longitude:%f alttitude:%f\n",
+    flight_gps_data.latitude,flight_gps_data.longitude,flight_gps_data.altitude);
     landing_complete = 1;
     }
   }
@@ -262,8 +262,8 @@ static int landing_lux_ver(){
       timestamp();
       printf("TIMEOUT_ALTSTABLE;landing_complete\n");
       //着地地点ログ
-      printf("landing point: latitude:%f longtitude:%f alttitude:%f\n",
-      flight_gps_data.latitude flight_gps_data.longtitude flight_gps_data.altitude);
+      printf("landing point: latitude:%f longitude:%f alttitude:%f\n",
+      flight_gps_data.latitude,flight_gps_data.longitude,flight_gps_data.altitude);
       landing_complete = 1;
       break;
     }
@@ -273,8 +273,8 @@ static int landing_lux_ver(){
       timestamp();
       printf("landing_complete(judged by altitude)\n");
       //着地地点ログ
-      printf("landing point: latitude:%f longtitude:%f alttitude:%f\n",
-      flight_gps_data.latitude flight_gps_data.longtitude flight_gps_data.altitude);
+      printf("landing point: latitude:%f longitude:%f alttitude:%f\n",
+      flight_gps_data.latitude,flight_gps_data.longitude,flight_gps_data.altitude);
       landing_complete = 1;
       }
     }
