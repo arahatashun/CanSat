@@ -73,7 +73,7 @@ double write_status(double sequence){
   //ステータスファイルにシーケンスデータを書き込む
   if((fp = fopen("status","w")) == NULL){
     //ファイルが開けない
-    printf("cannot open sequence file");
+    printf("cannot open sequence file\n");
     return -1;
   }
   else{
@@ -152,11 +152,11 @@ static int gps_3axisstable(){
 
 static int gps_altstable(){
   //GPS高度の値が安定で1を返す、不安定で0を返
-  printf("enter_gpsaltsable");
+  printf("enter_gpsaltsable\n");
   gpsflight_alt_ring = make_queue(gps_ring_len);
   int count = 1;
 
-  while(!is_full(gpsflight_alt_ring)){    
+  while(!is_full(gpsflight_alt_ring)){
   gps_location(&flight_gps_data);
   printf("gpsdata:%f",flight_gps_data.altitude);
   enqueue(gpsflight_alt_ring,flight_gps_data.altitude);
@@ -210,45 +210,54 @@ int release(){
 }
   //以上で放出判定完了
 
-int landing(){
-  printf("started landing fase:lux_flag;%d\n",lux_timeout_flag);
-  int a = 100;
-  if(a > 1000){
-    //時間切れした場合の処理 lux_timeoutフラグまたはstatusファイルの読み込みで判断
-      printf("enter timeout");
-      while(!landing_complete){
-      if(get_difftime() > timeout_gpsstable){
-        timestamp();
-        printf("timeout_gpsstable;landing_complete\n");
-        landing_complete = 1;
-        break;
-      }
-      else if(gps_3axisstable()){
-        timestamp();
-        printf("landing_complete(judged by 3 axis)\n");
-        landing_complete = 1;
+
+int landing_timeout_ver(){
+  //時間切れした場合の処理 lux_timeoutフラグまたはstatusファイルの読み込みで判断
+  printf("enter timeout_ver");
+  while(!landing_complete){
+    if(get_difftime() > timeout_gpsstable){
+    timestamp();
+    printf("timeout_gpsstable;landing_complete\n");
+    landing_complete = 1;
+    break;
+    }
+    else if(gps_3axisstable()){
+    timestamp();
+    printf("landing_complete(judged by 3 axis)\n");
+    landing_complete = 1;
+    }
+  }
+}
+
+int landing_lux_ver(){
+  //正常に照度センサーで放出判定できた場合の処理
+  while(!landing_complete){
+    if(get_difftime() > timeout_altstable){
+      timestamp();
+      printf("timeout_altstable;landing_complete\n");
+      landing_complete = 1;
+      break;
+    }
+    else if(gps_altstable()){
+      if(gps_altstable()){
+      //ダブルチェック
+      timestamp();
+      printf("landing_complete(judged by 3 axis)\n");
+      landing_complete = 1;
       }
     }
   }
+}
+
+int landing(){
+  printf("started landing fase:lux_flag;%d\n",lux_timeout_flag);
+  if(lux_timeout_flag == 1 || read_status() == 1.1){
+    //時間切れした場合の処理 lux_timeoutフラグまたはstatusファイルの読み込みで判断
+    landing_timeout_ver();
+  }
   else{
-    printf("start gps_stable");
     //正常に照度センサーで放出判定できた場合の処理
-    while(!landing_complete){
-      if(get_difftime() > timeout_altstable){
-        timestamp();
-        printf("timeout_altstable;landing_complete\n");
-        landing_complete = 1;
-        break;
-      }
-      else if(gps_altstable()){
-        if(gps_altstable()){
-        //ダブルチェック
-        timestamp();
-        printf("landing_complete(judged by 3 axis)\n");
-        landing_complete = 1;
-        }
-      }
-    }
+    landing_lux_ver();
   }
   write_status(2);
   return 0;
