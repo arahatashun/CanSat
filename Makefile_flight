@@ -6,7 +6,7 @@ objs0 = flight_integration.o gut.o luxsensor.o ring_buffer.o
 flight_integration.out: $(objs0)
 	gcc -g -Wall -O2 -o flight_integration.out $(objs0) $(LIBS)
 flight_integration.o: flight_integration.c
-	gcc -c flight_integration.c
+	gcc -c -Wall flight_integration.c
 gut.o: gut.c
 	gcc -c gut.c
 luxsensor.o: luxsensor.c

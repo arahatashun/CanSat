@@ -1,4 +1,4 @@
-q// flight_integration.c
+// flight_integration.c
 
 #include<stdio.h>
 #include<time.h>
@@ -25,8 +25,8 @@ static const int timeout_lux = 60; //光センサー放出判定タイムアウ�
 static const int timeout_gpsstable = 80; //上記に失敗した場合、gpsの三軸安定で着地判定するが、そのタイムアウト時間(min)
 static const int timeout_altstable = 100; //着地判定(gps高度)タイムアウト時間(min)
 
-//以下フラグ
-static int lux_timeout_flag = 0; //放出判定(luxセンサー)タイムアウトフラグ タイムアウトで1
+//以下フラ
+int lux_timeout_flag = 0; //放出判定(luxセンサー)タイムアウトフラグ タイムアウトで1
 static int release_complete = 0; //放出判定フラグ 放出判定で1
 static int landing_complete = 0; //着地判定フラグ 着地判定で1
 
@@ -77,8 +77,8 @@ double write_status(double sequence){
     return -1;
   }
   else{
-    fprintf(fp, "%f\n", &sequence);
-    printf("write_statusfile;sequence:%f\n", sequence);
+    fprintf(fp, "%lf\n",sequence);
+    printf("write_statusfile;sequence:%lf\n", sequence);
     fclose(fp);
     return 0;
   }
@@ -92,8 +92,9 @@ double read_status(){
   }
   else{
     double last_sequence; //最後に到達したシーケンス番号
-    fscanf(fp, "%lf",&last_sequence);
-    printf("read_statusfile;start from sequence:%f\n", last_sequence);
+    fscanf(fp,"%lf",&last_sequence);
+    fclose(fp);
+    printf("read_statusfile;start from sequence:%lf\n", last_sequence);
     return last_sequence;
   }
 }
@@ -150,11 +151,13 @@ static int gps_3axisstable(){
 }
 
 static int gps_altstable(){
-  //GPS高度の値が安定で1を返す、不安定で0を返す
+  //GPS高度の値が安定で1を返す、不安定で0を返
+  printf("enter_gpsaltsable");
   gpsflight_alt_ring = make_queue(gps_ring_len);
 
   while(!is_full(gpsflight_alt_ring)){
   gps_location(&flight_gps_data);
+  printf("gpsdata:%f",flight_gps_data.altitude);
   enqueue(gpsflight_alt_ring,flight_gps_data.altitude);
   sleep(2);
   }
@@ -205,10 +208,12 @@ int release(){
   //以上で放出判定完了
 
 int landing(){
-  printf("started landing fase\n");
-  if(lux_timeout_flag == 1 || read_status() == 1.1){
+  printf("started landing fase:lux_flag;%d\n",lux_timeout_flag);
+  int a = 100;
+  if(a > 1000){
     //時間切れした場合の処理 lux_timeoutフラグまたはstatusファイルの読み込みで判断
-    while(!landing_complete){
+      printf("enter timeout");
+      while(!landing_complete){
       if(get_difftime() > timeout_gpsstable){
         timestamp();
         printf("timeout_gpsstable;landing_complete\n");
@@ -220,10 +225,10 @@ int landing(){
         printf("landing_complete(judged by 3 axis)\n");
         landing_complete = 1;
       }
-      else;
     }
   }
   else{
+    printf("start gps_stable");
     //正常に照度センサーで放出判定できた場合の処理
     while(!landing_complete){
       if(get_difftime() > timeout_altstable){
@@ -240,7 +245,6 @@ int landing(){
         landing_complete = 1;
         }
       }
-      else;
     }
   }
   write_status(2);
@@ -265,4 +269,5 @@ int main(){
   release();
   landing();
   casing_open();
+  return 0;
 }
