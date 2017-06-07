@@ -123,7 +123,7 @@ double calc_compass_angle(double x,double y)
 {
 	double angle_calc1 = 0;
 	double angle_return = 0;
-	angle_calc1 = atan2(-y,-x)*(180/PI);
+	angle_calc1 = atan2(-y,x)*(180/PI);
 	if (angle_calc1 > 360)
 	{
 		angle_return = angle_calc1 - 360;
