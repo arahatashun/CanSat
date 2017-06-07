@@ -218,31 +218,6 @@ int compass_offset_initialize(Cmps_offset *compass_offset)
 	return 0;
 }
 
-static int rotate_to_calib(Cmps *compass_data)
-{
-	compass_value_initialize(compass_data);
-	motor_right(turn_calib_power);
-	delay(turn_calib_milliseconds);
-	motor_stop();
-	compass_read(compass_data);
-	printf( "compass_x= %f, compass_y= %f",compass_data->compassx_value
-	        ,compass_data->compassy_value);
-	return 0;
-}
-
-int cal_maxmin_compass(Cmps_offset *compass_offset,Cmps *compass_data)
-{
-	int i = 0;
-	compass_offset_initialize(compass_offset);
-	for(i = 0; i<10; i++)
-	{
-		rotate_to_calib(compass_data);
-		maxmin_compass(compass_offset,compass_data);
-	}
-	mean_compass_offset(compass_offset);
-	return 0;
-}
-
 static int maxmin_compass(Cmps *compass_offset, Cmps *compass_data)
 {
 	if(compass_data->compassx_value > compass_offset->compassx_offset_max)
@@ -270,5 +245,30 @@ static int mean_compass_offset(Cmps *compass_offset)
 	compass_offset->compassy_offset = (compass_offset->compassy_offset_max + compass_offset->compassy_offset_min)/2;
 	printf("x_offset=%f, y_offset=%f", compass_offset->compassx_offset
 	       ,compass_offset->compassy_offset);
+	return 0;
+}
+
+static int rotate_to_calib(Cmps *compass_data)
+{
+	compass_value_initialize(compass_data);
+	motor_right(turn_calib_power);
+	delay(turn_calib_milliseconds);
+	motor_stop();
+	compass_read(compass_data);
+	printf( "compass_x= %f, compass_y= %f",compass_data->compassx_value
+	        ,compass_data->compassy_value);
+	return 0;
+}
+
+int cal_maxmin_compass(Cmps_offset *compass_offset,Cmps *compass_data)
+{
+	int i = 0;
+	compass_offset_initialize(compass_offset);
+	for(i = 0; i<10; i++)
+	{
+		rotate_to_calib(compass_data);
+		maxmin_compass(compass_offset,compass_data);
+	}
+	mean_compass_offset(compass_offset);
 	return 0;
 }
