@@ -23,8 +23,8 @@ static int fd = 0;
 static int WPI2CWReg8 = 0;
 
 //calibration時の回転
-static const int turn_calib_power = 60;//地磁気補正時turnするpower
-static const int turn_calib_milliseconds = 500;//地磁気補正時turnするmilliseconds
+static const int turn_calib_power = 40;//地磁気補正時turnするpower
+static const int turn_calib_milliseconds = 100;//地磁気補正時turnするmilliseconds
 
 int compass_initializer()
 {
@@ -257,7 +257,7 @@ static int rotate_to_calib(Cmps *compass_data)
 	motor_right(turn_calib_power);
 	delay(turn_calib_milliseconds);
 	motor_stop();
-	delay(1000);
+	delay(2000);
 	compass_read(compass_data);
 	printf( "compass_x= %f, compass_y= %f\n",compass_data->compassx_value
 	        ,compass_data->compassy_value);
