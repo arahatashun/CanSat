@@ -240,7 +240,7 @@ int cal_maxmin_compass(Cmps_offset *compass_offset,Cmps *compass_data)
 	compass_offset_initialize(compass_offset);
 	for(i = 0; i<10; i++)
 	{
-		rotate_to_calib(ompass_data);
+		rotate_to_calib(compass_data);
 		maxmin_compass(compass_offset,compass_data);
 	}
 	mean_compass_offset(compass_offset);
