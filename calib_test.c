@@ -20,7 +20,7 @@ int main()
 		compass_y = compass_data.compassy_value - compass_offset.compassy_offset;
 		compass_angle = calc_compass_angle(compass_x, compass_y);
 		printf("compass_angle=%f\n",compass_angle);
-		delay(3000);
+		delay(1000);
 	}
 	return 0;
 }
