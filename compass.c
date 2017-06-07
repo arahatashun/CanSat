@@ -139,34 +139,6 @@ double calc_compass_angle(double x,double y)
 	return cal_deviated_angle(angle_return);
 }
 
-//ポインタで角度を渡す
-static int compass_get_angle(double *compass_angle)
-{
-	//WriteReg8
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
-	if(WPI2CWReg8 == -1)
-	{
-		printf("write error register mode_reg\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		errno = -WPI2CWReg8;
-		printf("errno=%d: %s\n", errno, strerror(errno));
-	}
-	else
-	{
-		printf("write register:mode_reg\n");
-	}
-	double x = 0;
-	double y = 0;
-	double z = 0;
-	double angle = 0;
-	x = (double)read_out(fd, x_msb_reg, x_lsb_reg);
-	y = (double)read_out(fd, y_msb_reg, y_lsb_reg);
-	z = (double)read_out(fd, z_msb_reg, z_lsb_reg);
-	*compass_angle = calc_compass_angle(x,y);
-	printf("COMPASS x:%d,y:%d,z:%d,angle:%f\n",x,y,z,*compass_angle);
-	return 0;
-}
-
 
 /*
    integrationで6軸から地磁気の向きを出すときの調整
