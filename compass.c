@@ -23,8 +23,8 @@ static int fd = 0;
 static int WPI2CWReg8 = 0;
 
 //calibration時の回転
-static const int turn_calib_power = 20;//地磁気補正時turnするpower
-static const int turn_calib_milliseconds = 50;//地磁気補正時turnするmilliseconds
+static const int turn_calib_power = 25;//地磁気補正時turnするpower
+static const int turn_calib_milliseconds = 75;//地磁気補正時turnするmilliseconds
 
 int compass_initializer()
 {
