@@ -97,24 +97,46 @@ int compass_value_initialize(Cmps *compass_init)
 	compass_init->compassz_value = 0;
 }
 
+/*
+   偏角を考慮を考慮して計算
+ */
+double cal_deviated_angle(double theta_degree)
+{
+	double true_theta = 0;
+	true_theta = theta_degree + angle_of_deviation;
+	if (true_theta > 360)
+	{
+		true_theta = true_theta - 360;
+	}
+	else if(true_theta<0)
+	{
+		true_theta = true_theta+ 360;
+	}
+	else
+	{
+		true_theta = true_theta;
+	}
+	return true_theta;
+}
+
 double calc_compass_angle(double x,double y)
 {
 	double angle_calc1 = 0;
 	double angle_return = 0;
 	angle_calc1 = atan2(y,x)*(180/PI);
-	if (angle_calc2 > 360)
+	if (angle_calc1 > 360)
 	{
-		angle_return = angle_calc2 - 360;
+		angle_return = angle_calc1 - 360;
 	}
-	else if(angle_calc2<0)
+	else if(angle_calc1<0)
 	{
-		angle_return = angle_calc2 + 360;
+		angle_return = angle_calc1 + 360;
 	}
 	else
 	{
-		angle_return = angle_calc2;
+		angle_return = angle_calc1;
 	}
-	return angle_return;
+	return cal_deviated_angle(angle_return);
 }
 
 //ポインタで角度を渡す
@@ -164,27 +186,6 @@ double cal_theta(double theta_atan2)
 	return theta;
 }
 
-/*
-   偏角を考慮を考慮して計算
- */
-double cal_deviated_angle(double theta_degree)
-{
-	double true_theta = 0;
-	true_theta = theta_degree + angle_of_deviation;
-	if (true_theta > 360)
-	{
-		true_theta = true_theta - 360;
-	}
-	else if(true_theta<0)
-	{
-		true_theta = true_theta+ 360;
-	}
-	else
-	{
-		true_theta = true_theta;
-	}
-	return true_theta;
-}
 
 double cal_deg_acclcompass(double compassx_value, double compassy_value,
                            double compassz_value, double sin_phi, double sin_psi,
