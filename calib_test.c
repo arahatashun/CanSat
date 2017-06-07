@@ -13,8 +13,8 @@ int main()
 	while(1)
 	{
 		compass_read(&compass_data);
-		compass_x = compass_data.compassx_value - compass_offset.comapssx_offset;
-		compass_y = compass_data.compassy_value - compass_offset.comapssy_offset;
+		compass_x = compass_data.compassx_value - compass_offset.compassx_offset;
+		compass_y = compass_data.compassy_value - compass_offset.compassy_offset;
 		calc_compass_angle(compass_x, compass_y);
 	}
 	return 0;
