@@ -218,7 +218,7 @@ int compass_offset_initialize(Cmps_offset *compass_offset)
 	return 0;
 }
 
-static int maxmin_compass(Cmps *compass_offset, Cmps *compass_data)
+static int maxmin_compass(Cmps_offset *compass_offset, Cmps *compass_data)
 {
 	if(compass_data->compassx_value > compass_offset->compassx_offset_max)
 	{
@@ -239,7 +239,7 @@ static int maxmin_compass(Cmps *compass_offset, Cmps *compass_data)
 	return 0;
 }
 
-static int mean_compass_offset(Cmps *compass_offset)
+static int mean_compass_offset(Cmps_offset *compass_offset)
 {
 	compass_offset->compassx_offset = (compass_offset->compassx_offset_max + compass_offset->compassx_offset_min)/2;
 	compass_offset->compassy_offset = (compass_offset->compassy_offset_max + compass_offset->compassy_offset_min)/2;
