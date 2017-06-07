@@ -236,6 +236,7 @@ static int rotate_to_calib(Cmps *compass_data)
 
 int cal_maxmin_compass(Cmps_offset *compass_offset,Cmps *compass_data)
 {
+	int i = 0;
 	compass_offset_initialize(compass_offset);
 	for(i = 0; i<10; i++)
 	{
