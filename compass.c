@@ -121,20 +121,16 @@ double cal_deviated_angle(double theta_degree)
 
 double calc_compass_angle(double x,double y)
 {
-	double angle_calc1 = 0;
+	double angle_calc = 0;
 	double angle_return = 0;
 	angle_calc1 = atan2(-y,x)*(180/PI);
-	if (angle_calc1 > 360)
+	if(angle_calc<0)
 	{
-		angle_return = angle_calc1 - 360;
-	}
-	else if(angle_calc1<0)
-	{
-		angle_return = angle_calc1 + 360;
+		angle_return = angle_calc + 360;
 	}
 	else
 	{
-		angle_return = angle_calc1;
+		angle_return = angle_calc;
 	}
 	return cal_deviated_angle(angle_return);
 }
