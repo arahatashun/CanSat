@@ -97,7 +97,7 @@ int compass_value_initialize(Cmps *compass_init)
 	compass_init->compassz_value = 0;
 }
 
-static double calc_compass_angle(double x,double y)
+double calc_compass_angle(double x,double y)
 {
 	double angle_calc1 = 0;
 	double angle_calc2 = 0;
@@ -120,7 +120,7 @@ static double calc_compass_angle(double x,double y)
 }
 
 //ポインタで角度を渡す
-int compass_get_angle(double *compass_angle)
+static int compass_get_angle(double *compass_angle)
 {
 	//WriteReg8
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
