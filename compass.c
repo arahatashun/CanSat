@@ -5,7 +5,7 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "compass.h"
-#include  "motor.h"
+#include "motor.h"
 
 static const int angle_of_deviation = -7.2;
 static const int devid = 0x1e; //I2C address
@@ -23,8 +23,8 @@ static int fd = 0;
 static int WPI2CWReg8 = 0;
 
 //calibration時の回転
-static const int turn_calib_power = 40;//地磁気補正時turnするpower
-static const int turn_calib_milliseconds = 100;//地磁気補正時turnするmilliseconds
+static const int turn_calib_power = 60;//地磁気補正時turnするpower
+static const int turn_calib_milliseconds = 500;//地磁気補正時turnするmilliseconds
 
 int compass_initializer()
 {
