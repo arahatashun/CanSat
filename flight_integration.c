@@ -15,9 +15,6 @@
 time_t start_all_time; //全体の開始時刻 グローバル変数
 static loc_t flight_gps_data; //gpsデータ確認用 integration_kndのdataとの衝突を回避
 
-Queue *gpsflight_lat_ring = NULL; //緯度データ
-Queue *gpsflight_lon_ring = NULL; //経度データ
-Queue *gpsflight_alt_ring = NULL; //高度データ
 FILE *statusfp; //ファイル型ポインタstatusfp
 
 static const int GPS_RING_LEN = 10; //GPSの値を格納するリングバッファの長さ
@@ -39,7 +36,7 @@ static const int GPS_3AXIS_INTERVAL = 2; //GPS高度取得間隔(gps_3axisstable
 static const int GPS_ALT_INTERVAL = 2; //GPS高度取得間隔(gps_altstable内) second
 
 //以下フラグ
-int lux_timeout_flag = 0; //放出判定(luxセンサー)タイムアウトフラグ タイムアウトで1
+static int lux_timeout_flag = 0; //放出判定(luxセンサー)タイムアウトフラグ タイムアウトで1
 static int release_complete = 0; //放出判定フラグ 放出判定で1
 static int landing_complete = 0; //着地判定フラグ 着地判定で1
 
@@ -49,7 +46,7 @@ static int gps_3axisstable();
 static int gps_altstable();
 static int landing_timeout_ver();
 static int landing_lux_ver();
-static double calc_variation(Queue *gpsflight_hoge_ring);
+static double calc_variation();
 
 int timer_setup(){
 	//制御開始時刻を取得、画面に表示
@@ -141,9 +138,9 @@ static double calc_variation(Queue *gpsflight_hoge_ring)
 //GPS3軸の値が安定で1を返す、不安定で0を返す
 static int gps_3axisstable(){
 	//ring_bufferを作る
-	gpsflight_lat_ring = make_queue(GPS_RING_LEN);
-	gpsflight_lon_ring = make_queue(GPS_RING_LEN);
-	gpsflight_alt_ring = make_queue(GPS_RING_LEN);
+	Queue *gpsflight_lat_ring = make_queue(GPS_RING_LEN);
+	Queue *gpsflight_lon_ring = make_queue(GPS_RING_LEN);
+	Queue *gpsflight_alt_ring = make_queue(GPS_RING_LEN);
 
 	while(!is_full(gpsflight_lat_ring)) {
 		gps_location(&flight_gps_data);
@@ -256,8 +253,8 @@ static int landing_timeout_ver(){
 	return 0;
 }
 
+//正常に照度センサーで放出判定できた場合の処理
 static int landing_lux_ver(){
-	//正常に照度センサーで放出判定できた場合の処理
 	while(!landing_complete) {
 		if(get_difftime() > TIMEOUT_ALTSTABLE) {
 			timestamp();
