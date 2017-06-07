@@ -100,10 +100,8 @@ int compass_value_initialize(Cmps *compass_init)
 double calc_compass_angle(double x,double y)
 {
 	double angle_calc1 = 0;
-	double angle_calc2 = 0;
 	double angle_return = 0;
-	angle_calc1 = atan2(-y, -x)*(180/PI) + 180;
-	angle_calc2 = angle_calc1 + angle_of_deviation;
+	angle_calc1 = atan2(y,x)*(180/PI);
 	if (angle_calc2 > 360)
 	{
 		angle_return = angle_calc2 - 360;
