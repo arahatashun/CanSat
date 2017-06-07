@@ -213,9 +213,6 @@ int compass_offset_initialize(Cmps_offset *compass_offset)
 	compass_offset->compassx_offset_min = 0;
 	compass_offset->compassy_offset_max = 0;
 	compass_offset->compassy_offset_min = 0;
-	compass_offset->compassz_offset_max = 0;
-	compass_offset->compassz_offset_min = 0;
-	compass_offset->compassx_offset = 0;
 	compass_offset->compassx_offset = 0;
 	compass_offset->compassy_offset = 0;
 	return 0;
@@ -228,9 +225,8 @@ static int rotate_to_calib(Cmps *compass_data)
 	delay(turn_calib_milliseconds);
 	motor_stop();
 	compass_read(compass_data);
-	printf( "compass_x= %f, compass_y= %f, compass_z=%f",compass_data->compassx_value
-	        ,compass_data->compassy_value
-	        ,compass_data->compassz_value);
+	printf( "compass_x= %f, compass_y= %f",compass_data->compassx_value
+	        ,compass_data->compassy_value);
 	return 0;
 }
 
@@ -265,14 +261,6 @@ static int maxmin_compass(Cmps *compass_offset, Cmps *compass_data)
 	{
 		compass_offset->compassy_offset_min = compass_data->compassy_value;
 	}
-	if(compass_data->compassz_value > compass_offset->compassz_offset_max)
-	{
-		compass_offset->compassz_offset_max = compass_data->compassz_value;
-	}
-	else if(compass_data->compassz_value < compass_offset->compassz_offset_min)
-	{
-		compass_offset->compassz_offset_min = compass_data->compassz_value;
-	}
 	return 0;
 }
 
@@ -280,9 +268,7 @@ static int mean_compass_offset(Cmps *compass_offset)
 {
 	compass_offset->compassx_offset = (compass_offset->compassx_offset_max + compass_offset->compassx_offset_min)/2;
 	compass_offset->compassy_offset = (compass_offset->compassy_offset_max + compass_offset->compassy_offset_min)/2;
-	compass_offset->compassz_offset = (compass_offset->compassz_offset_max + compass_offset->compassz_offset_min)/2;
-	printf("x_offset=%f, y_offset=%f, z_offset=%f", compass_offset->compassx_offset
-	       ,compass_offset->compassy_offset
-	       ,compass_offset->compassz_offset);
+	printf("x_offset=%f, y_offset=%f", compass_offset->compassx_offset
+	       ,compass_offset->compassy_offset);
 	return 0;
 }
