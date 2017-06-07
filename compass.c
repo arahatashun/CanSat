@@ -207,12 +207,14 @@ double cal_deg_acclcompass(double compassx_value, double compassy_value,
 }
 
 //以下は地磁気calibration用
-int compass_offset_initialize(Cmps_offset *compass_offset)
+static int compass_offset_initialize(Cmps_offset *compass_offset, Cmps *compass_data)
 {
-	compass_offset->compassx_offset_max = 0;
-	compass_offset->compassx_offset_min = 0;
-	compass_offset->compassy_offset_max = 0;
-	compass_offset->compassy_offset_min = 0;
+	compass_value_initialize(compass_data);
+	compass_read(compass_data);
+	compass_offset->compassx_offset_max = compass_data->compassx_value;
+	compass_offset->compassx_offset_min = compass_data->compassx_value;
+	compass_offset->compassy_offset_max = compass_data->compassy_value;
+	compass_offset->compassy_offset_min = compass_data->compassy_value;
 	compass_offset->compassx_offset = 0;
 	compass_offset->compassy_offset = 0;
 	return 0;
@@ -228,6 +230,7 @@ static int maxmin_compass(Cmps_offset *compass_offset, Cmps *compass_data)
 	{
 		compass_offset->compassx_offset_min = compass_data->compassx_value;
 	}
+
 	if(compass_data->compassy_value > compass_offset->compassy_offset_max)
 	{
 		compass_offset->compassy_offset_max = compass_data->compassy_value;
