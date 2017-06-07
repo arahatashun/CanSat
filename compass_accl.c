@@ -2,9 +2,9 @@
 #include "acclgyro.h"
 #include <math.h>
 #include <stdio.h>
+#include <wiringPi.h>
 
 static const double PI = 3.14159265359;
-static const int angle_of_deviation = -7;
 
 int main()
 {
