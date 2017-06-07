@@ -4,6 +4,7 @@
 
 int main()
 {
+	pwm_initializer();
 	compass_initializer();
 	Cmps compass_data;
 	Cmps_offset compass_offset;
