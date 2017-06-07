@@ -49,6 +49,7 @@ static int gps_3axisstable();
 static int gps_altstable();
 static int landing_timeout_ver();
 static int landing_lux_ver();
+static double calc_variation(Queue *gpsflight_hoge_ring);
 
 int timer_setup(){
 	//制御開始時刻を取得、画面に表示
@@ -57,6 +58,7 @@ int timer_setup(){
 	return 0;
 }
 
+//printfするだけの関数
 int timestamp(){
 	//start_all_timeからの経過時間をtimestamp
 	time_t current_time;//時間を取得
@@ -119,8 +121,26 @@ static int flightsensor_setup(){
 	return 0;
 }
 
+static double calc_variation(Queue *gpsflight_hoge_ring)
+{
+	double INF = 10000;
+	double minhoge = INF;
+	double maxhoge = 0;
+	for(int i=0; i<queue_length(gpsflight_hoge_ring); i++)
+	{
+		double hogei=0;
+		hogei=dequeue(gpsflight_hoge_ring);
+		if(hogei<minhoge) minhoge = hogei;
+		if(hogei>maxhoge) maxhoge = hogei;
+	}
+	double abshoge = INF;//0にするよりも大きくする方があとでtheresholdと比較するので適切
+	double abshoge = fabs(maxhoge - minhoge);
+	return abshoge;
+}
+
+//GPS3軸の値が安定で1を返す、不安定で0を返す
 static int gps_3axisstable(){
-	//GPS3軸の値が安定で1を返す、不安定で0を返す
+	//ring_bufferを作る
 	gpsflight_lat_ring = make_queue(GPS_RING_LEN);
 	gpsflight_lon_ring = make_queue(GPS_RING_LEN);
 	gpsflight_alt_ring = make_queue(GPS_RING_LEN);
@@ -138,30 +158,10 @@ static int gps_3axisstable(){
 		sleep(2);
 	}
 
-	double INF = 10000;
-	double minlat=INF,maxlat=0;
-	double minlon=INF,maxlon=0;
-	double minalt=INF,maxalt=0;
-
-	int i=0;
-	for(i=0; i<GPS_RING_LEN; i++) {
-		double lati=0;
-		double loni=0;
-		double alti=0;
-		lati=dequeue(gpsflight_lat_ring);
-		loni=dequeue(gpsflight_lon_ring);
-		alti=dequeue(gpsflight_alt_ring);
-		if(lati<minlat) minlat = lati;
-		if(lati>maxlat) maxlat = lati;
-		if(loni<minlon) minlon = loni;
-		if(loni>maxlon) maxlon = loni;
-		if(alti<minalt) minalt = alti;
-		if(alti>maxalt) maxalt = alti;
-	}
-	double abslat = fabs(maxlat-minlat);
-	double abslon = fabs(maxlon-minlon);
-	double absalt = fabs(maxalt-minalt);
-	if(abslat<ABSLAT_THRESHOLD && abslon<ABSLON_THRESHOLD && absalt<ABSALT_THRESHOLD) {
+	if(calc_variation(&gpsflight_lat_ring)<ABSLAT_THRESHOLD &&
+	   calc_variation(&gpsflight_lon_ring)<ABSLON_THRESHOLD &&
+	   calc_variation(&gpsflight_alt_ring)<ABSALT_THRESHOLD)
+	{
 		return 1;
 	}
 	sleep(2);
@@ -183,30 +183,25 @@ static int gps_altstable(){
 		enqueue(gpsflight_alt_ring,flight_gps_data.altitude);
 		sleep(GPS_ALT_INTERVAL);
 	}
-
-	double INF = 10000;
-	double minalt=INF,maxalt=0;
-	int i=0;
-	for(i=0; i<GPS_RING_LEN; i++) {
-		double alti=0;
-		alti=dequeue(gpsflight_alt_ring);
-		if(alti<minalt) minalt = alti;
-		if(alti>maxalt) maxalt = alti;
-	}
-	double absalt = fabs(maxalt-minalt);
-	if(absalt<ABSALT_THRESHOLD) {
+	if(calc_variation(&gpsflight_alt_ring)<ABSALT_THRESHOLD) {
 		return 1;
 	}
 	sleep(2);
 	return 0;
 }
 
+/*
+   照度センサータイムアウトの場合は、より慎重に着地を判定するために3軸安定を使い、放出判定が成功してる場合は、
+   高速化のためと着地後風で飛ばされることも考慮して高度情報の安定化のみを判定基準にしてる
+   (上空で安定化してしまった場合に備えて、高度が一定値以下も条件に入れるべきかも)
+ */
+
 int release(){
 	flightsensor_setup();
 
-	int islight_counter = 0;
+	int islight_counter = 0;//islight()return 1した回数
 
-	while(!release_complete) {
+	while(release_complete!=1) {
 		//放出判定が出るまで繰り返す(timeoutによる抜け出しあり)
 		if(islight_counter == 9) {
 			//10回連続でislightが1
@@ -221,8 +216,14 @@ int release(){
 			write_status(STS_RELEASETIMEOUT);
 			break;
 		}
-		else if(islight() == 1) islight_counter++;
-		else islight_counter = 0; //islightで暗い判定 カウンターを0に戻してやり直し
+		else if(islight() == 1)
+		{
+			islight_counter++;
+		}
+		else
+		{
+			islight_counter = 0; //islightで暗い判定 カウンターを0に戻してやり直し
+		}
 		sleep(2); //2秒間空ける
 	}
 	return 0;
@@ -284,7 +285,7 @@ static int landing_lux_ver(){
 
 int landing(){
 	printf("started landing phase:lux_flag;%d\n",lux_timeout_flag);
-	if(lux_timeout_flag == 1 || read_status() == 1.1) {
+	if(lux_timeout_flag == 1 || read_status() == STS_RELEASETIMEOUT) {
 		//時間切れした場合の処理 lux_timeoutフラグまたはstatusファイルの読み込みで判断
 		landing_timeout_ver();
 	}
