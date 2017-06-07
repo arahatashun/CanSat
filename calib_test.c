@@ -16,6 +16,7 @@ int main()
 		compass_x = compass_data.compassx_value - compass_offset.compassx_offset;
 		compass_y = compass_data.compassy_value - compass_offset.compassy_offset;
 		calc_compass_angle(compass_x, compass_y);
+		delay(3000);
 	}
 	return 0;
 }
