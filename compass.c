@@ -7,7 +7,7 @@
 #include "compass.h"
 #include  "motor.h"
 
-static const int angle_of_deviation = -7;
+static const int angle_of_deviation = -7.2;
 static const int devid = 0x1e; //I2C address
 static const int mode_reg = 0x02;
 static const int mode_continuous = 0x00;
@@ -97,12 +97,12 @@ int compass_value_initialize(Cmps *compass_init)
 	compass_init->compassz_value = 0;
 }
 
-static double calc_compass_angle(short x,short y)
+static double calc_compass_angle(double x,double y)
 {
 	double angle_calc1 = 0;
 	double angle_calc2 = 0;
 	double angle_return = 0;
-	angle_calc1 = atan2((double)-y, (double)-x)*(180/PI) + 180;
+	angle_calc1 = atan2(-y, -x)*(180/PI) + 180;
 	angle_calc2 = angle_calc1 + angle_of_deviation;
 	if (angle_calc2 > 360)
 	{
@@ -135,13 +135,13 @@ int compass_get_angle(double *compass_angle)
 	{
 		printf("write register:mode_reg\n");
 	}
-	short x = 0;
-	short y = 0;
-	short z = 0;
+	double x = 0;
+	double y = 0;
+	double z = 0;
 	double angle = 0;
-	x = read_out(fd, x_msb_reg, x_lsb_reg);
-	y = read_out(fd, y_msb_reg, y_lsb_reg);
-	z = read_out(fd, z_msb_reg, z_lsb_reg);
+	x = (double)read_out(fd, x_msb_reg, x_lsb_reg);
+	y = (double)read_out(fd, y_msb_reg, y_lsb_reg);
+	z = (double)read_out(fd, z_msb_reg, z_lsb_reg);
 	*compass_angle = calc_compass_angle(x,y);
 	printf("COMPASS x:%d,y:%d,z:%d,angle:%f\n",x,y,z,*compass_angle);
 	return 0;
