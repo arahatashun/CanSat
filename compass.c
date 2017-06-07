@@ -23,8 +23,8 @@ static int fd = 0;
 static int WPI2CWReg8 = 0;
 
 //calibration時の回転
-static const int turn_calib_power = 30;//地磁気補正時turnするpower
-static const int turn_calib_milliseconds = 100;//地磁気補正時turnするmilliseconds
+static const int turn_calib_power = 20;//地磁気補正時turnするpower
+static const int turn_calib_milliseconds = 50;//地磁気補正時turnするmilliseconds
 
 int compass_initializer()
 {
@@ -239,7 +239,7 @@ int cal_maxmin_compass(Cmps_offset *compass_offset,Cmps *compass_data)
 {
 	int i = 0;
 	compass_offset_initialize(compass_offset,compass_data);
-	for(i = 0; i<15; i++)
+	for(i = 0; i<25; i++)
 	{
 		rotate_to_calib(compass_data);
 		maxmin_compass(compass_offset,compass_data);
