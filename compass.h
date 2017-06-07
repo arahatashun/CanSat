@@ -21,6 +21,7 @@ int compass_read(Cmps *compass_data);
 int print_compass(Cmps *compass_data);
 int compass_initializer();
 int compass_value_initialize(Cmps *compass_init);
+double calc_compass_angle(double x,double y);
 double cal_theta(double);
 double cal_deviated_angle(double);
 double cal_deg_acclcompass(double compassx_value, double compassy_value,
