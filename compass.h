@@ -13,7 +13,7 @@ typedef struct cmps_offset {
   double compassx_offset_min;
   double compassy_offset_max;
   double compassy_offset_min;
-  double comapssx_offset;
+  double compassx_offset;
   double compassy_offset;
 } Cmps_offset;
 
