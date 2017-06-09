@@ -126,7 +126,6 @@ int main()
 {
 	time(&start_time);
 	signal(SIGINT, handler);
-	acclgyro_initializer();
 	pwm_initializer();
 	gps_init();
 	compass_initializer();
