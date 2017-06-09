@@ -98,13 +98,13 @@ int motor_rotate(int pwm_value)
 	}
 	return 0;
 }
-int motor_stack() //delay(1000)は適当
+int motor_stack() //delayは適当
 {
 	printf("get stacked\n");
 	motor_back(100);
 	delay(500);
 	motor_right(100);
-	delay(200);
+	delay(500);
 	motor_forward(100);
 	delay(2000);
 	motor_stop();
