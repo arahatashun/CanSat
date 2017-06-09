@@ -1,4 +1,4 @@
-#Makefile_flight
+#Makefile_knd
 
 LIBS = -lwiringPi -lm -lgps
 objs0 = integration_knd.o motor.o mitibiki.o compass.o acclgyro.c ring_buffer.o
