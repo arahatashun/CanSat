@@ -213,7 +213,7 @@ static int mean_compass_offset(Cmps_offset *compass_offset)
 {
 	compass_offset->compassx_offset = (compass_offset->compassx_offset_max + compass_offset->compassx_offset_min)/2;
 	compass_offset->compassy_offset = (compass_offset->compassy_offset_max + compass_offset->compassy_offset_min)/2;
-	printf("x_offset=%f, y_offset=%f", compass_offset->compassx_offset
+	printf("x_offset=%f, y_offset=%f\n", compass_offset->compassx_offset
 	       ,compass_offset->compassy_offset);
 	return 0;
 }

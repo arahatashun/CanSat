@@ -13,7 +13,7 @@
 static const int turn_power = 60;//turnするpower
 static const int turn_milliseconds = 100;//turnするmilliseconds
 static const int forward_milliseconds = 1000;//forwardするmilliseconds
-static const int stop_milliseconds = 100;//地磁気安定のためにstopするmilliseconds
+static const int stop_milliseconds = 1000;//地磁気安定のためにstopするmilliseconds
 static const int gps_ring_len = 10;//gpsのリングバッファの長さ
 static const double stack_threshold = 0.00003; //stack判定するときの閾値
 
