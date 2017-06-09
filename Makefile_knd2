@@ -6,7 +6,7 @@ objs0 = integration_knd.o motor.o mitibiki.o compass.o ring_buffer.o
 knd2.out: $(objs0)
 	gcc -g -Wall -O2 knd2.out $(Objs0) $(LIBS)
 integration_knd2.o: integration_knd2.c
-	gcc -c intagration_knd2.c
+	gcc -c integration_knd2.c
 mitibiki.o: mitibiki.c
 	gcc -c mitibiki.c
 compass.o: compass.c
