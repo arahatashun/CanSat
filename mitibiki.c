@@ -4,8 +4,8 @@
 #include "mitibiki.h"
 //note: seikei toukei ni izon
 
-static const double target_latitude = 35.715985;//緯度
-static const double target_longitude = 139.760297;//経度
+static const double target_latitude = 35.755963;//緯度
+static const double target_longitude = 139.770381;//経度
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
 
@@ -65,9 +65,9 @@ double dist_on_sphere(double current_lat, double current_lon)
 	return distance;
 }
 /*
-	マシンの方角を0として目的地の方角がそれから
-	どれだけずれているかを-180~180で表示
-	目的方角が右なら値は正
+        マシンの方角を0として目的地の方角がそれから
+        どれだけずれているかを-180~180で表示
+        目的方角が右なら値は正
  */
 double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 {
