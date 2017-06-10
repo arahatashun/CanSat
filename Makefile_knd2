@@ -14,4 +14,4 @@ compass.o: compass.c
 ring_buffer.o: ring_buffer.c
 	gcc -c ring_buffer.c
 mitibiki.o: mitibiki.c
-  gcc -c mitibiki.c
+	gcc -c mitibiki.c
