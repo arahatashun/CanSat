@@ -230,6 +230,7 @@ static int rotate_to_calib(Cmps *compass_data)
 	        ,compass_data->compassy_value);*/
 	printf( "%f\n", compass_data->compassx_value);
 	printf( "%f\n", compass_data->compassy_value);
+	delay(50);
 	return 0;
 }
 
