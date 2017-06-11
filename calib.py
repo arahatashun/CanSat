@@ -11,11 +11,11 @@ while(line):
     line = f.readline()
 f.close
 
-num = len(xy)
+num = len(xylist)
 
-for i in range(num/2):
-    x.append[xy[2i]]
-    y.append[xy[2i+1]]
+for i in range(int(num/2)):
+    x.append(xylist[2*i])
+    y.append(xylist[2*i+1])
 
-plt.plot(x, y)
+plt.scatter(x, y, marker="o")
 plt.show()
