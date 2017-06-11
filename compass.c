@@ -60,18 +60,18 @@ int compass_read(Cmps *compass_data)
 {
 	//WriteReg8
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
-	if(WPI2CWReg8 == -1)
-	{
-		printf("Compass write error register mode_reg\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		errno = -WPI2CWReg8;
-		printf("errno=%d: %s\n", errno, strerror(errno));
-	}
-	else
-	{
-		printf("Compass write register:mode_reg\n");
-	}
-
+	/*if(WPI2CWReg8 == -1)
+	   {
+	        printf("Compass write error register mode_reg\n");
+	        printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+	        errno = -WPI2CWReg8;
+	        printf("errno=%d: %s\n", errno, strerror(errno));
+	   }
+	   else
+	   {
+	        printf("Compass write register:mode_reg\n");
+	   }
+	 */
 	short x = 0;
 	short y = 0;
 	short z = 0;
