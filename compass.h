@@ -18,6 +18,7 @@ typedef struct cmps_offset {
 } Cmps_offset;
 
 int compass_read(Cmps *compass_data);
+int compass_read_scatter(Cmps *compass_data);
 int print_compass(Cmps *compass_data);
 int compass_initializer();
 int compass_value_initialize(Cmps *compass_init);
