@@ -226,11 +226,10 @@ static int rotate_to_calib(Cmps *compass_data)
 	motor_stop();
 	delay(2000);
 	compass_read(compass_data);
-	printf( "compass_x= %f, compass_y= %f\n",compass_data->compassx_value
-	        ,compass_data->compassy_value);
-	/*printf( "%f\n
-	                     %f\n",compass_data->compassx_value
+	/*printf( "compass_x= %f, compass_y= %f\n",compass_data->compassx_value
 	        ,compass_data->compassy_value);*/
+	printf( "%f\n", compass_data->compassx_value);
+	printf( "%f\n", compass_data->compassy_value);
 	return 0;
 }
 
@@ -238,8 +237,8 @@ int cal_maxmin_compass(Cmps_offset *compass_offset,Cmps *compass_data)
 {
 	int i = 0;
 	compass_offset_initialize(compass_offset,compass_data);
-	for(i = 0; i<25; i++)
-	/*for(i = 0; i<5000; i++):*/
+	/*for(i = 0; i<25; i++)*/
+	for(i = 0; i<5000; i++)
 	{
 		rotate_to_calib(compass_data);
 		maxmin_compass(compass_offset,compass_data);
