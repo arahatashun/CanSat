@@ -96,7 +96,7 @@ int update_angle(Distangle *distangle_data)
 int decide_route()
 {
 	update_angle(&distangle_data);
-	else if(distangle_data.dist_to_goal<10)
+	if(distangle_data.dist_to_goal<10)
 	{
 		printf("==========GOAL==========");
 		return -2;        //ゴールに着いた
