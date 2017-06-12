@@ -11,7 +11,6 @@ static const int GPS_FLIGHT_RING = 10;//ring_bufferの長さ
 typedef struct st_Sequence {
 	int sequence_num;//シーケンス番号
 	time_t last_time;//一段階前のシーケンスの時間
-
 }Sequence;
 
 Sequence sequence; //global
@@ -76,8 +75,8 @@ static int alt_is_low(Queue* tmp_alt_ring)
 	int alt_counter = 0;
 	for (int i=0; i<queue_length(tmp_alt_ring); i++)
 	{
-		double tmpi = 0;
-		tmpi = dequeue(tmp_alt_ring);
+		double tmp_alt = 0;
+		tmp_alt = dequeue(tmp_alt_ring);
 		if(tmpi<ALT_THRESHOLD) alt_counter++;
 	}
 	if(alt_counter==queue_length(tmp_alt_ring))
@@ -101,11 +100,17 @@ static int gps_3_stable()
 	}
 }
 
+//前回のシーケンスの終了時間からの分を返す
+static int diffmin(Sequence last_seq)
+{
+	
+}
+
 int start_seq(void)
 {
 	time_t timer;
 	time (&timer);
-	printf("SEQUENCE START");
+	printf("FIRST SEQUENCE START");
 	sequence.sequence_num = START_SEQ;
 	sequence.last_time = timer;
 	write_sequence(&sequence);
