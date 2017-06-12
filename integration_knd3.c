@@ -77,7 +77,7 @@ int update_angle(Distangle *distangle_data)
 	gps_location(&data);                   //gpsデータ取得
 	if(data.latitude== 0.0)
 	{
-		printf("GPS satellites not found");
+		printf("GPS satellites not found\n");
 		cal_compass_theta(distangle_data);
 		distangle_data->delta_angle = cal_delta_angle(distangle_data->angle_by_compass,distangle_data->angle_by_gps);
 		printf("delta_angle:%f\n",distangle_data->delta_angle);
