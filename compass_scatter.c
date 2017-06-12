@@ -6,7 +6,6 @@ int main()
 {
 	compass_initializer();
 	Cmps compass_data;
-	double compass_angle = 0;
 	while(1)
 	{
 		compass_read_scatter(&compass_data);
