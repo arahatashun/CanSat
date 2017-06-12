@@ -142,7 +142,7 @@ int decide_route()
 		motor_stop();
 		delay(stop_milliseconds);
 	}
-	printf("\n"); //１つのシーケンスの
+	printf("\n"); //１つのシーケンスの終わり
 	return 0;
 }
 
