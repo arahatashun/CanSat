@@ -42,7 +42,7 @@ void handler(int signum)
 }
 
 /*
-   地磁気と６軸センサーからマシンの向いている角度を計算
+   地磁気とそのオフセット値からマシンの向いている角度を計算
  */
 int cal_compass_theta(Distangle *distangle_data)
 {
