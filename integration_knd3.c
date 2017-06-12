@@ -41,6 +41,10 @@ void handler(int signum)
 	exit(1);
 }
 
+int distangle_initializer()
+{
+
+}
 /*
    地磁気とそのオフセット値からマシンの向いている角度を計算
  */
@@ -81,6 +85,7 @@ int update_angle(Distangle *distangle_data)
 		enqueue(gps_lon_ring,data.longitude); //経度を格納
 		printf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
 		distangle_data->angle_by_gps = calc_target_angle(data.latitude,data.longitude);
+		printf("GPS_angle:%f\n",distangle_data->angle_by_gps);
 		cal_compass_theta(distangle_data);
 		distangle_data->delta_angle = cal_delta_angle(distangle_data->angle_by_compass,distangle_data->angle_by_gps);
 		printf("delta_angle:%f\n",distangle_data->delta_angle);
