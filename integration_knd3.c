@@ -93,11 +93,15 @@ int update_angle(Distangle *distangle_data)
 		distangle_data->delta_angle = cal_delta_angle(distangle_data->angle_by_compass,distangle_data->angle_by_gps);
 		printf("delta_angle:%f\n",distangle_data->delta_angle);
 		distangle_data->dist_to_goal = dist_on_sphere(data.latitude,data.longitude);
+		double delta_movement = 0;
+		delta_movement = fabs(data.latitude-dequeue(gps_lat_ring)) +
+		                 fabs(data.longitude-dequeue(gps_lon_ring));
+		printf("delta_movement = %f\n", delta_movement);
 		if(queue_length(gps_lat_ring)==10)
 		{
-			double delta_movement = 0;
-			delta_movement = fabs(data.latitude-dequeue(gps_lat_ring)) +
-			                 fabs(data.longitude-dequeue(gps_lon_ring));
+			/*double delta_movement = 0;
+			   delta_movement = fabs(data.latitude-dequeue(gps_lat_ring)) +
+			                 fabs(data.longitude-dequeue(gps_lon_ring));*/
 			if(delta_movement<stack_threshold)
 			{
 				motor_stack();
