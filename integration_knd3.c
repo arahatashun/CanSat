@@ -152,7 +152,7 @@ int main()
 	pwm_initializer();
 	gps_init();
 	compass_initializer();
-	distangle_initializer()
+	distangle_initializer();
 	gps_lat_ring = make_queue(gps_ring_len);
 	gps_lon_ring = make_queue(gps_ring_len);
 	while(decide_route()!=-2) ;
