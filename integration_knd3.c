@@ -43,7 +43,11 @@ void handler(int signum)
 
 int distangle_initializer()
 {
-
+	distangle_data.angle_by_compass = 0;
+	distangle_data.angle_by_gps = 0;
+	distangle_data.dist_to_goal = 100000;
+	distangle_data.delta_angle = 0;
+	return 0;
 }
 /*
    地磁気とそのオフセット値からマシンの向いている角度を計算
@@ -148,6 +152,7 @@ int main()
 	pwm_initializer();
 	gps_init();
 	compass_initializer();
+	distangle_initializer()
 	gps_lat_ring = make_queue(gps_ring_len);
 	gps_lon_ring = make_queue(gps_ring_len);
 	while(decide_route()!=-2) ;
