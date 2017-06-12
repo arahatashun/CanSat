@@ -80,6 +80,30 @@ int compass_read(Cmps *compass_data)
 	return 0;
 }
 
+int compass_read_scatter(Cmps *compass_data)
+{
+	//WriteReg8
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
+	/*if(WPI2CWReg8 == -1)
+	   {
+	        printf("Compass write error register mode_reg\n");
+	        printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+	        errno = -WPI2CWReg8;
+	        printf("errno=%d: %s\n", errno, strerror(errno));
+	   }
+	   else
+	   {
+	        printf("Compass write register:mode_reg\n");
+	   }*/
+	short x = 0;
+	short y = 0;
+	short z = 0;
+	compass_data->compassx_value = read_out(fd, x_msb_reg, x_lsb_reg);
+	compass_data->compassy_value = read_out(fd, y_msb_reg, y_lsb_reg);
+	compass_data->compassz_value = read_out(fd, z_msb_reg, z_lsb_reg);
+	return 0;
+}
+
 int print_compass(Cmps *compass_data)
 {
 	compass_read(compass_data);
