@@ -73,12 +73,11 @@ int serial_readln(char *buffer, int len)
 			if (c == '\n')
 			{
 				*b++ = '\0';
-				break;
+				return 0;
 			}
 			*b++ = c;
 		}
 	}
-	return 0;
 }
 
 void serial_close(void)

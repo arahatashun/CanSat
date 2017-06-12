@@ -33,7 +33,7 @@ extern void gps_location(loc_t *coord) {
 			coord->altitude = 0;
 			coord->speed = 0;
 			coord->course = 0;
-      break;
+			break;
 		}else{
 			switch (nmea_get_message_type(buffer)) {
 			case NMEA_GPGGA:
