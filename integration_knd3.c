@@ -67,25 +67,36 @@ int update_angle(Distangle *distangle_data)
 	double delta_time = difftime(current_time,start_time);
 	printf("OS timestamp:%f\n",delta_time);
 	gps_location(&data);                   //gpsデータ取得
-	enqueue(gps_lat_ring,data.latitude);         //緯度を格納
-	enqueue(gps_lon_ring,data.longitude);         //経度を格納
-	printf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
-	distangle_data->angle_by_gps = calc_target_angle(data.latitude,data.longitude);
-	cal_compass_theta(distangle_data);
-	distangle_data->delta_angle = cal_delta_angle(distangle_data->angle_by_compass,distangle_data->angle_by_gps);
-	printf("delta_angle:%f\n",distangle_data->delta_angle);
-	distangle_data->dist_to_goal = dist_on_sphere(data.latitude,data.longitude);
-	if(queue_length(gps_lat_ring)==10)
+	if(data.latitude== 0.0)
 	{
-		double delta_movement = 0;
-		delta_movement = fabs(data.latitude-dequeue(gps_lat_ring)) +
-		                 fabs(data.longitude-dequeue(gps_lon_ring));
-		if(delta_movement<stack_threshold)
-		{
-			motor_stack();
-		}
+		printf("GPS satellites not found");
+		cal_compass_theta(distangle_data);
+		distangle_data->delta_angle = cal_delta_angle(distangle_data->angle_by_compass,distangle_data->angle_by_gps);
+		printf("delta_angle:%f\n",distangle_data->delta_angle);
+		return 0;
 	}
-	return 0;
+	else
+	{
+		enqueue(gps_lat_ring,data.latitude); //緯度を格納
+		enqueue(gps_lon_ring,data.longitude); //経度を格納
+		printf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
+		distangle_data->angle_by_gps = calc_target_angle(data.latitude,data.longitude);
+		cal_compass_theta(distangle_data);
+		distangle_data->delta_angle = cal_delta_angle(distangle_data->angle_by_compass,distangle_data->angle_by_gps);
+		printf("delta_angle:%f\n",distangle_data->delta_angle);
+		distangle_data->dist_to_goal = dist_on_sphere(data.latitude,data.longitude);
+		if(queue_length(gps_lat_ring)==10)
+		{
+			double delta_movement = 0;
+			delta_movement = fabs(data.latitude-dequeue(gps_lat_ring)) +
+			                 fabs(data.longitude-dequeue(gps_lon_ring));
+			if(delta_movement<stack_threshold)
+			{
+				motor_stack();
+			}
+		}
+		return 0;
+	}
 
 }
 /*
