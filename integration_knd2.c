@@ -59,36 +59,30 @@ int update_angle(double *delta_angle,double *distance)
 	double delta_time = difftime(current_time,start_time);
 	printf("OS timestamp:%f\n",delta_time);
 	gps_location(&data);                   //gpsデータ取得
-	if(data.latitude == 0.0)
+	enqueue(gps_lat_ring,data.latitude);         //緯度を格納
+	enqueue(gps_lon_ring,data.longitude);         //経度を格納
+	printf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
+	double angle_to_go = 0;        //進むべき方角
+	double compass_angle = 0;        //地磁気から今のマシンの向きを計算して代入するための変数
+	angle_to_go = calc_target_angle(data.latitude,data.longitude);
+	cal_compass_theta(&compass_angle);
+	*delta_angle = 0;
+	*delta_angle = cal_delta_angle(compass_angle,angle_to_go);
+	printf("delta_angle:%f\n",*delta_angle);
+	*distance = 0;
+	*distance = dist_on_sphere(data.latitude,data.longitude);
+	if(queue_length(gps_lat_ring)==10)
 	{
-		return 0;
-	}
-	else
-	{
-		enqueue(gps_lat_ring,data.latitude); //緯度を格納
-		enqueue(gps_lon_ring,data.longitude); //経度を格納
-		printf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
-		double angle_to_go = 0;//進むべき方角
-		double compass_angle = 0;//地磁気から今のマシンの向きを計算して代入するための変数
-		angle_to_go = calc_target_angle(data.latitude,data.longitude);
-		cal_compass_theta(&compass_angle);
-		*delta_angle = 0;
-		*delta_angle = cal_delta_angle(compass_angle,angle_to_go);
-		printf("delta_angle:%f\n",*delta_angle);
-		*distance = 0;
-		*distance = dist_on_sphere(data.latitude,data.longitude);
-		if(queue_length(gps_lat_ring)==10)
+		double delta_movement = 0;
+		delta_movement = fabs(data.latitude-dequeue(gps_lat_ring)) +
+		                 fabs(data.longitude-dequeue(gps_lon_ring));
+		if(delta_movement<stack_threshold)
 		{
-			double delta_movement = 0;
-			delta_movement = fabs(data.latitude-dequeue(gps_lat_ring)) +
-			                 fabs(data.longitude-dequeue(gps_lon_ring));
-			if(delta_movement<stack_threshold)
-			{
-				motor_stack();
-			}
+			motor_stack();
 		}
-		return 0;
 	}
+	return 0;
+
 }
 /*
    目的方角が自分から見て右に３０度以上ずれていたら右回転、
@@ -100,10 +94,6 @@ int decide_route()
 	double delta_angle = 0;
 	double dist_to_goal = 0;
 	update_angle(&delta_angle,&dist_to_goal);
-	if(dist_to_goal == 0.0 && delta_angle == 0.0)
-	{
-		return 0;
-	}
 	else if(dist_to_goal<10)
 	{
 		printf("==========GOAL==========");
