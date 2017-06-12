@@ -96,19 +96,19 @@ int update_angle(Distangle *distangle_data)
 int decide_route()
 {
 	update_angle(&distangle_data);
-	else if(dist_to_goal<10)
+	else if(distangle_data.dist_to_goal<10)
 	{
 		printf("==========GOAL==========");
 		return -2;        //ゴールに着いた
 	}
-	if(-180 <= delta_angle && delta_angle <= -30) //ゴールの方角がマシンから見て左に30~180度の場合は左回転
+	if(-180 <= distangle_data.delta_angle && distangle_data.delta_angle <= -30) //ゴールの方角がマシンから見て左に30~180度の場合は左回転
 	{
 		motor_left(turn_power);
 		delay(turn_milliseconds);
 		motor_stop();
 		delay(stop_milliseconds);
 	}
-	else if(30 <= delta_angle && delta_angle <= 180)         //ゴールの方角がマシンから見て右に30~180度の場合は右回転
+	else if(30 <= distangle_data.delta_angle && distangle_data.delta_angle <= 180)         //ゴールの方角がマシンから見て右に30~180度の場合は右回転
 	{
 		motor_right(turn_power);
 		delay(turn_milliseconds);
