@@ -26,7 +26,7 @@ double calc_target_angle(double lat,double lon)
 	lat_offset = target_latitude - lat;
 	lon_offset = target_longitude - lon;
 	angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;
-	printf("target_angle : %f\n",angle);
+	printf("GPS_target_angle : %f\n",angle);
 	return angle;
 }
 
