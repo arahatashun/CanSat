@@ -94,7 +94,7 @@ int decide_route()
 	double delta_angle = 0;
 	double dist_to_goal = 0;
 	update_angle(&delta_angle,&dist_to_goal);
-	else if(dist_to_goal<10)
+	if(dist_to_goal<10)
 	{
 		printf("==========GOAL==========");
 		return -2;        //ゴールに着いた
