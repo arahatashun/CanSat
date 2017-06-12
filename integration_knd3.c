@@ -28,7 +28,6 @@ time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
 
 Cmps compass_data;      //地磁気の構造体を宣言
-Cmps_offset compass_offset;  //地磁気の構造体を宣言
 Distangle distangle_data;
 Queue *gps_lat_ring = NULL; //緯度を格納するキューを用意
 Queue *gps_lon_ring = NULL; //経度を格納するキューを用意
@@ -75,12 +74,12 @@ int update_angle(Distangle *distangle_data)
 	double delta_time = difftime(current_time,start_time);
 	printf("OS timestamp:%f\n",delta_time);
 	gps_location(&data);                   //gpsデータ取得
-	if(data.latitude== 0.0)
+	if(data.latitude== 0.0)                //gpsの緯度が0.0の時(衛星を取得していない時)
 	{
 		printf("GPS satellites not found\n");
 		printf("previous GPS_angle=%f\n",distangle_data->angle_by_gps);
-		cal_compass_theta(distangle_data);
-		distangle_data->delta_angle = cal_delta_angle(distangle_data->angle_by_compass,distangle_data->angle_by_gps);
+		cal_compass_theta(distangle_data); //地磁気だけ取っておく
+		distangle_data->delta_angle = cal_delta_angle(distangle_data->angle_by_compass,distangle_data->angle_by_gps);//GPS_angleは元の値を使用
 		printf("delta_angle:%f\n",distangle_data->delta_angle);
 		return 0;
 	}
@@ -143,6 +142,7 @@ int decide_route()
 		motor_stop();
 		delay(stop_milliseconds);
 	}
+	printf("\n"); //１つのシーケンスの
 	return 0;
 }
 
