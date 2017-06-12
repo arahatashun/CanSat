@@ -16,6 +16,8 @@ static const int forward_milliseconds = 1000;//forwardするmilliseconds
 static const int stop_milliseconds = 1000;//地磁気安定のためにstopするmilliseconds
 static const int gps_ring_len = 10;//gpsのリングバッファの長さ
 static const double stack_threshold = 0.00003; //stack判定するときの閾値
+static const double compass_x_offset = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
+static const double compass_y_offset = 0.0;
 
 typedef struct dist_and_angle {
 	double angle_by_compass;
@@ -57,8 +59,8 @@ int cal_compass_theta(Distangle *distangle_data)
 	double compass_y = 0;
 	compass_value_initialize(&compass_data);
 	print_compass(&compass_data);
-	compass_x = compass_data.compassx_value - 0;  //この0を変えてoffsetを直接代入
-	compass_y = compass_data.compassy_value - 0;
+	compass_x = compass_data.compassx_value - compass_x_offset;
+	compass_y = compass_data.compassy_value - compass_y_offset;
 	distangle_data->angle_by_compass = calc_compass_angle(compass_x, compass_y);//偏角を調整
 	printf("compass_degree = %f\n", distangle_data->angle_by_compass);
 	return 0;
@@ -81,32 +83,30 @@ int update_angle(Distangle *distangle_data)
 		cal_compass_theta(distangle_data); //地磁気だけ取っておく
 		distangle_data->delta_angle = cal_delta_angle(distangle_data->angle_by_compass,distangle_data->angle_by_gps);//GPS_angleは元の値を使用
 		printf("delta_angle:%f\n",distangle_data->delta_angle);
-		return 0;
 	}
 	else
 	{
 		enqueue(gps_lat_ring,data.latitude); //緯度を格納
 		enqueue(gps_lon_ring,data.longitude); //経度を格納
 		printf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
+		distangle_data->dist_to_goal = dist_on_sphere(data.latitude,data.longitude);
 		distangle_data->angle_by_gps = calc_target_angle(data.latitude,data.longitude);
 		cal_compass_theta(distangle_data);
 		distangle_data->delta_angle = cal_delta_angle(distangle_data->angle_by_compass,distangle_data->angle_by_gps);
 		printf("delta_angle:%f\n",distangle_data->delta_angle);
-		distangle_data->dist_to_goal = dist_on_sphere(data.latitude,data.longitude);
-		if(queue_length(gps_lat_ring)==10)
-		{
-			double delta_movement = 0;
-			delta_movement = fabs(data.latitude-dequeue(gps_lat_ring)) +
-			                 fabs(data.longitude-dequeue(gps_lon_ring));
-			printf("delta_movement = %f\n", delta_movement);
-			if(delta_movement<stack_threshold)
-			{
-				motor_stack();
-			}
-		}
-		return 0;
 	}
-
+	if(queue_length(gps_lat_ring)==10)
+	{
+		double delta_movement = 0;
+		delta_movement = fabs(data.latitude-dequeue(gps_lat_ring)) +
+		                 fabs(data.longitude-dequeue(gps_lon_ring));
+		printf("delta_movement = %f\n", delta_movement);
+		if(delta_movement<stack_threshold)
+		{
+			motor_stack();
+		}
+	}
+	return 0;
 }
 /*
    目的方角が自分から見て右に３０度以上ずれていたら右回転、
