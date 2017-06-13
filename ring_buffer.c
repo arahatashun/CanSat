@@ -47,7 +47,6 @@ int enqueue(Queue *que, double x)
 	if (is_full(que)) return -1; //false
 	que->buff[que->rear++] = x;
 	que->count++;
-	if (que->rear == que->size)
 	return 0;//true
 }
 
