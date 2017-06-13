@@ -19,6 +19,7 @@ static const int z_lsb_reg = 0x06;
 static const int y_msb_reg = 0x07;
 static const int y_lsb_reg = 0x08;
 static const double PI = 3.14159265;
+static const double k_parameter = 1.0;//地磁気の感度補正パラメータ
 static int fd = 0;
 static int WPI2CWReg8 = 0;
 
@@ -146,7 +147,7 @@ double calc_compass_angle(double x,double y)
 {
 	double angle_calc = 0;
 	double angle_return = 0;
-	angle_calc = atan2(-y,x)*(180/PI);
+	angle_calc = atan2(-y*k_parameter,x)*(180/PI);
 	if(angle_calc<0)
 	{
 		angle_return = angle_calc + 360;
@@ -193,7 +194,7 @@ double cal_deg_acclcompass(double compassx_value, double compassy_value,
 	x1 = compassx_value*cos_psi;
 	x2 = compassy_value*sin_psi*sin_phi;
 	x3 = compassz_value*sin_psi*cos_phi;
-	return atan2(y1 - y2,x1 + x2 + x3)*180.0/PI;
+	return atan2((y1 - y2)*k_parameter,x1 + x2 + x3)*180.0/PI;
 }
 
 //以下は地磁気calibration用
