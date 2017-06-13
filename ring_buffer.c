@@ -40,11 +40,14 @@ int is_full(Queue *que)
 //queueに追加
 int enqueue(Queue *que, double x)
 {
+	if (que->rear == que->size)
+	{
+		que->rear = 0;
+	}
 	if (is_full(que)) return -1; //false
 	que->buff[que->rear++] = x;
 	que->count++;
 	if (que->rear == que->size)
-		que->rear = 0;
 	return 0;//true
 }
 
