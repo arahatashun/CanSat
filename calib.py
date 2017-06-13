@@ -14,7 +14,7 @@ def read_log():
         line = f.readline()
         f.close
 
-def get_list():
+def get_list(): #xとy見境なくリストにしたxylistをxとyにparse
     num = len(xylist)
     for i in range(int(num/2)):
         x.append(xylist[2*i])
@@ -67,16 +67,14 @@ def cal_min_y():
 if __name__ =="__main__":
     read_log()
     get_list()
-    cal_max_x()
-    cal_min_x()
     max_x = cal_max_x()
     min_x = cal_min_x()
     max_y = cal_max_y()
     min_y = cal_min_y()
     x_offset = (max_x + min_x)/2
     y_offset = (max_y + min_y)/2
-    print("max_x = {0}\nmin_x = {1}".format(max_x, min_x))
-    print("max_y = {0}\nmin_y = {1}".format(max_y, min_y))
-    print("x_offset = {0}\ny_offset = {1}".format(x_offset, y_offset))
+    print("max_x = {0} min_x = {1}".format(max_x, min_x))
+    print("max_y = {0} min_y = {1}".format(max_y, min_y))
+    print("x_offset = {0} y_offset = {1}".format(x_offset, y_offset))
     plt.scatter(x, y, marker="o") #散布図作成
     plt.show()
