@@ -19,7 +19,7 @@ static const int TIMEOUT_ALT_STABLE = 40; //gps高度着地判定
 static const int TIMEOUT_3_STABLE = 20; //gps三軸着地判定
 
 //関数の返り値
-static const int GPS_FLIGHT_RING = 10;//ring_bufferの長さ
+static const int GPS_RING_LEN = 10;//ring_bufferの長さ
 static const int ALT_IS_LOW = 1;
 static const int ALT_IS_HIGH = 0;
 static const int GPS3_IS_STABLE = 1;
@@ -92,7 +92,8 @@ static double calc_variation(Queue *gpsflight_tmp_ring)
 	double INF = 10000;
 	double min = INF;
 	double max = 0;
-	for(int i=0; i<queue_length(gpsflight_tmp_ring); i++)
+	int i = 0;
+	for(i; i<queue_length(gpsflight_tmp_ring); i++)
 	{
 		double tmp=0;
 		tmp=dequeue(gpsflight_tmp_ring);
@@ -110,7 +111,8 @@ static double calc_variation(Queue *gpsflight_tmp_ring)
 static int alt_is_low(Queue* tmp_alt_ring)
 {
 	int alt_counter = 0;
-	for (int i=0; i<queue_length(tmp_alt_ring); i++)
+	int i = 0;
+	for (i; i<queue_length(tmp_alt_ring); i++)
 	{
 		double tmp_alt = 0;
 		tmp_alt = dequeue(tmp_alt_ring);
@@ -128,9 +130,9 @@ static int alt_is_low(Queue* tmp_alt_ring)
 //gps三軸安定
 static int gps_3_stable()
 {
-	Queue *lat_ring = make_queue(GPS_FLIGHT_RING);
-	Queue *lon_ring = make_queue(GPS_FLIGHT_RING);
-	Queue *alt_ring = make_queue(GPS_FLIGHT_RING);
+	Queue *lat_ring = make_queue(GPS_LING_RING);
+	Queue *lon_ring = make_queue(GPS_LING_RING);
+	Queue *alt_ring = make_queue(GPS_LING_RING);
 	while(!is_full(lat_ring))
 	{
 		loc_t flight_gps;
@@ -188,7 +190,7 @@ int diffmin(Sequence last_seq)
 {
 	time_t tcurrent;
 	time(&tcurrent);
-	double delta_min=difftime(tcurrent-last_seq.last_time)/60;//分に変換
+	double delta_min=difftime(tcurrent,last_seq.last_time)/60;//分に変換
 	return (int)delta_min;
 }
 
