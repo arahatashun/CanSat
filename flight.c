@@ -69,6 +69,7 @@ int read_sequence(Sequence*sequence2read)
 int write_sequence(Sequence *sequence2write,int seq_num2write)
 {
 	time_t tcurrent;
+	time(&tcurrent);
 	sequence2write->last_time = tcurrent;
 	sequence2write->sequence_num = seq_num2write;
 	printf("write sequence %d:%s\n",seq_num2write,ctime(&tcurrent));
@@ -92,8 +93,8 @@ static double calc_variation(Queue *gpsflight_tmp_ring)
 	double INF = 10000;
 	double min = INF;
 	double max = 0;
-	int i = 0;
-	for(i; i<queue_length(gpsflight_tmp_ring); i++)
+	int i;
+	for(i = 0; i<queue_length(gpsflight_tmp_ring); i++)
 	{
 		double tmp=0;
 		tmp=dequeue(gpsflight_tmp_ring);
@@ -111,8 +112,8 @@ static double calc_variation(Queue *gpsflight_tmp_ring)
 static int alt_is_low(Queue* tmp_alt_ring)
 {
 	int alt_counter = 0;
-	int i = 0;
-	for (i; i<queue_length(tmp_alt_ring); i++)
+	int i;
+	for (i = 0; i<queue_length(tmp_alt_ring); i++)
 	{
 		double tmp_alt = 0;
 		tmp_alt = dequeue(tmp_alt_ring);
