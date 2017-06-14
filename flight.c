@@ -226,7 +226,7 @@ static int release(Sequence *release_seq)
 			write_sequence(release_seq,RELEASE_COMPLETE_SEQ);
 			return RELEASE_COMPLETE;
 		}
-		else if(time_is_out(TIMEOUT_LUX,release_seq)==TIME_IS_OUT)
+		else if(time_is_out(TIMEOUT_LUX,*release_seq)==TIME_IS_OUT)
 		{
 			//タイムアウト
 			printf("release_complete:time out\n");
@@ -257,7 +257,7 @@ static int land_release_suc(Sequence *land_seq)
 			printf("landing_complete;timeout\n");
 			write_sequence(land_seq,LAND_COMPLETE_SEQ);
 			return 0;
-		}else if(time_is_out(TIMEOUT_ALT_STABLE,land_seq)==TIME_IS_OUT)
+		}else if(time_is_out(TIMEOUT_ALT_STABLE,*land_seq)==TIME_IS_OUT)
 		{
 			printf("landing_complete;timeout\n");
 			write_sequence(land_seq,LAND_COMPLETE_SEQ);
@@ -278,7 +278,7 @@ static int land_release_timeout(Sequence *land_seq)
 			write_sequence(land_seq,LAND_COMPLETE_SEQ);
 			return 0;
 		}
-		else if(time_is_out(TIMEOUT_3_STABLE,land_seq)==TIME_IS_OUT)
+		else if(time_is_out(TIMEOUT_3_STABLE,*land_seq)==TIME_IS_OUT)
 		{
 			printf("landing_complete(timeout 3 axis stable)\n");
 			write_sequence(land_seq,LAND_COMPLETE_SEQ);
