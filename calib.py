@@ -6,7 +6,8 @@ f = open('compasslog.txt')
 xylist = []             #とりあえずcompasslog.txtの値を全て格納
 x = []                  #xyの区別がついてないxylistをxとyに分けるためのリスト
 y = []
-
+x_offset = 72   #このオフセット値を変えてプロットを円に近づける
+y_offset = -216.5
 def read_log():
     line = f.readline() # 1行を文字列として読み込む(改行文字も含まれる)
     while(line):
@@ -17,8 +18,8 @@ def read_log():
 def get_list(): #xとy見境なくリストにしたxylistをxとyにparse
     num = len(xylist)
     for i in range(int(num/2)):
-        x.append(xylist[2*i])
-        y.append(xylist[2*i+1])
+        x.append(xylist[2*i] - x_offset)
+        y.append(xylist[2*i+1] - y_offset)
 
 def cal_max_x():
     max_x = -10000
@@ -77,4 +78,5 @@ if __name__ =="__main__":
     print("max_y = {0} min_y = {1}".format(max_y, min_y))
     print("x_offset = {0} y_offset = {1}".format(x_offset, y_offset))
     plt.scatter(x, y, marker="o") #散布図作成
+    plt.axis('equal')
     plt.show()
