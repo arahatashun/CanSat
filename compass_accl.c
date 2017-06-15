@@ -14,9 +14,9 @@ int main()
 	Acclgyro acclgyro_data;
 	Cmps compass_data;
 	acclgyro_initializer();
-	compass_initializer();
 	while(1)
 	{
+		compass_initializer();
 		accl_and_rotation_read(&acclgyro_data);
 		compass_read(&compass_data);
 		print_compass(&compass_data);
