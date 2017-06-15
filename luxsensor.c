@@ -44,13 +44,9 @@ int getLux();
 int luxsensor_initializer()
 {
 	//I2c setup
-<<<<<<< HEAD
 	int fd = 0;
 	fd = wiringPiI2CSetup(TSL2561_ADDR_FLOAT);
 	//NOTE TSL2561_ADDR_FLOATをTSL2561_ADDR_LOWに置き換える必要あるかも
-=======
-	fd = wiringPiI2CSetup(TSL2561_ADDR_FLOAT);
->>>>>>> origin/calibration
 	if(fd == -1)
 	{
 		printf("WARNING! luxsensor wiringPiI2CSetup error\n");
