@@ -114,7 +114,7 @@ static int alt_is_low(Queue* tmp_alt_ring)
 {
 	int alt_counter = 0;
 	int i;
-	int qlength = queue_length(tmp_alt_ring)
+	int qlength = queue_length(tmp_alt_ring);
 	for (i = 0; i<qlength; i++)
 	{
 		double tmp_alt = 0;
