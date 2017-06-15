@@ -157,12 +157,12 @@ double calc_compass_angle(double x,double y)
 	}
 	else if(cal_theta > 0)
 	{
-		cal_theta = 90 - cal_theta;
+		cal_theta = cal_theta;
 		printf("b");
 	}
 	else
 	{
-		cal_theta = 90 - cal_theta;
+		cal_theta = cal_theta;
 		printf("c");
 	}
 	return cal_theta;
