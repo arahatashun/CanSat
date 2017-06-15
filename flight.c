@@ -209,7 +209,7 @@ int time_is_out(int timeout_min,Sequence last_seq)
 int start_seq(Sequence *start_seq)
 {
 	write_sequence(start_seq,START_SEQ);
-	printf("FIRST SEQUENCE START");
+	printf("FIRST SEQUENCE START\n");
 	return 0;
 }
 
@@ -300,6 +300,8 @@ int open_case(Sequence *open_seq)
 //TODO 電源瞬断対策復旧してシーケンス番号からのswitch-case文
 int main(void)
 {
+	luxsensor_initializer();
+	gps_init();
 	Sequence sequence;
 	start_seq(&sequence);
 	if (release(&sequence)==RELEASE_COMPLETE)
