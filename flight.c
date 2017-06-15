@@ -164,12 +164,14 @@ static int gps_3_stable()
 static int gps_alt_stable()
 {
 	Queue *gpsflight_alt_ring = make_queue(GPS_FLIGHT_RING);
+	int i=0;
 	while(!is_full(gpsflight_alt_ring))
 	{
 		loc_t lflight;
 		gps_location(&lflight);
 		//以下落下中ログデータ、時間緯度経度高度を送る
 		time_t tcurrent;
+		printf("altstable : %d\n",i++);
 		printf("%s\n",ctime(&tcurrent));
 		printf("latitude:%f longitude:%f altitude:%f\n",
 		       lflight.latitude,lflight.longitude,lflight.altitude);
