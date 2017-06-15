@@ -318,6 +318,7 @@ int main(void)
 	{
 		land_release_suc(&sequence);
 	}else{
+		//TODO 実験によるロジックの検証
 		land_release_timeout(&sequence);
 	}
 	open_case(&sequence);
