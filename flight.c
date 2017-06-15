@@ -120,7 +120,7 @@ static int alt_is_low(Queue* tmp_alt_ring)
 		tmp_alt = dequeue(tmp_alt_ring);
 		if(tmp_alt<ALT_THRESHOLD) alt_counter++;
 	}
-	if(alt_counter==queue_length(tmp_alt_ring))
+	if(alt_counter==queue_length(tmp_alt_ring)-1)
 	{
 		//高度が全て基準値以下
 		return ALT_IS_LOW;
