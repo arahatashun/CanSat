@@ -123,7 +123,7 @@ static int alt_is_low(Queue* tmp_alt_ring)
 	}
 	if(alt_counter==qlength)
 	{
-		printf("ALT IS LOW"\n);
+		printf("ALT IS LOW\n");
 		//高度が全て基準値以下
 		return ALT_IS_LOW;
 	}
