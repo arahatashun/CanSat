@@ -180,11 +180,11 @@ double cal_deg_acclcompass(double compassx_value, double compassy_value,
 	cal_theta = atan2((y1 - y2)*k_parameter,x1 + x2 + x3)*180.0/PI;
 	if(cal_theta < 0)
 	{
-		cal_theta = cal_theta;
+		cal_theta = 180 + cal_theta;
 	}
 	else
 	{
-		cal_theta = cal_theta;
+		cal_theta = 360 - cal_theta;
 	}
 	return cal_deviated_angle(cal_theta);
 }
