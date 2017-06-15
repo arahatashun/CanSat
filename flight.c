@@ -114,18 +114,21 @@ static int alt_is_low(Queue* tmp_alt_ring)
 {
 	int alt_counter = 0;
 	int i;
-	for (i = 0; i<queue_length(tmp_alt_ring); i++)
+	int qlength = queue_length(tmp_alt_ring)
+	for (i = 0; i<qlength; i++)
 	{
 		double tmp_alt = 0;
 		tmp_alt = dequeue(tmp_alt_ring);
 		if(tmp_alt<ALT_THRESHOLD) alt_counter++;
 	}
-	if(alt_counter==queue_length(tmp_alt_ring)-1)
+	if(alt_counter==qlength)
 	{
+		printf("ALT IS LOW"\n);
 		//高度が全て基準値以下
 		return ALT_IS_LOW;
 	}
 	//高度が基準以上
+	printf("ALR IS HIGH\n");
 	return ALT_IS_HIGH;
 }
 
