@@ -8,6 +8,7 @@ x = []                  #xyの区別がついてないxylistをxとyに分ける
 y = []
 x_offset = 72   #このオフセット値を変えてプロットを円に近づける
 y_offset = -216.5
+
 def read_log():
     line = f.readline() # 1行を文字列として読み込む(改行文字も含まれる)
     while(line):

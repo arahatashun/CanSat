@@ -24,11 +24,9 @@ int main()
 		                    acclgyro_data.acclZ_scaled, phi_rad);
 		printf("phi_degree = %f\n", phi_rad*180.0/PI);
 		printf("psi_degree = %f\n", psi_rad*180.0/PI);
-		double theta_degree1 = cal_deg_acclcompass(compass_data.compassx_value,compass_data.compassy_value,
-		                                           compass_data.compassz_value,sin(phi_rad),
-		                                           sin(psi_rad),cos(phi_rad),cos(psi_rad));
-		double theta_degree2 = cal_theta(theta_degree1);//値域が0~360になるように計算
-		theta_degree = cal_deviated_angle(theta_degree2);
+		double theta_degree = cal_deg_acclcompass(compass_data.compassx_value,compass_data.compassy_value,
+		                                          compass_data.compassz_value,sin(phi_rad),
+		                                          sin(psi_rad),cos(phi_rad),cos(psi_rad));
 		printf("theta_degree = %f\n", theta_degree);
 		delay(1000);
 	}
