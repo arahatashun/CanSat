@@ -148,18 +148,24 @@ static double cal_deviated_angle(double theta_degree)
 
 double calc_compass_angle(double x,double y)
 {
-	double angle_calc = 0;
-	double angle_return = 0;
-	angle_calc = atan2(-y*k_parameter,x)*(180/PI);
-	if(angle_calc<0)
+	double cal_theta = 0;
+	cal_theta = atan2(-y*k_parameter,x)*(180/PI);
+	if(cal_theta > 90)
 	{
-		angle_return = -angle_calc;
+		cal_theta = 450 - cal_theta;
+		printf("a");
+	}
+	else if(cal_theta > 0)
+	{
+		cal_theta = 90 - cal_theta;
+		printf("b");
 	}
 	else
 	{
-		angle_return = angle_calc;
+		cal_theta = 90 - cal_theta;
+		printf("c");
 	}
-	return cal_deviated_angle(angle_return);
+	return cal_deviated_angle(cal_theta);
 }
 
 double cal_deg_acclcompass(double compassx_value, double compassy_value,
