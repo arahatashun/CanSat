@@ -181,14 +181,17 @@ double cal_deg_acclcompass(double compassx_value, double compassy_value,
 	if(cal_theta > 90)
 	{
 		cal_theta = 450 - cal_theta;
+		printf("a");
 	}
 	else if(cal_theta > 0)
 	{
 		cal_theta = 90 - cal_theta;
+		printf("b");
 	}
 	else
 	{
 		cal_theta = 90 - cal_theta;
+		printf("c");
 	}
 	return cal_deviated_angle(cal_theta);
 }
