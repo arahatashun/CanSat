@@ -182,12 +182,12 @@ static int gps_alt_stable()
 		sleep(GPS_ALT_INTERVAL);
 	}
 	if(calc_variation(gpsflight_alt_ring)<ABSALT_THRESHOLD &&
-	   alt_is_low(gpsflight_alt_ring))
+	   alt_is_low(gpsflight_alt_ring)==ALT_IS_LOW)
 	{
-		printf("ALT IS STABLE\n");
+		printf("ALT IS STABLE and LOW\n");
 		return GPS_ALT_IS_STABLE;
 	}
-	printf("ALT IS NOT STABLE\n");
+	printf("ALT IS NOT STABLE OR NOT LOW\n");
 	sleep(GPS_ALT_INTERVAL);
 	return GPS_ALT_NOT_STABLE;
 }
