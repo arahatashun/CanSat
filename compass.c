@@ -152,7 +152,7 @@ double calc_compass_angle(double x,double y)
 	cal_theta = atan2(-y*k_parameter,x)*(180/PI);
 	if(cal_theta > 90)
 	{
-		cal_theta = 180 - cal_theta;
+		cal_theta = 270 - cal_theta;
 		printf("a");
 	}
 	else if(cal_theta > 0)
@@ -165,7 +165,7 @@ double calc_compass_angle(double x,double y)
 		cal_theta = 90 - cal_theta;
 		printf("c");
 	}
-	return cal_deviated_angle(cal_theta);
+	return cal_theta;
 }
 
 double cal_deg_acclcompass(double compassx_value, double compassy_value,
