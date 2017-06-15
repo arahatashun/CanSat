@@ -33,7 +33,7 @@ static const int RELEASE_TIMEOUT = 0;
 //THRESHOLD
 static const float ABSLAT_THRESHOLD = 0.00005; //GPS緯度情報安定判定閾値
 static const float ABSLON_THRESHOLD = 0.00005; //GPS経度情報安定判定閾値
-static const int ABSALT_THRESHOLD = 3; //GPS高度情報安定判定閾値
+static const int ABSALT_THRESHOLD = 5; //GPS高度情報安定判定閾値
 static const int ALT_THRESHOLD = 100; //GPS高度情報一定値以下判定閾値(m)
 static const int GPS_3AXIS_INTERVAL = 2; //GPS高度取得間隔(gps_3axisstable内) second
 static const int GPS_ALT_INTERVAL = 2; //GPS高度取得間隔(gps_altstable内) second
@@ -173,7 +173,7 @@ static int gps_alt_stable()
 		//以下落下中ログデータ、時間緯度経度高度を送る
 		time_t tcurrent;
 		time(&tcurrent);
-		printf("altstable : %d\n",i++);
+		printf("getting gps : %d\n",i++);
 		printf("%s\n",ctime(&tcurrent));
 		printf("latitude:%f longitude:%f altitude:%f\n",
 		       lflight.latitude,lflight.longitude,lflight.altitude);
