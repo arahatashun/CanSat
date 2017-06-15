@@ -83,6 +83,7 @@ int compass_read(Cmps *compass_data)
 	return 0;
 }
 
+/*地磁気のキャリブレーション補正用のログを取るためにprintをコメントアウトしたもの*/
 int compass_read_scatter(Cmps *compass_data)
 {
 	//WriteReg8
@@ -126,7 +127,7 @@ int compass_value_initialize(Cmps *compass_init)
 /*
    偏角を考慮を考慮して計算
  */
-double cal_deviated_angle(double theta_degree)
+static double cal_deviated_angle(double theta_degree)
 {
 	double true_theta = 0;
 	true_theta = theta_degree + angle_of_deviation;

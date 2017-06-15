@@ -19,6 +19,7 @@ static const double stack_threshold = 0.00003; //stack判定するときの閾�
 static const double compass_x_offset = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
 static const double compass_y_offset = 0.0;
 
+/*地磁気で得たマシンの向き、GPSで得たゴールまでの方角、そのdelta_angle、ゴールまでの距離を構造体に格納*/
 typedef struct dist_and_angle {
 	double angle_by_compass;
 	double angle_by_gps;

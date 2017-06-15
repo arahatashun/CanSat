@@ -3,12 +3,13 @@
 import matplotlib.pyplot as plt
 
 f = open('compasslog.txt')
-xylist = []             #とりあえずcompasslog.txtの値を全て格納
+xylist = []             #とりあえずcompasslog.txtの値を上から全て１つずつ全て格納
 x = []                  #xyの区別がついてないxylistをxとyに分けるためのリスト
 y = []
 x_offset = 72   #このオフセット値を変えてプロットを円に近づける
 y_offset = -216.5
 
+#log読み取り関数
 def read_log():
     line = f.readline() # 1行を文字列として読み込む(改行文字も含まれる)
     while(line):
@@ -16,7 +17,8 @@ def read_log():
         line = f.readline()
         f.close
 
-def get_list(): #xとy見境なくリストにしたxylistをxとyにparse
+#xとy見境なくリストにしたxylistをxとyにparse
+def get_list():
     num = len(xylist)
     for i in range(int(num/2)):
         x.append(xylist[2*i] - x_offset)
