@@ -1,5 +1,4 @@
 # Makefile
-
 LIBS =-lwiringPi -lm -lgps
 objs0 = integration.o motor.o mitibiki.o pid.o ring_buffer.o
 

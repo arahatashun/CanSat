@@ -5,8 +5,9 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "compass.h"
+#include "motor.h"
 
-static const int angle_of_deviation = -7;
+static const int angle_of_deviation = -7.2;
 static const int devid = 0x1e; //I2C address
 static const int mode_reg = 0x02;
 static const int mode_continuous = 0x00;
@@ -18,8 +19,15 @@ static const int z_lsb_reg = 0x06;
 static const int y_msb_reg = 0x07;
 static const int y_lsb_reg = 0x08;
 static const double PI = 3.14159265;
+static const double k_parameter = 1.0;//地磁気の感度補正パラメータ
 static int fd = 0;
 static int WPI2CWReg8 = 0;
+
+/*
+   //calibration時の回転
+   static const int turn_calib_power = 25;//地磁気補正時turnするpower
+   static const int turn_calib_milliseconds = 75;//地磁気補正時turnするmilliseconds
+ */
 
 int compass_initializer()
 {
@@ -66,7 +74,31 @@ int compass_read(Cmps *compass_data)
 	{
 		printf("Compass write register:mode_reg\n");
 	}
+	short x = 0;
+	short y = 0;
+	short z = 0;
+	compass_data->compassx_value = read_out(fd, x_msb_reg, x_lsb_reg);
+	compass_data->compassy_value = read_out(fd, y_msb_reg, y_lsb_reg);
+	compass_data->compassz_value = read_out(fd, z_msb_reg, z_lsb_reg);
+	return 0;
+}
 
+/*地磁気のキャリブレーション補正用のログを取るためにprintをコメントアウトしたもの*/
+int compass_read_scatter(Cmps *compass_data)
+{
+	//WriteReg8
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
+	/*if(WPI2CWReg8 == -1)
+	   {
+	        printf("Compass write error register mode_reg\n");
+	        printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+	        errno = -WPI2CWReg8;
+	        printf("errno=%d: %s\n", errno, strerror(errno));
+	   }
+	   else
+	   {
+	        printf("Compass write register:mode_reg\n");
+	   }*/
 	short x = 0;
 	short y = 0;
 	short z = 0;
@@ -92,79 +124,10 @@ int compass_value_initialize(Cmps *compass_init)
 	compass_init->compassz_value = 0;
 }
 
-static double calc_compass_angle(short x,short y)
-{
-	double angle_calc1 = 0;
-	double angle_calc2 = 0;
-	double angle_return = 0;
-	angle_calc1 = atan2((double)-y, (double)-x)*(180/PI) + 180;
-	angle_calc2 = angle_calc1 + angle_of_deviation;
-	if (angle_calc2 > 360)
-	{
-		angle_return = angle_calc2 - 360;
-	}
-	else if(angle_calc2<0)
-	{
-		angle_return = angle_calc2 + 360;
-	}
-	else
-	{
-		angle_return = angle_calc2;
-	}
-	return angle_return;
-}
-
-//ポインタで角度を渡す
-int compass_get_angle(double *compass_angle)
-{
-	//WriteReg8
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
-	if(WPI2CWReg8 == -1)
-	{
-		printf("write error register mode_reg\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		errno = -WPI2CWReg8;
-		printf("errno=%d: %s\n", errno, strerror(errno));
-	}
-	else
-	{
-		printf("write register:mode_reg\n");
-	}
-	short x = 0;
-	short y = 0;
-	short z = 0;
-	double angle = 0;
-	x = read_out(fd, x_msb_reg, x_lsb_reg);
-	y = read_out(fd, y_msb_reg, y_lsb_reg);
-	z = read_out(fd, z_msb_reg, z_lsb_reg);
-	*compass_angle = calc_compass_angle(x,y);
-	printf("COMPASS x:%d,y:%d,z:%d,angle:%f\n",x,y,z,*compass_angle);
-	return 0;
-}
-
-
-/*
-   integrationで6軸から地磁気の向きを出すときの調整
- */
-double cal_theta(double theta_atan2)
-{
-	double theta;
-	theta = theta_atan2;
-	if(theta < 0)
-	{
-		theta = 360 + theta;
-	}
-	else
-	{
-		theta = theta;
-	}
-	return theta;
-}
-
 /*
    偏角を考慮を考慮して計算
  */
-double cal_deviated_angle(double theta_degree)
+static double cal_deviated_angle(double theta_degree)
 {
 	double true_theta = 0;
 	true_theta = theta_degree + angle_of_deviation;
@@ -183,6 +146,27 @@ double cal_deviated_angle(double theta_degree)
 	return true_theta;
 }
 
+/*
+   地磁気のxy座標から方角を計算
+ */
+double calc_compass_angle(double x,double y)
+{
+	double cal_theta = 0;
+	cal_theta = atan2(-y*k_parameter,x)*(180/PI);
+	if(cal_theta  < -90)  //詳しい計算方法はkndまで
+	{
+		cal_theta = -cal_theta - 90;
+	}
+	else
+	{
+		cal_theta = 270 - cal_theta;
+	}
+	return cal_deviated_angle(cal_theta);
+}
+
+/*
+   6軸を用いた方角の計算
+ */
 double cal_deg_acclcompass(double compassx_value, double compassy_value,
                            double compassz_value, double sin_phi, double sin_psi,
                            double cos_phi, double cos_psi)
@@ -192,11 +176,93 @@ double cal_deg_acclcompass(double compassx_value, double compassy_value,
 	double x1 = 0;
 	double x2 = 0;
 	double x3 = 0;
-
+	double cal_theta = 0;
 	y1 = compassz_value*sin_phi;
 	y2 = compassy_value*cos_phi;
 	x1 = compassx_value*cos_psi;
 	x2 = compassy_value*sin_psi*sin_phi;
 	x3 = compassz_value*sin_psi*cos_phi;
-	return atan2(y1 - y2,x1 + x2 + x3)*180.0/PI;
+	cal_theta = atan2((y1 - y2)*k_parameter,x1 + x2 + x3)*180.0/PI;
+	if(cal_theta  < -90)  //詳しい計算方法はkndまで
+	{
+		cal_theta = -cal_theta - 90;
+	}
+	else
+	{
+		cal_theta = 270 - cal_theta;
+	}
+	return cal_deviated_angle(cal_theta);
 }
+
+/*
+   //以下は地磁気calibration用
+   static int compass_offset_initialize(Cmps_offset *compass_offset, Cmps *compass_data)
+   {
+        compass_value_initialize(compass_data);
+        compass_read(compass_data);
+        compass_offset->compassx_offset_max = compass_data->compassx_value;
+        compass_offset->compassx_offset_min = compass_data->compassx_value;
+        compass_offset->compassy_offset_max = compass_data->compassy_value;
+        compass_offset->compassy_offset_min = compass_data->compassy_value;
+        compass_offset->compassx_offset = 0;
+        compass_offset->compassy_offset = 0;
+        return 0;
+   }
+
+   static int maxmin_compass(Cmps_offset *compass_offset, Cmps *compass_data)
+   {
+        if(compass_data->compassx_value > compass_offset->compassx_offset_max)
+        {
+                compass_offset->compassx_offset_max = compass_data->compassx_value;
+        }
+        else if(compass_data->compassx_value < compass_offset->compassx_offset_min)
+        {
+                compass_offset->compassx_offset_min = compass_data->compassx_value;
+        }
+
+        if(compass_data->compassy_value > compass_offset->compassy_offset_max)
+        {
+                compass_offset->compassy_offset_max = compass_data->compassy_value;
+        }
+        else if(compass_data->compassy_value < compass_offset->compassy_offset_min)
+        {
+                compass_offset->compassy_offset_min = compass_data->compassy_value;
+        }
+        return 0;
+   }
+
+   static int mean_compass_offset(Cmps_offset *compass_offset)
+   {
+        compass_offset->compassx_offset = (compass_offset->compassx_offset_max + compass_offset->compassx_offset_min)/2;
+        compass_offset->compassy_offset = (compass_offset->compassy_offset_max + compass_offset->compassy_offset_min)/2;
+        printf("x_offset=%f, y_offset=%f\n", compass_offset->compassx_offset
+               ,compass_offset->compassy_offset);
+        return 0;
+   }
+
+   static int rotate_to_calib(Cmps *compass_data)
+   {
+        compass_value_initialize(compass_data);
+        motor_right(turn_calib_power);
+        delay(turn_calib_milliseconds);
+        motor_stop();
+        delay(2000);
+        compass_read(compass_data);
+        printf( "compass_x= %f, compass_y= %f\n",compass_data->compassx_value
+                ,compass_data->compassy_value);
+        delay(50);
+        return 0;
+   }
+
+   int cal_maxmin_compass(Cmps_offset *compass_offset,Cmps *compass_data)
+   {
+        int i = 0;
+        compass_offset_initialize(compass_offset,compass_data);
+        for(i = 0; i<25; i++)
+        {
+                rotate_to_calib(compass_data);
+                maxmin_compass(compass_offset,compass_data);
+        }
+        mean_compass_offset(compass_offset);
+        return 0;
+   }*/
