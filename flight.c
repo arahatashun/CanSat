@@ -139,6 +139,7 @@ static int gps_3_stable()
 		loc_t flight_gps;
 		gps_location(&flight_gps);
 		time_t tcurrent;
+		time(&tcurrent);
 		printf("%s\n",ctime(&tcurrent));
 		printf("latitude :%f\nlongitude :%f\naltitude:%f\n",
 		       flight_gps.latitude,flight_gps.longitude,flight_gps.altitude);
@@ -171,6 +172,7 @@ static int gps_alt_stable()
 		gps_location(&lflight);
 		//以下落下中ログデータ、時間緯度経度高度を送る
 		time_t tcurrent;
+		time(&tcurrent);
 		printf("altstable : %d\n",i++);
 		printf("%s\n",ctime(&tcurrent));
 		printf("latitude:%f longitude:%f altitude:%f\n",
