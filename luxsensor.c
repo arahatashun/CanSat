@@ -7,7 +7,7 @@
 
 //change adress:default 0x39
 static const int TSL2561_ADDR_LOW = 0x29;
-static const int TSL2561_ADDR_FLOAT = 0x39;     //default adress
+static const int TSL2561_ADDR_FLOAT = 0x39;
 static const int TSL2561_ADDR_HIGH  = 0x49;
 
 static const int TSL2561_CONTROL_POWERON = 0x03;
@@ -46,6 +46,7 @@ int luxsensor_initializer()
 	//I2c setup
 	int fd = 0;
 	fd = wiringPiI2CSetup(TSL2561_ADDR_LOW);
+	//NOTE TSL2561_ADDR_LOWをTSL2561_ADDR_FLOATに置き換える必要あるかも 
 	if(fd == -1)
 	{
 		printf("WARNING! luxsensor wiringPiI2CSetup error\n");
