@@ -103,6 +103,7 @@ static double calc_variation(Queue *gpsflight_tmp_ring)
 	}
 	double abstmp = INF;//0にするよりも大きくする方があとでtheresholdと比較するので適切
 	abstmp = fabs(max - min);
+	printf("VARIATION :%f\n",abstmp);
 	return abstmp;
 }
 
