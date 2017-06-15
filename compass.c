@@ -146,21 +146,27 @@ static double cal_deviated_angle(double theta_degree)
 	return true_theta;
 }
 
+/*
+   地磁気のxy座標から方角を計算
+ */
 double calc_compass_angle(double x,double y)
 {
 	double cal_theta = 0;
 	cal_theta = atan2(-y*k_parameter,x)*(180/PI);
-	if(cal_theta  < -90)
-	{
-		cal_theta = -cal_theta - 90;
-	}
-	else
-	{
-		cal_theta = 270 - cal_theta;
-	}
+	if(cal_theta  < -90) 　//詳しい計算方法はkndまで
+		{
+			cal_theta = -cal_theta - 90;
+		}
+		else
+		{
+			cal_theta = 270 - cal_theta;
+		}
 	return cal_deviated_angle(cal_theta);
 }
 
+/*
+   6軸を用いた方角の計算
+ */
 double cal_deg_acclcompass(double compassx_value, double compassy_value,
                            double compassz_value, double sin_phi, double sin_psi,
                            double cos_phi, double cos_psi)
@@ -177,7 +183,7 @@ double cal_deg_acclcompass(double compassx_value, double compassy_value,
 	x2 = compassy_value*sin_psi*sin_phi;
 	x3 = compassz_value*sin_psi*cos_phi;
 	cal_theta = atan2((y1 - y2)*k_parameter,x1 + x2 + x3)*180.0/PI;
-	if(cal_theta  < -90)
+	if(cal_theta  < -90)   //詳しい計算方法はkndまで
 	{
 		cal_theta = -cal_theta - 90;
 	}
