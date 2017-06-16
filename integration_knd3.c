@@ -74,6 +74,7 @@ int calc_all(loc_t coord,DistAngle *data,Queue* latring,Queue* lonring)
 	cal_compass_theta(data);
 	data->delta_angle = cal_delta_angle(data->angle_by_compass,data->angle2goal);
 	printf("delta_angle:%f\n",data->delta_angle);
+	return 0;
 }
 
 //NOTE gps０問題対策

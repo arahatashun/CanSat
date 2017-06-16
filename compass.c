@@ -21,6 +21,7 @@ static const int y_lsb_reg = 0x08;
 static const double PI = 3.14159265;
 static const double k_parameter = 1.0;//地磁気の感度補正パラメータ
 static const int fd = 0;
+static const int WPI2CWReg8 = 0
 /*
    //calibration時の回転
    static const int turn_calib_power = 25;//地磁気補正時turnするpower
@@ -59,7 +60,6 @@ static short read_out(int file,int msb_reg, int lsb_reg)
 
 int compass_read(Cmps *compass_data)
 {
-	int WPI2CWReg8 = 0
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
 	if(WPI2CWReg8 == -1)
 	{
@@ -82,7 +82,6 @@ int compass_read(Cmps *compass_data)
 int compass_read_scatter(Cmps *distangle_initializer)
 {
 	//WriteReg8
-	int WPI2CWReg8 = 0;
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
 	/*if(WPI2CWReg8 == -1)
 	   {
