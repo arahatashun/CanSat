@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <termios.h>
@@ -33,9 +34,11 @@ void usb_config(void)
     tcsetattr(usb_filestream, TCSANOW, &options);
 }
 
-void usb_println(const char *line, int len)
+void usb_println(const char *line)
 {
     if (usb_filestream != -1) {
+        int len = 0;
+        len = strlen(line)
         char *cpstr = (char *)malloc((len+1) * sizeof(char));
         strcpy(cpstr, line);
         cpstr[len-1] = '\r';
@@ -48,6 +51,19 @@ void usb_println(const char *line, int len)
         }
         free(cpstr);
     }
+}
+
+//formatを追加
+void xbeePrintf (const char *message, ...)
+{
+  va_list argp ;
+  char buffer [1024] ;
+
+  va_start (argp, message) ;
+  vsnprintf (buffer, 1023, message, argp) ;
+  va_end (argp) ;
+
+  usb_println(buffer) ;
 }
 
 // Read a line from USB.

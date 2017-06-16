@@ -10,6 +10,7 @@
 void usb_init(void);
 void usb_config(void);
 void usb_println(const char *, int);
+void xbeePrintf (const char *message, ...);
 void usb_readln(char *, int);
 void usb_close(void);
 
