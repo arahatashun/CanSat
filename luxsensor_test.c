@@ -7,7 +7,7 @@ int main()
 	int lux_value = 0;
 	while(1)
 	{
-		luxsensor_initializer();
+		luxsensor_initialize();
 		lux_value = getLux();
 		printf("lux :%d\n", lux_value);
 		delay(1000);

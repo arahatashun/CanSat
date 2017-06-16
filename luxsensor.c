@@ -41,7 +41,7 @@ static const int LIGHT_THRESHOLD = 10;  //光センサー閾値
 //関数プロトタイプ宣言(static)
 int getLux();
 
-int luxsensor_initializer()
+int luxsensor_initialize()
 {
 	//I2c setup
 	int fd = 0;

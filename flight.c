@@ -310,16 +310,18 @@ int open_case(Sequence *open_seq)
 //TODO 電源瞬断対策復旧してシーケンス番号からのswitch-case文
 int main(void)
 {
-	luxsensor_initializer();
+	luxsensor_initialize();
 	gps_init();
 	Sequence sequence;
 	start_seq(&sequence);
 	if (release(&sequence)==RELEASE_COMPLETE)
 	{
 		land_release_suc(&sequence);
+		luxsensor_close();
 	}else{
 		//TODO 実験によるロジックの検証
 		land_release_timeout(&sequence);
+		luxsensor_close();
 	}
 	open_case(&sequence);
 }
