@@ -10,10 +10,10 @@
 #include "mitibiki.h"
 #include "ring_buffer.h"
 
-static const int turn_power = 60;//turnするpower
-static const int turn_milliseconds = 100;//turnするmilliseconds
-static const int forward_milliseconds = 1000;//forwardするmilliseconds
-static const int stop_milliseconds = 1000;//地磁気安定のためにstopするmilliseconds
+static const int TURN_POWER = 60;//turnするpower
+static const int TURN_MILLISECONDS = 100;//turnするmilliseconds
+static const int FORWARD_MILLISECONDS = 1000;//forwardするmilliseconds
+static const int STOP_MILLISECONDS = 1000;//地磁気安定のためにstopするmilliseconds
 static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.00003; //stack判定するときの閾値
 static const double COMPASS_X_OFFSET = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
@@ -135,26 +135,26 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 		if(-180 <= data.delta_angle && data.delta_angle <= -30)
 		{
 			//ゴールの方角がマシンから見て左に30~180度の場合は左回転
-			motor_left(turn_power);
-			delay(turn_milliseconds);
+			motor_left(TURN_POWER);
+			delay(TURN_MILLISECONDS);
 			motor_stop();
-			delay(stop_milliseconds);
+			delay(STOP_MILLISECONDS);
 		}
 		else if(30 <= data.delta_angle && data.delta_angle <= 180)
 		{
 		 	//ゴールの方角がマシンから見て右に30~180度の場合は右回転
-			motor_right(turn_power);
-			delay(turn_milliseconds);
+			motor_right(TURN_POWER);
+			delay(TURN_MILLISECONDS);
 			motor_stop();
-			delay(stop_milliseconds);
+			delay(STOP_MILLISECONDS);
 		}
 		else
 		{
 			//直進
 			motor_forward(100);
-			delay(forward_milliseconds);
+			delay(FORWARD_MILLISECONDS);
 			motor_stop();
-			delay(stop_milliseconds);
+			delay(STOP_MILLISECONDS);
 		}
 	}
 	else
