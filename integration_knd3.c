@@ -39,7 +39,7 @@ void handler(int signum)
 	exit(1);
 }
 
-int DistAngle_initializer(DistAngle *data)
+int DistAngle_initialize(DistAngle *data)
 {
 	data->angle_by_compass = 0;
 	data->angle2goal = 0;
@@ -176,7 +176,7 @@ int main()
 	DistAngle DistAngle_data;
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
-	DistAngle_initializer(*DistAngle_data);
+	DistAngle_initialize(&DistAngle_data);
 	while(decide_route(DistAngle_data,gps_latring,gps_lonring)!=-2) ;
 	return 0;
 }
