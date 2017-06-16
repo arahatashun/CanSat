@@ -39,7 +39,7 @@ void handler(int signum)
 	exit(1);
 }
 
-int DistAngle_initializer(*DistAngle data)
+int DistAngle_initializer(DistAngle *data)
 {
 	data->angle_by_compass = 0;
 	data->angle2goal = 0;
@@ -84,7 +84,7 @@ int handle_gps_zero(DistAngle *data)
 	printf("previous GPS_angle=%f\n",data->angle2goal);
 	cal_compass_theta(data); //地磁気だけ取っておく
 	data->delta_angle = cal_delta_angle(data->angle_by_compass,data->angle2goal);//GPS_angleは元の値を使用
-	printf("delta_angle:%f\n",DistAngle_data->delta_angle);
+	printf("delta_angle:%f\n",data->delta_angle);
 	return 0;
 }
 //スタック判定をして抜け出す処理まで
@@ -121,7 +121,7 @@ int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
 	}
 	if(queue_length(latring)==10)//stack 判定
 	{
-		stack(latring,lonring)
+		stack(latring,lonring);
 	}
 	return 0;
 }
@@ -129,7 +129,7 @@ int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
 //goal判定で-2を返してそれ以外は0
 int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 {
-	update_angle(&data,latring,lonring);
+	update_angle(data,latring,lonring);
 	if(data.dist2goal>GOAL_THRESHOLD)
 	{
 		if(-180 <= data.delta_angle && data.delta_angle <= -30)
