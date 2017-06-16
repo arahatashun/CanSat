@@ -21,14 +21,14 @@ static const int y_lsb_reg = 0x08;
 static const double PI = 3.14159265;
 static const double k_parameter = 1.0;//地磁気の感度補正パラメータ
 static int fd = 0;
-static int WPI2CWReg8 = 0
+static int WPI2CWReg8 = 0;
 /*
    //calibration時の回転
    static const int turn_calib_power = 25;//地磁気補正時turnするpower
    static const int turn_calib_milliseconds = 75;//地磁気補正時turnするmilliseconds
  */
 
-int compass_initializer()
+int compass_initialize()
 {
 	//I2c setup
 	fd = wiringPiI2CSetup(devid);
@@ -43,7 +43,6 @@ int compass_initializer()
 		printf("compass wiringPiI2CSetup success\n");
 		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
 	}
-
 	return 0;
 }
 

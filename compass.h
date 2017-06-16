@@ -20,7 +20,7 @@ typedef struct cmps {
 int compass_read(Cmps *cdata);
 int compass_read_scatter(Cmps *data);
 int print_compass(Cmps *data);
-int compass_initializer();
+int compass_initialize();
 int compass_value_initialize(Cmps *compass_init);
 double calc_compass_angle(double x,double y);
 double cal_deg_acclcompass(double x, double y,
