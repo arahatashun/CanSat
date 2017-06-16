@@ -14,7 +14,7 @@ static const int turn_power = 60;//turnするpower
 static const int turn_milliseconds = 100;//turnするmilliseconds
 static const int forward_milliseconds = 1000;//forwardするmilliseconds
 static const int stop_milliseconds = 1000;//地磁気安定のためにstopするmilliseconds
-static const int gps_ring_len = 10;//gpsのリングバッファの長さ
+static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.00003; //stack判定するときの閾値
 static const double COMPASS_X_OFFSET = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
 static const double COMPASS_Y_OFFSET = 0.0;
@@ -29,8 +29,7 @@ typedef struct dist_and_angle {
 
 //グローバル変数
 time_t start_time;//開始時刻
-Queue *gps_lat_ring = NULL; //緯度を格納するキューを用意 stack判定に使う
-Queue *gps_lon_ring = NULL; //経度を格納するキューを用意 stack判定に使う
+
 
 //シグナルハンドラ
 void handler(int signum)
@@ -64,6 +63,30 @@ int cal_compass_theta(DistAngle *data)
 	return 0;
 }
 
+//地磁気の取得及びgpsと地磁気の計算
+int calc_all(loc_t coord,DistAngle *data,Queue* latring,Queue* lonring)
+{
+	enqueue(latring,coord.latitude); //緯度を格納
+	enqueue(lonring,coord.longitude); //経度を格納
+	printf("latitude:%f\nlongitude:%f\n", coord.latitude, coord.longitude);
+	data->dist2goal = dist_on_sphere(coord.latitude,coord.longitude);
+	data->angle2goal = calc_target_angle(coord.latitude,coord.longitude);
+	cal_compass_theta(data);
+	data->delta_angle = cal_delta_angle(data->angle_by_compass,data->angle2goal);
+	printf("delta_angle:%f\n",data->delta_angle);
+}
+
+//NOTE gps０問題対策
+//gps情報をring_bufferに入れずに地磁気によるdataの更新のみ
+int handle_gps_zero(DistAngle *data)
+{
+	printf("GPS return 0 value\n");
+	printf("previous GPS_angle=%f\n",data->angle2goal);
+	cal_compass_theta(data); //地磁気だけ取っておく
+	data->delta_angle = cal_delta_angle(data->angle_by_compass,data->angle2goal);//GPS_angleは元の値を使用
+	printf("delta_angle:%f\n",DistAngle_data->delta_angle);
+	return 0;
+}
 //スタック判定をして抜け出す処理まで
 int stack(Queue *latring,Queue *lonring)
 {
@@ -79,33 +102,8 @@ int stack(Queue *latring,Queue *lonring)
 	return 0;
 }
 
-//NOTE gps０問題対策
-//gps情報をring_bufferに入れずに地磁気によるdataの更新のみ
-int handle_gps_zero(DistAngle *data)
-{
-	printf("GPS return 0 value\n");
-	printf("previous GPS_angle=%f\n",data->angle2goal);
-	cal_compass_theta(data); //地磁気だけ取っておく
-	data->delta_angle = cal_delta_angle(data->angle_by_compass,data->angle2goal);//GPS_angleは元の値を使用
-	printf("delta_angle:%f\n",DistAngle_data->delta_angle);
-	return 0;
-}
-
-//地磁気の取得及びgpsと地磁気の計算
-int calc_all(loc_t coord,DistAngle *data)
-{
-	enqueue(gps_lat_ring,coord.latitude); //緯度を格納
-	enqueue(gps_lon_ring,coord.longitude); //経度を格納
-	printf("latitude:%f\nlongitude:%f\n", coord.latitude, coord.longitude);
-	data->dist2goal = dist_on_sphere(coord.latitude,coord.longitude);
-	data->angle2goal = calc_target_angle(coord.latitude,coord.longitude);
-	cal_compass_theta(data);
-	data->delta_angle = cal_delta_angle(data->angle_by_compass,data->angle2goal);
-	printf("delta_angle:%f\n",data->delta_angle);
-}
-
 //gpsと地磁気のデータを一回分更新し、リングバッファに格納
-int update_angle(DistAngle *data)
+int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
 {
 	time_t current_time;//時間を取得
 	time(&current_time);
@@ -115,23 +113,23 @@ int update_angle(DistAngle *data)
 	gps_location(&coord);//gpsデータ取得
 	if(coord.latitude != 0.0)
 	{
-		calc_all(coord,data);
+		calc_all(coord,data,latring,lonring);
 	}
 	else//例外処理
 	{
 		handle_gps_zero(data);
 	}
-	if(queue_length(gps_lat_ring)==10)//stack 判定
+	if(queue_length(latring)==10)//stack 判定
 	{
-		stack(gps_lat_ring,gps_lon_ring)
+		stack(latring,lonring)
 	}
 	return 0;
 }
 
 //goal判定で-2を返してそれ以外は0
-int decide_route(DistAngle *data)
+int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 {
-	update_angle(&data);
+	update_angle(&data,latring,lonring);
 	if(data.dist2goal>GOAL_THRESHOLD)
 	{
 		if(-180 <= data.delta_angle && data.delta_angle <= -30)
@@ -176,9 +174,9 @@ int main()
 	gps_init();
 	compass_initializer();
 	DistAngle DistAngle_data;
+	Queue* gps_latring = make_queue(GPS_RING_LEN);
+	Queue* gps_lonring = make_queue(GPS_RING_LEN);
 	DistAngle_initializer(*DistAngle_data);
-	gps_lat_ring = make_queue(gps_ring_len);
-	gps_lon_ring = make_queue(gps_ring_len);
-	while(decide_route(DistAngle_data)!=-2) ;
+	while(decide_route(DistAngle_data,gps_latring,gps_lonring)!=-2) ;
 	return 0;
 }
