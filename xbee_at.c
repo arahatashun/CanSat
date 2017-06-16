@@ -32,25 +32,11 @@ void usb_config(void)
     options.c_lflag = 0;
     tcflush(usb_filestream, TCIFLUSH);
     tcsetattr(usb_filestream, TCSANOW, &options);
-}
+  }
 
-void usb_println(const char *line)
+void usbPuts (const char *s)
 {
-    if (usb_filestream != -1) {
-        int len = 0;
-        len = strlen(line)
-        char *cpstr = (char *)malloc((len+1) * sizeof(char));
-        strcpy(cpstr, line);
-        cpstr[len-1] = '\r';
-        cpstr[len] = '\n';
-
-        int count = write(usb_filestream, cpstr, len+1);
-        if (count < 0) {
-            printf("errno=%d: %s\n",errno, strerror(errno));
-            printf("print error\n");//TODO: handle errors...
-        }
-        free(cpstr);
-    }
+  write (usb_filestream, s, strlen (s));
 }
 
 //formatを追加
@@ -63,7 +49,7 @@ void xbeePrintf (const char *message, ...)
   vsnprintf (buffer, 1023, message, argp) ;
   va_end (argp) ;
 
-  usb_println(buffer) ;
+  usbPuts(buffer) ;
 }
 
 // Read a line from USB.
