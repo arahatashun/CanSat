@@ -127,9 +127,9 @@ int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
 }
 
 //goal判定で-2を返してそれ以外は0
-int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
+int decide_route(DistAngle data,Queue *latring,Queue *lonring)
 {
-	update_angle(data,latring,lonring);
+	update_angle(&data,latring,lonring);
 	if(data.dist2goal>GOAL_THRESHOLD)
 	{
 		if(-180 <= data.delta_angle && data.delta_angle <= -30)
