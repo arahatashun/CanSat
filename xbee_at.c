@@ -100,7 +100,7 @@ int main()
   usb_config();
   while (1)
   {
-    char s = "fuck";
+    char s[] = "fuck";
     double a = 100;
     xbeePrintf("%s%f",s,a);
     sleep(3);
