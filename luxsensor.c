@@ -38,6 +38,13 @@ static const int TSL2561_REGISTER_CHAN1_HIGH = 0x8F;
 static const int LUXDELAY = 500;
 static const int LIGHT_THRESHOLD = 10;  //光センサー閾値
 
+
+//グローバルデータ宣言(not const)
+static int fd = 0;   //output of wiringPi setup
+static int WPI2CWReg8 = 0;
+static uint16_t visible_and_ir;        //CH0 photodiode:sensitive to both visible and infrared light
+static uint16_t ir;     //CH1 photodiode:sensitive primarily to infared light
+
 //関数プロトタイプ宣言(static)
 int getLux();
 
@@ -81,13 +88,13 @@ int getLux()
 }
 
 int islight(){
-  int lux=0;
-  lux = getLux();
-  if(lux>LIGHT_THRESHOLD){
+	int lux=0;
+	lux = getLux();
+	if(lux>LIGHT_THRESHOLD) {
 		printf("light:%d\n",lux);
-    return 1;
-  }
-  else{
-    return 0;
-  }
+		return 1;
+	}
+	else{
+		return 0;
+	}
 }
