@@ -15,25 +15,22 @@ static const int turn_milliseconds = 100;//turnするmilliseconds
 static const int forward_milliseconds = 1000;//forwardするmilliseconds
 static const int stop_milliseconds = 1000;//地磁気安定のためにstopするmilliseconds
 static const int gps_ring_len = 10;//gpsのリングバッファの長さ
-static const double stack_threshold = 0.00003; //stack判定するときの閾値
-static const double compass_x_offset = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
-static const double compass_y_offset = 0.0;
+static const double STACK_THRESHOLD = 0.00003; //stack判定するときの閾値
+static const double COMPASS_X_OFFSET = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
+static const double COMPASS_Y_OFFSET = 0.0;
+static const int GOAL_THRESHOLD = 2;
 
-/*地磁気で得たマシンの向き、GPSで得たゴールまでの方角、そのdelta_angle、ゴールまでの距離を構造体に格納*/
 typedef struct dist_and_angle {
-	double angle_by_compass;
-	double angle_by_gps;
-	double dist_to_goal;
+	double angle_by_compass;//地磁気による向き
+	double angle2goal;//gpsによるゴールまでの角度
+	double dist2goal;
 	double delta_angle;
-}Distangle;
+}DistAngle;
 
-time_t start_time;//開始時刻のグローバル変数宣言
-loc_t data;//gpsのデータを確認するものをグローバル変数宣言
-
-Cmps compass_data;      //地磁気の構造体を宣言
-Distangle distangle_data;
-Queue *gps_lat_ring = NULL; //緯度を格納するキューを用意
-Queue *gps_lon_ring = NULL; //経度を格納するキューを用意
+//グローバル変数
+time_t start_time;//開始時刻
+Queue *gps_lat_ring = NULL; //緯度を格納するキューを用意 stack判定に使う
+Queue *gps_lon_ring = NULL; //経度を格納するキューを用意 stack判定に使う
 
 //シグナルハンドラ
 void handler(int signum)
@@ -43,105 +40,129 @@ void handler(int signum)
 	exit(1);
 }
 
-int distangle_initializer()
+int DistAngle_initializer(*DistAngle data)
 {
-	distangle_data.angle_by_compass = 0;
-	distangle_data.angle_by_gps = 0;
-	distangle_data.dist_to_goal = 100000;
-	distangle_data.delta_angle = 0;
-	return 0;
-}
-/*
-   地磁気とそのオフセット値からマシンの向いている角度を計算
- */
-int cal_compass_theta(Distangle *distangle_data)
-{
-	double compass_x = 0;
-	double compass_y = 0;
-	compass_value_initialize(&compass_data);
-	print_compass(&compass_data);
-	compass_x = compass_data.compassx_value - compass_x_offset;
-	compass_y = compass_data.compassy_value - compass_y_offset;
-	distangle_data->angle_by_compass = calc_compass_angle(compass_x, compass_y);//偏角を調整
-	printf("compass_degree = %f\n", distangle_data->angle_by_compass);
+	data->angle_by_compass = 0;
+	data->angle2goal = 0;
+	data->dist2goal = 100000;
+	data->delta_angle = 0;
 	return 0;
 }
 
-/*
-   gpsと地磁気のデータを一回分更新し、リングバッファに格納
- */
-int update_angle(Distangle *distangle_data)
+//地磁気の計測及びとそのオフセット値からマシンの向いている角度を計算
+int cal_compass_theta(DistAngle *data)
+{
+	Cmps compass_data;
+	compass_value_initialize(&compass_data);
+	print_compass(&compass_data);
+	double compass_x = 0;
+	double compass_y = 0;
+	compass_x = compass_data.x_value - COMPASS_X_OFFSET;
+	compass_y = compass_data.y_value - COMPASS_Y_OFFSET;
+	data->angle_by_compass = calc_compass_angle(compass_x, compass_y);//偏角を調整
+	printf("compass_degree = %f\n",data->angle_by_compass);
+	return 0;
+}
+
+//スタック判定をして抜け出す処理まで
+int stack(Queue *latring,Queue *lonring)
+{
+	double delta_movement = 0;
+	delta_movement = fabs(latring->buff[latring->rear]-dequeue(latring)) +
+									 fabs(lonring->buff[lonring->rear]-dequeue(lonring));
+	printf("delta_movement = %f\n", delta_movement);
+	if(delta_movement<STACK_THRESHOLD)
+	{
+		printf("STACK JUDGEMENT\n");
+		motor_stack();
+	}
+	return 0;
+}
+
+//NOTE gps０問題対策
+//gps情報をring_bufferに入れずに地磁気によるdataの更新のみ
+int handle_gps_zero(DistAngle *data)
+{
+	printf("GPS return 0 value\n");
+	printf("previous GPS_angle=%f\n",data->angle2goal);
+	cal_compass_theta(data); //地磁気だけ取っておく
+	data->delta_angle = cal_delta_angle(data->angle_by_compass,data->angle2goal);//GPS_angleは元の値を使用
+	printf("delta_angle:%f\n",DistAngle_data->delta_angle);
+	return 0;
+}
+
+//地磁気の取得及びgpsと地磁気の計算
+int calc_all(loc_t coord,DistAngle *data)
+{
+	enqueue(gps_lat_ring,coord.latitude); //緯度を格納
+	enqueue(gps_lon_ring,coord.longitude); //経度を格納
+	printf("latitude:%f\nlongitude:%f\n", coord.latitude, coord.longitude);
+	data->dist2goal = dist_on_sphere(coord.latitude,coord.longitude);
+	data->angle2goal = calc_target_angle(coord.latitude,coord.longitude);
+	cal_compass_theta(data);
+	data->delta_angle = cal_delta_angle(data->angle_by_compass,data->angle2goal);
+	printf("delta_angle:%f\n",data->delta_angle);
+}
+
+//gpsと地磁気のデータを一回分更新し、リングバッファに格納
+int update_angle(DistAngle *data)
 {
 	time_t current_time;//時間を取得
 	time(&current_time);
 	double delta_time = difftime(current_time,start_time);
 	printf("OS timestamp:%f\n",delta_time);
-	gps_location(&data);                   //gpsデータ取得
-	if(data.latitude== 0.0)                //gpsの緯度が0.0の時(衛星を取得していない時)
+	loc_t coord;
+	gps_location(&coord);//gpsデータ取得
+	if(coord.latitude != 0.0)
 	{
-		printf("GPS satellites not found\n");
-		printf("previous GPS_angle=%f\n",distangle_data->angle_by_gps);
-		cal_compass_theta(distangle_data); //地磁気だけ取っておく
-		distangle_data->delta_angle = cal_delta_angle(distangle_data->angle_by_compass,distangle_data->angle_by_gps);//GPS_angleは元の値を使用
-		printf("delta_angle:%f\n",distangle_data->delta_angle);
+		calc_all(coord,data);
 	}
-	else
+	else//例外処理
 	{
-		enqueue(gps_lat_ring,data.latitude); //緯度を格納
-		enqueue(gps_lon_ring,data.longitude); //経度を格納
-		printf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
-		distangle_data->dist_to_goal = dist_on_sphere(data.latitude,data.longitude);
-		distangle_data->angle_by_gps = calc_target_angle(data.latitude,data.longitude);
-		cal_compass_theta(distangle_data);
-		distangle_data->delta_angle = cal_delta_angle(distangle_data->angle_by_compass,distangle_data->angle_by_gps);
-		printf("delta_angle:%f\n",distangle_data->delta_angle);
+		handle_gps_zero(data);
 	}
-	if(queue_length(gps_lat_ring)==10)
+	if(queue_length(gps_lat_ring)==10)//stack 判定
 	{
-		double delta_movement = 0;
-		delta_movement = fabs(data.latitude-dequeue(gps_lat_ring)) +
-		                 fabs(data.longitude-dequeue(gps_lon_ring));
-		printf("delta_movement = %f\n", delta_movement);
-		if(delta_movement<stack_threshold)
-		{
-			motor_stack();
-		}
+		stack(gps_lat_ring,gps_lon_ring)
 	}
 	return 0;
 }
-/*
-   目的方角が自分から見て右に３０度以上ずれていたら右回転、
-   目的方角が自分から見て左に３０度以上ずれていたら左回転、
-   30以内もしくは-30以上で前進
- */
-int decide_route()
+
+//goal判定で-2を返してそれ以外は0
+int decide_route(DistAngle *data)
 {
-	update_angle(&distangle_data);
-	if(distangle_data.dist_to_goal<10)
+	update_angle(&data);
+	if(data.dist2goal>GOAL_THRESHOLD)
 	{
-		printf("==========GOAL==========");
-		return -2;        //ゴールに着いた
-	}
-	if(-180 <= distangle_data.delta_angle && distangle_data.delta_angle <= -30) //ゴールの方角がマシンから見て左に30~180度の場合は左回転
-	{
-		motor_left(turn_power);
-		delay(turn_milliseconds);
-		motor_stop();
-		delay(stop_milliseconds);
-	}
-	else if(30 <= distangle_data.delta_angle && distangle_data.delta_angle <= 180)         //ゴールの方角がマシンから見て右に30~180度の場合は右回転
-	{
-		motor_right(turn_power);
-		delay(turn_milliseconds);
-		motor_stop();
-		delay(stop_milliseconds);
+		if(-180 <= data.delta_angle && data.delta_angle <= -30)
+		{
+			//ゴールの方角がマシンから見て左に30~180度の場合は左回転
+			motor_left(turn_power);
+			delay(turn_milliseconds);
+			motor_stop();
+			delay(stop_milliseconds);
+		}
+		else if(30 <= data.delta_angle && data.delta_angle <= 180)
+		{
+		 	//ゴールの方角がマシンから見て右に30~180度の場合は右回転
+			motor_right(turn_power);
+			delay(turn_milliseconds);
+			motor_stop();
+			delay(stop_milliseconds);
+		}
+		else
+		{
+			//直進
+			motor_forward(100);
+			delay(forward_milliseconds);
+			motor_stop();
+			delay(stop_milliseconds);
+		}
 	}
 	else
 	{
-		motor_forward(100);
-		delay(forward_milliseconds);
-		motor_stop();
-		delay(stop_milliseconds);
+		printf("==========GOAL==========");
+		return -2;//ゴールに着いた
 	}
 	printf("\n"); //１つのシーケンスの終わり
 	return 0;
@@ -154,9 +175,10 @@ int main()
 	pwm_initializer();
 	gps_init();
 	compass_initializer();
-	distangle_initializer();
+	DistAngle DistAngle_data;
+	DistAngle_initializer(*DistAngle_data);
 	gps_lat_ring = make_queue(gps_ring_len);
 	gps_lon_ring = make_queue(gps_ring_len);
-	while(decide_route()!=-2) ;
+	while(decide_route(DistAngle_data)!=-2) ;
 	return 0;
 }
