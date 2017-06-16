@@ -37,14 +37,13 @@ static const int TSL2561_REGISTER_CHAN1_HIGH = 0x8F;
 //Delay getLux function
 static const int LUXDELAY = 500;
 static const int LIGHT_THRESHOLD = 10;  //光センサー閾値
-
+static const int fd = 0;
 //関数プロトタイプ宣言(static)
 int getLux();
 
 int luxsensor_initialize()
 {
 	//I2c setup
-	int fd = 0;
 	fd = wiringPiI2CSetup(TSL2561_ADDR_FLOAT);
 	//NOTE TSL2561_ADDR_FLOATをTSL2561_ADDR_LOWに置き換える必要あるかも
 	if(fd == -1)
