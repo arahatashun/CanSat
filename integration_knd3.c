@@ -16,8 +16,9 @@ static const int forward_milliseconds = 1000;//forwardするmilliseconds
 static const int stop_milliseconds = 1000;//地磁気安定のためにstopするmilliseconds
 static const int gps_ring_len = 10;//gpsのリングバッファの長さ
 static const double stack_threshold = 0.00003; //stack判定するときの閾値
-static const double compass_x_offset = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
-static const double compass_y_offset = 0.0;
+static const double COMPASS_X_OFFSET = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
+static const double COMPASS_Y_OFFSET = 0.0;
+static const double  GOAL_THRESHOLD = 1;
 
 /*地磁気で得たマシンの向き、GPSで得たゴールまでの方角、そのdelta_angle、ゴールまでの距離を構造体に格納*/
 typedef struct dist_and_angle {
@@ -25,13 +26,13 @@ typedef struct dist_and_angle {
 	double angle_by_gps;
 	double dist_to_goal;
 	double delta_angle;
-}Distangle;
+}DistAngle;
 
 time_t start_time;//開始時刻のグローバル変数宣言
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
 
 Cmps compass_data;      //地磁気の構造体を宣言
-Distangle distangle_data;
+DistAngle distangle_data;
 Queue *gps_lat_ring = NULL; //緯度を格納するキューを用意
 Queue *gps_lon_ring = NULL; //経度を格納するキューを用意
 
@@ -43,26 +44,26 @@ void handler(int signum)
 	exit(1);
 }
 
-int distangle_initializer()
+int DistAngle_initializer(DistAngle *data)
 {
-	distangle_data.angle_by_compass = 0;
-	distangle_data.angle_by_gps = 0;
-	distangle_data.dist_to_goal = 100000;
-	distangle_data.delta_angle = 0;
+	data->angle_by_compass = 0;
+	data->angle_by_gps = 0;
+	data->dist_to_goal = 100000;
+	data->delta_angle = 0;
 	return 0;
 }
 /*
    地磁気とそのオフセット値からマシンの向いている角度を計算
  */
-int cal_compass_theta(Distangle *distangle_data)
+int cal_compass_theta(DistAngle *data)
 {
 	double compass_x = 0;
 	double compass_y = 0;
 	compass_value_initialize(&compass_data);
 	print_compass(&compass_data);
-	compass_x = compass_data.compassx_value - compass_x_offset;
-	compass_y = compass_data.compassy_value - compass_y_offset;
-	distangle_data->angle_by_compass = calc_compass_angle(compass_x, compass_y);//偏角を調整
+	compass_x = data.compassx_value - COMPASS_X_OFFSET;
+	compass_y = data.compassy_value - COMPASS_Y_OFFSET;
+	data->angle_by_compass = calc_compass_angle(compass_x, compass_y);//偏角を調整
 	printf("compass_degree = %f\n", distangle_data->angle_by_compass);
 	return 0;
 }
@@ -117,19 +118,21 @@ int update_angle(Distangle *distangle_data)
 int decide_route()
 {
 	update_angle(&distangle_data);
-	if(distangle_data.dist_to_goal<10)
+	if(distangle_data.dist_to_goal<GOAL_THRESHOLD)
 	{
 		printf("==========GOAL==========");
 		return -2;        //ゴールに着いた
 	}
-	if(-180 <= distangle_data.delta_angle && distangle_data.delta_angle <= -30) //ゴールの方角がマシンから見て左に30~180度の場合は左回転
+	//ゴールの方角がマシンから見て左に30~180度の場合は左回転
+	if(-180 <= distangle_data.delta_angle && distangle_data.delta_angle <= -30)
 	{
 		motor_left(turn_power);
 		delay(turn_milliseconds);
 		motor_stop();
 		delay(stop_milliseconds);
 	}
-	else if(30 <= distangle_data.delta_angle && distangle_data.delta_angle <= 180)         //ゴールの方角がマシンから見て右に30~180度の場合は右回転
+	//ゴールの方角がマシンから見て右に30~180度の場合は右回転
+	else if(30 <= distangle_data.delta_angle && distangle_data.delta_angle <= 180)
 	{
 		motor_right(turn_power);
 		delay(turn_milliseconds);
