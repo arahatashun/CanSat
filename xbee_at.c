@@ -100,9 +100,9 @@ int main()
   usb_config();
   while (1)
   {
-  char buffer[7] = "hoge";
-  usb_println(buffer, 7);
-  sleep(3);
-  //sprintf
+    char s = "fuck";
+    double a = 100;
+    xbeePrintf("%s%f",s,a);
+    sleep(3);
   }
 }
