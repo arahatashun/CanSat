@@ -20,8 +20,8 @@ static const int y_msb_reg = 0x07;
 static const int y_lsb_reg = 0x08;
 static const double PI = 3.14159265;
 static const double k_parameter = 1.0;//地磁気の感度補正パラメータ
-static const int fd = 0;
-static const int WPI2CWReg8 = 0
+static int fd = 0;
+static int WPI2CWReg8 = 0
 /*
    //calibration時の回転
    static const int turn_calib_power = 25;//地磁気補正時turnするpower
@@ -79,7 +79,7 @@ int compass_read(Cmps *compass_data)
 }
 
 /*地磁気のキャリブレーション補正用のログを取るためにprintをコメントアウトしたもの*/
-int compass_read_scatter(Cmps *distangle_initializer)
+int compass_read_scatter(Cmps *data)
 {
 	//WriteReg8
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
