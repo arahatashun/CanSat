@@ -27,7 +27,7 @@ char* takePhoto(void)
 }
 
 int main(void) {
-	cv::Mat src,hsv,hsv_filtered;/
+	cv::Mat src,hsv,hsv_filtered;
 	hsv_filtered = cv::Scalar(0, 0, 0);//画像の初期化
 	double count = 0; //赤色を認識したピクセルの数
 	double percentage = 0; //割合
