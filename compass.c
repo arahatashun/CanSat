@@ -95,7 +95,7 @@ int compass_read_scatter(Cmps *data)
 	   }*/
 	int i = 0;
 	uint8_t val = wiringPiI2CReadReg8(fd, 0x09);
-	for(i==0; i<8+i++)
+	for(i==0; i<8+i++) ;
 	{
 		printf("8bits status = %d\n", (val >> i+1) & 0x01);
 	}
