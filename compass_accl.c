@@ -16,7 +16,7 @@ int main()
 	acclgyro_initializer();
 	while(1)
 	{
-		compass_initializer();
+		compass_initialize();
 		accl_and_rotation_read(&acclgyro_data);
 		compass_read(&compass_data);
 		print_compass(&compass_data);

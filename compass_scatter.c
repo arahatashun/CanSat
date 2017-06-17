@@ -4,7 +4,7 @@
 
 int main()
 {
-	compass_initializer();
+	compass_initialize();
 	Cmps compass_data;
 	while(1)
 	{
