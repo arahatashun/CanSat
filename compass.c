@@ -71,6 +71,9 @@ int compass_read(Cmps *compass_data)
 	{
 		printf("Compass write register:mode_reg\n");
 	}
+	uint8_t status_val = wiringPiI2CReadReg8(fd, 0x09);
+	printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01); //地磁気が正常ならここは1(死んでも1?)
+	printf("2nd bit of status resister = %d\n", (status_val >> 1) & 0x01); //地磁気が正常ならここは0(死んだら1)
 	compass_data->x_value = read_out(fd, x_msb_reg, x_lsb_reg);
 	compass_data->y_value = read_out(fd, y_msb_reg, y_lsb_reg);
 	compass_data->z_value = read_out(fd, z_msb_reg, z_lsb_reg);
@@ -93,12 +96,9 @@ int compass_read_scatter(Cmps *data)
 	   {
 	        printf("Compass write register:mode_reg\n");
 	   }*/
-	int i = 0;
-	uint8_t val = wiringPiI2CReadReg8(fd, 0x09);
-	for(i==0; i<8; i++)
-	{
-		printf("8bits status = %d\n", (val >> i) & 0x01);
-	}
+	uint8_t status_val = wiringPiI2CReadReg8(fd, 0x09);
+	printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01); //地磁気が正常ならここは1(死んでも1?)
+	printf("2nd bit of status resister = %d\n", (status_val >> 1) & 0x01); //地磁気が正常ならここは0(死んだら1)
 	data->x_value = read_out(fd, x_msb_reg, x_lsb_reg);
 	data->y_value = read_out(fd, y_msb_reg, y_lsb_reg);
 	data->z_value = read_out(fd, z_msb_reg, z_lsb_reg);
