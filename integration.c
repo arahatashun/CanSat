@@ -56,14 +56,14 @@ double calc_gps_angle(Queue* latring,Queue* lonring)
 }
 
 
-int angle_gps(double *angle_course)
+int angle_gps(double* angle_course,Queue* latring,Queue* lonring)
 {
 	//ring_bufferが2回分のデータを保持するまでぶん回す
-	while(!is_full(gps_lat_ring))
+	while(!is_full(latring))
 	{
-		update_gps(gps_lat_ring,gps_lon_ring);
+		update_gps(latring,lonring);
 	}
-	*angle_course = calc_gps_angle(gps_lat_ring,gps_lon_ring);
+	*angle_course = calc_gps_angle(latring,lonring);
 	return 0;
 }
 
@@ -71,7 +71,7 @@ int angle_gps(double *angle_course)
    gpsのデータを更新する
    delta_angleは現在の角度-進むべき向きを-180~180になるように調整したもの
  */
-int update_angle(double *diffAngle)
+double update_angle(double* diffAngle,Queue* latring,Queue *lonring)
 {
 	time_t current_time;//時間を取得
 	time(&current_time);
@@ -85,7 +85,7 @@ int update_angle(double *diffAngle)
 	printf("GPS delta_angle:%f\n",*diffAngle);
 	double distance = 0;
 	distance = dist_on_sphere(latring->buff[latring->rear],lonring->buff[lonring->rear]);
-	return 0;
+	return distance;
 }
 
 
@@ -95,7 +95,7 @@ int update_angle(double *diffAngle)
 int decide_route()
 {
 	double delta_angle = 0;
-	update_angle(&delta_angle);
+	update_angle(&delta_angle,gps_lat_ring,gps_lon_ring);
 
 	while((-180 <= delta_angle && delta_angle <= -30))
 	{
