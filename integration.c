@@ -9,17 +9,17 @@
 #include "motor.h"
 #include "ring_buffer.h"
 
-static const int turn_milliseconds =10;//30度回転する
-static const int turn_power = 60;//turnするpower
-static const int gps_latency = 1100;//gps角度取得のための時間感覚
-static const int forward_power = 50;
+static const int TURN_MILLISECONDS =10;//30度回転する
+static const int TURN_POWER = 60;//turnするpower
+static const int GPS_LATENCY = 2500;//gps角度取得のための時間感覚
+static const int FORWARD_POWER = 50;
 static const double PI = 3.14159265;
-static const int gps_ring_len = 3;
+static const int GPS_RING_LEN = 2;
 
 time_t start_time;//開始時刻のグローバル変数宣言
-loc_t data;//gpsのデータを確認するものをグローバル変数宣言
 Queue *gps_lat_ring = NULL;
 Queue *gps_lon_ring = NULL;
+
 //モーター用シグナルハンドラ
 void handler(int signum)
 {
@@ -28,29 +28,40 @@ void handler(int signum)
 	exit(1);
 }
 
+//GPSのデータを取得
+//NOTE delayがある
+int update_gps(Queue* latring,Queue* lonring)
+{
+	loc_t data;
+	gps_location(&data);
+	enqueue(latring,data.latitude);
+	enqueue(lonring,data.longitude);
+	printf("GPS latitude:%f\nGPS longitude:%f\n", data.latitude, data.longitude);
+	delay(GPS_LATENCY);
+	return 0;
+}
+
 //gpsの緯度経度二回分から角度計算
+double calc_gps_angle(Queue* latring,Queue* lonring)
+{
+	double latitude_before = dequeue(latring);
+	double longitude_before = dequeue(lonring);
+	double latitude_after= latring->buff[latring->rear];
+	double longitude_after= lonring->buff[lonring->rear];
+	double angle_course = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;//移動中の角度
+	printf("GPS going_angle:%f\n",going_angle);
+	return angle_course;
+}
+
+
 int angle_gps(double *angle_course)
 {
-	double latitude_after;
-	double longitude_after;
-	//ring_bufferが三回分のデータを保持するまでぶん回す
+	//ring_bufferが2回分のデータを保持するまでぶん回す
 	while(!is_full(gps_lat_ring))
 	{
-		gps_location(&data);
-		latitude_after = data.latitude;//latitude_afterを更新
-		longitude_after = data.longitude;
-		enqueue(gps_lat_ring,data.latitude);
-		enqueue(gps_lon_ring,data.longitude);
-		printf("GPS latitude:%f\nGPS longitude:%f\n", latitude_after, longitude_after);
-		delay(gps_latency);
+		update_gps(gps_lat_ring,gps_lon_ring);
 	}
-	double latitude_before = dequeue(gps_lat_ring);
-	double longitude_before = dequeue(gps_lon_ring);
-	double lat_offset = latitude_after - latitude_before;
-	double lon_offset = longitude_after - longitude_before;
-	double going_angle = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;//移動中の角度
-	printf("GPS going_angle:%f\n",going_angle);
-	*angle_course = going_angle;
+	*angle_course = calc_gps_angle(gps_lat_ring,gps_lon_ring);
 	return 0;
 }
 
@@ -58,21 +69,20 @@ int angle_gps(double *angle_course)
    gpsのデータを更新する
    delta_angleは現在の角度-進むべき向きを-180~180になるように調整したもの
  */
-int update_angle(double *updated_angle)
+int update_angle(double *diffAngle)
 {
 	time_t current_time;//時間を取得
 	time(&current_time);
-	double delta_time = difftime(current_time,start_time);
-	printf("OS timestamp:%f\n",delta_time);
+	printf("%s\n",ctime(&current_time));
 	double angle_course = 0;//移動中の角度
 	angle_gps(&angle_course);
-	double angle_to_go = 0;//進むべき方角
-	angle_to_go = calc_target_angle(data.latitude,data.longitude);
-	*updated_angle = 0;//進むべき方角と現在の移動方向の差の角
-	*updated_angle = cal_delta_angle(angle_course,angle_to_go);
-	printf("GPS delta_angle:%f\n",*updated_angle);
+	double angle2go = 0;//進むべき方角
+	angle2go = calc_target_angle(latring->buff[latring->rear],lonring->buff[lonring->rear]);
+	*diffAngle = 0;//進むべき方角と現在の移動方向の差の角
+	*diffAngle = cal_delta_angle(angle_course,angle2go);
+	printf("GPS delta_angle:%f\n",*diffAngle);
 	double distance = 0;
-	distance = dist_on_sphere(data.latitude,data.longitude);
+	distance = dist_on_sphere(latring->buff[latring->rear],lonring->buff[lonring->rear]);
 	return 0;
 }
 
@@ -87,17 +97,17 @@ int decide_route()
 
 	while((-180 <= delta_angle && delta_angle <= -30))
 	{
-		motor_left(turn_power);
-		delay((int)((-delta_angle/30)*turn_milliseconds));
-		motor_forward(forward_power);
+		motor_left(TURN_POWER);
+		delay((int)((-delta_angle/30)*TURN_MILLISECONDS));
+		motor_forward(FORWARD_POWER);
 		delta_angle=update_angle(&delta_angle);
 	}
 
 	while(30 < delta_angle && delta_angle <= 180)
 	{
-		motor_right(turn_power);
-		delay((int)((delta_angle/30)*turn_milliseconds));
-		motor_forward(forward_power);
+		motor_right(TURN_POWER);
+		delay((int)((delta_angle/30)*TURN_MILLISECONDS));
+		motor_forward(FORWARD_POWER);
 		delta_angle=update_angle(&delta_angle);
 	}
 	return 0;
@@ -105,15 +115,14 @@ int decide_route()
 
 int main()
 {
-	time(&start_time);
 	gps_init();
 	pwm_initializer();
 	signal(SIGINT, handler);
-	gps_lat_ring = make_queue(gps_ring_len);
-	gps_lon_ring = make_queue(gps_ring_len);
+	gps_lat_ring = make_queue(GPS_RING_LEN);
+	gps_lon_ring = make_queue(GPS_RING_LEN);
 	while(1)
 	{
-		motor_forward(forward_power);
+		motor_forward(FORWARD_POWER);
 		decide_route();
 	}
 	return 0;
