@@ -16,10 +16,6 @@ static const int FORWARD_POWER = 50;
 static const double PI = 3.14159265;
 static const int GPS_RING_LEN = 2;
 
-
-Queue *gps_lat_ring = NULL;
-Queue *gps_lon_ring = NULL;
-
 //モーター用シグナルハンドラ
 void handler(int signum)
 {
@@ -92,7 +88,7 @@ double update_angle(double* diffAngle,Queue* latring,Queue *lonring)
 /*
    進む方角が-180から-30の時にその角度差に応じて左回転、30~180の時その角度さに応じて右回転
  */
-int decide_route()
+int decide_route(Queue* latring,Queue *lonring)
 {
 	double delta_angle = 0;
 	update_angle(&delta_angle,gps_lat_ring,gps_lon_ring);
@@ -120,12 +116,12 @@ int main()
 	gps_init();
 	pwm_initializer();
 	signal(SIGINT, handler);
-	gps_lat_ring = make_queue(GPS_RING_LEN);
-	gps_lon_ring = make_queue(GPS_RING_LEN);
+	Queue* gps_lat_ring = make_queue(GPS_RING_LEN);
+	Queue* gps_lon_ring = make_queue(GPS_RING_LEN);
 	while(1)
 	{
 		motor_forward(FORWARD_POWER);
-		decide_route();
+		decide_route(gps_lat_ring,gps_lon_ring);
 	}
 	return 0;
 }
