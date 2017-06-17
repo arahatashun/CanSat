@@ -77,7 +77,7 @@ double update_angle(double* diffAngle,Queue* latring,Queue *lonring)
 	time(&current_time);
 	printf("%s\n",ctime(&current_time));
 	double angle_course = 0;//移動中の角度
-	angle_gps(&angle_course);
+	angle_gps(&angle_course,latring,lonring);
 	double angle2go = 0;//進むべき方角
 	angle2go = calc_target_angle(latring->buff[latring->rear],lonring->buff[lonring->rear]);
 	*diffAngle = 0;//進むべき方角と現在の移動方向の差の角
@@ -102,7 +102,7 @@ int decide_route()
 		motor_left(TURN_POWER);
 		delay((int)((-delta_angle/30)*TURN_MILLISECONDS));
 		motor_forward(FORWARD_POWER);
-		delta_angle=update_angle(&delta_angle);
+		delta_angle=update_angle(&delta_angle,latring,lonring);
 	}
 
 	while(30 < delta_angle && delta_angle <= 180)
@@ -110,7 +110,7 @@ int decide_route()
 		motor_right(TURN_POWER);
 		delay((int)((delta_angle/30)*TURN_MILLISECONDS));
 		motor_forward(FORWARD_POWER);
-		delta_angle=update_angle(&delta_angle);
+		delta_angle=update_angle(&delta_angle,latring,lonring);
 	}
 	return 0;
 }
