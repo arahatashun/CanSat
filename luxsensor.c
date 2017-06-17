@@ -37,7 +37,7 @@ static const int TSL2561_REGISTER_CHAN1_HIGH = 0x8F;
 //Delay getLux function
 static const int LUXDELAY = 500;
 static const int LIGHT_THRESHOLD = 10;  //光センサー閾値
-static const int fd = 0;
+static int fd = 0;
 //関数プロトタイプ宣言(static)
 int getLux();
 
