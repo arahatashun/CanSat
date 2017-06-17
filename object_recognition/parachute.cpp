@@ -7,9 +7,9 @@
 static const int N = 256;//文字列の長さ
 int main(void) {
 	char full_command[N];
-	char front_command[] = "raspistill -o ";//command
+	char front_command[] = "sudo raspistill -o ";//command
 	char full_path[N];
-	char directry_path[] = "/home/pi/motion/object";//pathの先頭
+	char directry_path[] = "/home/pi/object";//pathの先頭
 	char name_path[N];//時間を文字列に変換するときに代入する変数
 	char file_extention[] = ".jpg";//拡張子
 	time_t timer;//時刻を受け取る変数
