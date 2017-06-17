@@ -33,6 +33,6 @@ int main(void) {
 	cv::inRange(dst, cv::Scalar(160, 150, 0), cv::Scalar(190, 255, 255), dst_filtered);
 	count = cv::countNonZero(dst_filtered);//赤色部分の面積を計算
 	double Area = dst.rows*dst.cols;//全ピクセル数の計算
-	percentage = count / Area;//割合を計算
+	percentage = (count / Area)*100;//百分率で計算
 	printf("赤色の面積の割合は%f\n", percentage);
 }
