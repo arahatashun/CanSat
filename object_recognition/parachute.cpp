@@ -6,6 +6,7 @@
 
 static const int N = 256;//文字列の長さ
 int main(void) {
+	//TODO 関数の分割
 	char full_command[N];
 	char front_command[] = "sudo raspistill -o ";//command
 	char full_path[N];
