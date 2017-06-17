@@ -71,6 +71,8 @@ int compass_read(Cmps *compass_data)
 	{
 		printf("Compass write register:mode_reg\n");
 	}
+	val = wiringPiI2CReadReg8(fd, 0x09);
+	printf("%f\n", val);
 	compass_data->x_value = read_out(fd, x_msb_reg, x_lsb_reg);
 	compass_data->y_value = read_out(fd, y_msb_reg, y_lsb_reg);
 	compass_data->z_value = read_out(fd, z_msb_reg, z_lsb_reg);
@@ -96,8 +98,6 @@ int compass_read_scatter(Cmps *data)
 	data->x_value = read_out(fd, x_msb_reg, x_lsb_reg);
 	data->y_value = read_out(fd, y_msb_reg, y_lsb_reg);
 	data->z_value = read_out(fd, z_msb_reg, z_lsb_reg);
-	val = wiringPiI2CReadReg8(fd, addr);
-	printf("%f\n", val);
 	return 0;
 }
 
