@@ -1,2 +1,2 @@
 parachute: parachute.cpp
-	g++ -o parachute parachute.cpp `pkg-config --cflag opencv` `pkg-config --libs opencv`
+	g++ -o parachute parachute.cpp `pkg-config --cflags opencv` `pkg-config --libs opencv`
