@@ -93,8 +93,12 @@ int compass_read_scatter(Cmps *data)
 	   {
 	        printf("Compass write register:mode_reg\n");
 	   }*/
+	int i = 0;
 	uint8_t val = wiringPiI2CReadReg8(fd, 0x09);
-	printf("8bits status = %d\n", (val >> 3) & 0x01);
+	for(i==0; i<8+i++)
+	{
+		printf("8bits status = %d\n", (val >> i+1) & 0x01);
+	}
 	data->x_value = read_out(fd, x_msb_reg, x_lsb_reg);
 	data->y_value = read_out(fd, y_msb_reg, y_lsb_reg);
 	data->z_value = read_out(fd, z_msb_reg, z_lsb_reg);
