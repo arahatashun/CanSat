@@ -16,7 +16,7 @@ static const int FORWARD_POWER = 50;
 static const double PI = 3.14159265;
 static const int GPS_RING_LEN = 2;
 
-time_t start_time;//開始時刻のグローバル変数宣言
+
 Queue *gps_lat_ring = NULL;
 Queue *gps_lon_ring = NULL;
 
