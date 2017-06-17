@@ -22,14 +22,13 @@ static const double PI = 3.14159265;
 static const double k_parameter = 1.0;//地磁気の感度補正パラメータ
 static int fd = 0;
 static int WPI2CWReg8 = 0;
-
 /*
    //calibration時の回転
    static const int turn_calib_power = 25;//地磁気補正時turnするpower
    static const int turn_calib_milliseconds = 75;//地磁気補正時turnするmilliseconds
  */
 
-int compass_initializer()
+int compass_initialize()
 {
 	//I2c setup
 	fd = wiringPiI2CSetup(devid);
@@ -44,7 +43,6 @@ int compass_initializer()
 		printf("compass wiringPiI2CSetup success\n");
 		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
 	}
-
 	return 0;
 }
 
@@ -61,7 +59,6 @@ static short read_out(int file,int msb_reg, int lsb_reg)
 
 int compass_read(Cmps *compass_data)
 {
-	//WriteReg8
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
 	if(WPI2CWReg8 == -1)
 	{
@@ -74,17 +71,14 @@ int compass_read(Cmps *compass_data)
 	{
 		printf("Compass write register:mode_reg\n");
 	}
-	short x = 0;
-	short y = 0;
-	short z = 0;
-	compass_data->compassx_value = read_out(fd, x_msb_reg, x_lsb_reg);
-	compass_data->compassy_value = read_out(fd, y_msb_reg, y_lsb_reg);
-	compass_data->compassz_value = read_out(fd, z_msb_reg, z_lsb_reg);
+	compass_data->x_value = read_out(fd, x_msb_reg, x_lsb_reg);
+	compass_data->y_value = read_out(fd, y_msb_reg, y_lsb_reg);
+	compass_data->z_value = read_out(fd, z_msb_reg, z_lsb_reg);
 	return 0;
 }
 
 /*地磁気のキャリブレーション補正用のログを取るためにprintをコメントアウトしたもの*/
-int compass_read_scatter(Cmps *compass_data)
+int compass_read_scatter(Cmps *data)
 {
 	//WriteReg8
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
@@ -99,34 +93,31 @@ int compass_read_scatter(Cmps *compass_data)
 	   {
 	        printf("Compass write register:mode_reg\n");
 	   }*/
-	short x = 0;
-	short y = 0;
-	short z = 0;
-	compass_data->compassx_value = read_out(fd, x_msb_reg, x_lsb_reg);
-	compass_data->compassy_value = read_out(fd, y_msb_reg, y_lsb_reg);
-	compass_data->compassz_value = read_out(fd, z_msb_reg, z_lsb_reg);
+	data->x_value = read_out(fd, x_msb_reg, x_lsb_reg);
+	data->y_value = read_out(fd, y_msb_reg, y_lsb_reg);
+	data->z_value = read_out(fd, z_msb_reg, z_lsb_reg);
 	return 0;
 }
 
-int print_compass(Cmps *compass_data)
+//NOTE printだけじゃなくて値の取得もしてる
+int print_compass(Cmps *data)
 {
-	compass_read(compass_data);
-	printf("compassx = %f\n", compass_data->compassx_value);
-	printf("compassy = %f\n", compass_data->compassy_value);
-	printf("compassz = %f\n", compass_data->compassz_value);
+	compass_read(data);
+	printf("compassx = %f\n", data->x_value);
+	printf("compassy = %f\n", data->y_value);
+	printf("compassz = %f\n", data->z_value);
 	return 0;
 }
 
 int compass_value_initialize(Cmps *compass_init)
 {
-	compass_init->compassx_value = 0;
-	compass_init->compassy_value = 0;
-	compass_init->compassz_value = 0;
+	compass_init->x_value = 0;
+	compass_init->y_value = 0;
+	compass_init->z_value = 0;
 }
 
-/*
-   偏角を考慮を考慮して計算
- */
+
+//偏角を考慮を考慮して計算
 static double cal_deviated_angle(double theta_degree)
 {
 	double true_theta = 0;
@@ -146,9 +137,8 @@ static double cal_deviated_angle(double theta_degree)
 	return true_theta;
 }
 
-/*
-   地磁気のxy座標から方角を計算
- */
+
+//地磁気のxy座標から方角を計算
 double calc_compass_angle(double x,double y)
 {
 	double cal_theta = 0;
@@ -164,11 +154,10 @@ double calc_compass_angle(double x,double y)
 	return cal_deviated_angle(cal_theta);
 }
 
-/*
-   6軸を用いた方角の計算
- */
-double cal_deg_acclcompass(double compassx_value, double compassy_value,
-                           double compassz_value, double sin_phi, double sin_psi,
+
+//6軸を用いた方角の計算
+double cal_deg_acclcompass(double x, double y,double z,
+													double sin_phi, double sin_psi,
                            double cos_phi, double cos_psi)
 {
 	double y1 = 0;//y1~x3は見やすさと計算のために用意した物理的に意味はない変数
@@ -177,11 +166,11 @@ double cal_deg_acclcompass(double compassx_value, double compassy_value,
 	double x2 = 0;
 	double x3 = 0;
 	double cal_theta = 0;
-	y1 = compassz_value*sin_phi;
-	y2 = compassy_value*cos_phi;
-	x1 = compassx_value*cos_psi;
-	x2 = compassy_value*sin_psi*sin_phi;
-	x3 = compassz_value*sin_psi*cos_phi;
+	y1 = z*sin_phi;
+	y2 = y*cos_phi;
+	x1 = x*cos_psi;
+	x2 = y*sin_psi*sin_phi;
+	x3 = z*sin_psi*cos_phi;
 	cal_theta = atan2((y1 - y2)*k_parameter,x1 + x2 + x3)*180.0/PI;
 	if(cal_theta  < -90)  //詳しい計算方法はkndまで
 	{
@@ -200,10 +189,10 @@ double cal_deg_acclcompass(double compassx_value, double compassy_value,
    {
         compass_value_initialize(compass_data);
         compass_read(compass_data);
-        compass_offset->compassx_offset_max = compass_data->compassx_value;
-        compass_offset->compassx_offset_min = compass_data->compassx_value;
-        compass_offset->compassy_offset_max = compass_data->compassy_value;
-        compass_offset->compassy_offset_min = compass_data->compassy_value;
+        compass_offset->compassx_offset_max = compass_data->x_value;
+        compass_offset->compassx_offset_min = compass_data->x_value;
+        compass_offset->compassy_offset_max = compass_data->y_value;
+        compass_offset->compassy_offset_min = compass_data->y_value;
         compass_offset->compassx_offset = 0;
         compass_offset->compassy_offset = 0;
         return 0;
@@ -211,22 +200,22 @@ double cal_deg_acclcompass(double compassx_value, double compassy_value,
 
    static int maxmin_compass(Cmps_offset *compass_offset, Cmps *compass_data)
    {
-        if(compass_data->compassx_value > compass_offset->compassx_offset_max)
+        if(compass_data->x_value > compass_offset->compassx_offset_max)
         {
-                compass_offset->compassx_offset_max = compass_data->compassx_value;
+                compass_offset->compassx_offset_max = compass_data->x_value;
         }
-        else if(compass_data->compassx_value < compass_offset->compassx_offset_min)
+        else if(compass_data->x_value < compass_offset->compassx_offset_min)
         {
-                compass_offset->compassx_offset_min = compass_data->compassx_value;
+                compass_offset->compassx_offset_min = compass_data->x_value;
         }
 
-        if(compass_data->compassy_value > compass_offset->compassy_offset_max)
+        if(compass_data->y_value > compass_offset->compassy_offset_max)
         {
-                compass_offset->compassy_offset_max = compass_data->compassy_value;
+                compass_offset->compassy_offset_max = compass_data->y_value;
         }
-        else if(compass_data->compassy_value < compass_offset->compassy_offset_min)
+        else if(compass_data->y_value < compass_offset->compassy_offset_min)
         {
-                compass_offset->compassy_offset_min = compass_data->compassy_value;
+                compass_offset->compassy_offset_min = compass_data->y_value;
         }
         return 0;
    }
@@ -248,8 +237,8 @@ double cal_deg_acclcompass(double compassx_value, double compassy_value,
         motor_stop();
         delay(2000);
         compass_read(compass_data);
-        printf( "compass_x= %f, compass_y= %f\n",compass_data->compassx_value
-                ,compass_data->compassy_value);
+        printf( "compass_x= %f, compass_y= %f\n",compass_data->x_value
+                ,compass_data->y_value);
         delay(50);
         return 0;
    }
