@@ -52,7 +52,7 @@ int DistAngle_initialize(DistAngle *data)
 }
 
 //地磁気の計測及びとそのオフセット値からマシンの向いている角度を計算
->>>>>>> inte
+
 int cal_compass_theta(DistAngle *data)
 {
 	Cmps compass_data;
