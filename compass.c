@@ -157,7 +157,7 @@ double calc_compass_angle(double x,double y)
 
 //6軸を用いた方角の計算
 double cal_deg_acclcompass(double x, double y,double z,
-													double sin_phi, double sin_psi,
+                           double sin_phi, double sin_psi,
                            double cos_phi, double cos_psi)
 {
 	double y1 = 0;//y1~x3は見やすさと計算のために用意した物理的に意味はない変数
