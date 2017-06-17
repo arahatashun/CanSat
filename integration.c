@@ -91,7 +91,7 @@ double update_angle(double* diffAngle,Queue* latring,Queue *lonring)
 int decide_route(Queue* latring,Queue *lonring)
 {
 	double delta_angle = 0;
-	update_angle(&delta_angle,gps_lat_ring,gps_lon_ring);
+	update_angle(&delta_angle,latring,lonring);
 
 	while((-180 <= delta_angle && delta_angle <= -30))
 	{
