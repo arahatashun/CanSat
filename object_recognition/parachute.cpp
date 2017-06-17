@@ -17,7 +17,7 @@ int main(void) {
 	time(&timer);//現在時刻の取得
 	timeptr = localtime(&timer);//ポインタ
 	strftime(name_path, N, "%Y%m%d-%H%M%S", timeptr);//日時を文字列に変換してｓに代入
-	sprintf(full_path, "%s%s%s",directry_path, name_path, file_extention)
+	sprintf(full_path, "%s%s%s",directry_path, name_path, file_extention);
 	sprintf(full_command, "%s%s", front_command, full_path);//コマンドの文字列をつなげる。
 	system(full_command);//raspistillで静止画を撮って日時を含むファイル名で保存。
 
