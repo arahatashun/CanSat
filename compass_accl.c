@@ -16,7 +16,7 @@ int main()
 	acclgyro_initializer();
 	while(1)
 	{
-		compass_initializer();
+		compass_initialize();
 		accl_and_rotation_read(&acclgyro_data);
 		compass_read(&compass_data);
 		print_compass(&compass_data);
@@ -25,8 +25,8 @@ int main()
 		                    acclgyro_data.acclZ_scaled, phi_rad);
 		printf("phi_degree = %f\n", phi_rad*180.0/PI);
 		printf("psi_degree = %f\n", psi_rad*180.0/PI);
-		double theta_degree = cal_deg_acclcompass(compass_data.compassx_value,compass_data.compassy_value,
-		                                          compass_data.compassz_value,sin(phi_rad),
+		double theta_degree = cal_deg_acclcompass(compass_data.x_value,compass_data.y_value,
+		                                          compass_data.z_value,sin(phi_rad),
 		                                          sin(psi_rad),cos(phi_rad),cos(psi_rad));
 		printf("theta_degree = %f\n", theta_degree);
 		delay(1000);

@@ -57,9 +57,10 @@ static short read_out(int file,int msb_reg, int lsb_reg)
 	return i;
 }
 
+//NOTE　地磁気がロックされた時はmode_continuousの部分をsingleにしたり変えたりしたら治る?
 int compass_read(Cmps *compass_data)
 {
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuos);
 	if(WPI2CWReg8 == -1)
 	{
 		printf("Compass write error register mode_reg\n");
@@ -71,6 +72,9 @@ int compass_read(Cmps *compass_data)
 	{
 		printf("Compass write register:mode_reg\n");
 	}
+	uint8_t status_val = wiringPiI2CReadReg8(fd, 0x09);
+	printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01); //地磁気が正常ならここは1(死んでも1?)
+	printf("2nd bit of status resister = %d\n", (status_val >> 1) & 0x01); //地磁気が正常ならここは0(死んだら1)
 	compass_data->x_value = read_out(fd, x_msb_reg, x_lsb_reg);
 	compass_data->y_value = read_out(fd, y_msb_reg, y_lsb_reg);
 	compass_data->z_value = read_out(fd, z_msb_reg, z_lsb_reg);
@@ -81,7 +85,7 @@ int compass_read(Cmps *compass_data)
 int compass_read_scatter(Cmps *data)
 {
 	//WriteReg8
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
 	/*if(WPI2CWReg8 == -1)
 	   {
 	        printf("Compass write error register mode_reg\n");
@@ -157,7 +161,7 @@ double calc_compass_angle(double x,double y)
 
 //6軸を用いた方角の計算
 double cal_deg_acclcompass(double x, double y,double z,
-													double sin_phi, double sin_psi,
+                           double sin_phi, double sin_psi,
                            double cos_phi, double cos_psi)
 {
 	double y1 = 0;//y1~x3は見やすさと計算のために用意した物理的に意味はない変数

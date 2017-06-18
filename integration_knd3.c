@@ -14,9 +14,9 @@
 static const int TURN_POWER = 60;//turnするpower
 static const int TURN_MILLISECONDS = 100;//turnするmilliseconds
 static const int FORWARD_MILLISECONDS = 1000;//forwardするmilliseconds
-static const int STOP_MILLISECONDS = 1000;//地磁気安定のためにstopするmilliseconds
+static const int STOP_MILLISECONDS = 3000;//地磁気安定のためにstopするmilliseconds
 static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
-static const double STACK_THRESHOLD = 0.00003; //stack判定するときの閾値
+static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
 static const double COMPASS_X_OFFSET = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
 static const double COMPASS_Y_OFFSET = 0.0;
 static const int GOAL_THRESHOLD = 2;
@@ -55,7 +55,6 @@ int DistAngle_initialize(DistAngle *data)
 
 int cal_compass_theta(DistAngle *data)
 {
-	Cmps compass_data;
 	compass_value_initialize(&compass_data);
 	print_compass(&compass_data);
 	double compass_x = 0;
@@ -96,8 +95,8 @@ int handle_gps_zero(DistAngle *data)
 int stack(Queue *latring,Queue *lonring)
 {
 	double delta_movement = 0;
-	delta_movement = fabs(latring->buff[latring->rear]-dequeue(latring)) +
-									 fabs(lonring->buff[lonring->rear]-dequeue(lonring));
+	delta_movement = fabs(latring->buff[latring->rear-1]-dequeue(latring)) +
+	                 fabs(lonring->buff[lonring->rear-1]-dequeue(lonring));
 	printf("delta_movement = %f\n", delta_movement);
 	if(delta_movement<STACK_THRESHOLD)
 	{
@@ -147,7 +146,7 @@ int decide_route(DistAngle data,Queue *latring,Queue *lonring)
 		}
 		else if(30 <= data.delta_angle && data.delta_angle <= 180)
 		{
-		 	//ゴールの方角がマシンから見て右に30~180度の場合は右回転
+			//ゴールの方角がマシンから見て右に30~180度の場合は右回転
 			motor_right(TURN_POWER);
 			delay(TURN_MILLISECONDS);
 			motor_stop();

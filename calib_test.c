@@ -18,8 +18,8 @@
         while(1)
         {
                 compass_read(&compass_data);
-                compass_x = compass_data.compassx_value - compass_offset.compassx_offset;
-                compass_y = compass_data.compassy_value - compass_offset.compassy_offset;
+                compass_x = compass_data.x_value - compass_offset.compassx_offset;
+                compass_y = compass_data.y_value - compass_offset.compassy_offset;
                 compass_angle = calc_compass_angle(compass_x, compass_y);
                 printf("compass_angle=%f\n",compass_angle);
                 delay(1000);
