@@ -28,12 +28,12 @@ void handler(int signum)
 //NOTE delayがある
 int update_gps(Queue* latring,Queue* lonring)
 {
+	delay(GPS_LATENCY);//NOTE delayは先頭にかます
 	loc_t data;
 	gps_location(&data);
 	enqueue(latring,data.latitude);
 	enqueue(lonring,data.longitude);
 	printf("GPS latitude:%f\nGPS longitude:%f\n", data.latitude, data.longitude);
-	delay(GPS_LATENCY);
 	return 0;
 }
 
@@ -44,6 +44,8 @@ double calc_gps_angle(Queue* latring,Queue* lonring)
 	double longitude_before = dequeue(lonring);
 	double latitude_after= latring->buff[latring->rear];
 	double longitude_after= lonring->buff[lonring->rear];
+	printf("latitude_after %f\n",latitude_after);
+	printf("longitude_after%f\n",longitude_after);
 	double lat_offset = latitude_after - latitude_before;
 	double lon_offset = longitude_after - longitude_before;
 	double angle_course = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;//移動中の角度
