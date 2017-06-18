@@ -4,8 +4,8 @@
 #include "mitibiki.h"
 //note: seikei toukei ni izon
 
-static const double target_latitude = 35.755963;//緯度
-static const double target_longitude = 139.770381;//経度
+static const double target_latitude = 35.759309;//緯度
+static const double target_longitude = 139.769746;//経度
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
 
