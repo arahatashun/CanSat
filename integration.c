@@ -75,12 +75,12 @@ double update_angle(double* diffAngle,Queue* latring,Queue *lonring)
 	double angle_course = 0;//移動中の角度
 	angle_gps(&angle_course,latring,lonring);
 	double angle2go = 0;//進むべき方角
-	angle2go = calc_target_angle(latring->buff[latring->rear],lonring->buff[lonring->rear]);
+	angle2go = calc_target_angle(getLast(latring),getLast(lonring));
 	*diffAngle = 0;//進むべき方角と現在の移動方向の差の角
 	*diffAngle = cal_delta_angle(angle_course,angle2go);
 	printf("GPS delta_angle:%f\n",*diffAngle);
 	double distance = 0;
-	distance = dist_on_sphere(latring->buff[latring->rear],lonring->buff[lonring->rear]);
+	distance = dist_on_sphere(getLast(latring),getLast(lonring));
 	return distance;
 }
 
