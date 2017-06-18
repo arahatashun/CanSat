@@ -55,7 +55,6 @@ int DistAngle_initialize(DistAngle *data)
 
 int cal_compass_theta(DistAngle *data)
 {
-	Cmps compass_data;
 	compass_value_initialize(&compass_data);
 	print_compass(&compass_data);
 	double compass_x = 0;
@@ -96,8 +95,8 @@ int handle_gps_zero(DistAngle *data)
 int stack(Queue *latring,Queue *lonring)
 {
 	double delta_movement = 0;
-	delta_movement = fabs(latring->buff[latring->rear]-dequeue(latring)) +
-	                 fabs(lonring->buff[lonring->rear]-dequeue(lonring));
+	delta_movement = fabs(latring->buff[latring->rear-1]-dequeue(latring)) +
+	                 fabs(lonring->buff[lonring->rear-1]-dequeue(lonring));
 	printf("delta_movement = %f\n", delta_movement);
 	if(delta_movement<STACK_THRESHOLD)
 	{

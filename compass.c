@@ -59,7 +59,7 @@ static short read_out(int file,int msb_reg, int lsb_reg)
 
 int compass_read(Cmps *compass_data)
 {
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuos);
 	if(WPI2CWReg8 == -1)
 	{
 		printf("Compass write error register mode_reg\n");
@@ -84,7 +84,7 @@ int compass_read(Cmps *compass_data)
 int compass_read_scatter(Cmps *data)
 {
 	//WriteReg8
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
 	/*if(WPI2CWReg8 == -1)
 	   {
 	        printf("Compass write error register mode_reg\n");
