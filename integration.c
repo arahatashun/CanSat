@@ -42,8 +42,11 @@ double calc_gps_angle(Queue* latring,Queue* lonring)
 {
 	double latitude_before = dequeue(latring);
 	double longitude_before = dequeue(lonring);
+	printf("longitude_before%f\n",longitude_before);
 	double latitude_after= latring->buff[latring->rear];
 	double longitude_after= lonring->buff[lonring->rear];
+	printf("latring->buff[latring->rear]%f\n",latring->buff[latring->rear]);
+	printf("lonring->buff[lonring->rear]%f\n",lonring->buff[lonring->rear]);
 	printf("latitude_after %f\n",latitude_after);
 	printf("longitude_after%f\n",longitude_after);
 	double lat_offset = latitude_after - latitude_before;
