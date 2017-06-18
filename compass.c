@@ -57,6 +57,7 @@ static short read_out(int file,int msb_reg, int lsb_reg)
 	return i;
 }
 
+//NOTE　地磁気がロックされた時はmode_continuousの部分をsingleにしたり変えたりしたら治る?
 int compass_read(Cmps *compass_data)
 {
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuos);
@@ -96,9 +97,6 @@ int compass_read_scatter(Cmps *data)
 	   {
 	        printf("Compass write register:mode_reg\n");
 	   }*/
-	uint8_t status_val = wiringPiI2CReadReg8(fd, 0x09);
-	printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01); //地磁気が正常ならここは1(死んでも1?)
-	printf("2nd bit of status resister = %d\n", (status_val >> 1) & 0x01); //地磁気が正常ならここは0(死んだら1)
 	data->x_value = read_out(fd, x_msb_reg, x_lsb_reg);
 	data->y_value = read_out(fd, y_msb_reg, y_lsb_reg);
 	data->z_value = read_out(fd, z_msb_reg, z_lsb_reg);
