@@ -10,7 +10,7 @@ static const int N = 256;//文字列の長さ
 char* takePhoto(void)
 {
 	char full_command[N];
-	char front_command[] = "sudo raspistill -o ";//command
+	char front_command[] = "raspistill -o ";//command
 	static char full_path[N];//NOTE 自動変数をreturn するために使った. smartなやり方か?
 	char directry_path[] = "/home/pi/Pictures/";//pathの先頭
 	char name_path[N];//時間を文字列に変換するときに代入する変数
