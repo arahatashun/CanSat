@@ -44,7 +44,11 @@ int enqueue(Queue *que, double x)
 	{
 		que->rear = 0;
 	}
-	if (is_full(que)) return -1; //false
+	if (is_full(que))
+	{
+		printf("enqueue failed\n");
+		return -1; //false
+	}
 	que->buff[que->rear++] = x;
 	que->count++;
 	return 0;//true
