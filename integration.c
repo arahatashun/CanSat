@@ -42,13 +42,8 @@ double calc_gps_angle(Queue* latring,Queue* lonring)
 {
 	double latitude_before = dequeue(latring);
 	double longitude_before = dequeue(lonring);
-	printf("longitude_before%f\n",longitude_before);
-	double latitude_after= latring->buff[latring->rear-1];
-	double longitude_after= lonring->buff[lonring->rear-1];
-	printf("latring->buff[latring->rear]%f\n",latring->rear);
-	printf("lonring->buff[lonring->rear]%f\n",lonring->rear);
-	printf("latitude_after %f\n",latitude_after);
-	printf("longitude_after%f\n",longitude_after);
+	double latitude_after= getLast(latring);
+	double longitude_after= getLast(lonring);
 	double lat_offset = latitude_after - latitude_before;
 	double lon_offset = longitude_after - longitude_before;
 	double angle_course = atan2(-lon_offset,-lat_offset)*(180/PI) + 180;//移動中の角度
