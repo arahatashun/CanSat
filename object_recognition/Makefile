@@ -8,4 +8,4 @@ goal.o: goal.cpp
 camera.o: camera.cpp
 	g++ -c camera.cpp
 motor.o: ../motor.c
-	gcc -c motor.c
+	gcc -c ../motor.c
