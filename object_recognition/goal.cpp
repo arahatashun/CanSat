@@ -9,9 +9,9 @@
 
 static const int ROTATE_POWER = 20;
 static const int ROTATE_MILLISECONDS = 200;
-static const int LEFT_MAX = -200;
-static const int RIGHT_MAX = 200;
-static const int CENTER_THRESHOLD = 100;//-100~100で直進するようにする
+static const int LEFT_MAX = -100;
+static const int RIGHT_MAX = 100;
+static const int CENTER_THRESHOLD = 30;//-30~30で直進するようにする
 int main(void)
 {
 	cv::Mat red = Mred(takePhoto());
