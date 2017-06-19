@@ -14,23 +14,25 @@ static const int RIGHT_MAX = 100;
 static const int CENTER_THRESHOLD = 30;//-30~30で直進するようにする
 int main(void)
 {
-	cv::Mat red = Mred(takePhoto());
-	countArea(red);
 	pwm_initialize();
 while(1)
 {
-	if(LEFT_MAX<getCenter(red)<-CENTER_THRESHOLD)
+	cv::Mat red = Mred(takePhoto());
+	countArea(red);
+	int center = getCenter(red)
+	if(LEFT_MAX<center<-CENTER_THRESHOLD)
 	{
 		motor_right(ROTATE_POWER);
 		delay(ROTATE_MILLISECONDS);
 	}
-	if(CENTER_THRESHOLD<getCenter(red)<RIGHT_MAX)
+	if(CENTER_THRESHOLD<center<RIGHT_MAX)
 	{
 		motor_left(ROTATE_POWER);
 		delay(ROTATE_MILLISECONDS);
 	}
-	if(-CENTER_THRESHOLD<getCenter(red)<30)
+	if(-CENTER_THRESHOLD<center<CENTER_THRESHOLD)
 	{
+		printf("hoge\n");
 		motor_forward(100);
 		delay(200);
 	}
