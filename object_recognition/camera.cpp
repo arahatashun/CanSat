@@ -57,7 +57,7 @@ double countArea(cv::Mat src)
 	double percentage = 0; //割合
 	percentage = (redCount / Area)*100;//割合を計算
 	printf("面積の割合は%f\n", percentage);
-	return precentage;
+	return percentage;
 }
 
 //二値化画像のcenterを-100から100で返す
