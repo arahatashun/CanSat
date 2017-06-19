@@ -16,6 +16,7 @@ static const int TURN_MILLISECONDS = 100;//turnするmilliseconds
 static const int FORWARD_MILLISECONDS = 1000;//forwardするmilliseconds
 static const int STOP_MILLISECONDS = 3000;//地磁気安定のためにstopするmilliseconds
 static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
+static const int COMPASS_RING_LEN = 5;//compassのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
 static const double COMPASS_X_OFFSET = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
 static const double COMPASS_Y_OFFSET = 0.0;
@@ -31,7 +32,6 @@ typedef struct dist_and_angle {
 
 //グローバル変数
 time_t start_time;//開始時刻
-
 
 //シグナルハンドラ
 void handler(int signum)
@@ -53,7 +53,7 @@ int DistAngle_initialize(DistAngle *data)
 
 //地磁気の計測及びとそのオフセット値からマシンの向いている角度を計算
 
-int cal_compass_theta(DistAngle *data)
+int cal_compass_theta(DistAngle *data, Queue *compass_ring)
 {
 	compass_value_initialize(&compass_data);
 	print_compass(&compass_data);
@@ -62,7 +62,9 @@ int cal_compass_theta(DistAngle *data)
 	compass_x = compass_data.x_value - COMPASS_X_OFFSET;
 	compass_y = compass_data.y_value - COMPASS_Y_OFFSET;
 	data->angle_by_compass = calc_compass_angle(compass_x, compass_y);//偏角を調整
+	enqueue(compass_ring,data->angle_by_compass); //緯度を格納
 	printf("compass_degree = %f\n",data->angle_by_compass);
+
 	return 0;
 }
 
@@ -180,7 +182,8 @@ int main()
 	DistAngle DistAngle_data;
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
-	DistAngle_initialize(&DistAngle_data);
+	Queue* compass_ring = make_queue(COMPASS_RING_LEN =)
+	                      DistAngle_initialize(&DistAngle_data);
 	while(decide_route(DistAngle_data,gps_latring,gps_lonring)!=-2) ;
 	return 0;
 }
