@@ -182,6 +182,16 @@ int decide_route(DistAngle data,Queue *latring,Queue *lonring)
 	return 0;
 }
 
+int loop_for_goal() //地磁気のmode_changeをシーケンス20回ごとに行わせる
+{
+	compass_mode_change();
+	for(i=0; i<20; ++)
+	{
+		if(decide_route(DistAngle_data,gps_latring,gps_lonring) == -2) 　return -2;
+	}
+	return 0;
+}
+
 int main()
 {
 	int i = 0;
@@ -194,12 +204,6 @@ int main()
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
 	DistAngle_initialize(&DistAngle_data);
-	while(decide_route(DistAngle_data,gps_latring,gps_lonring)!=-2)
-	{
-		for(i=0; i<20; i++)
-		{
-			if(i==0) compass_mode_change();
-		}
-	}
+	while(loop_for_goal() != -2) ;
 	return 0;
 }
