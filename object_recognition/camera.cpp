@@ -35,8 +35,8 @@ char* takePhoto(void)
 cv::Mat Mred(char* full_path)
 {
 	cv::Mat src,hsv,hsv_filtered15,hsv_filtered180;
-	dst_filtered15 = cv::Scalar(0, 0, 0);//画像の初期化
-	dst_filtered180 = cv::Scalar(0, 0, 0);//画像の初期化
+	hsv_filtered15 = cv::Scalar(0, 0, 0);//画像の初期化
+	hsv_filtered180 = cv::Scalar(0, 0, 0);//画像の初期化
 	src =cv::imread(full_path);//画像の読み込み
 	cv::cvtColor(src, hsv, CV_BGR2HSV);//入力画像(src)をhsv色空間(dst)に変換
 	//inRange(入力画像,下界画像,上界画像,出力画像)
@@ -52,10 +52,10 @@ double countArea(cv::Mat src)
 {
 
 	double Area = src.rows*src.cols;//全ピクセル数
-	double red_count = 0; //赤色を認識したピクセルの数
-	red_count = cv::countNonZero(src);//赤色部分の面積を計算
+	double redCount = 0; //赤色を認識したピクセルの数
+	redCount = cv::countNonZero(src);//赤色部分の面積を計算
 	double percentage = 0; //割合
-	percentage = (redcount / Area)*100;//割合を計算
+	percentage = (redCount / Area)*100;//割合を計算
 	printf("面積の割合は%f\n", percentage);
 	return precentage;
 }
