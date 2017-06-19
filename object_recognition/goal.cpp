@@ -20,19 +20,19 @@ while(1)
 	cv::Mat red = Mred(takePhoto());
 	countArea(red);
 	int center = getCenter(red);
+	printf("%d\n",center);
 	if(LEFT_MAX<center<-CENTER_THRESHOLD)
 	{
 		motor_right(ROTATE_POWER);
 		delay(ROTATE_MILLISECONDS);
 	}
-	if(CENTER_THRESHOLD<center<RIGHT_MAX)
+	else if(CENTER_THRESHOLD<center<RIGHT_MAX)
 	{
 		motor_left(ROTATE_POWER);
 		delay(ROTATE_MILLISECONDS);
 	}
-	if(-CENTER_THRESHOLD<center<CENTER_THRESHOLD)
+	else
 	{
-		printf("hoge\n");
 		motor_forward(100);
 		delay(200);
 	}
