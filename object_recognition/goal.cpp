@@ -29,7 +29,7 @@ while(1)
 		motor_left(ROTATE_POWER);
 		delay(ROTATE_MILLISECONDS);
 	}
-	if(-CENTER_THRESHOLD<getCenter(red)<CENTER_THRESHOLD)
+	if(-CENTER_THRESHOLD<getCenter(red)<30)
 	{
 		motor_forward(100);
 		delay(200);
