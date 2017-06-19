@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <wiringPi.h>
 #include "camera.hpp"
 #include "../motor.h"
 
