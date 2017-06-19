@@ -1,4 +1,4 @@
-objs0 = goal.o camera.o motor.c
+objs0 = goal.o camera.o motor.o
 LIBS =-lwiringPi
 
 goal.out: $(objs0)
