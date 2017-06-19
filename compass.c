@@ -81,6 +81,13 @@ int compass_read(Cmps *compass_data)
 	return 0;
 }
 
+int compass_mode_change()
+{
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
+	printf("compass mode changed and returned");
+	return 0;
+}
 /*地磁気のキャリブレーション補正用のログを取るためにprintをコメントアウトしたもの*/
 int compass_read_scatter(Cmps *data)
 {

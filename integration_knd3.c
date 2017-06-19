@@ -13,10 +13,9 @@
 
 static const int TURN_POWER = 60;//turnするpower
 static const int TURN_MILLISECONDS = 100;//turnするmilliseconds
-static const int FORWARD_MILLISECONDS = 1000;//forwardするmilliseconds
-static const int STOP_MILLISECONDS = 3000;//地磁気安定のためにstopするmilliseconds
+static const int FORWARD_MILLISECONDS = 2000;//forwardするmilliseconds
+static const int STOP_MILLISECONDS = 2000;//地磁気安定のためにstopするmilliseconds
 static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
-static const int COMPASS_RING_LEN = 5;//compassのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
 static const double COMPASS_X_OFFSET = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
 static const double COMPASS_Y_OFFSET = 0.0;
@@ -53,18 +52,21 @@ int DistAngle_initialize(DistAngle *data)
 
 //地磁気の計測及びとそのオフセット値からマシンの向いている角度を計算
 
-int cal_compass_theta(DistAngle *data, Queue *compass_ring)
+int cal_compass_theta(DistAngle *data)
 {
 	compass_value_initialize(&compass_data);
 	print_compass(&compass_data);
 	double compass_x = 0;
 	double compass_y = 0;
-	compass_x = compass_data.x_value - COMPASS_X_OFFSET;
+	while(compass_data.x_value == -1.0 && compass_data.y_value == -1.0) 　//地磁気resister　error
+		{
+			handle_compass_error();
+			print_compass(&compass_data);
+		}
+		compass_x = compass_data.x_value - COMPASS_X_OFFSET;
 	compass_y = compass_data.y_value - COMPASS_Y_OFFSET;
-	data->angle_by_compass = calc_compass_angle(compass_x, compass_y);//偏角を調整
-	enqueue(compass_ring,data->angle_by_compass); //緯度を格納
+	data->angle_by_compass = calc_compass_angle(compass_x, compass_y);                //偏角を調整
 	printf("compass_degree = %f\n",data->angle_by_compass);
-
 	return 0;
 }
 
@@ -93,6 +95,14 @@ int handle_gps_zero(DistAngle *data)
 	printf("delta_angle:%f\n",data->delta_angle);
 	return 0;
 }
+int handle_compass_error() //地磁気-1対策
+{
+	compass_initialize();
+	printf("compass reinitialized");
+	compass_mode_change();
+	return 0;
+}
+
 //スタック判定をして抜け出す処理まで
 int stack(Queue *latring,Queue *lonring)
 {
@@ -174,6 +184,7 @@ int decide_route(DistAngle data,Queue *latring,Queue *lonring)
 
 int main()
 {
+	int i = 0;
 	time(&start_time);
 	signal(SIGINT, handler);
 	pwm_initializer();
@@ -182,8 +193,13 @@ int main()
 	DistAngle DistAngle_data;
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
-	Queue* compass_ring = make_queue(COMPASS_RING_LEN =)
-	                      DistAngle_initialize(&DistAngle_data);
-	while(decide_route(DistAngle_data,gps_latring,gps_lonring)!=-2) ;
+	DistAngle_initialize(&DistAngle_data);
+	while(decide_route(DistAngle_data,gps_latring,gps_lonring)!=-2)
+	{
+		for(i=0; i<20; i++)
+		{
+			if(i==0) compass_mode_change();
+		}
+	}
 	return 0;
 }
