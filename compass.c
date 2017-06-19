@@ -60,7 +60,7 @@ static short read_out(int file,int msb_reg, int lsb_reg)
 //NOTE　地磁気がロックされた時はmode_continuousの部分をsingleにしたり変えたりしたら治る?
 int compass_read(Cmps *compass_data)
 {
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuos);
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
 	if(WPI2CWReg8 == -1)
 	{
 		printf("Compass write error register mode_reg\n");
