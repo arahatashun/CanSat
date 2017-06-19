@@ -25,7 +25,7 @@ int main(void) {
 	//「HSV」は、色を色相(Hue)・彩度(Saturation)・明度(Value)
 	cv::inRange(hsv, cv::Scalar(HUE_MIN, 150, 0), cv::Scalar(HUE_MAX, 255, 255), hsv_filtered);
 	count = cv::countNonZero(hsv_filtered);//赤色部分の面積を計算
-	double Area = hsv.rows*hsv.cols;//全ピクセル数の計算
+	double Area = hsv_filtered.rows*hsv_filtered.cols;//全ピクセル数の計算
 	percentage = (count / Area)*100;//百分率で計算
 	printf("赤色の面積の割合は%f\n", percentage);
 }
