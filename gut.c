@@ -3,7 +3,7 @@
 #include "gut.h"
 
 static const int gut_pin = 10;
-static const int electric_on_time = 4000; //ms・4秒間
+static const int electric_on_time = 3000; //ms・3秒間
 
 int cut_initializer(){
 
@@ -29,7 +29,7 @@ int cut(){
 		digitalWrite(gut_pin,1);
 		delay(electric_on_time);
 		digitalWrite(gut_pin,0);
-		delay(10);
+		delay(100);
 	}
 	return 0;
 }
