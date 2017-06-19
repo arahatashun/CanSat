@@ -66,7 +66,7 @@ double getCenter(cv::Mat src)
 {
 	cv::Moments mu = cv::moments(src, false);//重心の計算結果をmuに代入
 	double mc = mu.m10 / mu.m00;//重心のx座標
-	double center = (mc - src.cols / 2) * 200 / dst.cols;//正規化
+	double center = (mc - src.cols / 2) * 200 / src.cols;//正規化
 	printf("重心の位置は%f\n",center);
 	return center;
 }
