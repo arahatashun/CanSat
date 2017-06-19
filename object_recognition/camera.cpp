@@ -8,6 +8,9 @@
 #pragma comment(lib,"opencv_world320.lib")
 
 static const int N = 256;//文字列の長さ
+//明度について
+static const int MAX_VALUE = 255;
+static const int NO_VALUE = 0;
 
 //写真をとってそのpathを返す
 char* takePhoto(void)
@@ -41,8 +44,8 @@ cv::Mat Mred(char* full_path)
 	cv::cvtColor(src, hsv, CV_BGR2HSV);//入力画像(src)をhsv色空間(dst)に変換
 	//inRange(入力画像,下界画像,上界画像,出力画像)
 	//「HSV」は、色を色相(Hue)・彩度(Saturation)・明度(Value)
-	cv::inRange(hsv, cv::Scalar(0, 150, 0), cv::Scalar(15, 255, 255), hsv_filtered15);
-	cv::inRange(hsv, cv::Scalar(160, 150, 0), cv::Scalar(180, 255, 255), hsv_filtered180);
+	cv::inRange(hsv, cv::Scalar(0, 150, NO_VALUE), cv::Scalar(15, 255, MAX_VALUE), hsv_filtered15);
+	cv::inRange(hsv, cv::Scalar(160, 150, NO_VALUE), cv::Scalar(180, 255, MAX_VALUE), hsv_filtered180);
 	cv::add(hsv_filtered15,hsv_filtered180,hsv);
 	return hsv;
 }
