@@ -19,7 +19,7 @@ while(1)
 {
 	cv::Mat red = Mred(takePhoto());
 	countArea(red);
-	int center = getCenter(red)
+	int center = getCenter(red);
 	if(LEFT_MAX<center<-CENTER_THRESHOLD)
 	{
 		motor_right(ROTATE_POWER);
