@@ -11,7 +11,7 @@ static const int PWM_RANGE = 100;
 static const int INITIAL_PWM_VAL = 0;
 static const int ZERO_PWM_VAL = 0;
 
-int pwm_initializer()
+int pwm_initialize()
 {
 	//wiring Pi initialize
 	if(wiringPiSetupGpio()!=0)

@@ -16,6 +16,7 @@ int main(void)
 {
 	cv::Mat red = Mred(takePhoto());
 	countArea(red);
+	pwm_initialize();
 while(1)
 {
 	if(LEFT_MAX<getCenter(red)<-CENTER_THRESHOLD)

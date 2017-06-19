@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-int pwm_initializer();
+int pwm_initialize();
 int motor_stop();
 int motor_forward(int);
 int motor_back(int);

@@ -15,7 +15,7 @@ void handler(int signum)
 int main()
 {
 	signal(SIGINT, handler);
-	pwm_initializer();
+	pwm_initialize();
 	motor_forward(60);
 	delay(5000);
 	motor_right(50);

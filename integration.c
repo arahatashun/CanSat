@@ -114,7 +114,7 @@ int decide_route(Queue* latring,Queue *lonring)
 int main()
 {
 	gps_init();
-	pwm_initializer();
+	pwm_initialize();
 	signal(SIGINT, handler);
 	Queue* gps_lat_ring = make_queue(GPS_RING_LEN);
 	Queue* gps_lon_ring = make_queue(GPS_RING_LEN);
