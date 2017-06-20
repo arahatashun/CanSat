@@ -172,7 +172,7 @@ int print_compass(Cmps *data)
 int handle_compass_error() //地磁気-1がきた時のせめてもの抵抗(本来mode changeはlock対策)
 {
 	compass_initialize();
-	printf("compass reinitialized");
+	printf("compass reinitialized\n");
 	compass_mode_change();
 	return 0;
 }
