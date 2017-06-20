@@ -95,7 +95,7 @@ int handle_gps_zero(DistAngle *data)
 	printf("delta_angle:%f\n",data->delta_angle);
 	return 0;
 }
-int handle_compass_error() //地磁気-1対策
+int handle_compass_error() //地磁気-1がきた時のせめてもの抵抗(本来mode changeはlock対策)
 {
 	compass_initialize();
 	printf("compass reinitialized");
