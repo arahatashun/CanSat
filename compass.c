@@ -130,7 +130,7 @@ static double get_compass_average(double *compass_list)
 	{
 		sum += compass_list[i];
 	}
-	return sum/8
+	return sum/8;
 }
 
 int compass_mean(Cmps *data)
