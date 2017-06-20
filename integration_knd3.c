@@ -182,7 +182,7 @@ int loop_for_goal(DistAngle data, Queue* gps_latring, Queue* gps_lonring) //地�
 	compass_mode_change();
 	for(i=0; i<20; i++)
 	{
-		if(decide_route(&data,gps_latring,gps_lonring) == -2) 　return -2;
+		if(decide_route(data,gps_latring,gps_lonring) == -2) return -2;
 	}
 	return 0;
 }
@@ -198,6 +198,6 @@ int main()
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
 	DistAngle_initialize(&DistAngle_data);
-	while(loop_for_goal(Queue* gps_latring, Queue* gps_lonring) != -2) ;
+	while(loop_for_goal(Distangle_data, gps_latring, gps_lonring) != -2) ;
 	return 0;
 }
