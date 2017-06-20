@@ -172,7 +172,7 @@ int decide_route(DistAngle data,Queue *latring,Queue *lonring)
 		printf("==========GOAL==========");
 		return -2;//ゴールに着いた
 	}
-	printf("\n"); //１つのシーケンスの終わり
+	printf("\n");  //１つのシーケンスの終わり
 	return 0;
 }
 
