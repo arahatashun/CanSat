@@ -183,7 +183,7 @@ int main()
 {
 	time(&start_time);
 	signal(SIGINT, handler);
-	pwm_initializer();
+	pwm_initialize();
 	gps_init();
 	compass_initialize();
 	DistAngle DistAngle_data;
