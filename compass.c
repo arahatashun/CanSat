@@ -140,6 +140,7 @@ int compass_mean(Cmps *data)
 	double compass_ylist[10];
 	for(i=0; i<10; i++)
 	{
+		compass_mode_change();
 		compass_read_scatter(data);
 		compass_xlist[i] = data->x_value;
 		compass_ylist[i] = data->y_value;
