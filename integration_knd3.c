@@ -139,7 +139,6 @@ int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
 //goal判定で-2を返してそれ以外は0
 int decide_route(DistAngle data,Queue *latring,Queue *lonring)
 {
-	compass_mode_change();
 	update_angle(&data,latring,lonring);
 	if(data.dist2goal>GOAL_THRESHOLD)
 	{
@@ -174,17 +173,6 @@ int decide_route(DistAngle data,Queue *latring,Queue *lonring)
 		return -2;//ゴールに着いた
 	}
 	printf("\n");  //１つのシーケンスの終わり
-	return 0;
-}
-
-int loop_for_goal(DistAngle data, Queue* gps_latring, Queue* gps_lonring) //地磁気のmode_changeをシーケンス20回ごとに行わせる
-{
-	int i = 0;
-
-	for(i=0; i<20; i++)
-	{
-		if(decide_route(data,gps_latring,gps_lonring) == -2) return -2;
-	}
 	return 0;
 }
 
