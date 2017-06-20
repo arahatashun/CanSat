@@ -144,6 +144,8 @@ int compass_mean(Cmps *data)
 		compass_read_scatter(data);
 		compass_xlist[i] = data->x_value;
 		compass_ylist[i] = data->y_value;
+		printf("%d x = %f\n", i, data->x_value);
+		printf("%d y = %f\n", i, data->y_value);
 	}
 	compass_sort(compass_xlist);
 	compass_sort(compass_ylist);
