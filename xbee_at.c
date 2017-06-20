@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include "xbee_at.h"
 
-int usb_filestream = -1;
+static int usb_filestream = -1;
 
 void usb_init(void)
 {
