@@ -57,7 +57,7 @@ static short read_out(int file,int msb_reg, int lsb_reg)
 	return i;
 }
 
-//NOTE　地磁気がロックされた時はmode_continuousの部分をsingleにしたり変えたりしたら治る?
+//通常のcompass読み取り関数 error時のみ表示するようにした
 int compass_read(Cmps *compass_data)
 {
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
@@ -67,10 +67,6 @@ int compass_read(Cmps *compass_data)
 		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
 		errno = -WPI2CWReg8;
 		printf("errno=%d: %s\n", errno, strerror(errno));
-	}
-	else
-	{
-		printf("Compass write register:mode_reg\n");
 	}
 	/*uint8_t status_val = wiringPiI2CReadReg8(fd, 0x09);  とりあえずコメントアウトしておきます
 	   printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01); //地磁気が正常ならここは1(死んでも1?)
@@ -103,6 +99,7 @@ int compass_read_scatter(Cmps *data)
 	return 0;
 }
 
+//10個の配列の中の数値を昇順にsort
 static int compass_sort(double *compass_list)
 {
 	int i,j;
@@ -122,6 +119,7 @@ static int compass_sort(double *compass_list)
 	return 0;
 }
 
+//10個の配列の値のうちmaxとmin(左端と右端)以外の8つの平均値を計算
 static double get_compass_average(double *compass_list)
 {
 	int i;
@@ -133,6 +131,7 @@ static double get_compass_average(double *compass_list)
 	return sum/8;
 }
 
+//Cmps構造体に地磁気データ10個中左端右端の2個以外の８個の平均を格納
 int compass_mean(Cmps *data)
 {
 	int i;
@@ -141,21 +140,18 @@ int compass_mean(Cmps *data)
 	for(i=0; i<10; i++)
 	{
 		compass_mode_change();
-		compass_read_scatter(data);
+		compass_read(data);
 		compass_xlist[i] = data->x_value;
 		compass_ylist[i] = data->y_value;
-		printf("%d x = %f\n", i, data->x_value);
-		printf("%d y = %f\n", i, data->y_value);
 	}
 	compass_sort(compass_xlist);
 	compass_sort(compass_ylist);
 	data->x_value = get_compass_average(compass_xlist);
 	data->y_value = get_compass_average(compass_ylist);
-	printf("meanx = %f\n",data->x_value);
-	printf("meany = %f\n",data->y_value);
 	return 0;
 }
 
+//地磁気ロック対策のmode_change関数
 int compass_mode_change()
 {
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
@@ -173,7 +169,8 @@ int print_compass(Cmps *data)
 	return 0;
 }
 
-int handle_compass_error() //地磁気-1がきた時のせめてもの抵抗(本来mode changeはlock対策)
+//地磁気-1がきた時のせめてもの抵抗(本来mode changeはlock対策)
+int handle_compass_error()
 {
 	compass_initialize();
 	printf("compass reinitialized\n");

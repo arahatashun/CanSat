@@ -101,8 +101,8 @@ int handle_gps_zero(DistAngle *data)
 int stack(Queue *latring,Queue *lonring)
 {
 	double delta_movement = 0;
-	delta_movement = fabs(latring->buff[latring->rear-1]-dequeue(latring)) +
-	                 fabs(lonring->buff[lonring->rear-1]-dequeue(lonring));
+	delta_movement = fabs(getLast(latring)-dequeue(latring)) +
+	                 fabs(getLast(lonring)-dequeue(lonring));
 	printf("delta_movement = %f\n", delta_movement);
 	if(delta_movement<STACK_THRESHOLD)
 	{
