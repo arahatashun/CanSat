@@ -16,6 +16,8 @@ int queue_length(Queue *que);
 
 int is_full(Queue *que);
 
+double getLast(Queue *que);
+
 int enqueue(Queue *que, double x);
 
 double dequeue(Queue *que);
