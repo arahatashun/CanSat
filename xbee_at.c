@@ -10,6 +10,8 @@
 #include <unistd.h>
 #include "xbee_at.h"
 
+//NOTE CoodinatorがPC
+//NOTE Routerがraspberry pi
 static int usb_filestream = -1;
 
 void usb_init(void)
@@ -89,5 +91,6 @@ int main()
     char s[] = "fuck";
     double a = 100;
     xbeePrintf("%s%f",s,a);
+    sleep(1);
   }
 }
