@@ -63,6 +63,7 @@ int cal_compass_theta(DistAngle *data)
 	while(compass_data.x_value == -1.0 && compass_data.y_value == -1.0) //地磁気resister　error
 	{
 		handle_compass_error();
+		delay(1000);
 		print_compass(&compass_data);
 	}
 	compass_x = compass_data.x_value - COMPASS_X_OFFSET;
