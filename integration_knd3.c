@@ -55,7 +55,7 @@ int DistAngle_initialize(DistAngle *data)
 int cal_compass_theta(DistAngle *data)
 {
 	compass_value_initialize(&compass_data);
-	print_compass(&compass_data);
+	compass_mean(&compass_data);
 	double compass_x = 0;
 	double compass_y = 0;
 	while(compass_data.x_value == -1.0 && compass_data.y_value == -1.0) 　//地磁気resister　error
