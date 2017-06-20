@@ -151,6 +151,8 @@ int compass_mean(Cmps *data)
 	compass_sort(compass_ylist);
 	data->x_value = get_compass_average(compass_xlist);
 	data->y_value = get_compass_average(compass_ylist);
+	printf("meanx = %f\n",data->x_value);
+	printf("meany = %f\n",data->y_value);
 	return 0;
 }
 
