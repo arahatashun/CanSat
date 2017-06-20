@@ -89,6 +89,5 @@ int main()
     char s[] = "fuck";
     double a = 100;
     xbeePrintf("%s%f",s,a);
-    sleep(3);
   }
 }
