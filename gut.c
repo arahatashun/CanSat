@@ -3,11 +3,8 @@
 #include "gut.h"
 
 static const int gut_pin = 10;
-<<<<<<< HEAD
 static const int electric_on_time = 3000; //ms・3秒間
-=======
-static const int electric_on_time = 3000; //ms・4秒間
->>>>>>> origin/compass4
+
 
 int cut_initializer(){
 
@@ -33,11 +30,7 @@ int cut(){
 		digitalWrite(gut_pin,1);
 		delay(electric_on_time);
 		digitalWrite(gut_pin,0);
-<<<<<<< HEAD
-		delay(100);
-=======
 		delay(1000);
->>>>>>> origin/compass4
 	}
 	return 0;
 }
