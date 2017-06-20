@@ -19,6 +19,7 @@ typedef struct cmps {
 
 int compass_read(Cmps *cdata);
 int compass_read_scatter(Cmps *data);
+int compass_mean(Cmps *data);
 int print_compass(Cmps *data);
 int compass_initialize();
 int compass_mode_change();
