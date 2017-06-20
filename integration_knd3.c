@@ -59,12 +59,12 @@ int cal_compass_theta(DistAngle *data)
 	compass_mean(&compass_data);
 	double compass_x = 0;
 	double compass_y = 0;
-	while(compass_data.x_value == -1.0 && compass_data.y_value == -1.0) 　//地磁気resister　error
-		{
-			handle_compass_error();
-			print_compass(&compass_data);
-		}
-		compass_x = compass_data.x_value - COMPASS_X_OFFSET;
+	while(compass_data.x_value == -1.0 && compass_data.y_value == -1.0) //地磁気resister　error
+	{
+		handle_compass_error();
+		print_compass(&compass_data);
+	}
+	compass_x = compass_data.x_value - COMPASS_X_OFFSET;
 	compass_y = compass_data.y_value - COMPASS_Y_OFFSET;
 	data->angle_by_compass = calc_compass_angle(compass_x, compass_y);                //偏角を調整
 	printf("compass_degree = %f\n",data->angle_by_compass);

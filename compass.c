@@ -169,6 +169,14 @@ int print_compass(Cmps *data)
 	return 0;
 }
 
+int handle_compass_error() //地磁気-1がきた時のせめてもの抵抗(本来mode changeはlock対策)
+{
+	compass_initialize();
+	printf("compass reinitialized");
+	compass_mode_change();
+	return 0;
+}
+
 int compass_value_initialize(Cmps *compass_init)
 {
 	compass_init->x_value = 0;
