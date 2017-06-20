@@ -54,7 +54,7 @@ int DistAngle_initialize(DistAngle *data)
 
 int cal_compass_theta(DistAngle *data)
 {
-	Cmps compass_data;
+	Cmps *ompass_data;
 	compass_value_initialize(&compass_data);
 	compass_mean(&compass_data);
 	double compass_x = 0;
