@@ -96,13 +96,6 @@ int handle_gps_zero(DistAngle *data)
 	printf("delta_angle:%f\n",data->delta_angle);
 	return 0;
 }
-int handle_compass_error() //地磁気-1がきた時のせめてもの抵抗(本来mode changeはlock対策)
-{
-	compass_initialize();
-	printf("compass reinitialized");
-	compass_mode_change();
-	return 0;
-}
 
 //スタック判定をして抜け出す処理まで
 int stack(Queue *latring,Queue *lonring)
@@ -183,13 +176,13 @@ int decide_route(DistAngle data,Queue *latring,Queue *lonring)
 	return 0;
 }
 
-int loop_for_goal(Queue* gps_latring, Queue* gps_lonring) //地磁気のmode_changeをシーケンス20回ごとに行わせる
+int loop_for_goal(DistAngle data, Queue* gps_latring, Queue* gps_lonring) //地磁気のmode_changeをシーケンス20回ごとに行わせる
 {
 	int i = 0;
 	compass_mode_change();
-	for(i=0; i<20; ++)
+	for(i=0; i<20; i++)
 	{
-		if(decide_route(DistAngle_data,gps_latring,gps_lonring) == -2) 　return -2;
+		if(decide_route(&data,gps_latring,gps_lonring) == -2) 　return -2;
 	}
 	return 0;
 }

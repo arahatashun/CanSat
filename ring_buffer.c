@@ -37,6 +37,12 @@ int is_full(Queue *que)
 	//trueならば1を返す
 }
 
+//Queueの最後に追加した値を返すだけ
+double getLast(Queue *que)
+{
+	return que->buff[que->rear-1];
+}
+
 //queueに追加
 int enqueue(Queue *que, double x)
 {
