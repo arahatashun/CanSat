@@ -184,6 +184,7 @@ int decide_route(DistAngle data,Queue *latring,Queue *lonring)
 
 int loop_for_goal() //地磁気のmode_changeをシーケンス20回ごとに行わせる
 {
+	int i = 0;
 	compass_mode_change();
 	for(i=0; i<20; ++)
 	{
@@ -194,7 +195,6 @@ int loop_for_goal() //地磁気のmode_changeをシーケンス20回ごとに行
 
 int main()
 {
-	int i = 0;
 	time(&start_time);
 	signal(SIGINT, handler);
 	pwm_initializer();
