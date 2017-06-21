@@ -39,6 +39,8 @@ while(1)
 	else
 	{
 		motor_forward(100);
+		delay(1000);
+		motor_stop();
 	}
  }
 return 0;
