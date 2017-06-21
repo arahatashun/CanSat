@@ -22,7 +22,7 @@ int main(void)
 	{
 		cv::Mat red = Mred(takePhoto());
 		double count = countArea(red);
-		if(count < 0.09)
+		if(count < 0.05)
 		{
 			//回転するだけ
 			motor_right(100);
