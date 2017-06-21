@@ -24,36 +24,19 @@ int main(void)
 		double count = countArea(red);
 		if(count < 0.09)
 		{
-			motor_right(50);
-			delay(100);
+			//回転するだけ
+			motor_right(100);
+			delay(20);
 			motor_stop();
 			delay(10)
 		}
 		else
 		{
-			int center = getCenter(red);
-			printf("%d\n",center);
-			if(LEFT_MAX<center && center<-CENTER_THRESHOLD)
-			{
-				motor_right(ROTATE_POWER);
-				delay(ROTATE_MILLISECONDS);
-				motor_stop();
-				delay(10);
-			}
-			if(CENTER_THRESHOLD<center && center<RIGHT_MAX)
-			{
-				motor_left(ROTATE_POWER);
-				delay(ROTATE_MILLISECONDS);
-				motor_stop();
-				delay(10);
-			}
-			else
-			{
-				motor_forward(100);
-				delay(1000);
-				motor_stop();
-				delay(10);
-			}
+			//見つけれたら全身
+			motor_forward(100);
+			delay(200);
+			motor_stop();
+			delay(10);
 		}
 	}
 	return 0;
