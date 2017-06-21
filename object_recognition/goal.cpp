@@ -41,6 +41,7 @@ while(1)
 		motor_forward(100);
 		delay(1000);
 		motor_stop();
+		delay(10);
 	}
  }
 return 0;
