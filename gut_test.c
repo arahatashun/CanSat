@@ -7,7 +7,7 @@
 
 void gutHandler(int signum)
 {
-	cutInterupt(void);
+	cutInterupt();
 	delay(100);
 	exit(1);
 }
