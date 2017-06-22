@@ -1,6 +1,8 @@
 #include <wiringPi.h>
 #include <stdio.h>
 #include <signal.h>
+#include <stdlib.h>
+
 #include "gut.h"
 
 void gutHandler(int signum)
