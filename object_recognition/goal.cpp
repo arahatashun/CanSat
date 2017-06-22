@@ -12,7 +12,7 @@ static const int ROTATE_MILLISECONDS = 200;
 static const int LEFT_MAX = -100;
 static const int RIGHT_MAX = 100;
 static const int CENTER_THRESHOLD = 30;//-30~30で直進するようにする
-static const double THRESHOLD_PRECENTAGE = 0.09//ゴール存在判定
+static const double THRESHOLD_PRECENTAGE = 0.09;//ゴール存在判定
 
 //TODO turn millisecondどんどん大きくしていくPI制御にする
 int main(void)
