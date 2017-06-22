@@ -1,7 +1,8 @@
 #ifdef GUT_H
 #define GUT_H
 
-int cut_initializer();
+int cut_initialize();
+int cutInterupt(void)
 int cut();
 
 #endif

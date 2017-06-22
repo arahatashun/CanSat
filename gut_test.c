@@ -1,10 +1,20 @@
 #include <wiringPi.h>
-#include "gut.h"
 #include <stdio.h>
+#include <signal.h>
+#include "gut.h"
+
+void gutHandler(int signum)
+{
+	cutInterupt(void);
+	delay(100);
+	exit(1);
+}
+
 
 int main()
 {
-	cut_initializer();
+	signal(SIGINT, gutHandler);
+	cut_initialize();
 	cut();
 	return 0;
 }
