@@ -8,6 +8,7 @@
 #pragma comment(lib,"opencv_world320.lib")
 
 static const int N = 256;//文字列の長さ
+static const int FOV = 62.2 //FIELD OF VIEW
 //明度について
 static const int MAX_VALUE = 255;//明るさ最大
 static const int NO_VALUE = 0;//明るさ最小
@@ -63,12 +64,12 @@ double countArea(cv::Mat src)
 	return percentage;
 }
 
-//二値化画像のcenterを-100から100で返す
+//二値化画像のcenterを角度で返す
 double getCenter(cv::Mat src)
 {
 	cv::Moments mu = cv::moments(src, false);//重心の計算結果をmuに代入
 	double mc = mu.m10 / mu.m00;//重心のx座標
-	double center = (mc - src.cols / 2) * 200 / src.cols;//正規化
+	double center = (mc - src.cols / 2) * FOV / src.cols;//正規化
 	printf("重心の位置は%f\n",center);
 	return center;
 }
