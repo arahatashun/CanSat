@@ -28,7 +28,7 @@ int main(void)
 			motor_right(100);
 			delay(20);
 			motor_stop();
-			delay(10)
+			delay(10);
 		}
 		else
 		{
