@@ -84,9 +84,9 @@ int readAccl(Accl*data)
 	short acclY = 0;
 	short acclZ = 0;
 
-	acclX = read_word_2c(ACCLX_REG);
-	acclY = read_word_2c(ACCLY_REG);
-	acclZ = read_word_2c(ACCLZ_REG);
+	acclX = read_out(ACCLX_REG);
+	acclY = read_out(ACCLY_REG);
+	acclZ = read_out(ACCLZ_REG);
 
 	data->acclX_scaled = acclX / CONVERT2G;
 	data->acclY_scaled = acclY / CONVERT2G;
