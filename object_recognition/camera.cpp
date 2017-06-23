@@ -8,7 +8,7 @@
 #pragma comment(lib,"opencv_world320.lib")
 
 static const int N = 256;//文字列の長さ
-static const int AOV = 62.2 //ANGLE OF VIEW
+static const int AOV = 62.2;//ANGLE OF VIEW
 //明度について
 static const int MAX_VALUE = 255;//明るさ最大
 static const int NO_VALUE = 0;//明るさ最小
