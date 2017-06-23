@@ -121,7 +121,7 @@ double cal_roll(Accl* data)
 //ピッチ角を計算
 double cal_pitch(Accl* data)
 {
-	double phi = cal_roll(data)
+	double phi = cal_roll(data);
 	double psi = atan2(-data->acclX_scaledx,
 										data->acclY_scaled*sin(phi)+data->acclZ_scaled*cos(phi));
 	return psi;
