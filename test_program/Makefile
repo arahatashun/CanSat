@@ -14,3 +14,6 @@ gyro:
 
 xbee:
 	gcc -o xbee.out xbee_test.c ../xbee_at.c  $(LIBS) -lgps
+
+gps:
+	gcc -o gps.out gps_test.c $(LIBS) -lgps
