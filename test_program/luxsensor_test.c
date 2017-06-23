@@ -1,6 +1,6 @@
 #include <wiringPi.h>
 #include <stdio.h>
-#include "luxsensor.h"
+#include "../luxsensor.h"
 
 int main()
 {

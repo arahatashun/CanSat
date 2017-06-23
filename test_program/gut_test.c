@@ -3,7 +3,7 @@
 #include <signal.h>
 #include <stdlib.h>
 
-#include "gut.h"
+#include "../gut.h"
 
 void gutHandler(int signum)
 {

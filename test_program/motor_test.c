@@ -1,7 +1,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <wiringPi.h>
-#include "motor.h"
+#include "../motor.h"
 
 void handler(int signum)
 {

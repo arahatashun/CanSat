@@ -7,10 +7,9 @@
 #define XBEE_PORTNAME "/dev/ttyUSB0"
 #endif
 
-void usb_init(void);
-void usb_config(void);
+void xbee_init(void);
 void xbeePrintf (const char *message, ...);
-void usb_readln(char *, int);
-void usb_close(void);
+void xbee_readln(char *, int);
+void xbee_close(void);
 
 #endif

@@ -14,7 +14,7 @@
 //NOTE Routerがraspberry pi
 static int usb_filestream = -1;
 
-void usb_init(void)
+static void usb_init(void)
 {
     usb_filestream = open(XBEE_PORTNAME, O_RDWR | O_NOCTTY | O_NDELAY);
 
@@ -24,7 +24,7 @@ void usb_init(void)
     }
 }
 
-void usb_config(void)
+static void usb_config(void)
 {
     struct termios options;
     tcgetattr(usb_filestream, &options);
@@ -36,7 +36,13 @@ void usb_config(void)
     tcsetattr(usb_filestream, TCSANOW, &options);
   }
 
-void usbPuts (const char *s)
+void xbee_init(void)
+{
+  	usb_init();
+  	usb_config();
+}
+
+static void usbPuts (const char *s)
 {
   write (usb_filestream, s, strlen (s));
 }
@@ -56,7 +62,7 @@ void xbeePrintf (const char *message, ...)
 
 // Read a line from USB.
 // Return a 0 len string in case of problems with USB
-void usb_readln(char *buffer, int len)
+void xbee_readln(char *buffer, int len)
 {
     char c;
     char *b = buffer;
@@ -77,20 +83,7 @@ void usb_readln(char *buffer, int len)
     }
 }
 
-void usb_close(void)
+void xbee_close(void)
 {
     close(usb_filestream);
-}
-
-int main()
-{
-  usb_init();
-  usb_config();
-  while (1)
-  {
-    char s[] = "fuck";
-    double a = 100;
-    xbeePrintf("%s%f",s,a);
-    sleep(1);
-  }
 }
