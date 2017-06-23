@@ -5,7 +5,7 @@
 
 int main(){
 	Accl accl_data;
-	Gyto gyro_data;
+	Gyro gyro_data;
 	acclgyro_initialize();
 	int now = 0;
 	int lastTime = millis();
