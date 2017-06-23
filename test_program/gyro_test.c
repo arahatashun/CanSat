@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <wiringPiI2C.h>
-#include "../acclgyro.h"
+#include "../acclGyro.h"
 
 int main(){
 	Accl accl_data;
