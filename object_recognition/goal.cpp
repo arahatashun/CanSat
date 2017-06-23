@@ -26,7 +26,7 @@ int main(void)
 		{
 			//回転するだけ
 			motor_right(ROTATE_POWER);
-			delay(ROTATE_MILLISECONDS;
+			delay(ROTATE_MILLISECONDS);
 			motor_stop();
 			delay(10);
 		}
