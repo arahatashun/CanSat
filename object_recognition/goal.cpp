@@ -12,7 +12,7 @@ static const int ROTATE_MILLISECONDS = 200;
 static const int LEFT_MAX = -100;
 static const int RIGHT_MAX = 100;
 static const int CENTER_THRESHOLD = 30;//-30~30で直進するようにする
-static const double THRESHOLD_PRECENTAGE = 0.09;//ゴール存在判定
+static const double EXIST_THRESHOLD = 0.05;//ゴール存在判定 パーセンテージ
 
 //TODO turn millisecondどんどん大きくしていくPI制御にする
 int main(void)
@@ -22,17 +22,17 @@ int main(void)
 	{
 		cv::Mat red = Mred(takePhoto());
 		double count = countArea(red);
-		if(count < 0.05)
+		if(count < EXIST_THRESHOLD)
 		{
 			//回転するだけ
-			motor_right(100);
-			delay(20);
+			motor_right(ROTATE_POWER);
+			delay(ROTATE_MILLISECONDS;
 			motor_stop();
 			delay(10);
 		}
 		else
 		{
-			//見つけれたら全身
+			//見つけれたら前進
 			motor_forward(100);
 			delay(200);
 			motor_stop();
