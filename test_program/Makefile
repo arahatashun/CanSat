@@ -10,7 +10,7 @@ lux:
 	gcc -o lux.out luxsensor_test.c ../luxsensor.c $(LIBS)
 
 gyro:
-	gcc -o gyro.out gyro_test.c ../acclGyro.c $(LIBS)
+	gcc -o gyro.out gyro_test.c ../acclgyro.c $(LIBS)
 
 xbee:
 	gcc -o xbee.out xbee_test.c ../xbee_at.c  $(LIBS) -lgps

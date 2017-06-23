@@ -3,7 +3,7 @@
 #include <errno.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
-#include "acclGyro.h"
+#include "acclgyro.h"
 
 static const int MPU6050_ADDRESS = 0x68;
 static const int POWER_MANAGEMENT_REG = 0x6B;//manual p40
