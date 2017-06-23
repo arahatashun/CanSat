@@ -1,4 +1,3 @@
-#include "compass.h"
 #include <stdio.h>
 #include <math.h>
 #include <gps.h>
