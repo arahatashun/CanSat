@@ -12,6 +12,7 @@ static const int AOV = 62.2 //ANGLE OF VIEW
 //明度について
 static const int MAX_VALUE = 255;//明るさ最大
 static const int NO_VALUE = 0;//明るさ最小
+static const int REMOVE_COUNT = 10;//ノイズ除去のための縮小及び膨張の回数
 
 //写真をとってそのpathを返す
 char* takePhoto(void)
@@ -35,6 +36,14 @@ char* takePhoto(void)
 	return full_path;
 }
 
+//ノイズ除去
+cv::Mat rmNoize(cv::Mat src)
+{
+	cv::erode(src,src,cv::Mat(),cv::Point(-1, -1),REMOVE_COUNT);//縮小処理
+	cv::dilate(src,src,cv::Mat(),cv::Point(-1, -1),REMOVE_COUNT);//膨張処理
+	return src;
+}
+
 //入力画像を赤色に二値化
 cv::Mat Mred(char* full_path)
 {
@@ -48,6 +57,7 @@ cv::Mat Mred(char* full_path)
 	cv::inRange(hsv, cv::Scalar(0, 95, NO_VALUE), cv::Scalar(13, 255, MAX_VALUE), hsv_filtered15);
 	cv::inRange(hsv, cv::Scalar(170, 95, NO_VALUE), cv::Scalar(180, 255, MAX_VALUE), hsv_filtered180);
 	cv::add(hsv_filtered15,hsv_filtered180,hsv);
+	rmNoize(hsv);
 	return hsv;
 }
 
