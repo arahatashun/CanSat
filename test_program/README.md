@@ -29,7 +29,7 @@ $ cd cansat
 $ cd test_program
 ```
 
-##注意
+## 注意
 
 makeを実行して
 ```shell
