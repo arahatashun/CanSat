@@ -6,7 +6,7 @@
 int main(){
 	Accl accl_data;
 	Gyro gyro_data;
-	acclgyro_initialize();
+	acclGyro_initialize();
 	int now = 0;
 	int lastTime = millis();
 	double delat_theta = 0;
