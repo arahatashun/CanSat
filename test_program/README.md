@@ -20,3 +20,19 @@ $ sudo ./センサ名.out(e.g. sudo ./xbee.out)
 |ジャイロセンサ|make gyro|sudo ./gyro.out|
 |XBEE|make xbee|sudo ./xbee.out|
 |GPS|make gps|sudo ./gps.out|
+
+## ssh接続してからの手順
+
+```shell
+$ ssh pi@raspberrypi.local
+$ cd cansat
+$ cd test_program
+```
+
+##注意
+
+makeを実行して
+```shell
+make: `センサー名' is up to date.
+```
+となった時はすでに実行ファイルがあると思うのでsudo ./センサー名としてください。
