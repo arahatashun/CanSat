@@ -13,10 +13,10 @@ int main()
 	double theta_degree = 0;
 	Accl acclgyro_data;
 	Cmps compass_data;
-	acclgyro_initializer();
+	acclGyro_initialize();
+	compass_initialize();
 	while(1)
 	{
-		compass_initialize();
 		readAccl(&acclgyro_data);
 		compass_read(&compass_data);
 		print_compass(&compass_data);
