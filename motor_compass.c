@@ -45,6 +45,7 @@ int main()
 	while(1)
 	{
 		motor_forward(100);
+		print_compass(&compass_data);
 		cal_compass_theta();
 		delay(1000);
 		motor_stop();
