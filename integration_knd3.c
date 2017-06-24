@@ -62,10 +62,11 @@ int cal_compass_theta(DistAngle *data)
 	//NOTE ここは地磁気が抜けていると無限ループに入りかねないのでそのうちGPS制御に移りたい
 	while(compass_data.x_value == -1.0 && compass_data.y_value == -1.0) //地磁気resister　error
 	{
-		handle_compass_error();
-		delay(1000);
-		compass_mean(&compass_data);
-		printf("\n");
+		handle_compass_error_two(&compass_data);
+	}
+	while(compass_data.x_value == -4096.0 || compass_data.y_value == -4096.0)//周囲に強磁場がある
+	{
+		handle_compass_error_three(&compass_data);
 	}
 	compass_x = compass_data.x_value - COMPASS_X_OFFSET;
 	compass_y = compass_data.y_value - COMPASS_Y_OFFSET;
@@ -149,7 +150,7 @@ int decide_route(DistAngle data,Queue *latring,Queue *lonring)
 		if(-180 <= data.delta_angle && data.delta_angle <= -10)
 		{
 			//ゴールの方角がマシンから見て左に30~180度の場合は左回転
-			int turn_power_pid = cnst*data.delta_angle/180*100;
+			int turn_power_pid = (int)(cnst*data.delta_angle/180*100);
 			motor_rotate(turn_power_pid);
 			delay(TURN_MILLISECONDS);
 			motor_stop();
@@ -158,7 +159,7 @@ int decide_route(DistAngle data,Queue *latring,Queue *lonring)
 		else if(10 <= data.delta_angle && data.delta_angle <= 180)
 		{
 			//ゴールの方角がマシンから見て右に30~180度の場合は右回転
-			int turn_power_pid = cnst*data.delta_angle/180*100;
+			int turn_power_pid = (int)(cnst*data.delta_angle/180*100);
 			motor_rotate(turn_power_pid);
 			delay(TURN_MILLISECONDS);
 			motor_stop();

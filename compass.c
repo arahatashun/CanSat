@@ -26,6 +26,8 @@ static int WPI2CWReg8 = 0;
 static const int turn_calib_power = 25;   //地磁気補正時turnするpower
 static const int turn_calib_milliseconds = 75;   //地磁気補正時turnするmilliseconds
 
+static const int MAX_PWM_POWER = 100;
+static const int ESCAPE_TIME = 1000;
 int compass_initialize()
 {
 	//I2c setup
@@ -98,7 +100,7 @@ int compass_read_scatter(Cmps *data)
 }
 
 //10個の配列の中の数値を昇順にsort
-static int compass_sort(double *compass_list)
+static int compass_sort(double *list)
 {
 	int i,j;
 	double tmp_value = 0;
@@ -106,11 +108,11 @@ static int compass_sort(double *compass_list)
 	{
 		for (j=i+1; j<10; j++)
 		{
-			if (compass_list[i] > compass_list[j])
+			if (list[i] > list[j])
 			{
-				tmp_value = compass_list[i];
-				compass_list[i] = compass_list[j];
-				compass_list[j] = tmp_value;
+				tmp_value = list[i];
+				list[i] = list[j];
+				list[j] = tmp_value;
 			}
 		}
 	}
@@ -149,14 +151,6 @@ int compass_mean(Cmps *data)
 	return 0;
 }
 
-//地磁気ロック対策のmode_change関数
-int compass_mode_change()
-{
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
-	return 0;
-}
-
 //NOTE printだけじゃなくて値の取得もしてる
 int print_compass(Cmps *data)
 {
@@ -164,6 +158,14 @@ int print_compass(Cmps *data)
 	printf("compassx = %f\n", data->x_value);
 	printf("compassy = %f\n", data->y_value);
 	printf("compassz = %f\n", data->z_value);
+	return 0;
+}
+
+//地磁気ロック対策のmode_change関数
+int compass_mode_change()
+{
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_single);
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,mode_reg,mode_continuous);
 	return 0;
 }
 
@@ -176,13 +178,30 @@ int handle_compass_error()
 	return 0;
 }
 
+int handle_compass_error_two(Cmps *data)//地磁気が-1になった時に使う
+{
+	handle_compass_error();
+	delay(1000);
+	compass_mean(data);
+	printf("\n");
+	return 0;
+}
+int handle_compass_error_three(Cmps *data)//地磁気が-4096になった時使う　モーター回して近くの磁場を一応避ける
+{
+	handle_compass_error();
+	motor_forward(MAX_PWM_VALUE);
+	delay(ESCAPE_TIME);
+	compass_mean(data);
+	printf("\n");
+	return 0;
+}
 int compass_value_initialize(Cmps *compass_init)
 {
 	compass_init->x_value = 0;
 	compass_init->y_value = 0;
 	compass_init->z_value = 0;
+	return 0;
 }
-
 
 //偏角を考慮を考慮して計算
 static double cal_deviated_angle(double theta_degree)
