@@ -23,7 +23,7 @@ int cut_initialize()
 	return 0;
 }
 
-//NOTE　HIGHとLOWは1と0に元から割り当てられてる
+//NOTE HIGHとLOWは1と0に元から割り当てられてる
 int cutInterupt(void)
 {
 	digitalWrite(FIRST_GUT_PIN,LOW);
