@@ -21,9 +21,9 @@ int main()
 	//Pid* pid = make_pid();
 	Pid pid;
 	pid_initialize(&pid);
-	pid -> Kp = 0.4;
-	pid -> Ki = 0.4;
-	pid -> setpoint = 0;
+	pid.Kp = 0.4;
+	pid.Ki = 0.4;
+	pid.setpoint = 0;
 	signal(SIGINT, handler);
 	Accl accl_data;
 	Gyro gyro_data;
@@ -40,7 +40,7 @@ int main()
 		delta_theta -= gyro_data.gyroZ_scaled*delta_time/1000;//convert2seconds
 		printf("%f\n",delta_theta);
 		lastTime = now;
-		pid -> input =  90 - delta_theta;
+		pid.input =  90 - delta_theta;
 		int pwm = compute_output(&pid);
 		printf("rotate power:%f\n",pwm);
 		motor_rotate(pwm);
