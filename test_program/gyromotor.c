@@ -21,8 +21,8 @@ int main()
 	//Pid* pid = make_pid();
 	Pid pid;
 	pid_initialize(&pid);
-	pid.Kp = 0.004;
-	pid.Ki = 0.000002;
+	pid.Kp = 0.4;
+	pid.Ki = 0.00002;
 	pid.Kd = 0;
 	pid.setpoint = 90;
 	signal(SIGINT, handler);
@@ -44,7 +44,7 @@ int main()
 		pid.input = delta_theta;
 		printf("pidinput %f\n",pid.input);
 		compute_output(&pid);
-		printf("pid integral%f\n",pid.integral);
+		printf("pid integral %f\n",pid.integral);
 		printf("rotate power:%d\n",pid.output);
 		motor_rotate(pid.output);
 	}
