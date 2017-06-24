@@ -24,7 +24,7 @@ int main()
 	pid.Kp = 0.4;
 	pid.Ki = 0.00002;
 	pid.Kd = 0;
-	pid.setpoint = 90;
+	pid.setpoint = 30;
 	signal(SIGINT, handler);
 	Accl accl_data;
 	Gyro gyro_data;
