@@ -11,7 +11,7 @@ int main()
 	double phi_rad = 0;
 	double psi_rad = 0;
 	double theta_degree = 0;
-	Acclgyro acclgyro_data;
+	Accl acclgyro_data;
 	Cmps compass_data;
 	acclgyro_initializer();
 	while(1)
