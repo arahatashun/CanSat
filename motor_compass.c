@@ -3,9 +3,18 @@
 #include "compass.h"
 #include "motor.h"
 #include "pid.h"
+#include <signal.h>
+#include <stdlib.h>
 
 static const double COMPASS_X_OFFSET = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
 static const double COMPASS_Y_OFFSET = 0.0;
+
+void handler(int signum)
+{
+	motor_stop();
+	delay(100);
+	exit(1);
+}
 
 int cal_compass_theta()
 {
@@ -30,6 +39,7 @@ int cal_compass_theta()
 
 int main()
 {
+	signal(SIGINT, handler);
 	pwm_initialize();
 	compass_initialize();
 	while(1)
