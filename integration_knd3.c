@@ -142,14 +142,14 @@ int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
 //goal判定で-2を返してそれ以外は0
 int decide_route(DistAngle data,Queue *latring,Queue *lonring)
 {
-	cnst = 1;
+	int cnst = 1;
 	update_angle(&data,latring,lonring);
 	if(data.dist2goal>GOAL_THRESHOLD)
 	{
 		if(-180 <= data.delta_angle && data.delta_angle <= -10)
 		{
 			//ゴールの方角がマシンから見て左に30~180度の場合は左回転
-			turn_power_pid = cnst*data.delta_angle/180*100;
+			int turn_power_pid = cnst*data.delta_angle/180*100;
 			motor_rotate(turn_power_pid);
 			delay(TURN_MILLISECONDS);
 			motor_stop();
