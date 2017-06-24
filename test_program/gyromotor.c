@@ -5,11 +5,23 @@
 #include "../motor.h"
 #include "../acclgyro.h"
 
+
+void handler(int signum)
+{
+	motor_stop();
+	delay(100);
+	exit(1);
+}
+
+
+
 int main()
 {
+	signal(SIGINT, handler);
 	Accl accl_data;
 	Gyro gyro_data;
 	acclGyro_initialize();
+	pwm_initialize();
 	int now = 0;
 	int lastTime = millis();
 	double delta_theta = 0;
