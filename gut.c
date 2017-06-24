@@ -48,7 +48,7 @@ static int cut(int gut_pin)
 	return 0;
 }
 
-int all_cut()
+int cut_all()
 {
 	printf("first cut start\n");
 	cut(FIRST_GUT_PIN);

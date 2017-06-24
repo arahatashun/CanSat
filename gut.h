@@ -3,6 +3,6 @@
 
 int cut_initialize();
 int cutInterupt(void);
-int all_cut();
+int cut_all();
 
 #endif
