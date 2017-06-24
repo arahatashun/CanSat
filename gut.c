@@ -37,7 +37,7 @@ int first_cut(){
 	for(i=0; i<2; i++)
 	{
 		//念のため二回流す
-		printf("%d\n", i);
+		printf("%d\n", i+1);
 		digitalWrite(first_gut_pin,1);
 		delay(electric_on_time);
 		digitalWrite(second_gut_pin,0);
@@ -54,7 +54,7 @@ int second_cut(){
 	for(i=0; i<2; i++)
 	{
 		//念のため二回流す
-		printf("%d\n", i);
+		printf("%d\n", i+1);
 		digitalWrite(second_gut_pin,1);
 		delay(electric_on_time);
 		digitalWrite(second_gut_pin,0);
