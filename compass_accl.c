@@ -17,7 +17,7 @@ int main()
 	while(1)
 	{
 		compass_initialize();
-		accl_and_rotation_read(&acclgyro_data);
+		readAccl(&acclgyro_data);
 		compass_read(&compass_data);
 		print_compass(&compass_data);
 		phi_rad = cal_roll(acclgyro_data.acclY_scaled, acclgyro_data.acclZ_scaled);
