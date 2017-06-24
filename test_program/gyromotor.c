@@ -18,8 +18,9 @@ void handler(int signum)
 
 int main()
 {
-	Pid* pid = make_pid();
-	pid_initialize(pid);
+	//Pid* pid = make_pid();
+	Pid pid;
+	pid_initialize(&pid);
 	pid -> Kp = 0.4;
 	pid -> Ki = 0.4;
 	pid -> setpoint = 0;
@@ -40,7 +41,7 @@ int main()
 		printf("%f\n",delta_theta);
 		lastTime = now;
 		pid -> input =  90 - delta_theta;
-		int pwm = compute_output(pid);
+		int pwm = compute_output(&pid);
 		printf("rotate power:%f\n",pwm);
 		motor_rotate(pwm);
 	}
