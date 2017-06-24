@@ -10,6 +10,7 @@ static const int RIGHT_MOTOR2 = 17;//GPIO17
 static const int PWM_RANGE = 100;
 static const int INITIAL_PWM_VAL = 0;
 static const int ZERO_PWM_VAL = 0;
+static const int SLALOM_RATIO =2;
 
 int pwm_initialize()
 {
@@ -98,6 +99,16 @@ int motor_rotate(int pwm_value)
 	}
 	return 0;
 }
+
+int slalomLeft(int pwm_value)
+{
+	printf("SLALOM MOTOR left\n");
+	softPwmWrite(RIGHT_MOTOR1,pwm_value);
+	softPwmWrite(RIGHT_MOTOR2,ZERO_PWM_VAL);
+	softPwmWrite(LEFT_MOTOR1,pwm_value/SLALOM_RATIO);
+	softPwmWrite(LEFT_MOTOR2,ZERO_PWM_VAL);
+}
+
 int motor_stack() //delayは適当
 {
 	printf("get stacked\n");
