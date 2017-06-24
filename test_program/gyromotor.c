@@ -1,6 +1,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <wiringPi.h>
+#include <stdio.h>
 #include "../motor.h"
 #include "../acclgyro.h"
 
