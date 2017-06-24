@@ -6,8 +6,8 @@
 #include <signal.h>
 #include <stdlib.h>
 
-static const double COMPASS_X_OFFSET = -116.5; //ここに手動でキャリブレーションしたoffset値を代入
-static const double COMPASS_Y_OFFSET = -208.5;
+static const double COMPASS_X_OFFSET = -83.500000; //ここに手動でキャリブレーションしたoffset値を代入
+static const double COMPASS_Y_OFFSET = -418.500000;
 
 void handler(int signum)
 {
