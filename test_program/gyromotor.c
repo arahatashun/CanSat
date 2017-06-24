@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <wiringPi.h>
 #include "../motor.h"
+#include "../acclgyro.h"
 
 int main()
 {
