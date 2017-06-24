@@ -2,7 +2,7 @@
 #define GUT_H
 
 int cut_initialize();
-int cutInterupt(void)
-int cut();
+int cutInterupt(void);
+int cut_all();
 
 #endif

@@ -10,7 +10,11 @@ static const int RIGHT_MOTOR2 = 17;//GPIO17
 static const int PWM_RANGE = 100;
 static const int INITIAL_PWM_VAL = 0;
 static const int ZERO_PWM_VAL = 0;
+<<<<<<< HEAD
 static const int SLALOM_RATIO =2;
+=======
+static const int MAX_PWM_VAL = 100;
+>>>>>>> pid
 
 int pwm_initialize()
 {
@@ -101,6 +105,7 @@ int motor_rotate(int pwm_value)
 	return 0;
 }
 
+<<<<<<< HEAD
 int motor_slalomL(int pwm_value)
 {
 	printf("SLALOM MOTOR left\n");
@@ -111,6 +116,30 @@ int motor_slalomL(int pwm_value)
 }
 
 int motor_escape() //delayは適当
+=======
+int motor_slalom(int delta_pwm)
+{
+	if(delta_pwm>=0)
+	{
+		//右に曲がる
+		softPwmWrite(RIGHT_MOTOR1,MAX_PWM_VAL-delta_pwm);
+		softPwmWrite(RIGHT_MOTOR2,ZERO_PWM_VAL);
+		softPwmWrite(LEFT_MOTOR1,MAX_PWM_VAL);
+		softPwmWrite(LEFT_MOTOR2,ZERO_PWM_VAL);
+	}
+	else if(delta_pwm<0)
+	{
+		//左に曲がる
+		softPwmWrite(RIGHT_MOTOR1,MAX_PWM_VAL);
+		softPwmWrite(RIGHT_MOTOR2,ZERO_PWM_VAL);
+		softPwmWrite(LEFT_MOTOR1,MAX_PWM_VAL-delta_pwm);
+		softPwmWrite(LEFT_MOTOR2,ZERO_PWM_VAL);
+	}
+	return 0;
+}
+
+int motor_stack() //delayは適当
+>>>>>>> pid
 {
 	printf("get stacked\n");
 	motor_back(100);

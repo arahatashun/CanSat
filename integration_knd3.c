@@ -13,7 +13,7 @@
 
 static const int TURN_POWER = 60;//turnするpower
 static const int TURN_MILLISECONDS = 100;//turnするmilliseconds
-static const int FORWARD_MILLISECONDS = 2000;//forwardするmilliseconds
+static const int FORWARD_MILLISECONDS = 3000;//forwardするmilliseconds
 static const int STOP_MILLISECONDS = 2000;//地磁気安定のためにstopするmilliseconds
 static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
@@ -62,10 +62,11 @@ int cal_compass_theta(DistAngle *data)
 	//NOTE ここは地磁気が抜けていると無限ループに入りかねないのでそのうちGPS制御に移りたい
 	while(compass_data.x_value == -1.0 && compass_data.y_value == -1.0) //地磁気resister　error
 	{
-		handle_compass_error();
-		delay(1000);
-		print_compass(&compass_data);
-		printf("\n");
+		handle_compass_error_two(&compass_data);
+	}
+	while(compass_data.x_value == -4096.0 || compass_data.y_value == -4096.0)//周囲に強磁場がある
+	{
+		handle_compass_error_three(&compass_data);
 	}
 	compass_x = compass_data.x_value - COMPASS_X_OFFSET;
 	compass_y = compass_data.y_value - COMPASS_Y_OFFSET;
@@ -142,21 +143,24 @@ int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
 //goal判定で-2を返してそれ以外は0
 int decide_route(DistAngle data,Queue *latring,Queue *lonring)
 {
+	int cnst = 1;
 	update_angle(&data,latring,lonring);
 	if(data.dist2goal>GOAL_THRESHOLD)
 	{
-		if(-180 <= data.delta_angle && data.delta_angle <= -30)
+		if(-180 <= data.delta_angle && data.delta_angle <= -10)
 		{
 			//ゴールの方角がマシンから見て左に30~180度の場合は左回転
-			motor_left(TURN_POWER);
+			int turn_power_pid = (int)(cnst*data.delta_angle/180*100);
+			motor_rotate(turn_power_pid);
 			delay(TURN_MILLISECONDS);
 			motor_stop();
 			delay(STOP_MILLISECONDS);
 		}
-		else if(30 <= data.delta_angle && data.delta_angle <= 180)
+		else if(10 <= data.delta_angle && data.delta_angle <= 180)
 		{
 			//ゴールの方角がマシンから見て右に30~180度の場合は右回転
-			motor_right(TURN_POWER);
+			int turn_power_pid = (int)(cnst*data.delta_angle/180*100);
+			motor_rotate(turn_power_pid);
 			delay(TURN_MILLISECONDS);
 			motor_stop();
 			delay(STOP_MILLISECONDS);

@@ -20,4 +20,7 @@ int acclGyro_initialize(void);
 int readGyro(Gyro *data);
 int readAccl(Accl*data);
 int isReverse(void);
+double cal_roll(Accl* data);
+double cal_pitch(Accl* data);
+
 #endif
