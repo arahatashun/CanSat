@@ -39,7 +39,7 @@ int main()
 		now = millis();
 		int delta_time = now-lastTime;
 		delta_theta -= gyro_data.gyroZ_scaled*delta_time/1000;//convert2seconds
-		printf("%f\n",delta_theta);
+		printf("delta theta %f\n",delta_theta);
 		lastTime = now;
 		pid.input = delta_theta;
 		printf("pidinput %f",pid.input);
