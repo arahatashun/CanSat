@@ -240,7 +240,7 @@ double cal_deg_acclcompass(double x, double y,double z,
 	x1 = x*cos_psi;
 	x2 = y*sin_psi*sin_phi;
 	x3 = z*sin_psi*cos_phi;
-	cal_theta = atan2((y1 - y2)*k_parameter,x1 + x2 + x3)*180.0/PI;
+	cal_theta = atan2((y1 - y2)*k_parameter,x1 + x2 + x3)*(180.0/PI);
 	if(cal_theta  < -90)  //詳しい計算方法はkndまで
 	{
 		cal_theta = -cal_theta - 90;
