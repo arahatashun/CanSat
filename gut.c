@@ -29,9 +29,9 @@ int cutInterupt(void)
 	digitalWrite(second_gut_pin,0);
 }
 
-int first_cut(){
+int first_cut()
+{
 	int i=0;
-
 	printf("first cut start\n");
 
 	for(i=0; i<2; i++)
@@ -47,9 +47,9 @@ int first_cut(){
 	return 0;
 }
 
-int second_cut(){
+int second_cut()
+{
 	int i=0;
-
 	printf("second cut start\n");
 
 	for(i=0; i<2; i++)
