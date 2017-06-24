@@ -39,7 +39,8 @@ double cal_compass_theta()
 	{
 		delta_angle = calc_compass_angle(compass_x, compass_y) - 360;
 	}
-	else{
+	else
+	{
 		delta_angle = calc_compass_angle(compass_x, compass_y);
 	}
 	return delta_angle;
