@@ -18,7 +18,6 @@ int main()
 	while(1)
 	{
 		readAccl(&acclgyro_data);
-		compass_read(&compass_data);
 		print_compass(&compass_data);
 		phi_rad = cal_roll(acclgyro_data.acclY_scaled, acclgyro_data.acclZ_scaled);
 		psi_rad = cal_pitch(acclgyro_data.acclX_scaled, acclgyro_data.acclY_scaled,
@@ -31,4 +30,5 @@ int main()
 		printf("theta_degree = %f\n", theta_degree);
 		delay(1000);
 	}
+	return 0;
 }
