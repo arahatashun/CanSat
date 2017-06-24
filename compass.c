@@ -5,7 +5,7 @@
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "compass.h"
-#include "motor.h"
+/*#include "motor.h"*/
 
 static const int angle_of_deviation = -7.2;
 static const int devid = 0x1e; //I2C address
