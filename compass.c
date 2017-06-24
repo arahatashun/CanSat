@@ -120,13 +120,13 @@ static int compass_sort(double *compass_list)
 }
 
 //10個の配列の値のうちmaxとmin(左端と右端)以外の8つの平均値を計算
-static double get_compass_average(double *compass_list)
+static double get_compass_average(double *list)
 {
 	int i;
 	double sum = 0;
 	for(i=1; i<9; i++)
 	{
-		sum += compass_list[i];
+		sum += list[i];
 	}
 	return sum/8;
 }
