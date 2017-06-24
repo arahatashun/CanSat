@@ -23,4 +23,4 @@ calib.py
 |compass_test.c|make test|sudo ./test.out|
 
 pythonが使えるコンソール上で
-$python calib.py compasslog.txt
+`python calib.py compasslog.txt`
