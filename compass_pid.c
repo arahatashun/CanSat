@@ -52,7 +52,7 @@ int main()
 			compass_angle = cal_compass_theta();
 			pid_data.input = compass_angle/180*100;
 			compute_output(&pid_data);
-			printf("pid_output = %f\n",pid_data->output);
+			printf("pid_output = %f\n",pid_data.output);
 			delay(1000);
 		}
 	}
