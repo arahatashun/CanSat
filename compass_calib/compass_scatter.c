@@ -6,7 +6,6 @@ int main()
 {
 	compass_initialize();
 	Cmps compass_data;
-	FILE *fp=fopen("compasslog.txt","w");//新規新規書き込み
 	while(1)
 	{
 		compass_read_scatter(&compass_data);
