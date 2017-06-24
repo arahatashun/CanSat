@@ -14,9 +14,13 @@ calib.py
 
 (compasslog.txtをpythonでparseし、楕円プロットやoffset値などを計算するプログラム)
 
+
 ## 関数の名前一覧
 
 |対象|コンパイル|実行|
 |:--|:--|:--|
 |compass_scatter.c|make scatter|sudo ./scatter.out|
 |compass_test.c|make test|sudo ./test.out|
+
+pythonが使えるコンソール上で
+$python calib.py compasslog.txt
