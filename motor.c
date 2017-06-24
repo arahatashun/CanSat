@@ -101,7 +101,7 @@ int motor_rotate(int pwm_value)
 	return 0;
 }
 
-int slalomLeft(int pwm_value)
+int motor_slalomL(int pwm_value)
 {
 	printf("SLALOM MOTOR left\n");
 	softPwmWrite(RIGHT_MOTOR1,pwm_value);
