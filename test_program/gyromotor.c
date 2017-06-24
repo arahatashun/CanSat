@@ -12,13 +12,13 @@ int main()
 	acclGyro_initialize();
 	int now = 0;
 	int lastTime = millis();
-	double delat_theta = 0;
+	double delta_theta = 0;
 	while(1)
 	{
 		readGyro(&gyro_data);
 		now = millis();
 		int delta_time = now-lastTime;
-		delat_theta += gyro_data.gyroZ_scaled*delta_time/1000;//convert2seconds
+		delta_theta += gyro_data.gyroZ_scaled*delta_time/1000;//convert2seconds
 		printf("%f\n",delat_theta);
 		lastTime = now;
 		double rotate_power = delta_theta - 90;
