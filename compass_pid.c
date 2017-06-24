@@ -9,6 +9,13 @@
 static const double COMPASS_X_OFFSET = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
 static const double COMPASS_Y_OFFSET = 0.0;
 
+void handler(int signum)
+{
+	motor_stop();
+	delay(100);
+	exit(1);
+}
+
 double cal_compass_theta()
 {
 	Cmps compass_data;
@@ -36,13 +43,6 @@ double cal_compass_theta()
 		delta_angle = calc_compass_angle(compass_x, compass_y);
 	}
 	return delta_angle;
-}
-
-void handler(int signum)
-{
-	motor_stop();
-	delay(100);
-	exit(1);
 }
 
 int main()
