@@ -18,7 +18,8 @@ int cut_initialize(){
 	{
 		printf("wiringPisetup success\n");
 	}
-	pinMode(gut_pin, OUTPUT);
+	pinMode(first_gut_pin, OUTPUT);
+	pinMode(second_gut_pin, OUTPUT);
 	return 0;
 }
 
