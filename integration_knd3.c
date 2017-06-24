@@ -110,7 +110,7 @@ int stack(Queue *latring,Queue *lonring)
 	if(delta_movement<STACK_THRESHOLD)
 	{
 		printf("STACK JUDGEMENT\n");
-		motor_stack();
+		motor_escape();
 	}
 	return 0;
 }

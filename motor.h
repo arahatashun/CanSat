@@ -12,7 +12,8 @@ int motor_back(int);
 int motor_right(int);
 int motor_left(int);
 int motor_rotate(int);
-int motor_stack();
+int slalomLeft(int);
+int motor_escape();
 
 #ifdef __cplusplus
 }

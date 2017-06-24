@@ -109,7 +109,7 @@ int slalomLeft(int pwm_value)
 	softPwmWrite(LEFT_MOTOR2,ZERO_PWM_VAL);
 }
 
-int motor_stack() //delayは適当
+int motor_escape() //delayは適当
 {
 	printf("get stacked\n");
 	motor_back(100);
