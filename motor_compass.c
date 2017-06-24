@@ -28,10 +28,10 @@ int cal_compass_theta()
 	{
 		handle_compass_error();
 		delay(1000);
-		print_compass(&compass_data);
 		compass_mean(&compass_data);
 		printf("\n");
 	}
+	print_compass(&compass_data);
 	compass_x = compass_data.x_value - COMPASS_X_OFFSET;
 	compass_y = compass_data.y_value - COMPASS_Y_OFFSET;
 	printf("compass_degree = %f\n",calc_compass_angle(compass_x, compass_y));
