@@ -47,7 +47,7 @@ int main()
 		printf("pid integral %f\n",pid.integral);
 		printf("rotate power:%d\n",pid.output);
 		motor_rotate(pid.output);
-		printf("%i\n",now);
+		printf("time %i\n",now);
 	}
 	return 0;
 }
