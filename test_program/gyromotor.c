@@ -40,7 +40,7 @@ int main()
 		delta_theta -= gyro_data.gyroZ_scaled*delta_time/1000;//convert2seconds
 		printf("%f\n",delta_theta);
 		lastTime = now;
-		printf("pidinput %f",pif.input)
+		printf("pidinput %f",pid.input)
 		int pwm = compute_output(&pid);
 		printf("rotate power:%f\n",pwm);
 		motor_rotate(pwm);
