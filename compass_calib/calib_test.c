@@ -6,8 +6,8 @@
 
 int main()
 {
-	pwm_initializer();
-	compass_initializer();
+	pwm_initialize();
+	compass_initialize();
 	Cmps compass_data;
 	Cmps_offset compass_offset;
 	cal_maxmin_compass(&compass_offset,&compass_data);
