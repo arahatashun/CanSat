@@ -35,7 +35,7 @@ int main()
 		lastTime = now;
 		double rotate_power = - delta_theta + 90;
 		printf("%f\n",rotate_power);
-		motor_left(rotate_power);
+		motor_rotate(-rotate_power);
 	}
 	return 0;
 }
