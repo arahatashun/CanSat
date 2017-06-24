@@ -44,7 +44,7 @@ int main()
 		pid.input = delta_theta;
 		printf("pidinput %f\n",pid.input);
 		int pwm = compute_output(&pid);
-		printf("pid integral\n",pid.integral);
+		printf("pid integral%f\n",pid.integral);
 		printf("rotate power:%d\n",pwm);
 		motor_rotate(pwm);
 	}
