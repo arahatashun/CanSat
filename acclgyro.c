@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 #include <errno.h>
 #include <stdint.h>
@@ -63,34 +64,52 @@ static short read_out(int addr)  //レジスタの値を読み取る
 	return value;
 }
 
+//short型用の比較関数
+int sCmp (const void * a, const void * b)
+{
+    return *(short*)p - *(short*)q;
+}
+
 //角速度を測定する
 int readGyro(Gyro *data)
 {
-	short gyroX=0;
-	short gyroY=0;
-	short gyroZ=0;
-	gyroX = read_out(GYROX_REG);
-	gyroY = read_out(GYROY_REG);
-	gyroZ = read_out(GYROZ_REG);
-	data->gyroX_scaled = gyroX / CONVERT2DEGREES;
-	data->gyroY_scaled = gyroY / CONVERT2DEGREES;
-	data->gyroZ_scaled = gyroZ / CONVERT2DEGREES;
+	short xList[10] = {};//0で初期化
+	short yList[10] = {};
+	short zList[10] = {};
+	int i;
+	for(i=0;i<10;i++)
+	{
+	xList[i] = read_out(GYROX_REG);
+	yList[i] = read_out(GYROY_REG);
+	zList[i] = read_out(GYROZ_REG);
+	}
+	qsort(xList,10, sizeof(short), sCmp);
+	qsort(yList,10, sizeof(short), sCmp);
+	qsort(zList,10, sizeof(short), sCmp);
+	data->gyroX_scaled = xList[4] / CONVERT2DEGREES;//中央値を取る
+	data->gyroY_scaled = yList[4] / CONVERT2DEGREES;
+	data->gyroZ_scaled = zList[4] / CONVERT2DEGREES;
 	return 0;
 }
 
 int readAccl(Accl*data)
 {
-	short acclX = 0;
-	short acclY = 0;
-	short acclZ = 0;
-
-	acclX = read_out(ACCLX_REG);
-	acclY = read_out(ACCLY_REG);
-	acclZ = read_out(ACCLZ_REG);
-
-	data->acclX_scaled = acclX / CONVERT2G;
-	data->acclY_scaled = acclY / CONVERT2G;
-	data->acclZ_scaled = acclZ / CONVERT2G;
+	short xList[10] = {};//0で初期化
+	short yList[10] = {};
+	short zList[10] = {};
+	int i;
+	for(i=0;i<10;i++)
+	{
+	xList[i] = read_out(ACCLX_REG);
+	yList[i] = read_out(ACCLY_REG);
+	zList[i] = read_out(ACCLZ_REG);
+	}
+	qsort(xList,10, sizeof(short), sCmp);
+	qsort(yList,10, sizeof(short), sCmp);
+	qsort(zList,10, sizeof(short), sCmp);
+	data->acclX_scaled = xList[4] / CONVERT2G;
+	data->acclY_scaled = yList[4] / CONVERT2G;
+	data->acclZ_scaled = zList[4] / CONVERT2G;
 	return 0;
 }
 
@@ -126,4 +145,11 @@ double cal_pitch(Accl* data)
 	double psi = atan2(-data->acclX_scaled,
 										data->acclY_scaled*sin(phi)+data->acclZ_scaled*cos(phi));
 	return psi;
+}
+
+//XとYの加速度の大きさを計算
+static double calc_norm (Accl* data)
+{
+	return sqrt((data->acclX_scaled*data->acclX_scaled) +
+											(data->acclY_scaled*data->acclY_scaled));
 }
