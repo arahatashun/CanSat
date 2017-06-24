@@ -23,6 +23,7 @@ int main()
 	pid_initialize(&pid);
 	pid.Kp = 0.4;
 	pid.Ki = 0.4;
+	pid.Kd = 0;
 	pid.setpoint = 0;
 	signal(SIGINT, handler);
 	Accl accl_data;
