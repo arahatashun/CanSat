@@ -252,75 +252,74 @@ double cal_deg_acclcompass(double x, double y,double z,
 	return cal_deviated_angle(cal_theta);
 }
 
-/*
-   //以下は地磁気calibration用
-   static int compass_offset_initialize(Cmps_offset *compass_offset, Cmps *compass_data)
-   {
-        compass_value_initialize(compass_data);
-        compass_read(compass_data);
-        compass_offset->compassx_offset_max = compass_data->x_value;
-        compass_offset->compassx_offset_min = compass_data->x_value;
-        compass_offset->compassy_offset_max = compass_data->y_value;
-        compass_offset->compassy_offset_min = compass_data->y_value;
-        compass_offset->compassx_offset = 0;
-        compass_offset->compassy_offset = 0;
-        return 0;
-   }
+//以下は地磁気calibration用
+static int compass_offset_initialize(Cmps_offset *compass_offset, Cmps *compass_data)
+{
+	compass_value_initialize(compass_data);
+	compass_read(compass_data);
+	compass_offset->compassx_offset_max = compass_data->x_value;
+	compass_offset->compassx_offset_min = compass_data->x_value;
+	compass_offset->compassy_offset_max = compass_data->y_value;
+	compass_offset->compassy_offset_min = compass_data->y_value;
+	compass_offset->compassx_offset = 0;
+	compass_offset->compassy_offset = 0;
+	return 0;
+}
 
-   static int maxmin_compass(Cmps_offset *compass_offset, Cmps *compass_data)
-   {
-        if(compass_data->x_value > compass_offset->compassx_offset_max)
-        {
-                compass_offset->compassx_offset_max = compass_data->x_value;
-        }
-        else if(compass_data->x_value < compass_offset->compassx_offset_min)
-        {
-                compass_offset->compassx_offset_min = compass_data->x_value;
-        }
+static int maxmin_compass(Cmps_offset *compass_offset, Cmps *compass_data)
+{
+	if(compass_data->x_value > compass_offset->compassx_offset_max)
+	{
+		compass_offset->compassx_offset_max = compass_data->x_value;
+	}
+	else if(compass_data->x_value < compass_offset->compassx_offset_min)
+	{
+		compass_offset->compassx_offset_min = compass_data->x_value;
+	}
 
-        if(compass_data->y_value > compass_offset->compassy_offset_max)
-        {
-                compass_offset->compassy_offset_max = compass_data->y_value;
-        }
-        else if(compass_data->y_value < compass_offset->compassy_offset_min)
-        {
-                compass_offset->compassy_offset_min = compass_data->y_value;
-        }
-        return 0;
-   }
+	if(compass_data->y_value > compass_offset->compassy_offset_max)
+	{
+		compass_offset->compassy_offset_max = compass_data->y_value;
+	}
+	else if(compass_data->y_value < compass_offset->compassy_offset_min)
+	{
+		compass_offset->compassy_offset_min = compass_data->y_value;
+	}
+	return 0;
+}
 
-   static int mean_compass_offset(Cmps_offset *compass_offset)
-   {
-        compass_offset->compassx_offset = (compass_offset->compassx_offset_max + compass_offset->compassx_offset_min)/2;
-        compass_offset->compassy_offset = (compass_offset->compassy_offset_max + compass_offset->compassy_offset_min)/2;
-        printf("x_offset=%f, y_offset=%f\n", compass_offset->compassx_offset
-               ,compass_offset->compassy_offset);
-        return 0;
-   }
+static int mean_compass_offset(Cmps_offset *compass_offset)
+{
+	compass_offset->compassx_offset = (compass_offset->compassx_offset_max + compass_offset->compassx_offset_min)/2;
+	compass_offset->compassy_offset = (compass_offset->compassy_offset_max + compass_offset->compassy_offset_min)/2;
+	printf("x_offset=%f, y_offset=%f\n", compass_offset->compassx_offset
+	       ,compass_offset->compassy_offset);
+	return 0;
+}
 
-   static int rotate_to_calib(Cmps *compass_data)
-   {
-        compass_value_initialize(compass_data);
-        motor_right(turn_calib_power);
-        delay(turn_calib_milliseconds);
-        motor_stop();
-        delay(2000);
-        compass_read(compass_data);
-        printf( "compass_x= %f, compass_y= %f\n",compass_data->x_value
-                ,compass_data->y_value);
-        delay(50);
-        return 0;
-   }
+static int rotate_to_calib(Cmps *compass_data)
+{
+	compass_value_initialize(compass_data);
+	motor_right(turn_calib_power);
+	delay(turn_calib_milliseconds);
+	motor_stop();
+	delay(2000);
+	compass_read(compass_data);
+	printf( "compass_x= %f, compass_y= %f\n",compass_data->x_value
+	        ,compass_data->y_value);
+	delay(50);
+	return 0;
+}
 
-   int cal_maxmin_compass(Cmps_offset *compass_offset,Cmps *compass_data)
-   {
-        int i = 0;
-        compass_offset_initialize(compass_offset,compass_data);
-        for(i = 0; i<25; i++)
-        {
-                rotate_to_calib(compass_data);
-                maxmin_compass(compass_offset,compass_data);
-        }
-        mean_compass_offset(compass_offset);
-        return 0;
-   }*/
+int cal_maxmin_compass(Cmps_offset *compass_offset,Cmps *compass_data)
+{
+	int i = 0;
+	compass_offset_initialize(compass_offset,compass_data);
+	for(i = 0; i<25; i++)
+	{
+		rotate_to_calib(compass_data);
+		maxmin_compass(compass_offset,compass_data);
+	}
+	mean_compass_offset(compass_offset);
+	return 0;
+}
