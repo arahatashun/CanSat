@@ -1,7 +1,7 @@
 /*マシンを自動で回転させながら地磁気のログを取るプログラム
    今のところ使う予定はないが、一応残しておく*/
 /*#include <wiringPi.h>
- #include "compass.h"
+ #include "../compass.h"
  #include <stdio.h>
 
    int main()
