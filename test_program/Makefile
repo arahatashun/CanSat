@@ -22,4 +22,4 @@ escape:
 	gcc -o escape.out escape.c ../motor.c $(LIBS)
 
 gyromotor:
-	gcc -o  gyromotor.out gyromotor.c ../motor.c  ../acclgyro.c $(LIBS) -lm
+	gcc -o  gyromotor.out gyromotor.c ../motor.c  ../acclgyro.c ../pid.c $(LIBS) -lm
