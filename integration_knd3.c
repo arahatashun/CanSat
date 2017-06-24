@@ -158,7 +158,7 @@ int decide_route(DistAngle data,Queue *latring,Queue *lonring)
 		else if(10 <= data.delta_angle && data.delta_angle <= 180)
 		{
 			//ゴールの方角がマシンから見て右に30~180度の場合は右回転
-			turn_power_pid = cnst*data.delta_angle/180*100;
+			int turn_power_pid = cnst*data.delta_angle/180*100;
 			motor_rotate(turn_power_pid);
 			delay(TURN_MILLISECONDS);
 			motor_stop();
