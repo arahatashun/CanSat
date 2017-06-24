@@ -64,7 +64,7 @@ int cal_compass_theta(DistAngle *data)
 	{
 		handle_compass_error();
 		delay(1000);
-		print_compass(&compass_data);
+		compass_mean(&compass_data);
 		printf("\n");
 	}
 	compass_x = compass_data.x_value - COMPASS_X_OFFSET;
