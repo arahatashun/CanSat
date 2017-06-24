@@ -1,4 +1,4 @@
-LIBS =-lwiringPi
+LIBS =-lwiringPi -lm
 
 scatter:
 	gcc -o scatter.out compass_scatter.c ../compass.c $(LIBS)
