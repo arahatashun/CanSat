@@ -21,6 +21,7 @@ int main()
 		delat_theta += gyro_data.gyroZ_scaled*delta_time/1000;//convert2seconds
 		printf("%f\n",delat_theta);
 		lastTime = now;
-		motor_rotate(delat_theta-90);
+		double rotate_power = delta_theta - 90;
+		motor_rotate(rotate_power);
 	}
 }
