@@ -36,7 +36,6 @@ int main()
 		double rotate_power = - delta_theta + 90;
 		printf("%f\n",rotate_power);
 		motor_left(rotate_power);
-		delay(100);
 	}
 	return 0;
 }
