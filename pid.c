@@ -62,3 +62,19 @@ int pid_initialize(Pid* pid_init)
 	pid_init->integral = 0;
 	pid_init->differential = 0;
 }
+
+Pid *make_pid(void)
+{
+	Pid *pid = malloc(sizeof(Pid));
+	if (pid != NULL)
+	{
+		pid_initialize(pid);
+	}
+	else
+	{
+		free(pid);
+		printf("メモリ不足\n");
+		return NULL;//segmantaion faultの可能性
+	}
+	return pid;
+}
