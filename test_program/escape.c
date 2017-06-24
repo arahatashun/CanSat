@@ -17,6 +17,6 @@ int main()
 	pwm_initialize();
 	while(1)
 	{
-		motor_stack();
+		motor_escape();
 	}
 }
