@@ -6,13 +6,9 @@ static const int FIRST_GUT_PIN = 10;
 static const int SECOND_GUT_PIN = 9;
 static const int CURRENT_ON_TIME = 3000; //ms・3秒間
 static const int CURRENT_OFF_TIME = 2000; //ms・2秒間
-//static const int HIGH = 1;
-//static const int LOW = 0;
 
 int cut_initialize()
 {
-	printf("%d\n",HIGH);
-	printf("%d\n",LOW);
 	if(wiringPiSetupGpio() == -1)
 	{
 		printf("error wiringPi setup\n");
@@ -27,6 +23,7 @@ int cut_initialize()
 	return 0;
 }
 
+//NOTE　HIGHとLOWは1と0に元から割り当てられてる
 int cutInterupt(void)
 {
 	digitalWrite(FIRST_GUT_PIN,LOW);
