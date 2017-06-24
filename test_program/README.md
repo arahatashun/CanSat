@@ -4,8 +4,8 @@
 基本的には
 
 ```shell
-$ make センサ名(e.g. make xbee)
-$ sudo ./センサ名.out(e.g. sudo ./xbee.out)
+$ make プログラム名(e.g. make xbee)
+$ sudo ./プログラム名.out(e.g. sudo ./xbee.out)
 ```
 
 とすることで使用できます。
@@ -33,6 +33,6 @@ $ cd test_program
 
 makeを実行して
 ```shell
-make: `センサー名' is up to date.
+make: `プログラム名' is up to date.
 ```
-となった時はすでに実行ファイルがあると思うのでsudo ./センサー名.outとしてください。
+となった時はすでに実行ファイルがあると思うのでsudo ./プログラム名.outとしてください。
