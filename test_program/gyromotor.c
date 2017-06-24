@@ -21,7 +21,7 @@ int main()
 	//Pid* pid = make_pid();
 	Pid pid;
 	pid_initialize(&pid);
-	pid.Kp = 0.5;
+	pid.Kp = 0.4;
 	pid.Ki = 0.0002;
 	pid.Kd = 0;
 	pid.setpoint = 30;
