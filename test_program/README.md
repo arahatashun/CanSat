@@ -20,7 +20,7 @@ $ sudo ./センサ名.out(e.g. sudo ./xbee.out)
 |ジャイロセンサ|make gyro|sudo ./gyro.out|
 |XBEE|make xbee|sudo ./xbee.out|
 |GPS|make gps|sudo ./gps.out|
-
+|轍回避|make escape|sudo ./escape.out|
 ## ssh接続してからの手順
 
 ```shell

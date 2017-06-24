@@ -17,3 +17,6 @@ xbee:
 
 gps:
 	gcc -o gps.out gps_test.c $(LIBS) -lgps -lm
+
+escape:
+	gcc -o escape.out escape.c ../motor.c $(LIBS)
