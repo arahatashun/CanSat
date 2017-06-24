@@ -86,6 +86,7 @@ int motor_left(int pwm_value)
         pwm_valueを-100~100に拡張したもの
         負の時にleft,正の時にright
  */
+ //TODO 逆にするべきでは
 int motor_rotate(int pwm_value)
 {
 	printf("motor rotate\n");
