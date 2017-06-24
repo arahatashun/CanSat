@@ -32,7 +32,7 @@ int cutInterupt(void)
 int first_cut(){
 	int i=0;
 
-	printf("first nichrome cut start\n");
+	printf("first cut start\n");
 
 	for(i=0; i<2; i++)
 	{
@@ -43,14 +43,14 @@ int first_cut(){
 		digitalWrite(second_gut_pin,0);
 		delay(2000);
 	}
-	printf("first nichrome cut end\n");
+	printf("first cut end\n");
 	return 0;
 }
 
 int second_cut(){
 	int i=0;
 
-	printf("second nichrome cut start\n");
+	printf("second cut start\n");
 
 	for(i=0; i<2; i++)
 	{
