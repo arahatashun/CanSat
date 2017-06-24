@@ -15,6 +15,8 @@ int main()
 	double compass_x = 0;
 	double compass_y = 0;
 	double compass_angle = 0;
+	printf("compassx_offset = %f\n", compass_offset.compassx_offset);
+	printf("compassy_offset = %f\n", compass_offset.compassy_offset);
 	while(1)
 	{
 		compass_read(&compass_data);
