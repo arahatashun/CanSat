@@ -250,7 +250,7 @@ double cal_deg_acclcompass(double x, double y,double z,
 	return cal_deviated_angle(cal_theta);
 }
 
-//以下は地磁気calibration用
+//以下はマシンによる自動地磁気calibration用
 static int compass_offset_initialize(Cmps_offset *compass_offset, Cmps *compass_data)
 {
 	compass_value_initialize(compass_data);
