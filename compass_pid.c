@@ -4,6 +4,7 @@
 #include "motor.h"
 #include "pid.h"
 #include <signal.h>
+#include <stdlib.h>
 
 static const double COMPASS_X_OFFSET = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
 static const double COMPASS_Y_OFFSET = 0.0;
