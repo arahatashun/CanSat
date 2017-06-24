@@ -3,6 +3,7 @@
 
 int cut_initialize();
 int cutInterupt(void)
-int cut();
+int first_cut();
+int second_cut();
 
 #endif

@@ -17,6 +17,7 @@ int main()
 {
 	signal(SIGINT, gutHandler);
 	cut_initialize();
-	cut();
+	first_cut();
+	second_cut();
 	return 0;
 }
