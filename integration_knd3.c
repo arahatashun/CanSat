@@ -20,7 +20,7 @@ static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾�
 static const double COMPASS_X_OFFSET = -92.0; //ここに手動でキャリブレーションしたoffset値を代入
 static const double COMPASS_Y_OFFSET = -253.5;
 static const int GOAL_THRESHOLD = 2;
-static const double kp_value = 1;
+static const double kp_value = 5/9;
 static const double ki_value = 0.01;
 static const double kd_value = 0;
 
@@ -157,7 +157,7 @@ int decide_route(DistAngle *data,Pid *pid_data, Queue *latring,Queue *lonring)
 		update_angle(data,latring,lonring);
 		if(data->dist2goal>GOAL_THRESHOLD)
 		{
-			pid_data.input = (int)(data->delta_angle/180*100);
+			pid_data.input = data->delta_angle;
 			compute_output(pid_data);
 			printf("pid_output = %d\n",pid_data->output);
 			motor_slalom(pid_data->output);
