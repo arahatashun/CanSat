@@ -1,7 +1,7 @@
 # Makefile
 LIBS = -lwiringPi -lm -lgps
 objs_g = integration.o  motor.o mitibiki.o pid.o ring_buffer.o #GPSのみの制御
-objs_g_and_c = integration_knd3.o motor.o mitibiki.o pid.o ring_buffer.o #GPSとコンパス
+objs_g_and_c = integration_knd3.o motor.o mitibiki.o pid.o ring_buffer.o compass.o #GPSとコンパス
 objs_f = flight.o gut.o luxsensor.o ring_buffer.o #flight
 
 integration.out: $(objs_g)
@@ -36,3 +36,6 @@ ring_buffer.o: ring_buffer.c
 
 gut.o: gut.c
 	gcc -c -Wall gut.c
+
+compass.o: compass.c
+	gcc -c compass.c
