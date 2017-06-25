@@ -301,8 +301,8 @@ static int land_release_timeout(Sequence *land_seq)
 int open_case(Sequence *open_seq)
 {
 	printf("started open case sequence\n");
-	cut_initializer();
-	cut();
+	cut_initialize();
+	cut_all();
 	write_sequence(open_seq,OPEN_CASE_SEQ);
 	return 0;
 }
