@@ -157,7 +157,7 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 		update_angle(data,latring,lonring);
 		if(data->dist2goal>GOAL_THRESHOLD)
 		{
-			pid_data.input = data->delta_angle;
+			pid_data.input = -(data->delta_angle);
 			compute_output(&pid_data);
 			printf("pid_output = %d\n",pid_data.output);
 			motor_slalom(pid_data.output);
