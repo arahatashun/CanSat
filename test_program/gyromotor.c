@@ -24,7 +24,7 @@ int main()
 	pid.Kp = 0.3;
 	pid.Ki = 0.00005;
 	pid.Kd = 0;
-	pid.setpoint = 90;
+	pid.setpoint = 0;
 	signal(SIGINT, handler);
 	Accl accl_data;
 	Gyro gyro_data;
@@ -42,7 +42,7 @@ int main()
 		printf("delta theta %f\n",delta_theta);
 		lastTime = now;
 		pid.input = delta_theta;
-		printf("pidinput %f\n",pid.input);
+		printf("pid input %f\n",pid.input);
 		compute_output(&pid);
 		printf("pid integral %f\n",pid.integral);
 		printf("rotate power:%d\n",pid.output);
