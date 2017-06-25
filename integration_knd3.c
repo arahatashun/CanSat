@@ -20,9 +20,11 @@ static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾�
 static const double COMPASS_X_OFFSET = -92.0; //ここに手動でキャリブレーションしたoffset値を代入
 static const double COMPASS_Y_OFFSET = -253.5;
 static const int GOAL_THRESHOLD = 2;
+static const int setpoint = 0.0;//delta_angleの目標値
 static const double kp_value = 5/9;
 static const double ki_value = 0.01;
 static const double kd_value = 0;
+
 
 
 typedef struct dist_and_angle {
@@ -148,10 +150,7 @@ int decide_route(DistAngle *data,Pid *pid_data, Queue *latring,Queue *lonring)
 {
 	int i;
 	pid_initialize(pid_data);
-	pid_data->setpoint = 0.0;
-	pid_data->Kp = kp_value;
-	pid_data->Ki = ki_value;
-	pid_data->Kd = kd_value;
+	pid_const_initialize(pid_data,setpoint,kp_value,ki_value,kd_value);
 	for(i=0; i<20; i++)
 	{
 		update_angle(data,latring,lonring);
@@ -185,9 +184,10 @@ int main()
 	gps_init();
 	compass_initialize();
 	DistAngle DistAngle_data;
+	Pid Pid_data;
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
 	DistAngle_initialize(&DistAngle_data);
-	while(decide_route(DistAngle_data, gps_latring, gps_lonring) != -2) ;
+	while(decide_route(pid_dataDistAngle_data, gps_latring, gps_lonring) != -2) ;
 	return 0;
 }

@@ -54,8 +54,17 @@ int pid_initialize(Pid* pid_init)
 	pid_init->prev_error = 0;
 	pid_init->integral = 0;
 	pid_init->differential = 0;
+	return 0;
 }
 
+int pid_const_initialize(Pid* pid_init, double setpoint, double kp_value, double ki_value, double kd_value)
+{
+	pid_data->setpoint = setpoint;
+	pid_data->Kp = kp_value;
+	pid_data->Ki = ki_value;
+	pid_data->Kd = kd_value;
+	return 0;
+}
 Pid *make_pid(void)
 {
 	Pid *pid = malloc(sizeof(Pid));
