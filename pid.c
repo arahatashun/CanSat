@@ -59,10 +59,10 @@ int pid_initialize(Pid* pid_init)
 
 int pid_const_initialize(Pid* pid_init, double setpoint, double kp_value, double ki_value, double kd_value)
 {
-	pid_data->setpoint = setpoint;
-	pid_data->Kp = kp_value;
-	pid_data->Ki = ki_value;
-	pid_data->Kd = kd_value;
+	pid_init->setpoint = setpoint;
+	pid_init->Kp = kp_value;
+	pid_init->Ki = ki_value;
+	pid_init->Kd = kd_value;
 	return 0;
 }
 Pid *make_pid(void)
