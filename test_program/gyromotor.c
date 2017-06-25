@@ -22,7 +22,7 @@ int main()
 	Pid pid;
 	pid_initialize(&pid);
 	pid.Kp = 0.09;
-	pid.Ki = 0.00005;
+	pid.Ki = 0.00007;
 	pid.Kd = 0;
 	pid.setpoint = 0;
 	signal(SIGINT, handler);
