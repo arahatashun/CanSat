@@ -17,8 +17,8 @@ static const int FORWARD_MILLISECONDS = 3000;//forwardするmilliseconds
 static const int STOP_MILLISECONDS = 2000;//地磁気安定のためにstopするmilliseconds
 static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
-static const double COMPASS_X_OFFSET = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
-static const double COMPASS_Y_OFFSET = 0.0;
+static const double COMPASS_X_OFFSET = -92.0; //ここに手動でキャリブレーションしたoffset値を代入
+static const double COMPASS_Y_OFFSET = -253.5;
 static const int GOAL_THRESHOLD = 2;
 
 
