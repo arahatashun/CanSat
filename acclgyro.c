@@ -43,7 +43,6 @@ int acclGyro_initialize(void)
 	{
 		printf("acclGyro write error register POWER_MANAGEMENT_REG\n");
 		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		errno = -WPI2CWReg8;
 		printf("errno=%d: %s\n", errno, strerror(errno));
 	}
 	else
