@@ -9,7 +9,7 @@
 #include "motor.h"
 #include "mitibiki.h"
 #include "ring_buffer.h"
-
+#include "pid.h"
 
 static const int TURN_POWER = 60;//turnするpower
 static const int TURN_MILLISECONDS = 100;//turnするmilliseconds
