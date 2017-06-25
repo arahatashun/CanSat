@@ -4,7 +4,7 @@
 #include "pid.h"
 
 static const double kp_value = 1;
-static const double ki_value = 0.001;
+static const double ki_value = 0;
 static const double kd_value = 0;
 
 /*
@@ -37,7 +37,7 @@ int compute_output(Pid* pid_comp)
 	}
 	else
 	{
-		int deltaT = now -pid_comp->lastTime;
+		int deltaT = now - pid_comp->lastTime;
 		pid_comp->differential = (error-pid_comp->prev_error)/deltaT;
 		pid_comp->integral += error * deltaT;
 	}
