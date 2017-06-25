@@ -69,7 +69,6 @@ static int compass_mode_change()
 
 static short read_out(int file,int msb_reg, int lsb_reg)
 {
-	compass_mode_change();
 	uint8_t msb = 0;
 	uint8_t lsb = 0;
 	short i = 0;
@@ -94,6 +93,7 @@ int compass_read(Cmps *data)
 	int i;
 	for(i=0; i<10; i++)
 	{
+		compass_mode_change();
 		xList[i] = read_out(fd, X_MSB_REG, X_LSB_REG);
 		yList[i] = read_out(fd, Y_MSB_REG, Y_LSB_REG);
 		zList[i] = read_out(fd, Z_MSB_REG, Z_LSB_REG);
