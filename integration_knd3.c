@@ -176,8 +176,8 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 			motor_stop();
 			delay(3000);
 		}
+		printf("\n");  //１つのシーケンスの終わり
 	}
-	printf("\n");  //１つのシーケンスの終わり
 	return 0;
 }
 
