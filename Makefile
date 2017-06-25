@@ -35,4 +35,4 @@ ring_buffer.o: ring_buffer.c
 	gcc -c -Wall ring_buffer.c
 
 gut.o: gut.c
- gcc -c -Wall gut.c
+	gcc -c -Wall gut.c
