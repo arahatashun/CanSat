@@ -8,6 +8,10 @@
 
 static const double COMPASS_X_OFFSET = -92.0; //ここに手動でキャリブレーションしたoffset値を代入
 static const double COMPASS_Y_OFFSET = -253.5;
+static const int SETPOINT = 0.0;//delta_angleの目標値
+static const double KP_VALUE= 0.5;
+static const double KI_VALUE = 0.001;
+static const double KD_VALUE = 0;
 
 void handler(int signum)
 {
@@ -20,15 +24,13 @@ double cal_compass_theta()
 {
 	Cmps compass_data;
 	compass_value_initialize(&compass_data);
-	compass_mean(&compass_data);
+	compass_read(&compass_data);
 	double compass_x = 0;
 	double compass_y = 0;
 	//NOTE ここは地磁気が抜けていると無限ループに入りかねないのでそのうちGPS制御に移りたい
 	while(compass_data.x_value == -1.0 && compass_data.y_value == -1.0)//地磁気resister　error
 	{
-		handle_compass_error();
-		delay(1000);
-		compass_mean(&compass_data);
+		handle_compass_error(&compass_data);
 		printf("\n");
 	}
 	compass_x = compass_data.x_value - COMPASS_X_OFFSET;
@@ -57,11 +59,12 @@ int main()
 		int i = 0;
 		double compass_angle = 0;
 		pid_initialize(&pid_data);
+		pid_const_initialize(&pid_data,SETPOINT,KP_VALUE,KI_VALUE,KD_VALUE);
 		pid_data.setpoint = 0.0;
 		for(i=0; i<20; i++)
 		{
 			compass_angle = cal_compass_theta();
-			pid_data.input = (int)(compass_angle/180*100);
+			pid_data.input = compass_angle;
 			compute_output(&pid_data);
 			printf("pid_output = %d\n",pid_data.output);
 			motor_slalom(pid_data.output);

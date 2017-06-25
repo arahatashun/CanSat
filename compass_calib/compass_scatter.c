@@ -8,7 +8,7 @@ int main()
 	Cmps compass_data;
 	while(1)
 	{
-		compass_read_scatter(&compass_data);
+		compass_read(&compass_data);
 		printf("%f\n", compass_data.x_value);
 		printf("%f\n", compass_data.y_value);
 		delay(200);

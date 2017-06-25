@@ -18,7 +18,7 @@ int main()
 	while(1)
 	{
 		readAccl(&accl_data);
-		print_compass(&compass_data);
+		compass_read(&compass_data);
 		phi_rad = cal_roll(&accl_data);
 		psi_rad = cal_pitch(&accl_data);
 		printf("phi_degree = %f\n", phi_rad*180.0/PI);
