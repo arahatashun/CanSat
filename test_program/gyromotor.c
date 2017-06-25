@@ -22,7 +22,7 @@ int main()
 	Pid pid;
 	pid_initialize(&pid);
 	pid.Kp = 1.2;
-	pid.Ki = 0.0007;
+	pid.Ki = 0;
 	pid.Kd = 0;
 	pid.setpoint = 0;
 	signal(SIGINT, handler);
@@ -46,7 +46,7 @@ int main()
 		compute_output(&pid);
 		printf("pid integral %f\n",pid.integral);
 		printf("rotate power:%d\n",pid.output);
-		motor_slalom(-pid.output);
+		motor_slalom(pid.output);
 	}
 	return 0;
 }
