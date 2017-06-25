@@ -11,7 +11,7 @@ integration_knd3.out: $(objs_g_and_c)
 	gcc -g -Wall -O2 -o integration_knd3.out $(objs_g_and_c) $(LIBS)
 
 flight.out: $(objs_f)
-	gcc -g -Wall -O2 -o flight_integration.out $(objs_f) $(LIBS)
+	gcc -g -Wall -O2 -o flight.out $(objs_f) $(LIBS)
 
 integration_knd3.o: integration_knd3.c
 	gcc -c -Wall integration_knd3.c
