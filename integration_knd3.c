@@ -19,7 +19,7 @@ static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
 static const double COMPASS_X_OFFSET = -92.0; //ここに手動でキャリブレーションしたoffset値を代入
 static const double COMPASS_Y_OFFSET = -253.5;
-static const int GOAL_THRESHOLD = 8;
+static const int GOAL_THRESHOLD = 5;
 static const int SETPOINT = 0.0;//delta_angleの目標値
 static const double KP_VALUE= 0.5;
 static const double KI_VALUE = 0.0001;
@@ -166,6 +166,8 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 		else
 		{
 			printf("==========GOAL==========");
+			motor_stop();
+			delay(60000);
 			return -2;        //ゴールに着いた
 		}
 		if(i==19)
