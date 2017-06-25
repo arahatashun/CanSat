@@ -69,6 +69,7 @@ static int compass_mode_change()
 
 static short read_out(int file,int msb_reg, int lsb_reg)
 {
+	compass_mode_change();
 	uint8_t msb = 0;
 	uint8_t lsb = 0;
 	short i = 0;
@@ -78,97 +79,34 @@ static short read_out(int file,int msb_reg, int lsb_reg)
 	return i;
 }
 
+//short型用の比較関数
+static int sCmp (const void* p, const void* q)
+{
+	return *(short*)p - *(short*)q;
+}
+
 //通常のcompass読み取り関数 error時のみ表示するようにした
-int compass_read(Cmps *compass_data)
+int compass_read(Cmps *data)
 {
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
-	if(WPI2CWReg8 == -1)
-	{
-		printf("Compass write error register MODE_REG\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		errno = -WPI2CWReg8;
-		printf("errno=%d: %s\n", errno, strerror(errno));
-	}
-	/*uint8_t status_val = wiringPiI2CReadReg8(fd, 0x09);  とりあえずコメントアウトしておきます
-	   printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01); //地磁気が正常ならここは1(死んでも1?)
-	   printf("2nd bit of status resister = %d\n", (status_val >> 1) & 0x01); //地磁気が正常ならここは0(死んだら1)*/
-	compass_data->x_value = (double)read_out(fd, X_MSB_REG, X_LSB_REG);
-	compass_data->y_value = (double)read_out(fd, Y_MSB_REG, Y_LSB_REG);
-	compass_data->z_value = (double)read_out(fd, Z_MSB_REG, Z_LSB_REG);
-	return 0;
-}
-
-/*地磁気のキャリブレーション補正用のログを取るためにprintをコメントアウトしたもの*/
-int compass_read_scatter(Cmps *data)
-{
-	//WriteReg8
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
-	/*if(WPI2CWReg8 == -1)
-	   {
-	        printf("Compass write error register MODE_REG\n");
-	        printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-	        errno = -WPI2CWReg8;
-	        printf("errno=%d: %s\n", errno, strerror(errno));
-	   }
-	   else
-	   {
-	        printf("Compass write register:MODE_REG\n");
-	   }*/
-	data->x_value = (double)read_out(fd, X_MSB_REG, X_LSB_REG);
-	data->y_value = (double)read_out(fd, Y_MSB_REG, Y_LSB_REG);
-	data->z_value = (double)read_out(fd, Z_MSB_REG, Z_LSB_REG);
-	return 0;
-}
-
-//10個の配列の中の数値を昇順にsort
-static int compass_sort(double *list)
-{
-	int i,j;
-	double tmp_value = 0;
-	for (i=0; i<10; i++)
-	{
-		for (j=i+1; j<10; j++)
-		{
-			if (list[i] > list[j])
-			{
-				tmp_value = list[i];
-				list[i] = list[j];
-				list[j] = tmp_value;
-			}
-		}
-	}
-	return 0;
-}
-
-//10個の配列の値のうちmaxとmin(左端と右端)以外の8つの平均値を計算
-static double get_compass_average(double *list)
-{
+	short xList[10] = {};//0で初期化
+	short yList[10] = {};
+	short zList[10] = {};
 	int i;
-	double sum = 0;
-	for(i=1; i<9; i++)
-	{
-		sum += list[i];
-	}
-	return sum/8;
-}
-
-//Cmps構造体に地磁気データ10個中左端右端の2個以外の８個の平均を格納
-int compass_mean(Cmps *data)
-{
-	int i;
-	double compass_xlist[10];
-	double compass_ylist[10];
 	for(i=0; i<10; i++)
 	{
-		compass_mode_change();
-		compass_read(data);
-		compass_xlist[i] = data->x_value;
-		compass_ylist[i] = data->y_value;
+		xList[i] = read_out(fd, X_MSB_REG, X_LSB_REG);
+		yList[i] = read_out(fd, Y_MSB_REG, Y_LSB_REG);
+		zList[i] = read_out(fd, Z_MSB_REG, Z_LSB_REG);
+		/*uint8_t status_val = wiringPiI2CReadReg8(fd, 0x09);  とりあえずコメントアウトしておきます
+		   printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01); //地磁気が正常ならここは1(死んでも1?)
+		   printf("2nd bit of status resister = %d\n", (status_val >> 1) & 0x01); //地磁気が正常ならここは0(死んだら1)*/
 	}
-	compass_sort(compass_xlist);
-	compass_sort(compass_ylist);
-	data->x_value = get_compass_average(compass_xlist);
-	data->y_value = get_compass_average(compass_ylist);
+	qsort(xList,10, sizeof(short), sCmp);
+	qsort(yList,10, sizeof(short), sCmp);
+	qsort(zList,10, sizeof(short), sCmp);
+	data->x_value = (double)xList[4];
+	data->y_value = (double)yList[4];
+	data->z_value = (double)zList[4];
 	return 0;
 }
 
@@ -181,6 +119,7 @@ int handle_compass_error(Cmps *data)//地磁気が-1になった時に使う
 	printf("\n");
 	return 0;
 }
+
 int handle_compass_error_two(Cmps *data)//地磁気が-4096になった時使う　モーター回して近くの磁場を一応避ける
 {
 	compass_initialize();
