@@ -102,6 +102,7 @@ int readAccl(Accl*data)
 	xList[i] = read_out(ACCLX_REG);
 	yList[i] = read_out(ACCLY_REG);
 	zList[i] = read_out(ACCLZ_REG);
+	printf("%d\n",xList[i]);
 	}
 	qsort(xList,10, sizeof(short), sCmp);
 	qsort(yList,10, sizeof(short), sCmp);
