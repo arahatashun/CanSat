@@ -101,6 +101,8 @@ int motor_rotate(int pwm_value)
 	return 0;
 }
 
+
+//正の値を受け取って右に曲がる
 int motor_slalom(int delta_pwm)
 {
 	if(delta_pwm>=0)

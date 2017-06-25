@@ -46,7 +46,7 @@ int main()
 		compute_output(&pid);
 		printf("pid integral %f\n",pid.integral);
 		printf("rotate power:%d\n",pid.output);
-		motor_slalom(pid.output);
+		motor_slalom(-pid.output);
 	}
 	return 0;
 }
