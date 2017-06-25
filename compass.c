@@ -47,7 +47,7 @@ int compass_initialize()
 	return 0;
 }
 
-//地磁気ロック対策のmode_change関数
+//地磁気ロック対策のmode_change関数(error時のみ表示)
 static int compass_mode_change()
 {
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_SINGLE);
@@ -85,7 +85,7 @@ static int sCmp (const void* p, const void* q)
 	return *(short*)p - *(short*)q;
 }
 
-//通常のcompass読み取り関数 error時のみ表示するようにした
+//compassのraw_data読み取り関数
 int compass_read(Cmps *data)
 {
 	short xList[10] = {};//0で初期化

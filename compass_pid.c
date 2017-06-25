@@ -20,7 +20,7 @@ double cal_compass_theta()
 {
 	Cmps compass_data;
 	compass_value_initialize(&compass_data);
-	compass_mean(&compass_data);
+	compass_read(&compass_data);
 	double compass_x = 0;
 	double compass_y = 0;
 	//NOTE ここは地磁気が抜けていると無限ループに入りかねないのでそのうちGPS制御に移りたい
@@ -28,7 +28,7 @@ double cal_compass_theta()
 	{
 		handle_compass_error();
 		delay(1000);
-		compass_mean(&compass_data);
+		compass_read(&compass_data);
 		printf("\n");
 	}
 	compass_x = compass_data.x_value - COMPASS_X_OFFSET;
