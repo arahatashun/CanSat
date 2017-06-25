@@ -12,7 +12,7 @@ int motor_back(int);
 int motor_right(int);
 int motor_left(int);
 int motor_rotate(int);
-int motor_slalomL(int);
+int motor_slalom(int);
 int motor_escape();
 
 #ifdef __cplusplus
