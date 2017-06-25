@@ -20,10 +20,10 @@ static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾�
 static const double COMPASS_X_OFFSET = -92.0; //ここに手動でキャリブレーションしたoffset値を代入
 static const double COMPASS_Y_OFFSET = -253.5;
 static const int GOAL_THRESHOLD = 2;
-static const int setpoint = 0.0;//delta_angleの目標値
-static const double kp_value = 5/9;
-static const double ki_value = 0.01;
-static const double kd_value = 0;
+static const int SETPOINT = 0.0;//delta_angleの目標値
+static const double KP_VALUE= 5/9;
+static const double KI_VALUE = 0.01;
+static const double KD_VALUE = 0;
 
 
 
@@ -151,7 +151,7 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 	Pid pid_data;
 	int i;
 	pid_initialize(&pid_data);
-	pid_const_initialize(&pid_data,setpoint,kp_value,ki_value,kd_value);
+	pid_const_initialize(&pid_data,SETPOINT,KP_VALUE,KI_VALUE,KD_VALUE);
 	for(i=0; i<20; i++)
 	{
 		update_angle(data,latring,lonring);
