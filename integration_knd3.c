@@ -20,6 +20,9 @@ static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾�
 static const double COMPASS_X_OFFSET = -92.0; //ここに手動でキャリブレーションしたoffset値を代入
 static const double COMPASS_Y_OFFSET = -253.5;
 static const int GOAL_THRESHOLD = 2;
+static const double kp_value = 1;
+static const double ki_value = 0.01;
+static const double kd_value = 0;
 
 
 typedef struct dist_and_angle {
@@ -141,43 +144,34 @@ int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
 }
 
 //goal判定で-2を返してそれ以外は0
-int decide_route(DistAngle data,Queue *latring,Queue *lonring)
+int decide_route(DistAngle *data,Pid *pid_data, Queue *latring,Queue *lonring)
 {
-	int cnst = 1;
-	update_angle(&data,latring,lonring);
-	if(data.dist2goal>GOAL_THRESHOLD)
+	int i;
+	pid_initialize(pid_data);
+	pid_data->setpoint = 0.0;
+	pid_data->Kp = kp_value;
+	pid_data->Ki = ki_value;
+	pid_data->Kd = kd_value;
+	for(i=0; i<20; i++)
 	{
-		if(-180 <= data.delta_angle && data.delta_angle <= -15)
+		update_angle(data,latring,lonring);
+		if(data->dist2goal>GOAL_THRESHOLD)
 		{
-			//ゴールの方角がマシンから見て左に30~180度の場合は左回転
-			int turn_power_pid = (int)(cnst*data.delta_angle/180*100);
-			motor_rotate(turn_power_pid);
-			delay(TURN_MILLISECONDS);
-			motor_stop();
-			delay(STOP_MILLISECONDS);
-		}
-		else if(15 <= data.delta_angle && data.delta_angle <= 180)
-		{
-			//ゴールの方角がマシンから見て右に30~180度の場合は右回転
-			int turn_power_pid = (int)(cnst*data.delta_angle/180*100);
-			motor_rotate(turn_power_pid);
-			delay(TURN_MILLISECONDS);
-			motor_stop();
-			delay(STOP_MILLISECONDS);
+			pid_data.input = (int)(data->delta_angle/180*100);
+			compute_output(pid_data);
+			printf("pid_output = %d\n",pid_data->output);
+			motor_slalom(pid_data->output);
+			delay(50);
 		}
 		else
 		{
-			//直進
-			motor_forward(100);
-			delay(FORWARD_MILLISECONDS);
-			motor_stop();
-			delay(STOP_MILLISECONDS);
+			printf("==========GOAL==========");
+			return -2;        //ゴールに着いた
 		}
-	}
-	else
-	{
-		printf("==========GOAL==========");
-		return -2;//ゴールに着いた
+		if(i==19)
+		{
+			printf("integral finish\n");
+		}
 	}
 	printf("\n");  //１つのシーケンスの終わり
 	return 0;
