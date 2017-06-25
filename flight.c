@@ -3,6 +3,7 @@
 #include <math.h>
 #include <unistd.h>
 #include <gps.h>
+
 #include "luxsensor.h"
 #include "gut.h"
 #include "ring_buffer.h"
@@ -324,4 +325,5 @@ int main(void)
 		luxsensor_close();
 	}
 	open_case(&sequence);
+	return 0;
 }
