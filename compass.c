@@ -115,7 +115,7 @@ int handle_compass_error(Cmps *data)//地磁気が-1になった時に使う
 	compass_initialize();
 	printf("compass reinitialized\n");
 	compass_mode_change();
-	compass_mean(data);
+	compass_read(data);
 	printf("\n");
 	return 0;
 }
@@ -127,7 +127,7 @@ int handle_compass_error_two(Cmps *data)//地磁気が-4096になった時使う
 	compass_mode_change();
 	motor_forward(MAX_PWM_VAL);
 	delay(ESCAPE_TIME);
-	compass_mean(data);
+	compass_read(data);
 	printf("\n");
 	return 0;
 }

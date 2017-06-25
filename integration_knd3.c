@@ -61,7 +61,7 @@ int cal_compass_theta(DistAngle *data)
 {
 	Cmps compass_data;
 	compass_value_initialize(&compass_data);
-	compass_mean(&compass_data);
+	compass_read(&compass_data);
 	double compass_x = 0;
 	double compass_y = 0;
 	//NOTE ここは地磁気が抜けていると無限ループに入りかねないのでそのうちGPS制御に移りたい
