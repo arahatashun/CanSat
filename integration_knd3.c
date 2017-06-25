@@ -171,6 +171,8 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 		if(i==19)
 		{
 			printf("integral finish\n");
+			motor_stop();
+			delya(3000);
 		}
 	}
 	printf("\n");  //１つのシーケンスの終わり
