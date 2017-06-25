@@ -8,7 +8,7 @@
 #include "motor.h"
 
 static const int ANGLE_OF_DEVIATION = -7.2;
-static const int DEVID = 0x1e; //I2C address
+static const int HMC5883L_ADDRESS = 0x1e; //I2C address
 static const int MODE_REG = 0x02;
 static const int MODE_CONTINUOUS = 0x00;
 static const int MODE_SINGLE = 0x01;
@@ -20,18 +20,19 @@ static const int Y_MSB_REG = 0x07;
 static const int Y_LSB_REG = 0x08;
 static const double PI = 3.14159265;
 static const double K_PARAMETER = 1.0;//地磁気の感度補正パラメータ
-static int fd = 0;
-static int WPI2CWReg8 = 0;
 //calibration時の回転
 static const int TURN_CALIB_POWER = 25;   //地磁気補正時turnするpower
 static const int TURN_CALIB_MILLISECONDS = 75;   //地磁気補正時turnするmilliseconds
-
+//周囲の今日磁場がある時の退避
 static const int MAX_PWM_VAL = 100;
 static const int ESCAPE_TIME = 1000;
+
+static int fd = 0;
+static int WPI2CWReg8 = 0;
 int compass_initialize()
 {
 	//I2c setup
-	fd = wiringPiI2CSetup(DEVID);
+	fd = wiringPiI2CSetup(HMC5883L_ADDRESS);
 	if(fd == -1)
 	{
 		printf("WARNING! compass wiringPiI2CSetup error\n");
@@ -46,6 +47,26 @@ int compass_initialize()
 	return 0;
 }
 
+//地磁気ロック対策のmode_change関数
+static int compass_mode_change()
+{
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_SINGLE);
+	if(WPI2CWReg8 == -1)
+	{
+		printf("compass write error register MODE_REG\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		printf("errno=%d: %s\n", errno, strerror(errno));
+	}
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
+	if(WPI2CWReg8 == -1)
+	{
+		printf("compass write error register MODE_REG\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		printf("errno=%d: %s\n", errno, strerror(errno));
+	}
+	return 0;
+}
+
 static short read_out(int file,int msb_reg, int lsb_reg)
 {
 	uint8_t msb = 0;
@@ -55,14 +76,6 @@ static short read_out(int file,int msb_reg, int lsb_reg)
 	lsb = wiringPiI2CReadReg8(file, lsb_reg);
 	i = msb << 8| lsb;
 	return i;
-}
-
-//地磁気ロック対策のmode_change関数
-static int compass_mode_change()
-{
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_SINGLE);
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
-	return 0;
 }
 
 //通常のcompass読み取り関数 error時のみ表示するようにした
