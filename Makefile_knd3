@@ -1,4 +1,4 @@
-#Makefile_knd2
+# Makefile_knd2
 
 LIBS = -lwiringPi -lm -lgps
 objs0 = integration_knd3.o motor.o compass.o ring_buffer.o mitibiki.o pid.o
