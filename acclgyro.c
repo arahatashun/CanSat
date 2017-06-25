@@ -66,17 +66,17 @@ static short read_out(int addr)  //レジスタの値を読み取る
 	acclGyroModeChange();//ロック対策用の関数
 	uint8_t msb = 0;
 	msb = wiringPiI2CReadReg8(fd, addr);
-  uint8_t lsb = 0;
+	uint8_t lsb = 0;
 	lsb = wiringPiI2CReadReg8(fd, addr+1);
 	short value = 0;
-  value = msb << 8 | lsb;
+	value = msb << 8 | lsb;
 	return value;
 }
 
 //short型用の比較関数
 static int sCmp (const void* p, const void* q)
 {
-    return *(short*)p - *(short*)q;
+	return *(short*)p - *(short*)q;
 }
 
 //角速度を測定する
@@ -86,11 +86,11 @@ int readGyro(Gyro *data)
 	short yList[10] = {};
 	short zList[10] = {};
 	int i;
-	for(i=0;i<10;i++)
+	for(i=0; i<10; i++)
 	{
-	xList[i] = read_out(GYROX_REG);
-	yList[i] = read_out(GYROY_REG);
-	zList[i] = read_out(GYROZ_REG);
+		xList[i] = read_out(GYROX_REG);
+		yList[i] = read_out(GYROY_REG);
+		zList[i] = read_out(GYROZ_REG);
 	}
 	qsort(xList,10, sizeof(short), sCmp);
 	qsort(yList,10, sizeof(short), sCmp);
@@ -107,12 +107,11 @@ int readAccl(Accl*data)
 	short yList[10] = {};
 	short zList[10] = {};
 	int i;
-	for(i=0;i<10;i++)
+	for(i=0; i<10; i++)
 	{
-	xList[i] = read_out(ACCLX_REG);
-	yList[i] = read_out(ACCLY_REG);
-	zList[i] = read_out(ACCLZ_REG);
-	printf("%d\n",xList[i]);
+		xList[i] = read_out(ACCLX_REG);
+		yList[i] = read_out(ACCLY_REG);
+		zList[i] = read_out(ACCLZ_REG);
 	}
 	qsort(xList,10, sizeof(short), sCmp);
 	qsort(yList,10, sizeof(short), sCmp);
@@ -153,7 +152,7 @@ double cal_pitch(Accl* data)
 {
 	double phi = cal_roll(data);
 	double psi = atan2(-data->acclX_scaled,
-										data->acclY_scaled*sin(phi)+data->acclZ_scaled*cos(phi));
+	                   data->acclY_scaled*sin(phi)+data->acclZ_scaled*cos(phi));
 	return psi;
 }
 
@@ -161,5 +160,5 @@ double cal_pitch(Accl* data)
 static double calc_norm (Accl* data)
 {
 	return sqrt((data->acclX_scaled*data->acclX_scaled) +
-											(data->acclY_scaled*data->acclY_scaled));
+	            (data->acclY_scaled*data->acclY_scaled));
 }
