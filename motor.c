@@ -118,7 +118,7 @@ int motor_slalom(int delta_pwm)
 		//左に曲がる
 		softPwmWrite(RIGHT_MOTOR1,MAX_PWM_VAL);
 		softPwmWrite(RIGHT_MOTOR2,ZERO_PWM_VAL);
-		softPwmWrite(LEFT_MOTOR1,MAX_PWM_VAL-delta_pwm);
+		softPwmWrite(LEFT_MOTOR1,MAX_PWM_VAL+delta_pwm);
 		softPwmWrite(LEFT_MOTOR2,ZERO_PWM_VAL);
 	}
 	return 0;
