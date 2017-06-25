@@ -8,6 +8,10 @@
 
 static const double COMPASS_X_OFFSET = -92.0; //ここに手動でキャリブレーションしたoffset値を代入
 static const double COMPASS_Y_OFFSET = -253.5;
+static const int SETPOINT = 0.0;//delta_angleの目標値
+static const double KP_VALUE= 5/9;
+static const double KI_VALUE = 0.01;
+static const double KD_VALUE = 0;
 
 void handler(int signum)
 {
@@ -55,6 +59,7 @@ int main()
 		int i = 0;
 		double compass_angle = 0;
 		pid_initialize(&pid_data);
+		pid_const_initialize(&pid_data,SETPOINT,KP_VALUE,KI_VALUE,KD_VALUE);
 		pid_data.setpoint = 0.0;
 		for(i=0; i<20; i++)
 		{
