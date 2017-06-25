@@ -67,11 +67,11 @@ int cal_compass_theta(DistAngle *data)
 	//NOTE ここは地磁気が抜けていると無限ループに入りかねないのでそのうちGPS制御に移りたい
 	while(compass_data.x_value == -1.0 && compass_data.y_value == -1.0) //地磁気resister　error
 	{
-		handle_compass_error_two(&compass_data);
+		handle_compass_error(&compass_data);
 	}
 	while(compass_data.x_value == -4096.0 || compass_data.y_value == -4096.0)//周囲に強磁場がある
 	{
-		handle_compass_error_three(&compass_data);
+		handle_compass_error_two(&compass_data);
 	}
 	compass_x = compass_data.x_value - COMPASS_X_OFFSET;
 	compass_y = compass_data.y_value - COMPASS_Y_OFFSET;
