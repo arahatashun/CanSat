@@ -64,7 +64,7 @@ int main()
 			pid_data.input = (int)(compass_angle/180*100);
 			compute_output(&pid_data);
 			printf("pid_output = %d\n",pid_data.output);
-			motor_slalom(-pid_data.output);
+			motor_slalom(pid_data.output);
 			delay(50);
 			if(i==19)
 			{
