@@ -146,20 +146,21 @@ int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
 }
 
 //goal判定で-2を返してそれ以外は0
-int decide_route(DistAngle *data,Pid *pid_data, Queue *latring,Queue *lonring)
+int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 {
+	Pid pid_data;
 	int i;
-	pid_initialize(pid_data);
-	pid_const_initialize(pid_data,setpoint,kp_value,ki_value,kd_value);
+	pid_initialize(&pid_data);
+	pid_const_initialize(&pid_data,setpoint,kp_value,ki_value,kd_value);
 	for(i=0; i<20; i++)
 	{
 		update_angle(data,latring,lonring);
 		if(data->dist2goal>GOAL_THRESHOLD)
 		{
-			pid_data->input = data->delta_angle;
-			compute_output(pid_data);
-			printf("pid_output = %d\n",pid_data->output);
-			motor_slalom(pid_data->output);
+			pid_data.input = data->delta_angle;
+			compute_output(&pid_data);
+			printf("pid_output = %d\n",pid_data.output);
+			motor_slalom(pid_data.output);
 			delay(50);
 		}
 		else
@@ -184,10 +185,9 @@ int main()
 	gps_init();
 	compass_initialize();
 	DistAngle DistAngle_data;
-	Pid pid_data;
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
 	DistAngle_initialize(&DistAngle_data);
-	while(decide_route(&DistAngle_data,&pid_data,gps_latring,gps_lonring) != -2) ;
+	while(decide_route(&DistAngle_data,gps_latring,gps_lonring) != -2) ;
 	return 0;
 }
