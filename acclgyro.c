@@ -64,7 +64,7 @@ static short read_out(int addr)  //レジスタの値を読み取る
 }
 
 //short型用の比較関数
-int sCmp (const void* p, const void* q)
+static int sCmp (const void* p, const void* q)
 {
     return *(short*)p - *(short*)q;
 }
