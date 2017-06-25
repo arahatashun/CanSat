@@ -184,10 +184,10 @@ int main()
 	gps_init();
 	compass_initialize();
 	DistAngle DistAngle_data;
-	Pid Pid_data;
+	Pid pid_data;
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
 	DistAngle_initialize(&DistAngle_data);
-	while(decide_route(pid_dataDistAngle_data, gps_latring, gps_lonring) != -2) ;
+	while(decide_route(pid_data,DistAngle_data, gps_latring, gps_lonring) != -2) ;
 	return 0;
 }
