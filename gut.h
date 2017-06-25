@@ -1,4 +1,4 @@
-#ifdef GUT_H
+#ifndef GUT_H
 #define GUT_H
 
 int cut_initialize();
