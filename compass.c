@@ -163,8 +163,7 @@ static double cal_deviated_angle(double theta_degree)
 //地磁気のxy座標から方角を計算
 double calc_compass_angle(double x,double y)
 {
-	double cal_theta = 0;
-	cal_theta = atan2(-y*K_PARAMETER,x)*(180/PI);
+	double cal_theta = atan2(-y*K_PARAMETER,x)*(180/PI);
 	if(cal_theta  < -90)  //詳しい計算方法はkndまで
 	{
 		cal_theta = -cal_theta - 90;
@@ -182,18 +181,12 @@ double cal_deg_acclcompass(double x, double y,double z,
                            double sin_phi, double sin_psi,
                            double cos_phi, double cos_psi)
 {
-	double y1 = 0;//y1~x3は見やすさと計算のために用意した物理的に意味はない変数
-	double y2 = 0;
-	double x1 = 0;
-	double x2 = 0;
-	double x3 = 0;
-	double cal_theta = 0;
-	y1 = z*sin_phi;
-	y2 = y*cos_phi;
-	x1 = x*cos_psi;
-	x2 = y*sin_psi*sin_phi;
-	x3 = z*sin_psi*cos_phi;
-	cal_theta = atan2((y1 - y2)*K_PARAMETER,x1 + x2 + x3)*(180.0/PI);
+	double y1 = z*sin_phi;;//y1~x3は見やすさと計算のために用意した物理的に意味はない変数
+	double y2 = y*cos_phi;
+	double x1 = x*cos_psi;
+	double x2 = y*sin_psi*sin_phi;
+	double x3 = z*sin_psi*cos_phi;
+	double cal_theta = atan2((y1 - y2)*K_PARAMETER,x1 + x2 + x3)*(180.0/PI);
 	if(cal_theta  < -90)  //詳しい計算方法はkndまで
 	{
 		cal_theta = -cal_theta - 90;
