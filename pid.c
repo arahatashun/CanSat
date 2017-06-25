@@ -4,7 +4,7 @@
 #include "pid.h"
 
 static const double kp_value = 1;
-static const double ki_value = 0;
+static const double ki_value = 0.001;
 static const double kd_value = 0;
 
 /*

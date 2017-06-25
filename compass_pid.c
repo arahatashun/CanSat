@@ -66,6 +66,10 @@ int main()
 			printf("pid_output = %d\n",pid_data.output);
 			motor_slalom(-pid_data.output);
 			delay(50);
+			if(i==19)
+			{
+				printf("integral finish\n");
+			}
 		}
 	}
 }
