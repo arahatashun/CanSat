@@ -38,14 +38,12 @@ static const int TSL2561_REGISTER_CHAN1_HIGH = 0x8F;
 static const int LUXDELAY = 500;
 static const int LIGHT_THRESHOLD = 10;  //光センサー閾値
 static int fd = 0;
-//関数プロトタイプ宣言(static)
-int getLux();
+
 
 int luxsensor_initialize()
 {
 	//I2c setup
 	fd = wiringPiI2CSetup(TSL2561_ADDR_FLOAT);
-	//NOTE TSL2561_ADDR_FLOATをTSL2561_ADDR_LOWに置き換える必要あるかも
 	if(fd == -1)
 	{
 		printf("WARNING! luxsensor wiringPiI2CSetup error\n");
@@ -71,7 +69,13 @@ int getLux()
 {
 	//NOTE setup忘れたら値が振り切れる
 	// Set timing (101 mSec)
-	wiringPiI2CWriteReg8(fd, TSL2561_REGISTER_TIMING, TSL2561_GAIN_AUTO);
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd, TSL2561_REGISTER_TIMING, TSL2561_GAIN_AUTO);
+	if( WPI2CWReg8 == -1)
+	{
+		printf("luxsensor write error register REG_TIMING\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		printf("errno=%d: %s\n", errno, strerror(errno));
+	}
 	//Wait for the conversion to complete
 	delay(LUXDELAY);
 	int visible_and_ir = wiringPiI2CReadReg16(fd, TSL2561_REGISTER_CHAN0_LOW);
@@ -79,14 +83,17 @@ int getLux()
 	return visible_and_ir;
 }
 
-int islight(){
+int isLight()
+{
 	int lux=0;
 	lux = getLux();
-	if(lux>LIGHT_THRESHOLD) {
+	if(lux>LIGHT_THRESHOLD)
+	{
 		printf("light:%d\n",lux);
 		return 1;
 	}
-	else{
+	else
+	{
 		return 0;
 	}
 }
