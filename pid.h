@@ -1,7 +1,7 @@
 #ifndef PID_H
 #define PID_H
 
-typedef struct {
+typedef struct pid{
     double input;//入力値
     double setpoint;//目標値
     int output; //操作量(milliseconds) -100~100
@@ -19,6 +19,9 @@ int pid_limiter(Pid* pid_limits);
 int compute_output(Pid* pid_comp);
 
 int pid_initialize(Pid* pid_init);
+
+int pid_const_initialize(Pid* pid_init, double setpoint,
+  double kp_value, double ki_value, double kd_value);
 
 Pid *make_pid(void);
 

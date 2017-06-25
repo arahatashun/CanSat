@@ -1,7 +1,7 @@
 #Makefile_knd2
 
 LIBS = -lwiringPi -lm -lgps
-objs0 = integration_knd3.o motor.o compass.o ring_buffer.o mitibiki.o 
+objs0 = integration_knd3.o motor.o compass.o ring_buffer.o mitibiki.o pid.o
 
 integration_knd3.out: $(objs0)
 	gcc -g -Wall -O2 -o integration_knd3.out $(objs0) $(LIBS)
@@ -15,3 +15,5 @@ ring_buffer.o: ring_buffer.c
 	gcc -c ring_buffer.c
 mitibiki.o: mitibiki.c
 	gcc -c mitibiki.c
+pio.o: pid.c
+	gcc -c pid.c

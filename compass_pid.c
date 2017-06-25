@@ -6,8 +6,8 @@
 #include <signal.h>
 #include <stdlib.h>
 
-static const double COMPASS_X_OFFSET = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
-static const double COMPASS_Y_OFFSET = 0.0;
+static const double COMPASS_X_OFFSET = -92.0; //ここに手動でキャリブレーションしたoffset値を代入
+static const double COMPASS_Y_OFFSET = -253.5;
 
 void handler(int signum)
 {
@@ -24,7 +24,7 @@ double cal_compass_theta()
 	double compass_x = 0;
 	double compass_y = 0;
 	//NOTE ここは地磁気が抜けていると無限ループに入りかねないのでそのうちGPS制御に移りたい
-	while(compass_data.x_value == -1.0 && compass_data.y_value == -1.0) //地磁気resister　error
+	while(compass_data.x_value == -1.0 && compass_data.y_value == -1.0)//地磁気resister　error
 	{
 		handle_compass_error();
 		delay(1000);
@@ -61,11 +61,15 @@ int main()
 		for(i=0; i<20; i++)
 		{
 			compass_angle = cal_compass_theta();
-			pid_data.input = compass_angle/180*100;
+			pid_data.input = (int)(compass_angle/180*100);
 			compute_output(&pid_data);
-			printf("pid_output = %f\n",pid_data.output);
-			motor_slalom(-pid_data.output);
+			printf("pid_output = %d\n",pid_data.output);
+			motor_slalom(pid_data.output);
 			delay(50);
+			if(i==19)
+			{
+				printf("integral finish\n");
+			}
 		}
 	}
 }

@@ -26,7 +26,7 @@ static int WPI2CWReg8 = 0;
 static const int turn_calib_power = 25;   //地磁気補正時turnするpower
 static const int turn_calib_milliseconds = 75;   //地磁気補正時turnするmilliseconds
 
-static const int MAX_PWM_POWER = 100;
+static const int MAX_PWM_VAL = 100;
 static const int ESCAPE_TIME = 1000;
 int compass_initialize()
 {
@@ -189,7 +189,7 @@ int handle_compass_error_two(Cmps *data)//地磁気が-1になった時に使う
 int handle_compass_error_three(Cmps *data)//地磁気が-4096になった時使う　モーター回して近くの磁場を一応避ける
 {
 	handle_compass_error();
-	motor_forward(MAX_PWM_VALUE);
+	motor_forward(MAX_PWM_VAL);
 	delay(ESCAPE_TIME);
 	compass_mean(data);
 	printf("\n");

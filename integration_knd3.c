@@ -9,7 +9,7 @@
 #include "motor.h"
 #include "mitibiki.h"
 #include "ring_buffer.h"
-
+#include "pid.h"
 
 static const int TURN_POWER = 60;//turnするpower
 static const int TURN_MILLISECONDS = 100;//turnするmilliseconds
@@ -17,9 +17,14 @@ static const int FORWARD_MILLISECONDS = 3000;//forwardするmilliseconds
 static const int STOP_MILLISECONDS = 2000;//地磁気安定のためにstopするmilliseconds
 static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
-static const double COMPASS_X_OFFSET = 0.0; //ここに手動でキャリブレーションしたoffset値を代入
-static const double COMPASS_Y_OFFSET = 0.0;
+static const double COMPASS_X_OFFSET = -92.0; //ここに手動でキャリブレーションしたoffset値を代入
+static const double COMPASS_Y_OFFSET = -253.5;
 static const int GOAL_THRESHOLD = 2;
+static const int setpoint = 0.0;//delta_angleの目標値
+static const double kp_value = 5/9;
+static const double ki_value = 0.01;
+static const double kd_value = 0;
+
 
 
 typedef struct dist_and_angle {
@@ -141,43 +146,31 @@ int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
 }
 
 //goal判定で-2を返してそれ以外は0
-int decide_route(DistAngle data,Queue *latring,Queue *lonring)
+int decide_route(DistAngle *data,Pid *pid_data, Queue *latring,Queue *lonring)
 {
-	int cnst = 1;
-	update_angle(&data,latring,lonring);
-	if(data.dist2goal>GOAL_THRESHOLD)
+	int i;
+	pid_initialize(pid_data);
+	pid_const_initialize(pid_data,setpoint,kp_value,ki_value,kd_value);
+	for(i=0; i<20; i++)
 	{
-		if(-180 <= data.delta_angle && data.delta_angle <= -10)
+		update_angle(data,latring,lonring);
+		if(data->dist2goal>GOAL_THRESHOLD)
 		{
-			//ゴールの方角がマシンから見て左に30~180度の場合は左回転
-			int turn_power_pid = (int)(cnst*data.delta_angle/180*100);
-			motor_rotate(turn_power_pid);
-			delay(TURN_MILLISECONDS);
-			motor_stop();
-			delay(STOP_MILLISECONDS);
-		}
-		else if(10 <= data.delta_angle && data.delta_angle <= 180)
-		{
-			//ゴールの方角がマシンから見て右に30~180度の場合は右回転
-			int turn_power_pid = (int)(cnst*data.delta_angle/180*100);
-			motor_rotate(turn_power_pid);
-			delay(TURN_MILLISECONDS);
-			motor_stop();
-			delay(STOP_MILLISECONDS);
+			pid_data->input = data->delta_angle;
+			compute_output(pid_data);
+			printf("pid_output = %d\n",pid_data->output);
+			motor_slalom(pid_data->output);
+			delay(50);
 		}
 		else
 		{
-			//直進
-			motor_forward(100);
-			delay(FORWARD_MILLISECONDS);
-			motor_stop();
-			delay(STOP_MILLISECONDS);
+			printf("==========GOAL==========");
+			return -2;        //ゴールに着いた
 		}
-	}
-	else
-	{
-		printf("==========GOAL==========");
-		return -2;//ゴールに着いた
+		if(i==19)
+		{
+			printf("integral finish\n");
+		}
 	}
 	printf("\n");  //１つのシーケンスの終わり
 	return 0;
@@ -191,9 +184,10 @@ int main()
 	gps_init();
 	compass_initialize();
 	DistAngle DistAngle_data;
+	Pid pid_data;
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
 	DistAngle_initialize(&DistAngle_data);
-	while(decide_route(DistAngle_data, gps_latring, gps_lonring) != -2) ;
+	while(decide_route(&DistAngle_data,&pid_data,gps_latring,gps_lonring) != -2) ;
 	return 0;
 }
