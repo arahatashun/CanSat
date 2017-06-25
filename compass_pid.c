@@ -10,7 +10,7 @@ static const double COMPASS_X_OFFSET = -92.0; //ここに手動でキャリブ�
 static const double COMPASS_Y_OFFSET = -253.5;
 static const int SETPOINT = 0.0;//delta_angleの目標値
 static const double KP_VALUE= 0.5;
-static const double KI_VALUE = 0.0005;
+static const double KI_VALUE = 0.0007;
 static const double KD_VALUE = 0;
 
 void handler(int signum)
@@ -64,7 +64,7 @@ int main()
 		for(i=0; i<20; i++)
 		{
 			compass_angle = cal_compass_theta();
-			pid_data.input = (int)(compass_angle);
+			pid_data.input = compass_angle;
 			compute_output(&pid_data);
 			printf("pid_output = %d\n",pid_data.output);
 			motor_slalom(pid_data.output);
