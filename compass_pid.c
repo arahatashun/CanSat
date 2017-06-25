@@ -24,7 +24,7 @@ double cal_compass_theta()
 	double compass_x = 0;
 	double compass_y = 0;
 	//NOTE ここは地磁気が抜けていると無限ループに入りかねないのでそのうちGPS制御に移りたい
-	while(compass_data.x_value == -1.0 && compass_data.y_value == -1.0) //地磁気resister　error
+	while(compass_data.x_value == -1.0 && compass_data.y_value == -1.0)//地磁気resister　error
 	{
 		handle_compass_error();
 		delay(1000);
