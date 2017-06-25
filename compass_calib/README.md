@@ -22,5 +22,6 @@ calib.py
 |compass_scatter.c|make scatter|sudo ./scatter.out|
 |compass_test.c|make test|sudo ./test.out|
 
-pythonが使えるコンソール上で同じディレクトリに`compasslog.txt`
+pythonが使えるコンソール上で同じディレクトリに`compasslog.txt`があるところで
+
 `python calib.py`
