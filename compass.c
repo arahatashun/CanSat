@@ -169,26 +169,20 @@ int compass_mode_change()
 	return 0;
 }
 
-//地磁気-1がきた時のせめてもの抵抗(本来mode changeはlock対策)
-int handle_compass_error()
+int handle_compass_error(Cmps *data)//地磁気が-1になった時に使う
 {
 	compass_initialize();
 	printf("compass reinitialized\n");
 	compass_mode_change();
-	return 0;
-}
-
-int handle_compass_error_two(Cmps *data)//地磁気が-1になった時に使う
-{
-	handle_compass_error();
-	delay(1000);
 	compass_mean(data);
 	printf("\n");
 	return 0;
 }
-int handle_compass_error_three(Cmps *data)//地磁気が-4096になった時使う　モーター回して近くの磁場を一応避ける
+int handle_compass_error_two(Cmps *data)//地磁気が-4096になった時使う　モーター回して近くの磁場を一応避ける
 {
-	handle_compass_error();
+	compass_initialize();
+	printf("compass reinitialized\n");
+	compass_mode_change();
 	motor_forward(MAX_PWM_VAL);
 	delay(ESCAPE_TIME);
 	compass_mean(data);
@@ -269,7 +263,9 @@ double cal_deg_acclcompass(double x, double y,double z,
 	return cal_deviated_angle(cal_theta);
 }
 
-//以下はマシンによる自動地磁気calibration用
+/*******************************************/
+/***以下はマシンによる自動地磁気calibration用****/
+/*******************************************/
 static int compass_offset_initialize(Cmps_offset *compass_offset, Cmps *compass_data)
 {
 	compass_value_initialize(compass_data);

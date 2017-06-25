@@ -17,15 +17,12 @@ typedef struct cmps_offset {
   double compassy_offset;
 } Cmps_offset;
 
+int compass_initialize();
 int compass_read(Cmps *data);
 int compass_read_scatter(Cmps *data);
 int compass_mean(Cmps *data);
-int print_compass(Cmps *data);
-int compass_initialize();
-int compass_mode_change();
-int handle_compass_error();
+int handle_compass_error(Cmps *data);
 int handle_compass_error_two(Cmps *data);
-int handle_compass_error_three(Cmps *data);
 int compass_value_initialize(Cmps *compass_init);
 double calc_compass_angle(double x,double y);
 double cal_deg_acclcompass(double x, double y,
