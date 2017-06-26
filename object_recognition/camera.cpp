@@ -93,9 +93,9 @@ cv::Mat Mred(void)
 	printf("%s\n",sbtime);
 	char* path = makePath(stime);
 	printf("%s\n",path);
-	char* bpath = makePath(sbtime);
-	printf("%s\n",bpath);
 	takePhoto(path);
+	char* bpath = makePath(sbtime);
+	printf("%s\n",path);
  	cv::Mat src = cv::imread(path);//画像の読み込み
 	cv::Mat hsv;
 	hsv = rmNoize(binarize(src));
