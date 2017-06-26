@@ -81,6 +81,7 @@ int saveBinary(cv::Mat src,char* path)
 {
 	cv::Mat binary_img;
 	cv::resize(src,binary_img,cv::Size(),0.25,0.25);
+	imwrite(path, src); 
 	return 0;
 }
 
