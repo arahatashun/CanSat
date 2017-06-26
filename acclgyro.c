@@ -69,7 +69,8 @@ static short read_out(int addr)  //レジスタの値を読み取る
 	lsb = wiringPiI2CReadReg8(fd, addr+1);
 	short value = 0;
 	value = msb << 8 | lsb;
-	return value;
+	if (value >= 0x8000) return -((65535 - value) + 1);
+	else return value;
 }
 
 //short型用の比較関数

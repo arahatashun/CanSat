@@ -65,18 +65,3 @@ int pid_const_initialize(Pid* pid_init, double setpoint, double kp_value, double
 	pid_init->Kd = kd_value;
 	return 0;
 }
-Pid *make_pid(void)
-{
-	Pid *pid = malloc(sizeof(Pid));
-	if (pid != NULL)
-	{
-		pid_initialize(pid);
-	}
-	else
-	{
-		free(pid);
-		printf("メモリ不足\n");
-		return NULL;//segmantaion faultの可能性
-	}
-	return pid;
-}

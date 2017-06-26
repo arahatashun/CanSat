@@ -19,16 +19,44 @@ static const int Z_LSB_REG = 0x06;
 static const int Y_MSB_REG = 0x07;
 static const int Y_LSB_REG = 0x08;
 static const double PI = 3.14159265;
+
+///キャリブレーション関係のパラメーター
 static const double K_PARAMETER = 1.0;//地磁気の感度補正パラメータ
+static const double COMPASS_X_OFFSET = -92.0; //ここに手動でキャリブレーションしたoffset値を代入
+static const double COMPASS_Y_OFFSET = -253.5;
+
 //calibration時の回転
-static const int TURN_CALIB_POWER = 25;   //地磁気補正時turnするpower
-static const int TURN_CALIB_MILLISECONDS = 75;   //地磁気補正時turnするmilliseconds
+static const int TURN_CALIB_POWER = 25;//地磁気補正時turnするpower
+static const int TURN_CALIB_MILLISECONDS = 75;//地磁気補正時turnするmilliseconds
 //周囲の今日磁場がある時の退避
 static const int MAX_PWM_VAL = 100;
 static const int ESCAPE_TIME = 1000;
 
 static int fd = 0;
-static int WPI2CWReg8 = 0;
+
+//compass raw data格納
+typedef struct raw {
+  short xList[10];
+  short yList[10];
+	short zList[10];
+} Raw;
+
+typedef struct cmps {
+  double x_value;//the values of compassx
+  double y_value;
+  double z_value;
+} Cmps;
+
+//構造体の初期化
+static int compass_value_initialize(Cmps *compass_init)
+{
+	compass_init->x_value = 0;
+	compass_init->y_value = 0;
+	compass_init->z_value = 0;
+	return 0;
+}
+
+
 int compass_initialize()
 {
 	//I2c setup
@@ -44,23 +72,39 @@ int compass_initialize()
 		printf("compass wiringPiI2CSetup success\n");
 		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
 	}
+
+	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
+	if(WPI2CWReg8 == -1)
+	{
+		printf("compass write error register MODE_CONTINUOUS\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		printf("errno=%d: %s\n", errno, strerror(errno));
+	}
 	return 0;
 }
 
 //地磁気ロック対策のmode_change関数(error時のみ表示)
 static int compass_mode_change()
 {
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_SINGLE);
+	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_SINGLE);
 	if(WPI2CWReg8 == -1)
 	{
+<<<<<<< HEAD
 		printf("compass write error register MODE_REG_SINGLE\n");
+=======
+		printf("compass write error register MODE_SINGLE\n");
+>>>>>>> ground
 		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
 		printf("errno=%d: %s\n", errno, strerror(errno));
 	}
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
 	if(WPI2CWReg8 == -1)
 	{
+<<<<<<< HEAD
 		printf("compass write error register MODE_REG_CONTINUOUS\n");
+=======
+		printf("compass write error register MODE_CONTINUOUS\n");
+>>>>>>> ground
 		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
 		printf("errno=%d: %s\n", errno, strerror(errno));
 	}
@@ -79,6 +123,7 @@ static short read_out(int file,int msb_reg, int lsb_reg)
 	return i;
 }
 
+
 //short型用の比較関数
 static int sCmp (const void* p, const void* q)
 {
@@ -86,56 +131,97 @@ static int sCmp (const void* p, const void* q)
 }
 
 //compassのraw_data読み取り関数
-int compass_read(Cmps *data)
+static int compassReadRaw(Raw* data)
 {
-	short xList[10] = {};//0で初期化
-	short yList[10] = {};
-	short zList[10] = {};
 	int i;
 	for(i=0; i<10; i++)
 	{
-		xList[i] = read_out(fd, X_MSB_REG, X_LSB_REG);
-		yList[i] = read_out(fd, Y_MSB_REG, Y_LSB_REG);
-		zList[i] = read_out(fd, Z_MSB_REG, Z_LSB_REG);
-		/*uint8_t status_val = wiringPiI2CReadReg8(fd, 0x09);  とりあえずコメントアウトしておきます
-		   printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01); //地磁気が正常ならここは1(死んでも1?)
-		   printf("2nd bit of status resister = %d\n", (status_val >> 1) & 0x01); //地磁気が正常ならここは0(死んだら1)*/
+		data->xList[i] = read_out(fd, X_MSB_REG, X_LSB_REG);
+		data->yList[i] = read_out(fd, Y_MSB_REG, Y_LSB_REG);
+		data->zList[i] = read_out(fd, Z_MSB_REG, Z_LSB_REG);
+		/*
+		uint8_t status_val = wiringPiI2CReadReg8(fd, 0x09);//とりあえずコメントアウトしておきます
+		printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01);//地磁気が正常ならここは1(死んでも1?)
+		printf("2nd bit of status resister = %d\n", (status_val >> 1) & 0x01);//地磁気が正常ならここは0(死んだら1)
+		*/
 	}
-	qsort(xList,10, sizeof(short), sCmp);
-	qsort(yList,10, sizeof(short), sCmp);
-	qsort(zList,10, sizeof(short), sCmp);
-	data->x_value = (double)xList[4];
-	data->y_value = (double)yList[4];
-	data->z_value = (double)zList[4];
-	return 0;
+	qsort(data->xList,10, sizeof(short), sCmp);
+	qsort(data->yList,10, sizeof(short), sCmp);
+	//qsort(zList,10, sizeof(short), sCmp);
 }
 
-int handle_compass_error(Cmps *data)//地磁気が-1になった時に使う
+//地磁気が-1もしくは任意の値にLockなった時に使う
+static int handleCompassErrorOne(Raw* data)
 {
-	compass_initialize();
+	compass_initialize();//NOTE initialize
 	printf("compass reinitialized\n");
 	compass_mode_change();
-	compass_read(data);
+	compassReadRaw(data);
 	printf("\n");
 	return 0;
 }
 
-int handle_compass_error_two(Cmps *data)//地磁気が-4096になった時使う　モーター回して近くの磁場を一応避ける
+//地磁気が-4096になった時使う モーター回して近くの磁場を一応避ける
+static int handleCompassErrorTwo(Raw *data)
 {
 	compass_initialize();
 	printf("compass reinitialized\n");
 	compass_mode_change();
 	motor_forward(MAX_PWM_VAL);
 	delay(ESCAPE_TIME);
-	compass_read(data);
+	compassReadRaw(data);
 	printf("\n");
 	return 0;
 }
-int compass_value_initialize(Cmps *compass_init)
+//lock用、指定した値にlockされてたらreturn1する
+static int checkLock(short* values,const int lock)
 {
-	compass_init->x_value = 0;
-	compass_init->y_value = 0;
-	compass_init->z_value = 0;
+	int len = sizeof(values)/sizeof(values[0]); //配列の要素数を取得
+	int lock_count = 0;
+	int i;
+	for (i = 0; i < len; i++)
+	{
+		if (values[i] ==lock) lock_count++;
+	}
+	if (lock_count == len) return 1;
+	return 0;
+}
+
+static int compass_read(Cmps* data)
+{
+	Raw rawdata;
+	compassReadRaw(&rawdata);
+	int LockCounter = 0;
+	while((checkLock(rawdata.xList,-1) || checkLock(rawdata.yList,-1))
+																																			&& LockCounter<4)
+	{
+		printf("WARNING compass -1 lock\n");
+		handleCompassErrorOne(&rawdata);
+		LockCounter++;
+	}
+	while((checkLock(rawdata.xList,-4096) || checkLock(rawdata.yList,-4096))
+																																		&& LockCounter<4 )
+	{
+		handleCompassErrorTwo(&rawdata);
+		printf("WARNING compass -4096 lock\n");
+		LockCounter++;
+	}
+	while ((checkLock(rawdata.xList,rawdata.xList[0]) || checkLock(rawdata.xList,rawdata.xList[0]))
+																																		&& LockCounter<4)
+	{
+		printf("WARNING compass lock\n");
+		handleCompassErrorOne(&rawdata);
+		LockCounter++;
+	}
+
+	if(LockCounter>=5)
+	{
+		printf("Lock Counter Max\n");
+		;//TODO 再起動?
+	}
+	data->x_value = (double)rawdata.xList[4] - COMPASS_X_OFFSET;
+	data->y_value = (double)rawdata.yList[4] - COMPASS_Y_OFFSET;
+	data->z_value = (double)rawdata.zList[4];
 	return 0;
 }
 
@@ -161,9 +247,9 @@ static double cal_deviated_angle(double theta_degree)
 
 
 //地磁気のxy座標から方角を計算
-double calc_compass_angle(double x,double y)
+static double calc_compass_angle(Cmps data)
 {
-	double cal_theta = atan2(-y*K_PARAMETER,x)*(180/PI);
+	double cal_theta = atan2(-data.y_value*K_PARAMETER,data.x_value)*(180/PI);
 	if(cal_theta  < -90)  //詳しい計算方法はkndまで
 	{
 		cal_theta = -cal_theta - 90;
@@ -175,7 +261,16 @@ double calc_compass_angle(double x,double y)
 	return cal_deviated_angle(cal_theta);
 }
 
+//コンパスで測った角度を返す
+double readCompassAngle(void)
+{
+	Cmps data;
+	compass_value_initialize(&data);
+	compass_read(&data);
+	return calc_compass_angle(data);
+}
 
+/*
 //6軸を用いた方角の計算
 double cal_deg_acclcompass(double x, double y,double z,
                            double sin_phi, double sin_psi,
@@ -197,6 +292,7 @@ double cal_deg_acclcompass(double x, double y,double z,
 	}
 	return cal_deviated_angle(cal_theta);
 }
+*/
 
 /*******************************************/
 /***以下はマシンによる自動地磁気calibration用****/
