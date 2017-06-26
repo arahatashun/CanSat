@@ -43,7 +43,7 @@ char* makePath(char* name)
 	return full_path;
 }
 //写真をとる
-int takePhoto(char* name)
+int takePhoto(const char* name)
 {
 	char full_command[N];
 	char front_command[] = "raspistill -o ";//command
