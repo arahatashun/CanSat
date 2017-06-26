@@ -55,13 +55,25 @@ int luxsensor_initialize()
 		printf("luxsensor wiringPiI2CSetup success\n");
 		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
 	}
-	wiringPiI2CWriteReg8(fd, TSL2561_COMMAND_BIT, TSL2561_CONTROL_POWERON);
+	WPI2CWReg8  = wiringPiI2CWriteReg8(fd, TSL2561_COMMAND_BIT, TSL2561_CONTROL_POWERON);
+	if( WPI2CWReg8 == -1)
+	{
+		printf("luxsensor write error register COMMAND_BIT\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		printf("errno=%d: %s\n", errno, strerror(errno));
+	}
 	return 0;
 }
 
 int luxsensor_close()
 {
-	wiringPiI2CWriteReg8(fd, TSL2561_COMMAND_BIT, TSL2561_CONTROL_POWEROFF);
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd, TSL2561_COMMAND_BIT, TSL2561_CONTROL_POWEROFF);
+	if( WPI2CWReg8 == -1)
+	{
+		printf("luxsensor write error register COMMAND_BIT\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		printf("errno=%d: %s\n", errno, strerror(errno));
+	}
 	return 0;
 }
 
@@ -83,6 +95,7 @@ int getLux()
 	return visible_and_ir;
 }
 
+//LUXが閾値以上でreturn 1
 int isLight()
 {
 	int lux=0;
