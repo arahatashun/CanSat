@@ -88,17 +88,15 @@ int saveBinary(cv::Mat src,char* path)
 cv::Mat Mred(void)
 {
 	char* stime = makeTimeString();
-	printf("%s\n",stime);
 	char* sbtime = makeBinaryString(stime);
-	printf("%s\n",sbtime);
 	const char* path = makePath(stime);
-	printf("%s\n",path);
 	takePhoto(path);
+	cv::Mat src = cv::imread(path);
 	char* bpath = makePath(sbtime);
-	printf("%s\n",path);
- 	cv::Mat src = cv::imread(path);//画像の読み込み
 	cv::Mat hsv;
 	hsv = rmNoize(binarize(src));
+	//NOTE makePathはstaticを使ってるのでここに置くこと
+	char* bpath = makePath(sbtime);
 	saveBinary(hsv,bpath);
 	return hsv;
 }
