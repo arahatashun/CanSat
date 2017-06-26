@@ -79,7 +79,7 @@ cv::Mat rmNoize(cv::Mat src)
 int saveBinary(cv::Mat src,char* path)
 {
 	cv::Mat binary_img;
-	cv::resize(src,binary_img,cv::Size(),0.25,0.25,interpolation);
+	cv::resize(src,binary_img,cv::Size(),0.25,0.25);
 	return 0;
 }
 
@@ -89,7 +89,7 @@ cv::Mat Mred(void)
 	char* stime = makeTimeString();
 	char* sbtime = makeBinaryString(btime);
 	char* path = makePath(stime);
-	char* bpath = makePath(btime);
+	char* bpath = makePath(sbtime);
 	takePhoto(path);
  	cv::Mat src = cv::imread(path);//画像の読み込み
 	cv::Mat hsv;
