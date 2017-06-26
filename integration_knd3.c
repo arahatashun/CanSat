@@ -53,6 +53,14 @@ int DistAngle_initialize(DistAngle *data)
 	return 0;
 }
 
+int printTime()
+{
+	time_t timer;
+  time(&timer);
+  printf("%s\n", ctime(&timer));
+	return 0;
+}
+
 //地磁気の計測及びとそのオフセット値からマシンの向いている角度を計算
 
 int cal_compass_theta(DistAngle *data)
@@ -157,14 +165,6 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 		}
 		printf("\n");  //１つのシーケンスの終わり
 	}
-	return 0;
-}
-
-int printTime()
-{
-	time_t timer;
-  time(&timer);
-  printf("%s\n", ctime(&timer));
 	return 0;
 }
 
