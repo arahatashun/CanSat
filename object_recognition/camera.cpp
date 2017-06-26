@@ -91,7 +91,7 @@ cv::Mat Mred(void)
 	printf("%s\n",stime);
 	char* sbtime = makeBinaryString(stime);
 	printf("%s\n",sbtime);
-	char* path = makePath(stime);
+	const char* path = makePath(stime);
 	printf("%s\n",path);
 	takePhoto(path);
 	char* bpath = makePath(sbtime);
