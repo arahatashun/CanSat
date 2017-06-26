@@ -88,9 +88,8 @@ cv::Mat Mred(void)
 {
 	char* stime = makeTimeString();
 	char* sbtime = makeBinaryString(stime);
-	char* path = makePath(stime);
 	char* bpath = makePath(sbtime);
-	takePhoto(path);
+	takePhoto(stime);
  	cv::Mat src = cv::imread(path);//画像の読み込み
 	cv::Mat hsv;
 	hsv = rmNoize(binarize(src));
