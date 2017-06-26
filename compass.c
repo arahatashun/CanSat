@@ -53,14 +53,14 @@ static int compass_mode_change()
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_SINGLE);
 	if(WPI2CWReg8 == -1)
 	{
-		printf("compass write error register MODE_REG\n");
+		printf("compass write error register MODE_REG_SINGLE\n");
 		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
 		printf("errno=%d: %s\n", errno, strerror(errno));
 	}
 	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
 	if(WPI2CWReg8 == -1)
 	{
-		printf("compass write error register MODE_REG\n");
+		printf("compass write error register MODE_REG_CONTINUOUS\n");
 		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
 		printf("errno=%d: %s\n", errno, strerror(errno));
 	}
