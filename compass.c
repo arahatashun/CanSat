@@ -166,7 +166,7 @@ static int handleCompassErrorTwo(Raw *data)
 	return 0;
 }
 //lock用、指定した値にlockされてたらreturn1する
-static int checkLockList(int* values,const int lock)
+static int checkLockList(short* values,const int lock)
 {
 	int len = sizeof(values)/sizeof(values[0]); //配列の要素数を取得
 	int lock_count = 0;
