@@ -19,16 +19,31 @@ static const int Z_LSB_REG = 0x06;
 static const int Y_MSB_REG = 0x07;
 static const int Y_LSB_REG = 0x08;
 static const double PI = 3.14159265;
+
+///キャリブレーション関係のパラメーター
 static const double K_PARAMETER = 1.0;//地磁気の感度補正パラメータ
+static const double COMPASS_X_OFFSET = -92.0; //ここに手動でキャリブレーションしたoffset値を代入
+static const double COMPASS_Y_OFFSET = -253.5;
+
 //calibration時の回転
-static const int TURN_CALIB_POWER = 25;   //地磁気補正時turnするpower
-static const int TURN_CALIB_MILLISECONDS = 75;   //地磁気補正時turnするmilliseconds
+static const int TURN_CALIB_POWER = 25;//地磁気補正時turnするpower
+static const int TURN_CALIB_MILLISECONDS = 75;//地磁気補正時turnするmilliseconds
 //周囲の今日磁場がある時の退避
 static const int MAX_PWM_VAL = 100;
 static const int ESCAPE_TIME = 1000;
 
 static int fd = 0;
-static int WPI2CWReg8 = 0;
+
+//構造体の初期化
+int compass_value_initialize(Cmps *compass_init)
+{
+	compass_init->x_value = 0;
+	compass_init->y_value = 0;
+	compass_init->z_value = 0;
+	return 0;
+}
+
+
 int compass_initialize()
 {
 	//I2c setup
@@ -50,7 +65,7 @@ int compass_initialize()
 //地磁気ロック対策のmode_change関数(error時のみ表示)
 static int compass_mode_change()
 {
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_SINGLE);
+	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_SINGLE);
 	if(WPI2CWReg8 == -1)
 	{
 		printf("compass write error register MODE_REG\n");
@@ -79,6 +94,19 @@ static short read_out(int file,int msb_reg, int lsb_reg)
 	return i;
 }
 
+//-1と4096lock用、指定した値にlockされてたらreturn-1する
+static int checkLock(int values[],const int lock)
+{
+	len = sizeof(x)/sizeof(x[0]); //配列の要素数を取得
+	int lock_count = 0;
+	for (i = 0; i < len; i++)
+	{
+		if (x[i] ==lock) lock_count++;
+	}
+	if (lock_count == len) return -1;
+	return 0;
+}
+
 //short型用の比較関数
 static int sCmp (const void* p, const void* q)
 {
@@ -86,7 +114,7 @@ static int sCmp (const void* p, const void* q)
 }
 
 //compassのraw_data読み取り関数
-int compass_read(Cmps *data)
+int compassReadraw(Cmps *data)
 {
 	short xList[10] = {};//0で初期化
 	short yList[10] = {};
@@ -97,22 +125,33 @@ int compass_read(Cmps *data)
 		xList[i] = read_out(fd, X_MSB_REG, X_LSB_REG);
 		yList[i] = read_out(fd, Y_MSB_REG, Y_LSB_REG);
 		zList[i] = read_out(fd, Z_MSB_REG, Z_LSB_REG);
-		/*uint8_t status_val = wiringPiI2CReadReg8(fd, 0x09);  とりあえずコメントアウトしておきます
-		   printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01); //地磁気が正常ならここは1(死んでも1?)
-		   printf("2nd bit of status resister = %d\n", (status_val >> 1) & 0x01); //地磁気が正常ならここは0(死んだら1)*/
+		/*
+		uint8_t status_val = wiringPiI2CReadReg8(fd, 0x09);//とりあえずコメントアウトしておきます
+		printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01);//地磁気が正常ならここは1(死んでも1?)
+		printf("2nd bit of status resister = %d\n", (status_val >> 1) & 0x01);//地磁気が正常ならここは0(死んだら1)
+		*/
 	}
 	qsort(xList,10, sizeof(short), sCmp);
 	qsort(yList,10, sizeof(short), sCmp);
 	qsort(zList,10, sizeof(short), sCmp);
-	data->x_value = (double)xList[4];
-	data->y_value = (double)yList[4];
+	if(checkLock(xList,-1))
+	{
+		handle_compass_error(&compass_data);
+	}
+	else if (checkLock(xList, -4096) || checkLock(yList, -4096) )//周囲に強磁場がある
+	{
+		handle_compass_error_two(&compass_data);
+	}
+	data->x_value = (double)xList[4] - COMPASS_X_OFFSET;
+	data->y_value = (double)yList[4] - COMPASS_Y_OFFSET;
 	data->z_value = (double)zList[4];
 	return 0;
 }
 
 int handle_compass_error(Cmps *data)//地磁気が-1になった時に使う
 {
-	compass_initialize();
+	compass_initialize();//NOTE initialize
+	printf("WARNING compass -1 lock\n", );
 	printf("compass reinitialized\n");
 	compass_mode_change();
 	compass_read(data);
@@ -120,22 +159,16 @@ int handle_compass_error(Cmps *data)//地磁気が-1になった時に使う
 	return 0;
 }
 
-int handle_compass_error_two(Cmps *data)//地磁気が-4096になった時使う　モーター回して近くの磁場を一応避ける
+int handle_compass_error_two(Cmps *data)//地磁気が-4096になった時使う モーター回して近くの磁場を一応避ける
 {
 	compass_initialize();
+	printf("WARNING compass -4096 lock\n");
 	printf("compass reinitialized\n");
 	compass_mode_change();
 	motor_forward(MAX_PWM_VAL);
 	delay(ESCAPE_TIME);
 	compass_read(data);
 	printf("\n");
-	return 0;
-}
-int compass_value_initialize(Cmps *compass_init)
-{
-	compass_init->x_value = 0;
-	compass_init->y_value = 0;
-	compass_init->z_value = 0;
 	return 0;
 }
 
