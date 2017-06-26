@@ -90,9 +90,11 @@ cv::Mat Mred(void)
 	char* stime = makeTimeString();
 	printf("%s\n",stime);
 	char* sbtime = makeBinaryString(stime);
+	printf("%s\n",sbtime);
 	char* path = makePath(stime);
-	char* bpath = makePath(sbtime);
 	printf("%s\n",path);
+	char* bpath = makePath(sbtime);
+	printf("%s\n",bpath);
 	takePhoto(path);
  	cv::Mat src = cv::imread(path);//画像の読み込み
 	cv::Mat hsv;
