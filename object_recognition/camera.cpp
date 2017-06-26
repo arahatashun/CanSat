@@ -46,7 +46,7 @@ int takePhoto(char* name)
 {
 	char full_command[N];
 	char front_command[] = "raspistill -o ";//command
-	sprintf(full_command, "%s%s", front_command, makePath(name));//コマンドの文字列をつなげる。
+	sprintf(full_command, "%s%s", front_command,name);//コマンドの文字列をつなげる。
 	system(full_command);//raspistillで静止画を撮って日時を含むファイル名で保存。
 	printf("%s\n",full_command);
 	//NOTE system関数以外を使うべきか?
@@ -88,8 +88,9 @@ cv::Mat Mred(void)
 {
 	char* stime = makeTimeString();
 	char* sbtime = makeBinaryString(stime);
+	char* path = makePath(stime);
 	char* bpath = makePath(sbtime);
-	takePhoto(stime);
+	takePhoto(path);
  	cv::Mat src = cv::imread(path);//画像の読み込み
 	cv::Mat hsv;
 	hsv = rmNoize(binarize(src));
