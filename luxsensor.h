@@ -4,6 +4,6 @@
 int luxsensor_initialize();
 int luxsensor_close();
 int getLux();
-int islight();
+int isLight();
 
 #endif

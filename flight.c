@@ -245,7 +245,7 @@ static int release(Sequence *release_seq)
 			write_sequence(release_seq,RELEASE_TIMEOUT_SEQ);
 			return RELEASE_TIMEOUT;
 		}
-		else if(islight() == 1)
+		else if(isLight() == 1)
 		{
 			light_counter++;
 		}
