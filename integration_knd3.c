@@ -106,10 +106,7 @@ int stack(Queue *latring,Queue *lonring)
 //gpsと地磁気のデータを一回分更新し、リングバッファに格納
 int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
 {
-	time_t current_time;//時間を取得
-	time(&current_time);
-	double delta_time = difftime(current_time,start_time);
-	printf("OS timestamp:%f\n",delta_time);
+	printTime();
 	loc_t coord;
 	gps_location(&coord);//gpsデータ取得
 	if(coord.latitude != 0.0)
