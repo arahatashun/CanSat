@@ -57,8 +57,8 @@ int takePhoto(char* name)
 cv::Mat binarize(cv::Mat src)
 {
 	cv::Mat hsv;
-	cv::Mat hsv_filtered15 = cv::Scalar(0, 0, 0);//画像の初期化
-	cv::Mat hsv_filtered180 = cv::Scalar(0, 0, 0);//画像の初期化
+	cv::Mat hsv_filtered15 ;//画像の初期化
+	cv::Mat hsv_filtered180;//画像の初期化
 	cv::cvtColor(src, hsv, CV_BGR2HSV);//入力画像(src)をhsv色空間(dst)に変換
 	//inRange(入力画像,下界画像,上界画像,出力画像)
 	//「HSV」は、色を色相(Hue)・彩度(Saturation)・明度(Value)
