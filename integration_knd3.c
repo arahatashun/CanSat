@@ -34,8 +34,6 @@ typedef struct dist_and_angle {
 	double delta_angle;
 }DistAngle;
 
-//グローバル変数
-time_t start_time;//開始時刻
 
 //シグナルハンドラ
 void handler(int signum)
@@ -59,23 +57,7 @@ int DistAngle_initialize(DistAngle *data)
 
 int cal_compass_theta(DistAngle *data)
 {
-	Cmps compass_data;
-	compass_value_initialize(&compass_data);
-	compass_read(&compass_data);
-	double compass_x = 0;
-	double compass_y = 0;
-	//NOTE ここは地磁気が抜けていると無限ループに入りかねないのでそのうちGPS制御に移りたい
-	while(compass_data.x_value == -1.0 && compass_data.y_value == -1.0) //地磁気resister　error
-	{
-		handle_compass_error(&compass_data);
-	}
-	while(compass_data.x_value == -4096.0 || compass_data.y_value == -4096.0)//周囲に強磁場がある
-	{
-		handle_compass_error_two(&compass_data);
-	}
-	compass_x = compass_data.x_value - COMPASS_X_OFFSET;
-	compass_y = compass_data.y_value - COMPASS_Y_OFFSET;
-	data->angle_by_compass = calc_compass_angle(compass_x, compass_y);                //偏角を調整
+	data->angle_by_compass = readCompassAngle();                //偏角を調整
 	printf("compass_degree = %f\n",data->angle_by_compass);
 	return 0;
 }
@@ -181,17 +163,24 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 	return 0;
 }
 
+int printTime()
+{
+	time_t timer;
+  time(&timer);
+  printf("%s\n", ctime(&timer));
+}
+
 int main()
 {
-	time(&start_time);
 	signal(SIGINT, handler);
+	printTime();
 	pwm_initialize();
 	gps_init();
 	compass_initialize();
 	DistAngle DistAngle_data;
+	DistAngle_initialize(&DistAngle_data);
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
-	DistAngle_initialize(&DistAngle_data);
 	while(decide_route(&DistAngle_data,gps_latring,gps_lonring) != -2) ;
 	return 0;
 }
