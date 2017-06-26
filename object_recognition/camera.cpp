@@ -87,7 +87,7 @@ int saveBinary(cv::Mat src,char* path)
 cv::Mat Mred(void)
 {
 	char* stime = makeTimeString();
-	char* sbtime = makeBinaryString(btime);
+	char* sbtime = makeBinaryString(stime);
 	char* path = makePath(stime);
 	char* bpath = makePath(sbtime);
 	takePhoto(path);
