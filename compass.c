@@ -170,8 +170,9 @@ static int compassReadRaw(Raw* data)
 //lock用、指定した値にlockされてたらreturn1する
 static int checkLockList(int values[],const int lock)
 {
-	len = sizeof(values)/sizeof(values[0]); //配列の要素数を取得
+	int len = sizeof(values)/sizeof(values[0]); //配列の要素数を取得
 	int lock_count = 0;
+	int i;
 	for (i = 0; i < len; i++)
 	{
 		if (x[i] ==lock) lock_count++;

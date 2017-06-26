@@ -168,6 +168,7 @@ int printTime()
 	time_t timer;
   time(&timer);
   printf("%s\n", ctime(&timer));
+	return 0;
 }
 
 int main()
