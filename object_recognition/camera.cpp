@@ -92,7 +92,6 @@ cv::Mat Mred(void)
 	const char* path = makePath(stime);
 	takePhoto(path);
 	cv::Mat src = cv::imread(path);
-	char* bpath = makePath(sbtime);
 	cv::Mat hsv;
 	hsv = rmNoize(binarize(src));
 	//NOTE makePathはstaticを使ってるのでここに置くこと
