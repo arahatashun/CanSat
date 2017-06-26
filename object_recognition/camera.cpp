@@ -12,7 +12,7 @@ static const int AOV = 62.2;//ANGLE OF VIEW
 //明度について
 static const int MAX_VALUE = 255;//明るさ最大
 static const int NO_VALUE = 0;//明るさ最小
-static const int REMOVE_COUNT = 10;//ノイズ除去のための縮小及び膨張の回数
+
 
 //時間を元にStringを作る
 char* makeTimeString(void)
@@ -62,16 +62,17 @@ cv::Mat binarize(cv::Mat src)
 	cv::cvtColor(src, hsv, CV_BGR2HSV);//入力画像(src)をhsv色空間(dst)に変換
 	//inRange(入力画像,下界画像,上界画像,出力画像)
 	//「HSV」は、色を色相(Hue)・彩度(Saturation)・明度(Value)
-	cv::inRange(hsv, cv::Scalar(0, 95, NO_VALUE), cv::Scalar(13, 255, MAX_VALUE), hsv_filtered15);
-	cv::inRange(hsv, cv::Scalar(170, 95, NO_VALUE), cv::Scalar(180, 255, MAX_VALUE), hsv_filtered180);
+	cv::inRange(hsv, cv::Scalar(0, 45, 70), cv::Scalar(12, 255, MAX_VALUE), hsv_filtered15);
+	cv::inRange(hsv, cv::Scalar(160, 45, 70), cv::Scalar(180, 255, MAX_VALUE), hsv_filtered180);
 	cv::add(hsv_filtered15,hsv_filtered180,hsv);
 	return hsv;
 }
 //ノイズ除去
 cv::Mat rmNoize(cv::Mat src)
 {
-	cv::erode(src,src,cv::Mat(),cv::Point(-1, -1),REMOVE_COUNT);//縮小処理
-	cv::dilate(src,src,cv::Mat(),cv::Point(-1, -1),REMOVE_COUNT);//膨張処理
+	cv::erode(src,src,cv::Mat(),cv::Point(-1, -1),10);//縮小処理
+	cv::dilate(src,src,cv::Mat(),cv::Point(-1, -1),25);//膨張処理
+	cv::erode(src,src,cv::Mat(),cv::Point(-1, -1),15);//縮小処理
 	return src;
 }
 
