@@ -30,6 +30,7 @@ char* makeBinaryString(char *timeString)
 {
 	static char binaryString[N];
 	sprintf(binaryString, "%s%s",timeString,"Binary");
+	return binaryString;
 }
 
 //full_pathを作る
@@ -38,7 +39,7 @@ char* makePath(char* name)
 	static char full_path[N];//NOTE 自動変数をreturn するために使った. smartなやり方か?
 	char directry_path[] = "/home/pi/Pictures/";//pathの先頭
 	char file_extention[] = ".jpg";//拡張子
-	sprintf(full_path, "%s%s%s",directry_path,name, file_extention);
+	sprintf(full_path, "%s%s%s",directry_path,name,file_extention);
 	return full_path;
 }
 //写真をとる
@@ -91,6 +92,7 @@ cv::Mat Mred(void)
 	char* sbtime = makeBinaryString(stime);
 	char* path = makePath(stime);
 	char* bpath = makePath(sbtime);
+	printf("%s\n",path);
 	takePhoto(path);
  	cv::Mat src = cv::imread(path);//画像の読み込み
 	cv::Mat hsv;
