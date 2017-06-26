@@ -115,6 +115,33 @@ static short read_out(int file,int msb_reg, int lsb_reg)
 	return i;
 }
 
+
+//short型用の比較関数
+static int sCmp (const void* p, const void* q)
+{
+	return *(short*)p - *(short*)q;
+}
+
+//compassのraw_data読み取り関数
+static int compassReadRaw(Raw* data)
+{
+	int i;
+	for(i=0; i<10; i++)
+	{
+		data->xList[i] = read_out(fd, X_MSB_REG, X_LSB_REG);
+		data->yList[i] = read_out(fd, Y_MSB_REG, Y_LSB_REG);
+		data->zList[i] = read_out(fd, Z_MSB_REG, Z_LSB_REG);
+		/*
+		uint8_t status_val = wiringPiI2CReadReg8(fd, 0x09);//とりあえずコメントアウトしておきます
+		printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01);//地磁気が正常ならここは1(死んでも1?)
+		printf("2nd bit of status resister = %d\n", (status_val >> 1) & 0x01);//地磁気が正常ならここは0(死んだら1)
+		*/
+	}
+	qsort(data->xList,10, sizeof(short), sCmp);
+	qsort(data->yList,10, sizeof(short), sCmp);
+	//qsort(zList,10, sizeof(short), sCmp);
+}
+
 //地磁気が-1もしくは任意の値にLockなった時に使う
 static int handleCompassErrorOne(Raw* data)
 {
@@ -138,35 +165,6 @@ static int handleCompassErrorTwo(Raw *data)
 	printf("\n");
 	return 0;
 }
-//short型用の比較関数
-static int sCmp (const void* p, const void* q)
-{
-	return *(short*)p - *(short*)q;
-}
-
-//compassのraw_data読み取り関数
-static int compassReadRaw(Raw* data)
-{
-	data->xList[10] = {};//0で初期化
-	data->yList[10] = {};
-	data->zList[10] = {};
-	int i;
-	for(i=0; i<10; i++)
-	{
-		data->xList[i] = read_out(fd, X_MSB_REG, X_LSB_REG);
-		data->yList[i] = read_out(fd, Y_MSB_REG, Y_LSB_REG);
-		data->zList[i] = read_out(fd, Z_MSB_REG, Z_LSB_REG);
-		/*
-		uint8_t status_val = wiringPiI2CReadReg8(fd, 0x09);//とりあえずコメントアウトしておきます
-		printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01);//地磁気が正常ならここは1(死んでも1?)
-		printf("2nd bit of status resister = %d\n", (status_val >> 1) & 0x01);//地磁気が正常ならここは0(死んだら1)
-		*/
-	}
-	qsort(data->xList,10, sizeof(short), sCmp);
-	qsort(data->yList,10, sizeof(short), sCmp);
-	//qsort(zList,10, sizeof(short), sCmp);
-}
-
 //lock用、指定した値にlockされてたらreturn1する
 static int checkLockList(int values[],const int lock)
 {
