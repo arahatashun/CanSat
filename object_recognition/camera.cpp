@@ -75,22 +75,28 @@ cv::Mat rmNoize(cv::Mat src)
 	return src;
 }
 
-//入力画像を赤色に二値化
-cv::Mat Mred(char* full_path)
-{
-	cv::Mat src = cv::imread(full_path);//画像の読み込み
-	cv::Mat hsv;
-	hsv = rmNoize(binarize(src));
-	return hsv;
-}
-
-
 int saveBinary(cv::Mat src,char* path)
 {
 	cv::Mat binary_img;
 	cv::resize(src,binary_img,cv::Size(),0.25,0.25,interpolation);
 	return 0;
 }
+
+//写真を撮り画像処理する
+cv::Mat Mred(void)
+{
+	char* stime = makeTimeString();
+	char* sbtime = makeBinaryString(btime);
+	char* path = makePath(stime);
+	char* bpath = makePath(btime);
+	takePhoto(path);
+ 	cv::Mat src = cv::imread(path);//画像の読み込み
+	cv::Mat hsv;
+	hsv = rmNoize(binarize(src));
+	saveBinary(hsv,bpath);
+	return hsv;
+}
+
 
 //二値化した画像から1の面積を抽出
 double countArea(cv::Mat src)

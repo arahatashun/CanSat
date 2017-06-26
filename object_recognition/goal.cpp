@@ -20,7 +20,7 @@ int main(void)
 	pwm_initialize();
 	while(1)
 	{
-		cv::Mat red = Mred(takePhoto());
+		cv::Mat red = Mred();
 		double count = countArea(red);
 		if(count < EXIST_THRESHOLD)
 		{
