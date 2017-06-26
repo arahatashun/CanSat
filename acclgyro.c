@@ -22,7 +22,6 @@ static const int GYROZ_REG = 0x47;
 static const double CONVERT2G = 16384.0;
 static const double CONVERT2DEGREES = 131.0;
 static int fd = 0;
-static int WPI2CWReg8 = 0;
 
 int acclGyro_initialize(void)
 {
@@ -44,7 +43,7 @@ int acclGyro_initialize(void)
 //ロック対策用の関数
 static int acclGyroModeChange()
 {
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,POWER_MANAGEMENT_REG,MODE_SINGLE);
+	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,POWER_MANAGEMENT_REG,MODE_SINGLE);
 	if(WPI2CWReg8 == -1)
 	{
 		printf("acclGyro write error register POWER_MANAGEMENT_REG\n");

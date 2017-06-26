@@ -55,7 +55,7 @@ int luxsensor_initialize()
 		printf("luxsensor wiringPiI2CSetup success\n");
 		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
 	}
-	WPI2CWReg8  = wiringPiI2CWriteReg8(fd, TSL2561_COMMAND_BIT, TSL2561_CONTROL_POWERON);
+	int WPI2CWReg8  = wiringPiI2CWriteReg8(fd, TSL2561_COMMAND_BIT, TSL2561_CONTROL_POWERON);
 	if( WPI2CWReg8 == -1)
 	{
 		printf("luxsensor write error register COMMAND_BIT\n");
@@ -67,7 +67,7 @@ int luxsensor_initialize()
 
 int luxsensor_close()
 {
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd, TSL2561_COMMAND_BIT, TSL2561_CONTROL_POWEROFF);
+	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd, TSL2561_COMMAND_BIT, TSL2561_CONTROL_POWEROFF);
 	if( WPI2CWReg8 == -1)
 	{
 		printf("luxsensor write error register COMMAND_BIT\n");
@@ -81,7 +81,7 @@ int getLux()
 {
 	//NOTE setup忘れたら値が振り切れる
 	// Set timing (101 mSec)
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd, TSL2561_REGISTER_TIMING, TSL2561_GAIN_AUTO);
+	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd, TSL2561_REGISTER_TIMING, TSL2561_GAIN_AUTO);
 	if( WPI2CWReg8 == -1)
 	{
 		printf("luxsensor write error register REG_TIMING\n");
