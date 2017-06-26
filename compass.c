@@ -166,14 +166,14 @@ static int handleCompassErrorTwo(Raw *data)
 	return 0;
 }
 //lock用、指定した値にlockされてたらreturn1する
-static int checkLockList(int values[],const int lock)
+static int checkLockList(int* values,const int lock)
 {
 	int len = sizeof(values)/sizeof(values[0]); //配列の要素数を取得
 	int lock_count = 0;
 	int i;
 	for (i = 0; i < len; i++)
 	{
-		if (x[i] ==lock) lock_count++;
+		if (*values[i] ==lock) lock_count++;
 	}
 	if (lock_count == len) return 1;
 	return 0;
@@ -184,7 +184,7 @@ static int compass_read(Cmps* data)
 	Raw rawdata;
 	compassReadRaw(&rawdata);
 	int LockCounter = 0;
-	while((checkLockList(rawdata.xList[10],-1) || checkLockList(rawdata.yList[10],-1))
+	while((checkLockList(rawdata.xList,-1) || checkLockList(rawdata.yList,-1))
 																																			&& LockCounter<4)
 	{
 		printf("WARNING compass -1 lock\n");
