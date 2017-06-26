@@ -186,21 +186,21 @@ static int compass_read(Cmps* data)
 	Raw rawdata;
 	compassReadRaw(&rawdata);
 	int LockCounter = 0;
-	while((checkLockList(rawdata->xList[10],-1) || checkLockList(rawdata->yList[10],-1))
+	while((checkLockList(rawdata.xList[10],-1) || checkLockList(rawdata.yList[10],-1))
 																																			&& LockCounter<4)
 	{
 		printf("WARNING compass -1 lock\n");
 		handleCompassErrorOne(&rawdata);
 		LockCounter++;
 	}
-	while((checkLock(rawdata->xList,-4096) || checkLock(rawdata->yList,-4096))
+	while((checkLock(rawdata.xList,-4096) || checkLock(rawdata.yList,-4096))
 																																		&& LockCounter<4 )
 	{
 		handleCompassErrorTwo(&rawdata);
 		printf("WARNING compass -4096 lock\n");
 		LockCounter++;
 	}
-	while ((checkLock(rawdata->xList,rawdata->xList[0]) || checkLock(rawdata->xList,rawdata->xList[0]))
+	while ((checkLock(rawdata.xList,rawdata.xList[0]) || checkLock(rawdata.xList,rawdata.xList[0]))
 																																		&& LockCounter<4)
 	{
 		printf("WARNING compass lock\n");
@@ -213,9 +213,9 @@ static int compass_read(Cmps* data)
 		printf("Lock Counter Max\n");
 		;//TODO 再起動?
 	}
-	data->x_value = (double)rawdata->xList[4] - COMPASS_X_OFFSET;
-	data->y_value = (double)rawdata->yList[4] - COMPASS_Y_OFFSET;
-	data->z_value = (double)rawdata->zList[4];
+	data->x_value = (double)rawdata.xList[4] - COMPASS_X_OFFSET;
+	data->y_value = (double)rawdata.yList[4] - COMPASS_Y_OFFSET;
+	data->z_value = (double)rawdata.zList[4];
 	return 0;
 }
 

@@ -1,7 +1,7 @@
 #ifndef COMPASS_H
 #define COMPASS_H
 
-/*
+
 typedef struct cmps_offset {
   double compassx_offset_max;//the values of compassx offset
   double compassx_offset_min;
@@ -10,7 +10,7 @@ typedef struct cmps_offset {
   double compassx_offset;
   double compassy_offset;
 } Cmps_offset;
-*/
+
 
 int compass_initialize();
 double readCompassAngle(void);
