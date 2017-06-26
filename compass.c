@@ -173,7 +173,7 @@ static int checkLockList(short* values,const int lock)
 	int i;
 	for (i = 0; i < len; i++)
 	{
-		if (*values[i] ==lock) lock_count++;
+		if (values[i] ==lock) lock_count++;
 	}
 	if (lock_count == len) return 1;
 	return 0;
