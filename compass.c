@@ -173,7 +173,11 @@ static int checkLock(short* values,const int lock)
 	int i;
 	for (i = 0; i < len; i++)
 	{
-		if (values[i] ==lock) lock_count++;
+		if (values[i] == lock)
+    {
+      printf("value[i]%d,lock%d\n",value[i],lock);
+      lock_count++;
+    }
 	}
 
 	if (lock_count == len)
