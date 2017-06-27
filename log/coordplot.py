@@ -51,8 +51,8 @@ if __name__ =='__main__':
                 time.append(line)
     txt.close
 
-    print("control start time is {0}".format(time[0]))
-    print("control end time is {0}".format(time[len(time)-1]))
+    print("control start time(GBT) is {0}".format(time[0]))
+    print("control end time(GBT) is {0}".format(time[len(time)-1]))
     print("distance from control start point to goal is {0}[m]\n".format(round(dist[0],4)))
     print("distance from control end point to goal is {0}[m]\n".format(round(dist[len(dist)-1],4)))
     start_xyz = latlng_to_xyz(latlong_coord[0][0],latlong_coord[1][0]) #制御開始時の緯度経度から便宜上のxyz座標を計算
