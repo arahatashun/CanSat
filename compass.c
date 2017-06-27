@@ -175,6 +175,7 @@ static int checkLock(short* values,const int lock)
 	{
 		if (values[i] == lock)
     {
+      printf("%d\n",i);
       printf("value[i]%d,lock%d\n",values[i],lock);
       lock_count++;
     }
