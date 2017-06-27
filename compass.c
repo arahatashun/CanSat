@@ -178,7 +178,7 @@ static int checkLock(short* values,const int lock)
 
 	if (lock_count == len)
   {
-    printf("checkLock LOCK\n", );
+    printf("checkLock LOCK\n");
     return 1;
   }else
   {
