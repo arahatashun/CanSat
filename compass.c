@@ -82,27 +82,6 @@ int compass_initialize()
 	return 0;
 }
 
-//地磁気ロック対策のmode_change関数(error時のみ表示)
-static int compass_mode_change()
-{
-  /*
-	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_SINGLE);
-	if(WPI2CWReg8 == -1)
-	{
-		printf("compass write error register MODE_SINGLE\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		printf("errno=%d: %s\n", errno, strerror(errno));
-	}
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
-	if(WPI2CWReg8 == -1)
-	{
-		printf("compass write error register MODE_CONTINUOUS\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		printf("errno=%d: %s\n", errno, strerror(errno));
-	}
-  */
-	return 0;
-}
 
 static short read_out(int file,int msb_reg, int lsb_reg)
 {
@@ -138,6 +117,7 @@ static int compassReadRaw(Raw* data)
 		printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01);//地磁気が正常ならここは1(死んでも1?)
 		printf("2nd bit of status resister = %d\n", (status_val >> 1) & 0x01);//地磁気が正常ならここは0(死んだら1)
 		*/
+    delay(10);
 	}
 	qsort(data->xList,10, sizeof(short), sCmp);
 	qsort(data->yList,10, sizeof(short), sCmp);
