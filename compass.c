@@ -129,7 +129,6 @@ static int handleCompassErrorOne(Raw* data)
 {
 	compass_initialize();//NOTE initialize
 	printf("compass reinitialized\n");
-	compass_mode_change();
 	compassReadRaw(data);
 	printf("\n");
 	return 0;
@@ -140,7 +139,6 @@ static int handleCompassErrorTwo(Raw *data)
 {
 	compass_initialize();
 	printf("compass reinitialized\n");
-	compass_mode_change();
 	motor_forward(MAX_PWM_VAL);
 	delay(ESCAPE_TIME);
 	compassReadRaw(data);
