@@ -2,7 +2,8 @@
 
 20141025_23-54-16.txtのように年月日としてログをgithubにあげちゃいましょう
 
-#ログ解析用pythonコード
+# ログ解析用pythonコード
+
 coordplot.pyというpythonプログラムをログ解析したいファイルと同じディレクトリで
 
 `python coordplot.py`と実行する。
