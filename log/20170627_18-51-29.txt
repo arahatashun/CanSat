@@ -1,0 +1,692 @@
+pi@raspberrypi:~/cansat $ sudo ./integration_knd3.out
+Tue Jun 27 09:51:29 2017
+compass wiringPiI2CSetup success
+Tue Jun 27 09:51:29 2017
+latitude:35.760300
+longitude:139.765987
+distance : 19.365654
+GPS_target_angle : 292.470602
+283
+281
+283
+283
+283
+284
+284
+284
+284
+284
+compass_degree = 232.658139
+delta_angle:59.812463
+pid_output = 29
+Tue Jun 27 09:51:30 2017
+latitude:35.760300
+longitude:139.765987
+distance : 19.365654
+GPS_target_angle : 292.470602
+278
+286
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+286
+282
+282
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+282
+295
+295
+compass_degree = 243.764563
+delta_angle:48.706039
+pid_output = 29
+Tue Jun 27 09:51:31 2017
+latitude:35.760298
+longitude:139.765983
+distance : 19.148239
+GPS_target_angle : 293.420094
+256
+261
+256
+253
+257
+257
+269
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+469
+compass_degree = 244.936293
+delta_angle:48.483801
+pid_output = 34
+Tue Jun 27 09:51:32 2017
+latitude:35.760298
+longitude:139.765975
+distance : 18.513859
+GPS_target_angle : 294.347416
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-242
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+0
+0
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+208
+208
+208
+202
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+0
+0
+compass_degree = 332.980463
+delta_angle:-38.633047
+pid_output = -12
+Tue Jun 27 09:51:33 2017
+latitude:35.760300
+longitude:139.765962
+distance : 17.384050
+GPS_target_angle : 295.449946
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+218
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+218
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-33
+223
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+0
+0
+0
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+166
+compass_degree = 278.491986
+delta_angle:16.957960
+pid_output = 16
+Tue Jun 27 09:51:34 2017
+latitude:35.760305
+longitude:139.765952
+distance : 16.323109
+GPS_target_angle : 295.377744
+208
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+0
+227
+227
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass_degree = 330.106941
+delta_angle:-34.729197
+pid_output = -12
+Tue Jun 27 09:51:35 2017
+latitude:35.760308
+longitude:139.765942
+distance : 15.375612
+GPS_target_angle : 295.933718
+227
+227
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+227
+290
+292
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+292
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-34
+compass_degree = 256.118276
+delta_angle:39.815442
+pid_output = 28
+Tue Jun 27 09:51:36 2017
+latitude:35.760313
+longitude:139.765932
+distance : 14.314421
+GPS_target_angle : 295.887026
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+0
+0
+250
+0
+0
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+0
+0
+258
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass_degree = 333.053197
+delta_angle:-37.166171
+pid_output = -10
+Tue Jun 27 09:51:37 2017
+latitude:35.760318
+longitude:139.765922
+distance : 13.253795
+GPS_target_angle : 295.832877
+240
+233
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-23
+233
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+233
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+233
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-256
+0
+compass_degree = 220.097218
+delta_angle:75.735659
+pid_output = 54
+Tue Jun 27 09:51:38 2017
+latitude:35.760322
+longitude:139.765910
+distance : 12.096080
+GPS_target_angle : 296.565051
+236
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-20
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+236
+103
+103
+103
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+0
+0
+compass_degree = 332.980463
+delta_angle:-36.415412
+delta_movement = 0.000099
+pid_output = -5
+Tue Jun 27 09:51:39 2017
+latitude:35.760325
+longitude:139.765900
+distance : 11.153533
+GPS_target_angle : 297.439728
+45
+220
+215
+202
+184
+178
+178
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+0
+0
+0
+compass_degree = 260.984869
+delta_angle:36.454859
+delta_movement = 0.000112
+pid_output = 34
+Tue Jun 27 09:51:40 2017
+latitude:35.760332
+longitude:139.765892
+distance : 10.128069
+GPS_target_angle : 296.085600
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+checkLock LOCK
+WARNING compass -1 lock
+compass wiringPiI2CSetup success
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass reinitialized
+0
+0
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-256
+0
+0
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+174
+186
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+0
+compass_degree = 332.980463
+delta_angle:-36.894863
+delta_movement = 0.000125
+pid_output = -5
+Tue Jun 27 09:51:41 2017
+latitude:35.760340
+longitude:139.765885
+distance : 9.137354
+GPS_target_angle : 293.663141
+185
+215
+220
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+0
+0
+180
+180
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-76
+180
+compass_degree = 264.368940
+delta_angle:29.294201
+delta_movement = 0.000132
+pid_output = 30
+Tue Jun 27 09:51:42 2017
+latitude:35.760345
+longitude:139.765877
+distance : 8.239075
+GPS_target_angle : 292.770379
+189
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-67
+189
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-36
+220
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-256
+0
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+-4096
+compass_degree = 259.541276
+delta_angle:33.229103
+delta_movement = 0.000130
+pid_output = 36
+Tue Jun 27 09:51:43 2017
+latitude:35.760350
+longitude:139.765867
+distance : 7.180521
+GPS_target_angle : 292.217594
+219
+157
+158
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+158
+176
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+212
+212
+compass_degree = 267.687766
+delta_angle:24.529829
+delta_movement = 0.000130
+pid_output = 34
+Tue Jun 27 09:51:44 2017
+latitude:35.760355
+longitude:139.765858
+distance : 6.206882
+GPS_target_angle : 291.161260
+135
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+0
+0
+0
+109
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-154
+102
+117
+106
+106
+compass_degree = 283.231702
+delta_angle:7.929558
+delta_movement = 0.000131
+pid_output = 26
+Tue Jun 27 09:51:45 2017
+latitude:35.760362
+longitude:139.765850
+distance : 5.233335
+GPS_target_angle : 287.474774
+69
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+69
+116
+116
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+0
+0
+0
+-1
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-256
+compass_degree = 332.980463
+delta_angle:-45.505689
+delta_movement = 0.000131
+pid_output = -4
+Tue Jun 27 09:51:46 2017
+latitude:35.760368
+longitude:139.765842
+distance : 4.332482
+GPS_target_angle : 283.448615
+0
+0
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+0
+0
+0
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-127
+129
+129
+129
+compass write error register MODE_SINGLE
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+compass write error register MODE_CONTINUOUS
+wiringPiI2CWriteReg8 = -1
+errno=5: Input/output error
+-1
+compass_degree = 332.980463
+delta_angle:-49.531848
+delta_movement = 0.000130
+==========GOAL==========MOTOR stop
