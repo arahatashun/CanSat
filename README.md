@@ -6,7 +6,7 @@
 $sudo stdbuf -o0 -e0 ./a.out | tee log/`date +%Y%m%d_%H-%M-%S`.txt
 ```
 
-##めんどくさいのでshell scriptを使ったやり方
+## めんどくさいのでshell scriptを使ったやり方
 
 ```shell
 $sudo sh log.sh
