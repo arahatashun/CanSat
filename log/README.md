@@ -10,7 +10,7 @@ coordplot.pyというpythonプログラムをログ解析したいファイル�
 
 適宜コード内の
 
-`txt = open('2017627_18-51-29.txt')`にログ解析したいファイル名を書き換える。
+`txt = open('2017627_18-51-29.txt')`(31行目)にログ解析したいファイル名を書き換える。
 
 コンソールには
 
@@ -22,4 +22,6 @@ coordplot.pyというpythonプログラムをログ解析したいファイル�
 
 緯度経度については別途`gmplot.csv`というcsvファイルが作成され、これを
 
+[GPS Visualizer](http://www.gpsvisualizer.com/)
 
+にて渡すとgoogle map上に軌跡がプロットされる。
