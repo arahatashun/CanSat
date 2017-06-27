@@ -169,12 +169,14 @@ static int handleCompassErrorTwo(Raw *data)
 static int checkLock(short* values,const int lock)
 {
 	int len = sizeof(values)/sizeof(values[0]); //配列の要素数を取得
+  printf("len%d\n",len);
 	int lock_count = 0;
 	int i;
 	for (i = 0; i < len; i++)
 	{
 		if (values[i] == lock)
     {
+      printf("lock count\n", );
       printf("%d\n",i);
       printf("value[i]%d,lock%d\n",values[i],lock);
       lock_count++;
