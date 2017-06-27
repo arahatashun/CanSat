@@ -105,7 +105,6 @@ static int compass_mode_change()
 
 static short read_out(int file,int msb_reg, int lsb_reg)
 {
-	compass_mode_change();
 	uint8_t msb = 0;
 	uint8_t lsb = 0;
 	short i = 0;
