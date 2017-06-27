@@ -199,7 +199,7 @@ static int compass_read(Cmps* data)
 		printf("WARNING compass -4096 lock\n");
 		LockCounter++;
 	}
-	while ((checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.xList,rawdata.yList[0]))
+	while ((checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0]))
 																																		&& LockCounter<4)
 	{
 		printf("WARNING compass lock\n");
