@@ -1,5 +1,6 @@
 #!/bin/sh
 
 read program
-echo "Executing, $program"
-sudo stdbuf -o0 -e0 ./$program | tee log/`date +%Y%m%d_%H-%M-%S`.txt
+echo "Executing, $program.out"
+sudo stdbuf -o0 -e0 ./$program.out | tee log/`date +%Y%m%d_%H-%M-%S`.txt
+#permissionが与えられてるのかわからず
