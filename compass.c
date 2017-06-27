@@ -168,7 +168,7 @@ static int handleCompassErrorTwo(Raw *data)
 //lock用、指定した値にlockされてたらreturn1する
 static int checkLock(short* values,const int lock)
 {
-	int len = 10 //sizeof(values)/sizeof(values[0]); //配列の要素数を取得 おかしい
+	int len = 10; //sizeof(values)/sizeof(values[0]); //配列の要素数を取得 おかしい
   printf("len%d\n",len);
 	int lock_count = 0;
 	int i;
