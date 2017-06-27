@@ -3,8 +3,21 @@
 ## ログの取り方
 
 ```shell
-sudo stdbuf -o0 -e0 ./a.out | tee log/`date +%Y%m%d_%H-%M-%S`.txt
+$sudo stdbuf -o0 -e0 ./a.out | tee log/`date +%Y%m%d_%H-%M-%S`.txt
 ```
+
+##めんどくさいのでshell scriptを使ったやり方
+
+```shell
+$sudo sh log.sh
+```
+とすると
+```shell
+Enter program name (excluding .out)
+```
+と出るので
+プログラム名を入れます
+
 
 ## NOTE
 
