@@ -3,7 +3,7 @@
 ## ログの取り方
 
 ```shell
-sudo stdbuf -o0 -e0 ./a.out | tee log/`date +%Y%m%d`.txt
+sudo stdbuf -o0 -e0 ./a.out | tee log/`date +%Y%m%d_%H-%M-%S`.txt
 ```
 
 ## NOTE
