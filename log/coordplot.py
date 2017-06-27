@@ -8,9 +8,9 @@ def latlng_to_xyz(lat,long):
     rlat = lat*math.pi/180
     rlng = lat*math.pi/180
     coslat = math.cos(rlat)
-    cartesian_coord.append(coslat*math.cos(rlng))
-    cartesian_coord.append(coslat*math.sin(rlng))
-    cartesian_coord.append(math.sin(rlat))
+    cartesian_coord.append(coslat*math.cos(rlng))#x座標
+    cartesian_coord.append(coslat*math.sin(rlng))#y座標
+    cartesian_coord.append(math.sin(rlat))#z座標
     return cartesian_coord
 
 #２地点のxyz座標、つまり計6つの値からその間の距離を返す
@@ -19,8 +19,8 @@ def dist_on_sphere(start_x,start_y,start_z,end_x,end_y,end_z):
     dot_product_x = start_x*end_x
     dot_product_y = start_y*end_y
     dot_product_z = start_z*end_z
-    dot_product_sum =dot_product_x+dot_product_y+dot_product_z;
-    distance = abs(math.acos(dot_product_sum)*EARTH_RADIUS);
+    dot_product_sum =dot_product_x+dot_product_y+dot_product_z
+    distance = abs(math.acos(dot_product_sum)*EARTH_RADIUS)
     return distance
 
 if __name__ =='__main__':
@@ -38,16 +38,16 @@ if __name__ =='__main__':
             if(line.count('distance :')):
                 lis = line.split(":")
                 dist.append(float(lis[1]))
-            if(line.count('latitude:')):
+            elif(line.count('latitude:')):
                 lis = line.split(":")
                 csvlist[0] = float(lis[1])
                 latlong_coord[0].append(round(float(lis[1]),6))
-            if(line.count('longitude:')):
+            elif(line.count('longitude:')):
                 lis = line.split(":")
                 csvlist[1] = float(lis[1])
                 latlong_coord[1].append(round(float(lis[1]),5))
                 writer.writerow(csvlist)
-            if(line.count('2017')):
+            elif(line.count('2017')):
                 time.append(line)
     txt.close
 
