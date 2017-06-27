@@ -85,6 +85,7 @@ int compass_initialize()
 //地磁気ロック対策のmode_change関数(error時のみ表示)
 static int compass_mode_change()
 {
+  /*
 	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_SINGLE);
 	if(WPI2CWReg8 == -1)
 	{
@@ -99,6 +100,7 @@ static int compass_mode_change()
 		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
 		printf("errno=%d: %s\n", errno, strerror(errno));
 	}
+  */
 	return 0;
 }
 
