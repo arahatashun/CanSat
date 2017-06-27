@@ -1,3 +1,4 @@
+#pi制御で真北にひたすら進むプログラム
 #include <stdio.h>
 #include <wiringPi.h>
 #include "compass.h"
