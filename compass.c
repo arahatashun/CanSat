@@ -70,7 +70,6 @@ int compass_initialize()
 	else
 	{
 		printf("compass wiringPiI2CSetup success\n");
-		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
 	}
 
 	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
@@ -176,8 +175,15 @@ static int checkLock(short* values,const int lock)
 	{
 		if (values[i] ==lock) lock_count++;
 	}
-	if (lock_count == len) return 1;
-	return 0;
+
+	if (lock_count == len)
+  {
+    printf("checkLock LOCK\n", );
+    return 1;
+  }else
+  {
+	   return 0;
+  }
 }
 
 static int compass_read(Cmps* data)
@@ -199,7 +205,7 @@ static int compass_read(Cmps* data)
 		printf("WARNING compass -4096 lock\n");
 		LockCounter++;
 	}
-	while ((checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0]))
+	while (checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0])
 																																		&& LockCounter<4)
 	{
 		printf("WARNING compass lock\n");
