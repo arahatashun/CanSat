@@ -126,7 +126,7 @@ static int compassReadRaw(Raw* data)
 {
 	int i;
 	for(i=0; i<10; i++)
-	{
+	{	compass_mode_change();
 		data->xList[i] = read_out(fd, X_MSB_REG, X_LSB_REG);
 		data->yList[i] = read_out(fd, Y_MSB_REG, Y_LSB_REG);
 		data->zList[i] = read_out(fd, Z_MSB_REG, Z_LSB_REG);
