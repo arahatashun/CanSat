@@ -13,8 +13,8 @@ ground_compass.out: $(objs_g_and_c)
 flight.out: $(objs_f)
 	gcc -g -Wall -O2 -o flight.out $(objs_f) $(LIBS)
 
-ground_compass.o: ground_compass.cpp
-	gcc -c -Wall ground_compass.cpp
+ground_compass.o: ground_compass.c
+	gcc -c -Wall ground_compass.c
 
 flight.o: flight.c
 	gcc -c -Wall flight.c
