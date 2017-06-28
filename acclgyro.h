@@ -1,6 +1,10 @@
 #ifndef ACCLGYRO_H
 #define ACCLGYRO_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 //三軸加速度(単位G)
 typedef struct accl {
   double acclX_scaled;//the values of accleration
@@ -22,5 +26,9 @@ int readAccl(Accl*data);
 int isReverse(void);
 double cal_roll(Accl* data);
 double cal_pitch(Accl* data);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

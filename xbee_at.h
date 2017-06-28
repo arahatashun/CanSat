@@ -1,6 +1,10 @@
 #ifndef _XBEE_AT
 #define _XBEE_AT
 
+//C++から呼び出すため
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include <inttypes.h>
 
 #ifndef XBEE_PORTNAME
@@ -12,4 +16,7 @@ void xbeePrintf (const char *message, ...);
 void xbee_readln(char *, int);
 void xbee_close(void);
 
+#ifdef __cplusplus
+}
+#endif
 #endif

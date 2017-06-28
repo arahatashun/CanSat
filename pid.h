@@ -1,5 +1,9 @@
 #ifndef PID_H
 #define PID_H
+//C++から呼び出すため
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef struct pid{
     double input;//入力値
@@ -23,5 +27,7 @@ int pid_initialize(Pid* pid_init);
 int pid_const_initialize(Pid* pid_init, double setpoint,
   double kp_value, double ki_value, double kd_value);
 
-
+#ifdef __cplusplus
+}
+#endif
 #endif

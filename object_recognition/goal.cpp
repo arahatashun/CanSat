@@ -15,7 +15,7 @@ static const int CENTER_THRESHOLD = 30;//-30~30で直進するようにする
 static const double EXIST_THRESHOLD = 0.05;//ゴール存在判定 パーセンテージ
 
 //TODO turn millisecondどんどん大きくしていくPI制御にする
-int main(void)
+int go2pole(void)
 {
 	pwm_initialize();
 	while(1)

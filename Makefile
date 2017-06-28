@@ -1,20 +1,20 @@
 # Makefile
 LIBS = -lwiringPi -lm -lgps
 objs_g = integration.o  motor.o mitibiki.o pid.o ring_buffer.o #GPSのみの制御
-objs_g_and_c = integration_knd3.o motor.o mitibiki.o pid.o ring_buffer.o compass.o #GPSとコンパス
+objs_g_and_c = ground_compass.o motor.o mitibiki.o pid.o ring_buffer.o compass.o #GPSとコンパス
 objs_f = flight.o gut.o luxsensor.o ring_buffer.o #flight
 
 integration.out: $(objs_g)
 	gcc -g -Wall -O2 -o integration.out $(objs_g) $(LIBS)
 
-integration_knd3.out: $(objs_g_and_c)
-	gcc -g -Wall -O2 -o integration_knd3.out $(objs_g_and_c) $(LIBS)
+ground_compass.out: $(objs_g_and_c)
+	g++ -g -Wall -O2 -o ground_compass.out $(objs_g_and_c) $(LIBS)
 
 flight.out: $(objs_f)
 	gcc -g -Wall -O2 -o flight.out $(objs_f) $(LIBS)
 
-integration_knd3.o: integration_knd3.c
-	gcc -c -Wall integration_knd3.c
+ground_compass.o: ground_compass.cpp
+	g++ -c -Wall ground_compass.cpp
 
 flight.o: flight.c
 	gcc -c -Wall flight.c
