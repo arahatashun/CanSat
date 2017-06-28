@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <math.h>
 #include <errno.h>
+#include <assert.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "compass.h"
@@ -188,24 +189,25 @@ static int compass_read(Cmps* data)
 	Raw rawdata;
 	compassReadRaw(&rawdata);
 	int LockCounter = 0;
-	while(checkLock(rawdata.xList,-1)||checkLock(rawdata.yList,-1)&&(LockCounter<4))
+	while(checkLock(rawdata.xList,-1)||checkLock(rawdata.yList,-1)&&(LockCounter<5))
 	{
+    assert(LockCounter>5);
 		printf("WARNING compass -1 lock\n");
-    printf("LockCounter%d\n",LockCounter);
+    printf("LockCounter %d\n",LockCounter);
 		handleCompassErrorOne(&rawdata);
 		LockCounter++;
 	}
-	while(checkLock(rawdata.xList,-4096)||checkLock(rawdata.yList,-4096)&&(LockCounter<4))
+	while(checkLock(rawdata.xList,-4096)||checkLock(rawdata.yList,-4096)&&(LockCounter<5))
 	{
 		handleCompassErrorTwo(&rawdata);
 		printf("WARNING compass -4096 lock\n");
-    printf("LockCounter%d\n",LockCounter);
+    printf("LockCounter %d\n",LockCounter);
 		LockCounter++;
 	}
-	while(checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0])&&(LockCounter<4))
+	while(checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0])&&(LockCounter<5))
 	{
 		printf("WARNING compass lock\n");
-    printf("LockCounter%d\n",LockCounter);
+    printf("LockCounter %d\n",LockCounter);
 		handleCompassErrorOne(&rawdata);
 		LockCounter++;
 	}
