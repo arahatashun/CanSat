@@ -23,3 +23,6 @@ escape:
 
 gyromotor:
 	gcc -o  gyromotor.out gyromotor.c ../motor.c  ../acclgyro.c ../pid.c $(LIBS) -lm
+
+compass:
+	gcc -o compass.out compass_test.c ../compass.c $(LIBS)

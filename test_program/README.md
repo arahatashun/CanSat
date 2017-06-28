@@ -21,6 +21,7 @@ $ sudo ./プログラム名.out(e.g. sudo ./xbee.out)
 |XBEE|make xbee|sudo ./xbee.out|
 |GPS|make gps|sudo ./gps.out|
 |轍回避|make escape|sudo ./escape.out|
+|compass|make compass|sudo ./compass.out|
 ## ssh接続してからの手順
 
 ```shell
