@@ -28,4 +28,4 @@ compass:motor.o
 	gcc -o compass.out compass_test.c ../compass.c motor.o $(LIBS) -lm
 
 motor.o:
-	gcc -c motor.o motor_test.c ../motor.c $(LIBS)
+	gcc -c motor.o ../motor.c $(LIBS)
