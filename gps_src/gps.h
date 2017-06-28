@@ -1,6 +1,10 @@
 #ifndef _GPS_H_
 #define _GPS_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 struct location {
     double latitude;
     double longitude;
@@ -28,5 +32,9 @@ extern void gps_off(void);
 // convert deg to decimal deg latitude, (N/S), longitude, (W/E)
 void gps_convert_deg_to_dec(double *, char, double *, char);
 double gps_deg_dec(double);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
