@@ -70,6 +70,7 @@ int compass_initialize()
 	else
 	{
 		printf("compass wiringPiI2CSetup success\n");
+		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
 	}
 
 	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
@@ -82,6 +83,27 @@ int compass_initialize()
 	return 0;
 }
 
+/*
+//地磁気ロック対策のmode_change関数(error時のみ表示)
+static int compass_mode_change()
+{
+	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_SINGLE);
+	if(WPI2CWReg8 == -1)
+	{
+		printf("compass write error register MODE_SINGLE\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		printf("errno=%d: %s\n", errno, strerror(errno));
+	}
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
+	if(WPI2CWReg8 == -1)
+	{
+		printf("compass write error register MODE_CONTINUOUS\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		printf("errno=%d: %s\n", errno, strerror(errno));
+	}
+	return 0;
+}
+*/
 
 static short read_out(int file,int msb_reg, int lsb_reg)
 {
@@ -107,9 +129,9 @@ static int compassReadRaw(Raw* data)
 	int i;
 	for(i=0; i<10; i++)
 	{
-		compass_mode_change();
+		//compass_mode_change();
 		data->xList[i] = read_out(fd, X_MSB_REG, X_LSB_REG);
-    printf("%d%d\n",i,data->xList[i]);
+    printf("%d\n",data->xList[i]);
 		data->yList[i] = read_out(fd, Y_MSB_REG, Y_LSB_REG);
 		data->zList[i] = read_out(fd, Z_MSB_REG, Z_LSB_REG);
 		/*
@@ -117,7 +139,6 @@ static int compassReadRaw(Raw* data)
 		printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01);//地磁気が正常ならここは1(死んでも1?)
 		printf("2nd bit of status resister = %d\n", (status_val >> 1) & 0x01);//地磁気が正常ならここは0(死んだら1)
 		*/
-    delay(10);
 	}
 	qsort(data->xList,10, sizeof(short), sCmp);
 	qsort(data->yList,10, sizeof(short), sCmp);
@@ -129,6 +150,7 @@ static int handleCompassErrorOne(Raw* data)
 {
 	compass_initialize();//NOTE initialize
 	printf("compass reinitialized\n");
+	//compass_mode_change();
 	compassReadRaw(data);
 	printf("\n");
 	return 0;
@@ -139,6 +161,7 @@ static int handleCompassErrorTwo(Raw *data)
 {
 	compass_initialize();
 	printf("compass reinitialized\n");
+	//compass_mode_change();
 	motor_forward(MAX_PWM_VAL);
 	delay(ESCAPE_TIME);
 	compassReadRaw(data);
@@ -148,28 +171,15 @@ static int handleCompassErrorTwo(Raw *data)
 //lock用、指定した値にlockされてたらreturn1する
 static int checkLock(short* values,const int lock)
 {
-	int len = 10; //sizeof(values)/sizeof(values[0]); //配列の要素数を取得 おかしい
+	int len = sizeof(values)/sizeof(values[0]); //配列の要素数を取得
 	int lock_count = 0;
 	int i;
 	for (i = 0; i < len; i++)
 	{
-		if (values[i] == lock)
-    {
-      //printf("lock count\n");
-      //printf("%d\n",i);
-      //printf("value[i]%d,lock%d\n",values[i],lock);
-      lock_count++;
-    }
+		if (values[i] ==lock) lock_count++;
 	}
-
-	if (lock_count == len)
-  {
-    printf("checkLock LOCK\n");
-    return 1;
-  }else
-  {
-	   return 0;
-  }
+	if (lock_count == len) return 1;
+	return 0;
 }
 
 static int compass_read(Cmps* data)
@@ -177,19 +187,22 @@ static int compass_read(Cmps* data)
 	Raw rawdata;
 	compassReadRaw(&rawdata);
 	int LockCounter = 0;
-	while((checkLock(rawdata.xList,-1) || checkLock(rawdata.yList,-1))&&LockCounter<4)
+	while((checkLock(rawdata.xList,-1) || checkLock(rawdata.yList,-1))
+																																			&& LockCounter<4)
 	{
 		printf("WARNING compass -1 lock\n");
 		handleCompassErrorOne(&rawdata);
 		LockCounter++;
 	}
-	while((checkLock(rawdata.xList,-4096) || checkLock(rawdata.yList,-4096))&&LockCounter<4 )
+	while((checkLock(rawdata.xList,-4096) || checkLock(rawdata.yList,-4096))
+																																		&& LockCounter<4 )
 	{
 		handleCompassErrorTwo(&rawdata);
 		printf("WARNING compass -4096 lock\n");
 		LockCounter++;
 	}
-	while(checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0])&& LockCounter<4)
+	while (checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.xList,rawdata.xList[0]))
+																																		&& LockCounter<4)
 	{
 		printf("WARNING compass lock\n");
 		handleCompassErrorOne(&rawdata);
