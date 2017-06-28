@@ -191,7 +191,7 @@ static int compass_read(Cmps* data)
 	while(checkLock(rawdata.xList,-1)||checkLock(rawdata.yList,-1)&&(LockCounter<4))
 	{
 		printf("WARNING compass -1 lock\n");
-    printf("LockCounter%d",LockCounter);
+    printf("LockCounter%d\n",LockCounter);
 		handleCompassErrorOne(&rawdata);
 		LockCounter++;
 	}
@@ -199,13 +199,13 @@ static int compass_read(Cmps* data)
 	{
 		handleCompassErrorTwo(&rawdata);
 		printf("WARNING compass -4096 lock\n");
-    printf("LockCounter%d",LockCounter);
+    printf("LockCounter%d\n",LockCounter);
 		LockCounter++;
 	}
 	while(checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0])&&(LockCounter<4))
 	{
 		printf("WARNING compass lock\n");
-    printf("LockCounter%d",LockCounter);
+    printf("LockCounter%d\n",LockCounter);
 		handleCompassErrorOne(&rawdata);
 		LockCounter++;
 	}
