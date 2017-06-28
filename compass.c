@@ -139,6 +139,7 @@ static int compassReadRaw(Raw* data)
 		printf("1st bit of status resister = %d\n", (status_val >> 0) & 0x01);//地磁気が正常ならここは1(死んでも1?)
 		printf("2nd bit of status resister = %d\n", (status_val >> 1) & 0x01);//地磁気が正常ならここは0(死んだら1)
 		*/
+    delay(10);
 	}
 	qsort(data->xList,10, sizeof(short), sCmp);
 	qsort(data->yList,10, sizeof(short), sCmp);
