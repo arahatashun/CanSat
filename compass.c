@@ -70,7 +70,6 @@ int compass_initialize()
 	else
 	{
 		printf("compass wiringPiI2CSetup success\n");
-		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
 	}
 
 	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
