@@ -10,6 +10,7 @@
 #include "mitibiki.h"
 #include "ring_buffer.h"
 #include "pid.h"
+#include "/object_recognition/goal.hpp"
 
 static const int TURN_POWER = 60;//turnするpower
 static const int TURN_MILLISECONDS = 100;//turnするmilliseconds
@@ -152,9 +153,9 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 		}
 		else
 		{
-			printf("==========GOAL==========");
+			printf("COMPASS NAVIGATION FINISHED");
 			motor_stop();
-			delay(60000);
+			delay(1000);
 			return -2;        //ゴールに着いた
 		}
 		if(i==19)
@@ -179,6 +180,6 @@ int main()
 	DistAngle_initialize(&DistAngle_data);
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
-	while(decide_route(&DistAngle_data,gps_latring,gps_lonring) != -2) ;
+	while(decide_route(&DistAngle_data,gps_latring,gps_lonring) != -2);
 	return 0;
 }
