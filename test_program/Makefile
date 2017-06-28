@@ -25,7 +25,7 @@ gyromotor:
 	gcc -o  gyromotor.out gyromotor.c ../motor.c  ../acclgyro.c ../pid.c $(LIBS) -lm
 
 compass:motor.o
-	gcc -o compass.out compass_test.c ../compass.c $(LIBS) -lm
+	gcc -o compass.out compass_test.c ../compass.c motor.o $(LIBS) -lm
 
 motor.o:
 	gcc -c motor.out motor_test.c ../motor.c $(LIBS)
