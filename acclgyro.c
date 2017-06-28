@@ -35,7 +35,6 @@ int acclGyro_initialize(void)
 	else
 	{
 		printf("acclGyro wiringPiI2CSetup success\n");
-		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
 	}
 	return 0;
 }
@@ -69,8 +68,7 @@ static short read_out(int addr)  //レジスタの値を読み取る
 	lsb = wiringPiI2CReadReg8(fd, addr+1);
 	short value = 0;
 	value = msb << 8 | lsb;
-	if (value >= 0x8000) return -((65535 - value) + 1);
-	else return value;
+	return value;
 }
 
 //short型用の比較関数
