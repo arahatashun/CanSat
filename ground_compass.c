@@ -10,7 +10,7 @@
 #include "mitibiki.h"
 #include "ring_buffer.h"
 #include "pid.h"
-#include "/object_recognition/goal.hpp"
+
 
 static const int TURN_POWER = 60;//turnするpower
 static const int TURN_MILLISECONDS = 100;//turnするmilliseconds

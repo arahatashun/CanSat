@@ -8,13 +8,13 @@ integration.out: $(objs_g)
 	gcc -g -Wall -O2 -o integration.out $(objs_g) $(LIBS)
 
 ground_compass.out: $(objs_g_and_c)
-	g++ -g -Wall -O2 -o ground_compass.out $(objs_g_and_c) $(LIBS)
+	gcc -g -Wall -O2 -o ground_compass.out $(objs_g_and_c) $(LIBS)
 
 flight.out: $(objs_f)
 	gcc -g -Wall -O2 -o flight.out $(objs_f) $(LIBS)
 
 ground_compass.o: ground_compass.cpp
-	g++ -c -Wall ground_compass.cpp
+	gcc -c -Wall ground_compass.cpp
 
 flight.o: flight.c
 	gcc -c -Wall flight.c
