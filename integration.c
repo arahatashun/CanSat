@@ -11,7 +11,7 @@
 
 static const int TURN_MILLISECONDS =30;//30度回転する
 static const int TURN_POWER = 60;//turnするpower
-static const int GPS_LATENCY = 4500;//gps角度取得のための時間感覚
+static const int GPS_LATENCY = 2500;//gps角度取得のための時間感覚
 static const int FORWARD_POWER = 100;//NOTE 直進距離が長い方が正しい角度取りやすい
 static const double PI = 3.14159265;
 static const int GPS_RING_LEN = 2;
@@ -93,7 +93,7 @@ int decide_route(Queue* latring,Queue *lonring)
 	double delta_angle = 0;
 	update_angle(&delta_angle,latring,lonring);
 
-	while((-180 <= delta_angle && delta_angle <= -30))
+	while((-180 <= delta_angle && delta_angle <= -50))
 	{
 		motor_left(TURN_POWER);
 		delay((int)((-delta_angle/30)*TURN_MILLISECONDS));
@@ -101,7 +101,7 @@ int decide_route(Queue* latring,Queue *lonring)
 		delta_angle=update_angle(&delta_angle,latring,lonring);
 	}
 
-	while(30 < delta_angle && delta_angle <= 180)
+	while(50 < delta_angle && delta_angle <= 180)
 	{
 		motor_right(TURN_POWER);
 		delay((int)((delta_angle/30)*TURN_MILLISECONDS));
