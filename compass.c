@@ -217,7 +217,7 @@ static int compass_read(Cmps* data)
 	if(LockCounter>=5)
 	{
 		printf("Lock Counter Max\n");
-		//assert(LockCounter!=5);
+		assert(LockCounter!=5);
 		;//TODO 再起動?
 	}
 	data->x_value = (double)rawdata.xList[4] - COMPASS_X_OFFSET;
