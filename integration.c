@@ -9,9 +9,9 @@
 #include "motor.h"
 #include "ring_buffer.h"
 
-static const int TURN_MILLISECONDS =30;//30度回転する
+static const int TURN_MILLISECONDS =20;//30度回転する
 static const int TURN_POWER = 60;//turnするpower
-static const int GPS_LATENCY = 2500;//gps角度取得のための時間感覚
+static const int GPS_LATENCY = 3000;//gps角度取得のための時間感覚
 static const int FORWARD_POWER = 100;//NOTE 直進距離が長い方が正しい角度取りやすい
 static const double PI = 3.14159265;
 static const int GPS_RING_LEN = 2;
