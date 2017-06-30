@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "../compass.h"
+#include <wiringPi.h>
 
 int main()
 {
@@ -8,5 +9,6 @@ int main()
 	{
 		double angle =  readCompassAngle();
 		printf("%f\n",angle);
+		delay(500);
 	}
 }
