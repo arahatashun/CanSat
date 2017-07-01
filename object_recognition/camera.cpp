@@ -63,8 +63,8 @@ cv::Mat binarize(cv::Mat src)
 	cv::cvtColor(src, hsv, CV_BGR2HSV);//入力画像(src)をhsv色空間(dst)に変換
 	//inRange(入力画像,下界画像,上界画像,出力画像)
 	//「HSV」は、色を色相(Hue)・彩度(Saturation)・明度(Value)
-	cv::inRange(hsv, cv::Scalar(0, 45, 70), cv::Scalar(12, 255, MAX_VALUE), hsv_filtered15);
-	cv::inRange(hsv, cv::Scalar(160, 45, 70), cv::Scalar(180, 255, MAX_VALUE), hsv_filtered180);
+	cv::inRange(hsv, cv::Scalar(0, 70, 60), cv::Scalar(2, 255, MAX_VALUE), hsv_filtered15);
+	cv::inRange(hsv, cv::Scalar(160, 70, 60), cv::Scalar(180, 255, MAX_VALUE), hsv_filtered180);
 	cv::add(hsv_filtered15,hsv_filtered180,hsv);
 	return hsv;
 }
@@ -81,7 +81,7 @@ int saveBinary(cv::Mat src,char* path)
 {
 	cv::Mat binary_img;
 	cv::resize(src,binary_img,cv::Size(),0.25,0.25);
-	imwrite(path, src); 
+	imwrite(path, src);
 	return 0;
 }
 
