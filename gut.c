@@ -52,6 +52,6 @@ int cut_all()
 	printf("first cut end\n");
 	printf("second cut start\n");
 	cut(SECOND_GUT_PIN);
-	printf("first cut end\n");
+	printf("second cut end\n");
 	return 0;
 }

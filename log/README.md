@@ -4,13 +4,9 @@
 
 # ログ解析用pythonコード
 
-coordplot.pyというpythonプログラムをログ解析したいファイルと同じディレクトリで
-
 `python coordplot.py`と実行する。
 
-適宜コード内の
-
-`txt = open('2017627_18-51-29.txt')`(31行目)にログ解析したいファイル名を書き換える。
+解析したいファイル番号の入力を求められるので指示に従って入力する。
 
 コンソールには
 
@@ -20,7 +16,7 @@ coordplot.pyというpythonプログラムをログ解析したいファイル�
 
 またmatplotlibで簡単な軌跡グラフが描かれる。
 
-緯度経度については別途`gmplot.csv`というcsvファイルが作成され、これを
+緯度経度については別途同じディレクトリに`gmplot.csv`というcsvファイルが作成され、これを
 
 [GPS Visualizer](http://www.gpsvisualizer.com/)
 
