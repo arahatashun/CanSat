@@ -1,3 +1,3 @@
 #!/bin/sh
 
-timeout -sSIGINT 10 sudo sh ground.sh
+timeout -sSIGINT 1 sudo sh ground.sh
