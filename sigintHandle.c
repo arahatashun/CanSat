@@ -1,7 +1,8 @@
 #include <stdio.h>
-#include <motor.h>
-#include <gut.h>
 #include <wirigPi.h>
+#include "motor.h"
+#include "gut.h"
+
 
 int main(void)
 {
