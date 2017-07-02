@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <wirigPi.h>
+#include <wiringPi.h>
 #include "motor.h"
 #include "gut.h"
 
