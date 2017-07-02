@@ -6,7 +6,7 @@
 
 int main(void)
 {
-	cutInterupt(void);
+	cutInterupt();
 	motor_stop();
 	delay(10);
 	return 0;
