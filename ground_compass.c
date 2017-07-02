@@ -156,12 +156,9 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 			delay(1000);
 			return -2;        //ゴールに着いた
 		}
-		if(i==11)
-		{
-			printf("integral finish\n");
-		}
-		printf("\n");  //１つのシーケンスの終わり
 	}
+	printf("integral finish\n");
+	printf("\n");  //１つのシーケンスの終わり
 	return 0;
 }
 
