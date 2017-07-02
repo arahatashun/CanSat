@@ -1,3 +1,3 @@
 #!/bin/sh
 
-timeout --signal = 2 10 ground.sh
+timeout -sSIGINT 10 ground.sh
