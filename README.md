@@ -21,6 +21,10 @@ Enter program name (excluding .out)
 と出るので
 プログラム名を入れます
 
+## I2C系素子の接触確認方法
+`$sudo i2cdetect -y 1`
+
+でI2C系素子の接触確認ができる。
 
 ## NOTE
 
