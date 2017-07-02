@@ -16,7 +16,7 @@ flight.out: $(objs_f)
 sigint_handle.out: singint_handle.o motor.o gut.o
 	gcc -g -Wall -O2 -o sigint_handle.out singint_handle.o motor.o gut.o -lwiringPi
 
-sigint_handle.o: singint_handle.c
+sigint_handle.o: sigint_handle.c
 	gcc -c -Wall sigint_handle.c
 
 ground_compass.o: ground_compass.c
