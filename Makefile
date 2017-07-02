@@ -14,7 +14,7 @@ flight.out: $(objs_f)
 	gcc -g -Wall -O2 -o flight.out $(objs_f) $(LIBS)
 
 sigintHandle.out: sigintHandle.o motor.o gut.o
-	gcc -g -Wall -O2 -o sigintHandle.out singintHandle.o motor.o gut.o -lwiringPi
+	gcc -g -Wall -O2 -o sigintHandle.out sigintHandle.o motor.o gut.o -lwiringPi
 
 sigintHandle.o: sigintHandle.c
 	gcc -c -Wall sigintHandle.c
