@@ -31,10 +31,14 @@ Enter program name (excluding .out)
 I2Cが絡むコードを動かすときは全てsudoをつけること
 
 ## コンパスのoffset値
-EM搭載コンパス `COMPASS_X_OFFSET = -92.0`
+EM搭載コンパス
+                        
+`COMPASS_X_OFFSET = -92.0`
 
-            `COMPASS_Y_OFFSET = -253.5`
+`COMPASS_Y_OFFSET = -253.5`
             
-FM搭載コンパス `COMPASS_X_OFFSET = -15.5`
+FM搭載コンパス 
 
-            `COMPASS_Y_OFFSET = 401.5`
+`COMPASS_X_OFFSET = -15.5`
+
+`COMPASS_Y_OFFSET = 401.5`
