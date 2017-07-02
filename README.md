@@ -2,8 +2,11 @@
 
 ## ログの取り方
 
+ログの保存場所は~/Documentsに設定します.
+
+
 ```shell
-$sudo stdbuf -o0 -e0 ./a.out | tee ~/home/pi/documents/`date +%Y%m%d_%H-%M-%S`.txt
+$sudo stdbuf -o0 -e0 ./a.out | tee ~/Documents/`date +%Y%m%d_%H-%M-%S`.txt
 ```
 
 ## めんどくさいのでshell scriptを使ったやり方
