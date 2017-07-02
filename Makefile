@@ -13,6 +13,9 @@ ground_compass.out: $(objs_g_and_c)
 flight.out: $(objs_f)
 	gcc -g -Wall -O2 -o flight.out $(objs_f) $(LIBS)
 
+sigint_handle.out:singint_handle.out motor.o gut.o
+	gcc -g -Wall -O2 -o sigint_handle.out motor.o gut.o -lwiringPi
+
 ground_compass.o: ground_compass.c
 	gcc -c -Wall ground_compass.c
 
