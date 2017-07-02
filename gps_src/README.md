@@ -11,6 +11,13 @@ $ make
 $ sudo make install
 ```
 
+## Uninstall it
+
+```shell
+$ sudo make uninstall
+```
+
+
 ## Use it
 
 This project is mainly created for Raspberry ARM boards. After you have
@@ -106,4 +113,3 @@ That's all...
 This library is tested with:
 
  * Adafruit Ultimate GPS Breakout - 66 channel w/10 Hz updates - Version 3
-
