@@ -28,6 +28,7 @@ int cutInterupt(void)
 {
 	digitalWrite(FIRST_GUT_PIN,LOW);
 	digitalWrite(SECOND_GUT_PIN,LOW);
+	return 0;
 }
 
 static int cut(int gut_pin)
