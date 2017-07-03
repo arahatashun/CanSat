@@ -7,7 +7,7 @@
 
 #pragma comment(lib,"opencv_world320.lib")
 
-static const int ROTATE_POWER = 40;
+static const int ROTATE_POWER = 100;
 static const int ROTATE_MILLISECONDS = 200;
 static const int LEFT_MAX = -100;
 static const int RIGHT_MAX = 100;
