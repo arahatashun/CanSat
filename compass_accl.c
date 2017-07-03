@@ -8,9 +8,6 @@ static const double PI = 3.14159265359;
 
 int main()
 {
-	double phi_rad = 0;
-	double psi_rad = 0;
-	double theta_degree = 0;
 	Accl accl_data;
 	Cmps compass_data;
 	acclGyro_initialize();
@@ -19,8 +16,8 @@ int main()
 	{
 		readAccl(&accl_data);
 		compass_read(&compass_data);
-		phi_rad = cal_roll(&accl_data);
-		psi_rad = cal_pitch(&accl_data);
+		double phi_rad = cal_roll(&accl_data);
+		double psi_rad = cal_pitch(&accl_data);
 		printf("phi_degree = %f\n", phi_rad*180.0/PI);
 		printf("psi_degree = %f\n", psi_rad*180.0/PI);
 		double theta_degree = cal_deg_acclcompass(compass_data.x_value,compass_data.y_value,
