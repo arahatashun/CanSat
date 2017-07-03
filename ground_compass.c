@@ -11,7 +11,7 @@
 #include "ring_buffer.h"
 #include "pid.h"
 
-static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
+static const int GPS_RING_LEN = 5;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
 static const int GOAL_THRESHOLD = 5;
 static const int SETPOINT = 0.0;//delta_angleの目標値
@@ -127,7 +127,7 @@ int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
 	{
 		handle_gps_zero(data);
 	}
-	if(queue_length(latring)==10)//stack 判定
+	if(queue_length(latring)==GPS_RING_LEN)//stack 判定
 	{
 		stack(latring,lonring);
 	}
