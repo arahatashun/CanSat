@@ -71,21 +71,21 @@ int compass_initialize()
 	fd = wiringPiI2CSetup(HMC5883L_ADDRESS);
 	if(fd == -1)
 	{
-		printf("WARNING! compass wiringPiI2CSetup error\n");
-		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
+		/*printf("WARNING! compass wiringPiI2CSetup error\n");
+		   printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));*/
 		return -1;
 	}
 	else
 	{
-		printf("compass wiringPiI2CSetup success\n");
+		/*rintf("compass wiringPiI2CSetup success\n");*/
 	}
 
 	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
 	if(WPI2CWReg8 == -1)
 	{
-		printf("compass write error register MODE_CONTINUOUS\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		printf("errno=%d: %s\n", errno, strerror(errno));
+		/*printf("compass write error register MODE_CONTINUOUS\n");
+		   printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		   printf("errno=%d: %s\n", errno, strerror(errno));*/
 	}
 	return 0;
 }
@@ -158,7 +158,7 @@ static int compassReadRaw(Raw* data)
 static int handleCompassErrorOne(Raw* data)
 {
 	compass_initialize();//NOTE initialize
-	printf("compass reinitialized\n");
+	/*printf("compass reinitialized\n");*/
 	//compass_mode_change();
 	compassReadRaw(data);
 	printf("\n");
@@ -198,9 +198,9 @@ static int compass_read(Cmps* data)
 	int LockCounter = 0;
 	while((checkLock(rawdata.xList,-1)||checkLock(rawdata.yList,-1))&&(LockCounter<5))
 	{
-		assert(LockCounter<5);//TODO いつか消す
-		printf("WARNING compass -1 lock\n");
-		printf("LockCounter %d\n",LockCounter);
+		/*assert(LockCounter<5);//TODO いつか消す
+		   printf("WARNING compass -1 lock\n");
+		   printf("LockCounter %d\n",LockCounter);*/
 		handleCompassErrorOne(&rawdata);
 		LockCounter++;
 	}
@@ -214,9 +214,9 @@ static int compass_read(Cmps* data)
 	}
 	while((checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0]))&&(LockCounter<5))
 	{
-		assert(LockCounter<5);//TODO いつか消す
-		printf("WARNING compass lock\n");
-		printf("LockCounter %d\n",LockCounter);
+		/*assert(LockCounter<5);//TODO いつか消す
+		   printf("WARNING compass lock\n");
+		   printf("LockCounter %d\n",LockCounter);*/
 		handleCompassErrorOne(&rawdata);
 		LockCounter++;
 	}
