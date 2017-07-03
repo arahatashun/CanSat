@@ -11,11 +11,6 @@
 #include "ring_buffer.h"
 #include "pid.h"
 
-
-static const int TURN_POWER = 60;//turnするpower
-static const int TURN_MILLISECONDS = 100;//turnするmilliseconds
-static const int FORWARD_MILLISECONDS = 3000;//forwardするmilliseconds
-static const int STOP_MILLISECONDS = 2000;//地磁気安定のためにstopするmilliseconds
 static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
 static const int GOAL_THRESHOLD = 5;
