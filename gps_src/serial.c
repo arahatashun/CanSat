@@ -82,5 +82,9 @@ int serial_readln(char *buffer, int len)
 
 void serial_close(void)
 {
-	close(uart0_filestream);
+	if(close(uart0_filestream)== -1)
+	{
+		printf("uart0_filestream close failed\n");
+		printf("errno=%d: %s\n", errno, strerror(errno));
+	}
 }
