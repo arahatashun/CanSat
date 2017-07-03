@@ -106,6 +106,9 @@ int stack(Queue *latring,Queue *lonring)
 			motor_escape();
 		}
 		delay(10000);
+		gps_close();
+		gps_off();
+
 	}
 	return 0;
 }
