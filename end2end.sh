@@ -1,6 +1,6 @@
 #!/bin/sh
 #NOTE 事前に実行ファイルの用意
-trap 'echo -e "SIGIN Handle\n";sudo ./sigintHandle.out' 2
+trap 'echo -e "SIGIN Handle\n";sudo ./sigintHandle.out;exit' 2
 echo "start gut cut"
 sudo ./test_program/gut.out
 echo "start ground run"
