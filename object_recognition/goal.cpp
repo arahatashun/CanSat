@@ -34,7 +34,7 @@ int main (void)
 		{
 			//見つけれたら前進
 			motor_forward(100);
-			delay(200);
+			delay(400);
 			motor_stop();
 			delay(10);
 		}
