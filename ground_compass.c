@@ -50,8 +50,8 @@ int DistAngle_initialize(DistAngle *data)
 int printTime()
 {
 	time_t timer;
-  time(&timer);
-  printf("%s\n", ctime(&timer));
+	time(&timer);
+	printf("%s\n", ctime(&timer));
 	return 0;
 }
 
@@ -99,8 +99,12 @@ int stack(Queue *latring,Queue *lonring)
 	printf("delta_movement = %f\n", delta_movement);
 	if(delta_movement<STACK_THRESHOLD)
 	{
-		printf("STACK JUDGEMENT\n");
-		motor_escape();
+		for(int i=0; i<2; i++)
+		{
+			printf("STACK JUDGEMENT\n");
+			motor_escape();
+		}
+		delay(10000);
 	}
 	return 0;
 }
@@ -168,6 +172,6 @@ int main()
 	DistAngle_initialize(&DistAngle_data);
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
-	while(decide_route(&DistAngle_data,gps_latring,gps_lonring) != -2);
+	while(decide_route(&DistAngle_data,gps_latring,gps_lonring) != -2) ;
 	return 0;
 }
