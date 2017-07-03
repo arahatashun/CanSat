@@ -23,19 +23,22 @@ static const double PI = 3.14159265;
 
 ///キャリブレーション関係のパラメーター
 static const double K_PARAMETER = 1.0;//地磁気の感度補正パラメータ
-/*
-static const double COMPASS_X_OFFSET = -92.0; //ここに手動でキャリブレーションしたoffset値を代入(EMについてるコンパスの値)
+
+static const double COMPASS_X_OFFSET = -92.0;    //ここに手動でキャリブレーションしたoffset値を代入(EMについてるコンパスの値)
 static const double COMPASS_Y_OFFSET = -253.5;
-*/
-static const double COMPASS_X_OFFSET = -15.5; //ここに手動でキャリブレーションしたoffset値を代入(FMについてるコンパスの値)
-static const double COMPASS_Y_OFFSET = 401.5;
+
+/*
+   static const double COMPASS_X_OFFSET = -15.5; //ここに手動でキャリブレーションしたoffset値を代入(FMについてるコンパスの値)
+   static const double COMPASS_Y_OFFSET = 401.5;
+ */
+
+//周囲の今日磁場がある時の退避
+static const int MAX_PWM_VAL = 100;
+static const int ESCAPE_TIME = 1000;
 
 //calibration時の回転
 static const int TURN_CALIB_POWER = 25;//地磁気補正時turnするpower
 static const int TURN_CALIB_MILLISECONDS = 75;//地磁気補正時turnするmilliseconds
-//周囲の今日磁場がある時の退避
-static const int MAX_PWM_VAL = 100;
-static const int ESCAPE_TIME = 1000;
 
 static int fd = 0;
 
@@ -87,27 +90,27 @@ int compass_initialize()
 	return 0;
 }
 
-/*
-   //地磁気ロック対策のmode_change関数(error時のみ表示)
-   static int compass_mode_change()
-   {
-        int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_SINGLE);
-        if(WPI2CWReg8 == -1)
-        {
-                printf("compass write error register MODE_SINGLE\n");
-                printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-                printf("errno=%d: %s\n", errno, strerror(errno));
-        }
-        WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
-        if(WPI2CWReg8 == -1)
-        {
-                printf("compass write error register MODE_CONTINUOUS\n");
-                printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-                printf("errno=%d: %s\n", errno, strerror(errno));
-        }
-        return 0;
-   }
- */
+
+//地磁気ロック対策のmode_change関数(error時のみ表示)
+static int compass_mode_change()
+{
+	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_SINGLE);
+	if(WPI2CWReg8 == -1)
+	{
+		printf("compass write error register MODE_SINGLE\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		printf("errno=%d: %s\n", errno, strerror(errno));
+	}
+	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
+	if(WPI2CWReg8 == -1)
+	{
+		printf("compass write error register MODE_CONTINUOUS\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		printf("errno=%d: %s\n", errno, strerror(errno));
+	}
+	return 0;
+}
+
 
 static short read_out(int file,int msb_reg, int lsb_reg)
 {
@@ -135,9 +138,9 @@ static int compassReadRaw(Raw* data)
 	{
 		//compass_mode_change();
 		data->xList[i] = read_out(fd, X_MSB_REG, X_LSB_REG);
-		printf("x%d\n",data->xList[i]);
+		/*printf("x%d\n",data->xList[i]);*/
 		data->yList[i] = read_out(fd, Y_MSB_REG, Y_LSB_REG);
-		printf("y%d\n",data->yList[i]);
+		/*printf("y%d\n",data->yList[i]);*/
 		data->zList[i] = read_out(fd, Z_MSB_REG, Z_LSB_REG);
 		/*
 		   uint8_t status_val = wiringPiI2CReadReg8(fd, 0x09);//とりあえずコメントアウトしておきます
@@ -222,7 +225,7 @@ static int compass_read(Cmps* data)
 	{
 		printf("Lock Counter Max\n");
 		assert(LockCounter!=5);
-		;//TODO 再起動?
+		;      //TODO 再起動?
 	}
 	data->x_value = (double)rawdata.xList[4] - COMPASS_X_OFFSET;
 	data->y_value = (double)rawdata.yList[4] - COMPASS_Y_OFFSET;
@@ -302,47 +305,57 @@ double readCompassAngle(void)
 /*******************************************/
 /***以下はマシンによる自動地磁気calibration用****/
 /*******************************************/
+
+typedef struct cmps_offset {
+	double x_offset_max;
+	double x_offset_min;
+	double y_offset_max;
+	double y_offset_min;
+	double x_offset;
+	double y_offset;
+} Cmps_offset;
+
 static int compass_offset_initialize(Cmps_offset *compass_offset, Cmps *compass_data)
 {
 	compass_value_initialize(compass_data);
 	compass_read(compass_data);
-	compass_offset->compassx_offset_max = compass_data->x_value;
-	compass_offset->compassx_offset_min = compass_data->x_value;
-	compass_offset->compassy_offset_max = compass_data->y_value;
-	compass_offset->compassy_offset_min = compass_data->y_value;
-	compass_offset->compassx_offset = 0;
-	compass_offset->compassy_offset = 0;
+	compass_offset->x_offset_max = compass_data->x_value;
+	compass_offset->x_offset_min = compass_data->x_value;
+	compass_offset->y_offset_max = compass_data->y_value;
+	compass_offset->y_offset_min = compass_data->y_value;
+	compass_offset->x_offset = 0;
+	compass_offset->y_offset = 0;
 	return 0;
 }
 
 static int maxmin_compass(Cmps_offset *compass_offset, Cmps *compass_data)
 {
-	if(compass_data->x_value > compass_offset->compassx_offset_max)
+	if(compass_data->x_value > compass_offset->x_offset_max)
 	{
-		compass_offset->compassx_offset_max = compass_data->x_value;
+		compass_offset->x_offset_max = compass_data->x_value;
 	}
-	else if(compass_data->x_value < compass_offset->compassx_offset_min)
+	else if(compass_data->x_value < compass_offset->x_offset_min)
 	{
-		compass_offset->compassx_offset_min = compass_data->x_value;
+		compass_offset->x_offset_min = compass_data->x_value;
 	}
 
-	if(compass_data->y_value > compass_offset->compassy_offset_max)
+	if(compass_data->y_value > compass_offset->y_offset_max)
 	{
-		compass_offset->compassy_offset_max = compass_data->y_value;
+		compass_offset->y_offset_max = compass_data->y_value;
 	}
-	else if(compass_data->y_value < compass_offset->compassy_offset_min)
+	else if(compass_data->y_value < compass_offset->y_offset_min)
 	{
-		compass_offset->compassy_offset_min = compass_data->y_value;
+		compass_offset->y_offset_min = compass_data->y_value;
 	}
 	return 0;
 }
 
 static int mean_compass_offset(Cmps_offset *compass_offset)
 {
-	compass_offset->compassx_offset = (compass_offset->compassx_offset_max + compass_offset->compassx_offset_min)/2;
-	compass_offset->compassy_offset = (compass_offset->compassy_offset_max + compass_offset->compassy_offset_min)/2;
-	printf("x_offset=%f, y_offset=%f\n", compass_offset->compassx_offset
-	       ,compass_offset->compassy_offset);
+	compass_offset->x_offset = (compass_offset->x_offset_max + compass_offset->x_offset_min)/2;
+	compass_offset->y_offset = (compass_offset->y_offset_max + compass_offset->y_offset_min)/2;
+	printf("x_offset=%f, y_offset=%f\n", compass_offset->x_offset
+	       ,compass_offset->y_offset);
 	return 0;
 }
 

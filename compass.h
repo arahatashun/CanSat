@@ -5,16 +5,6 @@
 extern "C" {
 #endif
 
-typedef struct cmps_offset {
-  double compassx_offset_max;//the values of compassx offset
-  double compassx_offset_min;
-  double compassy_offset_max;
-  double compassy_offset_min;
-  double compassx_offset;
-  double compassy_offset;
-} Cmps_offset;
-
-
 int compass_initialize();
 double readCompassAngle(void);
 
