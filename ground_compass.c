@@ -11,11 +11,6 @@
 #include "ring_buffer.h"
 #include "pid.h"
 
-
-static const int TURN_POWER = 60;//turnするpower
-static const int TURN_MILLISECONDS = 100;//turnするmilliseconds
-static const int FORWARD_MILLISECONDS = 3000;//forwardするmilliseconds
-static const int STOP_MILLISECONDS = 2000;//地磁気安定のためにstopするmilliseconds
 static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
 static const int GOAL_THRESHOLD = 5;
@@ -23,7 +18,7 @@ static const int SETPOINT = 0.0;//delta_angleの目標値
 static const double KP_VALUE= 0.4539925;
 static const double KI_VALUE = 0.00001453125;
 static const double KD_VALUE = 0;
-
+static const int PID_LEN = 12;
 
 
 typedef struct dist_and_angle {
@@ -138,7 +133,7 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 	int i;
 	pid_initialize(&pid_data);
 	pid_const_initialize(&pid_data,SETPOINT,KP_VALUE,KI_VALUE,KD_VALUE);
-	for(i=0; i<12; i++)
+	for(i=0; i<PID_LEN; i++)
 	{
 		update_angle(data,latring,lonring);
 		if(data->dist2goal>GOAL_THRESHOLD)
@@ -156,12 +151,9 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 			delay(1000);
 			return -2;        //ゴールに着いた
 		}
-		if(i==11)
-		{
-			printf("integral finish\n");
-		}
-		printf("\n");  //１つのシーケンスの終わり
 	}
+	printf("integral finish\n");
+	printf("\n");  //１つのシーケンスの終わり
 	return 0;
 }
 
