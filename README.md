@@ -22,7 +22,10 @@ Enter program name (excluding .out)
 プログラム名を入れます
 
 ## I2C系素子の接触確認方法
-`$sudo i2cdetect -y 1`
+
+```shell
+$sudo i2cdetect -y 1
+```
 
 でI2C系素子の接触確認ができる。
 
@@ -32,13 +35,18 @@ I2Cが絡むコードを動かすときは全てsudoをつけること
 
 ## コンパスのoffset値
 EM搭載コンパス
-                        
+
 `COMPASS_X_OFFSET = -92.0`
 
 `COMPASS_Y_OFFSET = -253.5`
-            
-FM搭載コンパス 
+
+FM搭載コンパス
 
 `COMPASS_X_OFFSET = -15.5`
 
 `COMPASS_Y_OFFSET = 401.5`
+
+## PIDパラメーターの調整について
+
+Dはとりあえず無視.Iもとりあえず無視してPをまず決めます.
+Pは首振りしない限界の値を二分探索で求めます.そのあとIを足していって首振りしない限界まで近づける感じです.
