@@ -2,20 +2,19 @@
 #compasslog.txtというファイルが同じディレクトリにあるとする
 import matplotlib.pyplot as plt
 
-f = open('compasslog.txt')
 xylist = []             #とりあえずcompasslog.txtの値を上から全て１つずつ全て格納
 x = []                  #xyの区別がついてないxylistをxとyに分けるためのリスト
 y = []
-x_offset = 72   #このオフセット値を変えてプロットを円に近づける
-y_offset = -216.5
+x_offset = 0   #このオフセット値を変えてプロットを円に近づける(今の値はEMの値)
+y_offset = 0
 
 #log読み取り関数
 def read_log():
-    line = f.readline() # 1行を文字列として読み込む(改行文字も含まれる)
-    while(line):
+    txt = open('compasslog.txt')
+    for line in txt:
         xylist.append(float(line))
-        line = f.readline()
-        f.close
+        print(line)
+    txt.close
 
 #xとy見境なくリストにしたxylistをxとyにparse
 def get_list():
