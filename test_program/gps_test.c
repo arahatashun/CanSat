@@ -7,12 +7,12 @@ loc_t data;//gpsのデータを確認するものをグローバル変数宣言
 
 int main()
 {
-	gps_init();
 	while(1)
 	{
+		gps_init();
 		gps_location(&data);
 		printf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
-		delay(5000);
-		/*gps_off();*/
+		delay(1000);
+		gps_off();
 	}
 }
