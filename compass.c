@@ -32,7 +32,7 @@ static const double COMPASS_Y_OFFSET = -253.5;
    static const double COMPASS_Y_OFFSET = 401.5;
  */
 
-//周囲の今日磁場がある時の退避
+//周囲に強磁場がある時の退避
 static const int MAX_PWM_VAL = 100;
 static const int ESCAPE_TIME = 1000;
 
