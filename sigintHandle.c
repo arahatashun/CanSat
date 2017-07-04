@@ -9,6 +9,6 @@ int main(void)
 	printf("Executing Sigint Handle\n");
 	cutInterupt();
 	motor_stop();
-	delay(10);
+	delay(100);
 	return 0;
 }
