@@ -13,6 +13,7 @@ void handler(int signum)
 
 int main()
 {
+	int i;
 	signal(SIGINT, handler);
 	pwm_initialize();
 	motor_back(100);
