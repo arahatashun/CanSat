@@ -10,5 +10,6 @@ int main(void)
 	cutInterupt();
 	motor_stop();
 	delay(100);
+	printf("Sigint Handle FINISHED\n", );
 	return 0;
 }
