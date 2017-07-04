@@ -10,7 +10,7 @@
 #include "mitibiki.h"
 #include "ring_buffer.h"
 #include "pid.h"
-#include "acclyro.h"
+#include "acclgyro.h"
 
 static const int GPS_RING_LEN = 5;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
