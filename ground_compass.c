@@ -10,6 +10,7 @@
 #include "mitibiki.h"
 #include "ring_buffer.h"
 #include "pid.h"
+#include "acclyro.h"
 
 static const int GPS_RING_LEN = 5;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
@@ -159,6 +160,13 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 			delay(1000);
 			return -2;        //ゴールに着いた
 		}
+	}
+	if(isReverse() == -1)
+	{
+		motor_stop();
+		delay(1000);
+		motor_foward(100);
+		delay(2000);
 	}
 	printf("integral finish\n");
 	printf("\n");  //１つのシーケンスの終わり
