@@ -34,13 +34,13 @@ $sudo i2cdetect -y 1
 I2Cが絡むコードを動かすときは全てsudoをつけること
 
 ## コンパスのoffset値
-EM搭載コンパス
+FM2台目搭載コンパス
 
 `COMPASS_X_OFFSET = -92.0`
 
 `COMPASS_Y_OFFSET = -253.5`
 
-FM搭載コンパス
+FM1台目搭載コンパス
 
 `COMPASS_X_OFFSET = -15.5`
 
