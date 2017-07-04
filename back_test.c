@@ -17,12 +17,14 @@ int main()
 	signal(SIGINT, handler);
 	pwm_initialize();
 	motor_forward(100);
-	delay(1000);
-	for(i=2; i<5; i++)
-	{
-		motor_back(100-20*i);
-		delay(100);
-	}
+	delay(2000);
+	/*
+	   for(i=2; i<5; i++)
+	   {
+	        motor_back(100-20*i);
+	        delay(100);
+	   }*/
 	motor_stop();
 	delay(100);
+
 }
