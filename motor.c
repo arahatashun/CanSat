@@ -128,7 +128,7 @@ int motor_escape() //delayは適当
 {
 	int i;
 	printf("get stacked\n");
-	for(i=2; i<5; i++)
+	for(i=2; i<5; i++) //ひっくり返らないようにうまくバックしたい
 	{
 		motor_back(100-20*i);
 		delay(100);
@@ -139,7 +139,7 @@ int motor_escape() //delayは適当
 	delay(2000);
 	motor_forward(100);
 	delay(3000);
-	for(i=1; i<5; i++)
+	for(i=1; i<5; i++) //ひっくり帰らないようにうまく停止したい
 	{
 		motor_forward(100-20*i);
 		delay(200);
