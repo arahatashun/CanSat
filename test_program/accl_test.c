@@ -10,9 +10,9 @@ int main()
 	while(1)
 	{
 		readAccl(&accl_data);
-		printf("x_accl is %d\n",accl_data.acclX_scaled);
-		printf("y_accl is %d\n",accl_data.acclY_scaled);
-		printf("z_accl is %d\n",accl_data.acclZ_scaled);
+		printf("x_accl is %f\n",accl_data.acclX_scaled);
+		printf("y_accl is %f\n",accl_data.acclY_scaled);
+		printf("z_accl is %f\n",accl_data.acclZ_scaled);
 		isReverse();
 		delay(1000);
 	}
