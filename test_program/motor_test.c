@@ -16,7 +16,7 @@ int main()
 	signal(SIGINT, handler);
 	pwm_initialize();
 	motor_forward(100);
-	delay(2000);
+	delay(500);
 	motor_stop();
 	delay(1000);
 	/*motor_forward(60);
