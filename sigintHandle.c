@@ -6,10 +6,12 @@
 
 int main(void)
 {
+	pwm_initialize();
+	cut_initialize();
 	printf("Executing Sigint Handle\n");
 	cutInterupt();
 	motor_stop();
-	delay(100);
+	delay(1000);
 	printf("Sigint Handle FINISHED\n");
 	return 0;
 }
