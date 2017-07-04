@@ -132,7 +132,7 @@ int isReverse(void)
 	}
 	else
 	{
-		//printf("G:%f z_posture:normal\n",data.acclZ_scaled);
+		printf("G:%f z_posture:normal\n",data.acclZ_scaled);
 		return 0;
 	}
 }
