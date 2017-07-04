@@ -165,7 +165,7 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 	{
 		motor_stop();
 		delay(1000);
-		motor_right(100);
+		motor_forward(100);
 		delay(2000);
 	}
 	printf("integral finish\n");
