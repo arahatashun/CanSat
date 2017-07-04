@@ -57,7 +57,6 @@ int printTime()
 }
 
 //地磁気の計測及びとそのオフセット値からマシンの向いている角度を計算
-
 int cal_compass_theta(DistAngle *data)
 {
 	data->angle_by_compass = readCompassAngle();                //偏角を調整
