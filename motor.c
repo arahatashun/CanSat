@@ -144,6 +144,6 @@ int motor_escape() //delayは適当
 	motor_forward(20);
 	delay(200);
 	motor_stop();
-	delay(000);
+	delay(1000);
 	return 0;
 }
