@@ -136,7 +136,7 @@ int motor_escape() //delayは適当
 	motor_stop();
 	delay(200);
 	motor_right(100);
-	delay(2000);
+	delay(1000);
 	motor_forward(100);
 	delay(3000);
 	for(i=1; i<5; i++) //ひっくり帰らないようにうまく停止したい
