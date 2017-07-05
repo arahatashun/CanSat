@@ -140,13 +140,13 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 	for(i=0; i<PID_LEN; i++)
 	{
 		update_angle(data,latring,lonring);
-		/*if(isReverse() == -1)
-		   {
-		        motor_stop();
-		        delay(1000);
-		        motor_forward(100);
-		        delay(2000);
-		   }*/
+		if(isReverse() == -1)
+		{
+			motor_stop();
+			delay(1000);
+			motor_forward(100);
+			delay(2000);
+		}
 		if(data->dist2goal>GOAL_THRESHOLD)
 		{
 			pid_data.input = -(data->delta_angle);
