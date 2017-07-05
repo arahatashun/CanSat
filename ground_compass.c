@@ -179,6 +179,7 @@ int main()
 	pwm_initialize();
 	gps_init();
 	compass_initialize();
+	acclGyro_initialize();
 	DistAngle DistAngle_data;
 	DistAngle_initialize(&DistAngle_data);
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
