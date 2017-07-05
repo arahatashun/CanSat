@@ -15,18 +15,14 @@ int main()
 {
 	signal(SIGINT, handler);
 	pwm_initialize();
-	motor_forward(100);
-	delay(500);
-	motor_stop();
-	delay(1000);
-	/*motor_forward(60);
-	   delay(5000);
-	   motor_right(50);
-	   delay(5000);
-	   motor_left(50);
-	   delay(5000);
-	   motor_back(50);
-	   delay(5000);*/
+	motor_forward(60);
+	delay(5000);
+	motor_right(50);
+	delay(5000);
+	motor_left(50);
+	delay(5000);
+	motor_back(50);
+	delay(5000);
 	motor_stop();
 	delay(100);
 }
