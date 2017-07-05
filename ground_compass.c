@@ -100,11 +100,8 @@ int stack(Queue *latring,Queue *lonring)
 	printf("delta_movement = %f\n", delta_movement);
 	if(delta_movement<STACK_THRESHOLD)
 	{
-		for(i=0; i<2; i++)
-		{
-			printf("STACK JUDGEMENT\n");
-			motor_escape();
-		}
+		printf("STACK JUDGEMENT\n");
+		motor_escape();
 		delay(1000);
 		gps_off();
 		gps_init();
