@@ -3,7 +3,8 @@
 #include <wiringPiI2C.h>
 #include "../acclgyro.h"
 
-int main(){
+int main()
+{
 	Accl accl_data;
 	Gyro gyro_data;
 	acclGyro_initialize();

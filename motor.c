@@ -126,16 +126,25 @@ int motor_slalom(int delta_pwm)
 
 int motor_escape() //delayは適当
 {
+	int i;
 	printf("get stacked\n");
-	motor_back(50);
-	delay(200);
+	for(i=2; i<5; i++) //ひっくり返らないようにうまくバックしたい
+	{
+		motor_back(100-20*i);
+		delay(100);
+	}
 	motor_stop();
 	delay(200);
 	motor_right(100);
-	delay(2000);
+	delay(1250);
 	motor_forward(100);
-	delay(4000);
+	delay(3000);
+	for(i=1; i<5; i++) //ひっくり帰らないようにうまく停止したい
+	{
+		motor_forward(100-20*i);
+		delay(200);
+	}
 	motor_stop();
-	delay(000);
+	delay(500);
 	return 0;
 }

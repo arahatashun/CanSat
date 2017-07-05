@@ -9,6 +9,9 @@ gut:
 lux:
 	gcc -o lux.out luxsensor_test.c ../luxsensor.c $(LIBS)
 
+accl:
+	gcc -o accl.out accl_test.c ../acclgyro.c $(LIBS) -lm	
+
 gyro:
 	gcc -o gyro.out gyro_test.c ../acclgyro.c $(LIBS) -lm
 

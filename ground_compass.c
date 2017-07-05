@@ -10,8 +10,9 @@
 #include "mitibiki.h"
 #include "ring_buffer.h"
 #include "pid.h"
+#include "acclgyro.h"
 
-static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
+static const int GPS_RING_LEN = 5;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
 static const int GOAL_THRESHOLD = 5;
 static const int SETPOINT = 0.0;//delta_angleの目標値
@@ -50,13 +51,12 @@ int DistAngle_initialize(DistAngle *data)
 int printTime()
 {
 	time_t timer;
-  time(&timer);
-  printf("%s\n", ctime(&timer));
+	time(&timer);
+	printf("%s\n", ctime(&timer));
 	return 0;
 }
 
 //地磁気の計測及びとそのオフセット値からマシンの向いている角度を計算
-
 int cal_compass_theta(DistAngle *data)
 {
 	data->angle_by_compass = readCompassAngle();                //偏角を調整
@@ -101,6 +101,10 @@ int stack(Queue *latring,Queue *lonring)
 	{
 		printf("STACK JUDGEMENT\n");
 		motor_escape();
+		delay(1000);
+		gps_off();
+		gps_init();
+
 	}
 	return 0;
 }
@@ -119,7 +123,7 @@ int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
 	{
 		handle_gps_zero(data);
 	}
-	if(queue_length(latring)==10)//stack 判定
+	if(queue_length(latring)==GPS_RING_LEN)//stack 判定
 	{
 		stack(latring,lonring);
 	}
@@ -136,6 +140,13 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 	for(i=0; i<PID_LEN; i++)
 	{
 		update_angle(data,latring,lonring);
+		if(isReverse() == -1)
+		{
+			motor_stop();
+			delay(1000);
+			motor_forward(100);
+			delay(2000);
+		}
 		if(data->dist2goal>GOAL_THRESHOLD)
 		{
 			pid_data.input = -(data->delta_angle);
@@ -164,10 +175,11 @@ int main()
 	pwm_initialize();
 	gps_init();
 	compass_initialize();
+	acclGyro_initialize();
 	DistAngle DistAngle_data;
 	DistAngle_initialize(&DistAngle_data);
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
-	while(decide_route(&DistAngle_data,gps_latring,gps_lonring) != -2);
+	while(decide_route(&DistAngle_data,gps_latring,gps_lonring) != -2) ;
 	return 0;
 }

@@ -24,15 +24,16 @@ static const double PI = 3.14159265;
 ///キャリブレーション関係のパラメーター
 static const double K_PARAMETER = 1.0;//地磁気の感度補正パラメータ
 
-static const double COMPASS_X_OFFSET = -92.0;    //ここに手動でキャリブレーションしたoffset値を代入(EMについてるコンパスの値)
-static const double COMPASS_Y_OFFSET = -253.5;
-
 /*
-   static const double COMPASS_X_OFFSET = -15.5; //ここに手動でキャリブレーションしたoffset値を代入(FMについてるコンパスの値)
-   static const double COMPASS_Y_OFFSET = 401.5;
+   static const double COMPASS_X_OFFSET = -92.0;    //ここに手動でキャリブレーションしたoffset値を代入(EMについてるコンパスの値)
+   static const double COMPASS_Y_OFFSET = -253.5;
  */
 
-//周囲の今日磁場がある時の退避
+static const double COMPASS_X_OFFSET = -15.5;    //ここに手動でキャリブレーションしたoffset値を代入(FMについてるコンパスの値)
+static const double COMPASS_Y_OFFSET = 401.5;
+
+
+//周囲に強磁場がある時の退避
 static const int MAX_PWM_VAL = 100;
 static const int ESCAPE_TIME = 1000;
 
@@ -71,21 +72,21 @@ int compass_initialize()
 	fd = wiringPiI2CSetup(HMC5883L_ADDRESS);
 	if(fd == -1)
 	{
-		printf("WARNING! compass wiringPiI2CSetup error\n");
-		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
+		/*printf("WARNING! compass wiringPiI2CSetup error\n");
+		   printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));*/
 		return -1;
 	}
 	else
 	{
-		printf("compass wiringPiI2CSetup success\n");
+		/*rintf("compass wiringPiI2CSetup success\n");*/
 	}
 
 	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
 	if(WPI2CWReg8 == -1)
 	{
-		printf("compass write error register MODE_CONTINUOUS\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		printf("errno=%d: %s\n", errno, strerror(errno));
+		/*printf("compass write error register MODE_CONTINUOUS\n");
+		   printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		   printf("errno=%d: %s\n", errno, strerror(errno));*/
 	}
 	return 0;
 }
@@ -158,7 +159,7 @@ static int compassReadRaw(Raw* data)
 static int handleCompassErrorOne(Raw* data)
 {
 	compass_initialize();//NOTE initialize
-	printf("compass reinitialized\n");
+	/*printf("compass reinitialized\n");*/
 	//compass_mode_change();
 	compassReadRaw(data);
 	printf("\n");
@@ -196,35 +197,35 @@ static int compass_read(Cmps* data)
 	Raw rawdata;
 	compassReadRaw(&rawdata);
 	int LockCounter = 0;
-	while((checkLock(rawdata.xList,-1)||checkLock(rawdata.yList,-1))&&(LockCounter<5))
+	while((checkLock(rawdata.xList,-1)||checkLock(rawdata.yList,-1))&&(LockCounter<100))
 	{
-		assert(LockCounter<5);//TODO いつか消す
+		assert(LockCounter<100);//TODO いつか消す
 		printf("WARNING compass -1 lock\n");
 		printf("LockCounter %d\n",LockCounter);
 		handleCompassErrorOne(&rawdata);
 		LockCounter++;
 	}
-	while((checkLock(rawdata.xList,-4096)||checkLock(rawdata.yList,-4096))&&(LockCounter<5))
+	while((checkLock(rawdata.xList,-4096)||checkLock(rawdata.yList,-4096))&&(LockCounter<100))
 	{
-		assert(LockCounter<5);//TODO いつか消す
+		assert(LockCounter<100);//TODO いつか消す
 		handleCompassErrorTwo(&rawdata);
 		printf("WARNING compass -4096 lock\n");
 		printf("LockCounter %d\n",LockCounter);
 		LockCounter++;
 	}
-	while((checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0]))&&(LockCounter<5))
+	while((checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0]))&&(LockCounter<100))
 	{
-		assert(LockCounter<5);//TODO いつか消す
+		assert(LockCounter<100);//TODO いつか消す
 		printf("WARNING compass lock\n");
 		printf("LockCounter %d\n",LockCounter);
 		handleCompassErrorOne(&rawdata);
 		LockCounter++;
 	}
 
-	if(LockCounter>=5)
+	if(LockCounter>=100)
 	{
 		printf("Lock Counter Max\n");
-		assert(LockCounter!=5);
+		assert(LockCounter!=100);
 		;      //TODO 再起動?
 	}
 	data->x_value = (double)rawdata.xList[4] - COMPASS_X_OFFSET;
