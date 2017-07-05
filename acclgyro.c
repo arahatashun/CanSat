@@ -125,7 +125,7 @@ int isReverse(void)
 {
 	Accl data;
 	readAccl(&data);
-	if(data.acclZ_scaled < 0)
+	if(data.acclZ_scaled < -0.2)
 	{
 		printf("G:%f z_posture:reverse\n",data.acclZ_scaled);
 		return -1;
