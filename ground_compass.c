@@ -56,47 +56,51 @@ int printTime()
 	return 0;
 }
 
-//地磁気の計測及びとそのオフセット値からマシンの向いている角度を計算
-int cal_compass_theta(DistAngle *data)
-{
-	data->angle_by_compass = readCompassAngle();                //偏角を調整
-	printf("compass_degree = %f\n",data->angle_by_compass);
-	return 0;
-}
 
-//地磁気の取得及びgpsと地磁気の計算
-int calc_all(loc_t coord,DistAngle *data,Queue* latring,Queue* lonring)
+//DistAngleの更新
+int updateDistAngle(DistAngle *data,Queue* latring,Queue* lonring)
 {
-	enqueue(latring,coord.latitude); //緯度を格納
-	enqueue(lonring,coord.longitude); //経度を格納
-	printf("latitude:%f\nlongitude:%f\n", coord.latitude, coord.longitude);
-	data->dist2goal = dist_on_sphere(coord.latitude,coord.longitude);
-	data->angle2goal = calc_target_angle(coord.latitude,coord.longitude);
-	cal_compass_theta(data);
+	data->dist2goal = dist_on_sphere(getLast(latring),getLast(lonring));
+	data->angle2goal = calc_target_angle(getLast(latring),getLast(lonring));
+	data->angle_by_compass = readCompassAngle();
 	data->delta_angle = cal_delta_angle(data->angle_by_compass,data->angle2goal);
 	printf("delta_angle:%f\n",data->delta_angle);
 	return 0;
 }
 
-//NOTE gps０問題対策
-//gps情報をring_bufferに入れずに地磁気によるdataの更新のみ
-int handle_gps_zero(DistAngle *data)
+//gps０問題対策
+int handleGpsZero(loc_t coord,Queue* latring,Queue* lonring)
 {
 	printf("GPS return 0 value\n");
-	printf("previous GPS_angle=%f\n",data->angle2goal);
-	cal_compass_theta(data); //地磁気だけ取っておく
-	data->delta_angle = cal_delta_angle(data->angle_by_compass,data->angle2goal);//GPS_angleは元の値を使用
-	printf("delta_angle:%f\n",data->delta_angle);
+	coord.latitude = getLast(latring);
+	coord.longitude = getLast(lonring);
+	//RING BUFFERの更新はしない(stack判定誤作動のため)
+	return 0;
+}
+
+int updateCoord(Queue* latring,Queue* lonring)
+{
+	loc_t coord;
+	gps_location(&coord);//gpsデータ取得
+	if((int)coord.latitude == 0)
+	{
+		handleGpsZero(coord,latring,lonring);
+	}
+	else
+	{
+	enqueue(latring,coord.latitude); //緯度を格納
+	enqueue(lonring,coord.longitude); //経度を格納
+	printf("latitude:%f\nlongitude:%f\n", coord.latitude, coord.longitude);
+	}
 	return 0;
 }
 
 //スタック判定をして抜け出す処理まで
-int stack(Queue *latring,Queue *lonring)
+int stackJudge(Queue *latring,Queue *lonring)
 {
-	double delta_movement = 0;
-	delta_movement = fabs(getLast(latring)-dequeue(latring)) +
-	                 fabs(getLast(lonring)-dequeue(lonring));
-	printf("delta_movement = %f\n", delta_movement);
+	double deltaMovement = 0;
+	deltaMovement=fabs(getLast(latring)-dequeue(latring))+fabs(getLast(lonring)-dequeue(lonring));
+	printf("deltaMovement = %f\n", deltaMovement);
 	if(delta_movement<STACK_THRESHOLD)
 	{
 		printf("STACK JUDGEMENT\n");
@@ -104,28 +108,20 @@ int stack(Queue *latring,Queue *lonring)
 		delay(1000);
 		gps_off();
 		gps_init();
-
 	}
 	return 0;
 }
 
 //gpsと地磁気のデータを一回分更新し、リングバッファに格納
-int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
+int updateAll(DistAngle *data,Queue* latring,Queue* lonring)
 {
 	printTime();
-	loc_t coord;
-	gps_location(&coord);//gpsデータ取得
-	if(coord.latitude != 0.0)
+	updateCoord(latring,lonring);
+	updateDistAngle(data,latring,lonring);
+	//GPS_RING_LENまでリングバッファが溜まった時から随時動的にstack 判定
+	if(queue_length(latring)==GPS_RING_LEN)
 	{
-		calc_all(coord,data,latring,lonring);
-	}
-	else//例外処理
-	{
-		handle_gps_zero(data);
-	}
-	if(queue_length(latring)==GPS_RING_LEN)//stack 判定
-	{
-		stack(latring,lonring);
+		stackJudge(latring,lonring);
 	}
 	return 0;
 }
@@ -134,13 +130,13 @@ int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
 int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 {
 	Pid pid_data;
-	int i;
 	pid_initialize(&pid_data);
 	pid_const_initialize(&pid_data,SETPOINT,KP_VALUE,KI_VALUE,KD_VALUE);
+	int i;
 	for(i=0; i<PID_LEN; i++)
 	{
-		update_angle(data,latring,lonring);
-		if(isReverse() == -1)
+		updateAll(data,latring,lonring);
+		if(isReverse())
 		{
 			motor_stop();
 			delay(1000);
@@ -163,7 +159,7 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 			return -2;        //ゴールに着いた
 		}
 	}
-	printf("integral finish\n");
+	printf("PID integral finish\n");
 	printf("\n");  //１つのシーケンスの終わり
 	return 0;
 }

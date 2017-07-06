@@ -276,7 +276,10 @@ double readCompassAngle(void)
 	Cmps data;
 	compass_value_initialize(&data);
 	compass_read(&data);
-	return calc_compass_angle(data);
+	double angle = 0;
+	angle = calc_compass_angle(data);
+	printf("Compass Angle:%f\n",angle);
+	return angle;
 }
 
 /*
