@@ -9,7 +9,7 @@
 #pragma comment(lib,"opencv_world320.lib")
 
 static const int ROTATE_POWER = 100;
-static const int ROTATE_MILLISECONDS = 250;
+static const int ROTATE_MILLISECONDS = 300;
 static const int LEFT_MAX = -100;
 static const int RIGHT_MAX = 100;
 static const int CENTER_THRESHOLD = 30;//-30~30で直進するようにする
