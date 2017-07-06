@@ -11,7 +11,7 @@ static const int PWM_RANGE = 100;
 static const int INITIAL_PWM_VAL = 0;
 static const int ZERO_PWM_VAL = 0;
 static const int MAX_PWM_VAL = 100;
-
+static const int ESCAPE_TURN_MILLISECONDS = 1250;
 
 int pwm_initialize()
 {
@@ -136,7 +136,7 @@ int motor_escape() //delayは適当
 	motor_stop();
 	delay(200);
 	motor_right(100);
-	delay(1250);
+	delay(ESCAPE_TURN_MILLISECONDS);
 	motor_forward(100);
 	delay(3000);
 	for(i=1; i<5; i++) //ひっくり帰らないようにうまく停止したい
