@@ -113,7 +113,7 @@ int stackJudge(Queue *latring,Queue *lonring)
 }
 
 //gpsと地磁気のデータを一回分更新し、リングバッファに格納
-int updateAll(DistAngle *data,Queue* latring,Queue* lonring)
+int updateAll(DistAngle* data,Queue* latring,Queue* lonring)
 {
 	printTime();
 	updateCoord(latring,lonring);
