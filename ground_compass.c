@@ -100,7 +100,8 @@ int stack(Queue *latring,Queue *lonring)
 	{
 		printf("STACK JUDGEMENT\n");
 		motor_escape();
-		delay(1000);
+		motor_forward(100);
+	delay(1000);
 		gps_off();
 		gps_init();
 
@@ -125,6 +126,7 @@ int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
 	if(queue_length(latring)==GPS_RING_LEN)//stack 判定
 	{
 		stack(latring,lonring);
+		
 	}
 	return 0;
 }
