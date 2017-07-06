@@ -3,6 +3,8 @@
 trap 'echo "SIGIN Handle"; sudo ./sigintHandle.out; exit 1' 2
 echo "start gut cut"
 sudo ./test_program/gut.out
+echo "start forward"
+sudo ./forward.out
 echo "start ground run"
 echo "Executing, ground_compass.out"
 sudo stdbuf -o0 -e0 ./ground_compass.out | tee /home/pi/Documents/`date +%Y%m%d_%H-%M-%S`.txt
