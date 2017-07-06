@@ -36,9 +36,9 @@ I2Cが絡むコードを動かすときは全てsudoをつけること
 ## コンパスのoffset値
 FM1台目搭載コンパス
 
-`COMPASS_X_OFFSET = 97.0`
+`COMPASS_X_OFFSET = -113.0`
 
-`COMPASS_Y_OFFSET = -258.0`
+`COMPASS_Y_OFFSET = 356.0`
 
 FM2台目搭載コンパス
 
