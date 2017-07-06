@@ -105,9 +105,8 @@ int stackJudge(Queue *latring,Queue *lonring)
 	{
 		printf("STACK JUDGEMENT\n");
 		motor_escape();
-		delay(1000);
-		gps_off();
-		gps_init();
+		//gps_off();
+		//gps_init();
 	}
 	return 0;
 }
