@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <time.h>
 #include <wiringPi.h>
 #include "camera.hpp"
 #include "../motor.h"
@@ -18,13 +19,15 @@ static const int TIME_LIMIT = 360000;//6分
 //TODO turn millisecondどんどん大きくしていくPI制御にする
 int main (void)
 {
-	int startTime  = millis();
-	int lastTime = millis();
+	time_t startTime;
+	time(&startTime);
+	time_t lastTime;
+	time(&lastTime);
 	pwm_initialize();
 	while(lastTime-startTime<TIME_LIMIT)
 	{
 		printf("lastTime - startTime %d\n",lastTime - startTime);
-		lastTime = millis();
+		time(&lastTime)
 		cv::Mat red = Mred();
 		double count = countArea(red);
 		if(count < EXIST_THRESHOLD)
