@@ -27,7 +27,7 @@ int main (void)
 	while(lastTime-startTime<TIME_LIMIT)
 	{
 		printf("lastTime - startTime %d\n",lastTime - startTime);
-		time(&lastTime)
+		time(&lastTime);
 		cv::Mat red = Mred();
 		double count = countArea(red);
 		if(count < EXIST_THRESHOLD)
