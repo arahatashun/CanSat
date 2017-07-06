@@ -13,7 +13,7 @@ static const int ROTATE_MILLISECONDS = 200;
 static const int LEFT_MAX = -100;
 static const int RIGHT_MAX = 100;
 static const int CENTER_THRESHOLD = 30;//-30~30で直進するようにする
-static const double EXIST_THRESHOLD = 0.2;//ゴール存在判定 パーセンテージ
+static const double EXIST_THRESHOLD = 0.1;//ゴール存在判定 パーセンテージ
 static const int TIME_LIMIT = 600;//10分
 
 //TODO turn millisecondどんどん大きくしていくPI制御にする
