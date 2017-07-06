@@ -126,7 +126,7 @@ int updateAll(DistAngle* data,Queue* latring,Queue* lonring)
 }
 
 //goal判定で-2を返してそれ以外は0
-int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
+int Go2Goal(DistAngle *data,Queue *latring,Queue *lonring)
 {
 	Pid pid_data;
 	pid_initialize(&pid_data);
@@ -175,6 +175,6 @@ int main()
 	DistAngle_initialize(&DistAngle_data);
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
-	while(decide_route(&DistAngle_data,gps_latring,gps_lonring) != -2) ;
+	while(Go2Goal(&DistAngle_data,gps_latring,gps_lonring) != -2) ;
 	return 0;
 }
