@@ -16,6 +16,9 @@ flight.out: $(objs_f)
 sigintHandle.out: sigintHandle.o motor.o gut.o
 	gcc -g -Wall -O2 -o sigintHandle.out sigintHandle.o motor.o gut.o -lwiringPi
 
+forward.out: forward.c motor.o
+	gcc -g -Wall -O2 -o forward.out motor.o -lwiringPi
+
 sigintHandle.o: sigintHandle.c
 	gcc -c -Wall sigintHandle.c
 
