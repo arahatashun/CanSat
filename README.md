@@ -42,9 +42,9 @@ FM2台目搭載コンパス
 
 FM1台目搭載コンパス
 
-`COMPASS_X_OFFSET = -15.5`
+`COMPASS_X_OFFSET = 97.0`
 
-`COMPASS_Y_OFFSET = 401.5`
+`COMPASS_Y_OFFSET = -258.0`
 
 ## PIDパラメーターの調整について
 
