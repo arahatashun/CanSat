@@ -12,7 +12,7 @@ int main()
   {
     loc_t data;
     gps_location(&data);
-    xbeePrintf("COUNTER : %d",++i);
+    xbeePrintf("COUNTER : %d\n",++i);
 		xbeePrintf("latitude:%f\nlongitude:%f\n", data.latitude, data.longitude);
     delay(1000);
   }
