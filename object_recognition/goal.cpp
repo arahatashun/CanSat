@@ -23,6 +23,7 @@ int main (void)
 	pwm_initialize();
 	while(lastTime-startTime<TIME_LIMIT)
 	{
+		printf("lastTime - startTime %d\n",lastTime - startTime);
 		lastTime = millis();
 		cv::Mat red = Mred();
 		double count = countArea(red);
