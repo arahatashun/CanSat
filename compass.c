@@ -24,6 +24,7 @@ static const double PI = 3.14159265;
 ///キャリブレーション関係のパラメーター
 static const double K_PARAMETER = 1.0;//地磁気の感度補正パラメータ
 
+<<<<<<< HEAD
 /* FM 2
 static const double COMPASS_X_OFFSET = 35.5;
 static const double COMPASS_Y_OFFSET = -545.0;
@@ -33,6 +34,14 @@ static const double COMPASS_X_OFFSET = 97.0;    //ここに手動でキャリブ
 static const double COMPASS_Y_OFFSET = -258.0;
 
 
+=======
+static const double COMPASS_X_OFFSET = 97.0;    //ここに手動でキャリブレーションしたoffset値を代入(FM1についてるコンパスの値)
+static const double COMPASS_Y_OFFSET = -258.0;
+/*
+static const double COMPASS_X_OFFSET = 35.5;    //ここに手動でキャリブレーションしたoffset値を代入(FM2についてるコンパスの値)
+static const double COMPASS_Y_OFFSET = -545.0;
+*/
+>>>>>>> 92a17fc15511764bdff4f2fbf28946dc4225f21a
 //周囲に強磁場がある時の退避
 static const int MAX_PWM_VAL = 100;
 static const int ESCAPE_TIME = 1000;
@@ -72,21 +81,21 @@ int compass_initialize()
 	fd = wiringPiI2CSetup(HMC5883L_ADDRESS);
 	if(fd == -1)
 	{
-		/*printf("WARNING! compass wiringPiI2CSetup error\n");
-		   printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));*/
+		printf("WARNING! compass wiringPiI2CSetup error\n");
+		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
 		return -1;
 	}
 	else
 	{
-		/*rintf("compass wiringPiI2CSetup success\n");*/
+		printf("compass wiringPiI2CSetup success\n");
 	}
 
 	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
 	if(WPI2CWReg8 == -1)
 	{
-		/*printf("compass write error register MODE_CONTINUOUS\n");
-		   printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		   printf("errno=%d: %s\n", errno, strerror(errno));*/
+		printf("compass write error register MODE_CONTINUOUS\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		printf("errno=%d: %s\n", errno, strerror(errno));
 	}
 	return 0;
 }
@@ -159,7 +168,7 @@ static int compassReadRaw(Raw* data)
 static int handleCompassErrorOne(Raw* data)
 {
 	compass_initialize();//NOTE initialize
-	/*printf("compass reinitialized\n");*/
+	printf("compass reinitialized\n");
 	//compass_mode_change();
 	compassReadRaw(data);
 	printf("\n");
