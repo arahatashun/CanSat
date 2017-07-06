@@ -100,11 +100,8 @@ int stack(Queue *latring,Queue *lonring)
 	{
 		printf("STACK JUDGEMENT\n");
 		motor_escape();
-		motor_forward(100);
-	delay(1000);
 		gps_off();
 		gps_init();
-
 	}
 	return 0;
 }
