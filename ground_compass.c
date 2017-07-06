@@ -10,7 +10,6 @@
 #include "mitibiki.h"
 #include "ring_buffer.h"
 #include "pid.h"
-/*#include "acclgyro.h"*/
 
 static const int GPS_RING_LEN = 5;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
@@ -140,13 +139,6 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 	for(i=0; i<PID_LEN; i++)
 	{
 		update_angle(data,latring,lonring);
-		/*if(isReverse() == -1)
-		{
-			motor_stop();
-			delay(1000);
-			motor_forward(100);
-			delay(2000);
-		}*/
 		if(data->dist2goal>GOAL_THRESHOLD)
 		{
 			pid_data.input = -(data->delta_angle);
@@ -175,7 +167,6 @@ int main()
 	pwm_initialize();
 	gps_init();
 	compass_initialize();
-	/*acclGyro_initialize();*/
 	DistAngle DistAngle_data;
 	DistAngle_initialize(&DistAngle_data);
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
