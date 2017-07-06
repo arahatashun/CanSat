@@ -175,6 +175,8 @@ int main()
 	DistAngle_initialize(&DistAngle_data);
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
-	while(Go2Goal(&DistAngle_data,gps_latring,gps_lonring) != -2) ;
+	while(Go2Goal(&DistAngle_data,gps_latring,gps_lonring) != -2);
+	queue_delete(gps_lonring);
+	queue_delete(gps_latring);
 	return 0;
 }
