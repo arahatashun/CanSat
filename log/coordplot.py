@@ -3,11 +3,14 @@ import os
 import math
 import matplotlib.pyplot as plt
 
+EARTH_RADIUS = 6378137
+vector_scale = 0.00001
+
 #緯度経度たちを便宜上xyz座標に変換してそれをリストで返す
-def latlng_to_xyz(lat,long):
+def latlng_to_xyz(lat,longi):
     cartesian_coord = []
     rlat = lat*math.pi/180
-    rlng = lat*math.pi/180
+    rlng = longi*math.pi/180
     coslat = math.cos(rlat)
     cartesian_coord.append(coslat*math.cos(rlng))#x座標
     cartesian_coord.append(coslat*math.sin(rlng))#y座標
@@ -16,7 +19,6 @@ def latlng_to_xyz(lat,long):
 
 #２地点のxyz座標のリストからその間の距離を返す
 def dist_on_sphere(start_xyz,end_xyz):
-    EARTH_RADIUS = 6378137
     dot_product_x = start_xyz[0]*end_xyz[0]
     dot_product_y = start_xyz[1]*end_xyz[1]
     dot_product_z = start_xyz[2]*end_xyz[2]
@@ -25,8 +27,9 @@ def dist_on_sphere(start_xyz,end_xyz):
     return distance
 
 #緯度経度の多次元配列から軌跡をプロット
-def plot_coordinate(latlong_coord):
+def plot_coordinate(latlong_coord,compass):
     plt.plot(latlong_coord[1], latlong_coord[0])
+    plt.quiver(latlong_coord[1],latlong_coord[0],compass[0],compass[1],angles='xy',scale_units='xy',scale=1)
     plt.plot(latlong_coord[1][0], latlong_coord[0][0],color = 'k', marker="$START$",markersize=50)
     plt.plot(latlong_coord[1][len(latlong_coord[0])-1], latlong_coord[0][len(latlong_coord[1])-1],color = 'k', marker="$GOAL$",markersize=50)
     plt.gca().get_xaxis().get_major_formatter().set_useOffset(False)
@@ -48,6 +51,7 @@ if __name__ =='__main__':
 
     latlong_coord = [[],[]]##緯度経度を多次元配列に格納するためのリストを用意
     dist = []##距離を格納するリストを用意
+    compass = [[],[]]
     time = []##日時を格納するリストを用意
 
     txt = open(dir_dict[got_number])##ログtxtファイルを開く
@@ -68,10 +72,15 @@ if __name__ =='__main__':
                 csvlist[1] = float(lis[1])
                 latlong_coord[1].append(round(float(lis[1]),5))
                 writer.writerow(csvlist)
+            elif(line.count('compass_degree')):
+                lis = line.split("=")
+                compass[0].append(vector_scale*math.sin(float(lis[1])/360*2*math.pi))
+                compass[1].append(vector_scale*math.cos(float(lis[1])/360*2*math.pi))
             elif(line.count('2017')):
                 time.append(line)
 
     txt.close
+    print(compass)
     print("control start time(GBT) is {0}".format(time[0]))
     print("control end time(GBT) is {0}".format(time[len(time)-1]))
     print("distance from control start point to goal is {0}[m]\n".format(round(dist[0],4)))
@@ -81,4 +90,4 @@ if __name__ =='__main__':
     print("distance from control start point to control end point is {0}[m]\n".format
     (round(dist_on_sphere(start_xyz,end_xyz),4)))
 
-    plot_coordinate(latlong_coord)
+    plot_coordinate(latlong_coord,compass)
