@@ -24,7 +24,7 @@ static const float ABSLON_THRESHOLD = 0.00005; //GPS経度情報安定判定閾�
 static const int ABSALT_THRESHOLD = 5; //GPS高度情報安定判定閾値
 static const int ALT_THRESHOLD = 100; //GPS高度情報一定値以下判定閾値(m)
 static const int GPS_ALT_INTERVAL = 2; //GPS高度取得間隔(gps_altstable内) second
-
+static const double INF = 10000;
 typedef struct st_Sequence {
 	int sequence_num;//前のシーケンス番号
 	time_t last_time;//前のシーケンスの時間
@@ -93,7 +93,7 @@ int diffmin(Sequence last_seq)
 }
 
 //timeout 判定の関数 引数はタイムアウト時間(分)とSequence構造体
-int isTimeout(int timeout_min,Sequence eq)
+int isTimeout(int timeout_min,Sequence seq)
 {
 	if(diffmin(seq) > timeout_min)
 	{
@@ -135,7 +135,7 @@ static int releaseSeq(Sequence *seq)
 		}
 		sleep(2);
 	}
-	printf("release_complete:time out\n", );
+	printf("release_complete:time out\n");
 	xbeePrintf("release_complete:time out\n");
 	write_sequence(seq,RELEASE_SEQ);
 	return 0;
@@ -165,12 +165,12 @@ static int isAltlow(Queue* ring)
 	if(alt!=0.0&&alt<ALT_THRESHOLD)
 	{
 		printf("ALT IS LOW\n");
-		xbeePrintf("ALT IS LOW\n")
+		xbeePrintf("ALT IS LOW\n");
 		return 1;
 	}
 	//高度が基準以上
 	printf("ALT IS HIGH\n");
-	xbeePrintf("ALT IS HIGH\n")
+	xbeePrintf("ALT IS HIGH\n");
 	return 0;
 }
 
