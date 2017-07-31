@@ -258,9 +258,10 @@ int main(void)
 	case 2:
 		landSeq(&sequence);
 	case 3:
-		open_case(&seq);
+		open_case(&sequence);
 	case 4:
 		break;
+		//TODO default 追加する
 	}
 	return 0;
 }
