@@ -220,7 +220,7 @@ static int landSeq(Sequence* seq)
 	}
 	queue_delete(ring);
 	printf("landing_complete;timeout\n");
-	write_sequence(seq,LAND_COMPLETE_SEQ);
+	write_sequence(seq,LAND_SEQ);
 	return 0;
 }
 
@@ -243,10 +243,10 @@ int main(void)
 	if(read_sequence(&sequence)!=0)
 	//file open に失敗
 	{
-		start_seq(&sequence);
+		startSeq(&sequence);
 		isReleased(&sequence);
 		luxsensor_close();
-		isLanded(&sequence);
+		landSeq(&sequence);
 		open_case(&sequence);
 		return 0;
 	}
@@ -256,7 +256,7 @@ int main(void)
 		isReleased(&sequence);
 		luxsensor_close();
 	case 2:
-		isLanded(&sequence);
+		landSeq(&sequence);
 	case 3:
 		open_case(&seq);
 	case 4:
