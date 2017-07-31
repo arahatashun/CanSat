@@ -244,7 +244,7 @@ int main(void)
 	//file open に失敗
 	{
 		startSeq(&sequence);
-		isReleased(&sequence);
+		releaseSeq(&sequence);
 		luxsensor_close();
 		landSeq(&sequence);
 		open_case(&sequence);
@@ -253,7 +253,7 @@ int main(void)
 	switch (sequence.sequence_num)
 	{
 	case 1:
-		isReleased(&sequence);
+		releaseSeq(&sequence);
 		luxsensor_close();
 	case 2:
 		landSeq(&sequence);
