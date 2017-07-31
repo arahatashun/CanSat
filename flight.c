@@ -33,7 +33,7 @@ typedef struct st_Sequence {
 
 
 //前回のシーケンスの終了時刻と現在のシーケンスを取得
-int read_sequence(Sequence*sequence2read)
+int read_sequence(Sequence* sequence2read)
 {
 	FILE *fp = fopen("sequence.txt","r");
 	if(fp==NULL)
@@ -175,7 +175,7 @@ static int isAltlow(Queue* ring)
 }
 
 //着地判定
-static int isLanded(queue* ring)
+static int isLanded(Queue* ring)
 {
 	while(!is_full(ring))
 	{
@@ -213,14 +213,14 @@ static int landSeq(Sequence* seq)
 		{
 			printf("landing_complete:landed\n");
 			xbeePrintf("landing_complete:landed\n");
-			write_sequence(land_seq, LAND_SEQ);
+			write_sequence(seq, LAND_SEQ);
 			queue_delete(ring);
 			return 0;
 		}
 	}
 	queue_delete(ring);
 	printf("landing_complete;timeout\n");
-	write_sequence(land_seq,LAND_COMPLETE_SEQ);
+	write_sequence(seq,LAND_COMPLETE_SEQ);
 	return 0;
 }
 
