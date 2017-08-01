@@ -27,5 +27,6 @@ public:
   int binarize();
   double countArea();
   double getCenter();
-}
+};
+
 #endif

@@ -1,11 +1,10 @@
 #include <ctime>
 #include <iostream>
 #include <opencv2/highgui/highgui.hpp>
-
 #include "camera.hpp"
 
-static const int IWIDTH = 800;
-static const int IHEIGHT = 600;
+static const int WIDTH = 800;
+static const int HEIGHT = 600;
 static const int FPS = 10;
 
 static const std::string DIRECTORY_PATH = "/home/pi/Pictures/";//pathの先頭
@@ -22,8 +21,8 @@ Camera::Camera()
 	{
 		std::cout<<"capture is note opened"<<std::endl;
 	}
-	capture.set(CV_CAP_PROP_FRAME_WIDTH,IWIDTH);
-	capture.set(CV_CAP_PROP_FRAME_HEIGHT,IHEIGHT);
+	capture.set(CV_CAP_PROP_FRAME_WIDTH,WIDTH);
+	capture.set(CV_CAP_PROP_FRAME_HEIGHT,HEIGHT);
 	capture.set(CV_CAP_PROP_FPS,FPS);
 }
 
