@@ -12,7 +12,7 @@ static const int devid = 0;
 class Camera
 {
 private:
-  void operator=(cosnt Camera&){};
+  void operator=(const Camera&){};
   Camera(const Camera&){};
   int makeTimePath();
   cv::Mat Camera::rmNoize();
