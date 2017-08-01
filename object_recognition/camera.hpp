@@ -15,10 +15,10 @@ private:
   void operator=(const Camera&){};
   Camera(const Camera&){};
   int makeTimePath();
-  cv::Mat rmNoize();
+  cv::Mat rmNoize(cv::Mat src);
   int binarize();
-  cv::VideoCapture capture(devid);
-  string timePath;
+  cv::VideoCapture capture(int devid);
+  std::string timePath;
   cv::Mat input;//入力画像
   cv::Mat output;//出力画像
 public:
