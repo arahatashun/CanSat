@@ -3,7 +3,7 @@
 
 #include <string>
 #include <opencv2/opencv.hpp>
-#include <opencv/videoio.hpp>
+#include <opencv2/videoio.hpp>
 
 #pragma comment(lib,"opencv_world320.lib")
 
