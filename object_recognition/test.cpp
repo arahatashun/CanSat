@@ -6,7 +6,7 @@ int main(){
   Camera camera;
   int i=0;
   clock_t start = clock();
-  while(True)
+  while(1)
   {
   camera.takePhoto();
   camera.binarize();
