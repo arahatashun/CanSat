@@ -15,8 +15,8 @@ private:
   void operator=(const Camera&){};
   Camera(const Camera&){};
   int makeTimePath();
-  cv::Mat Camera::rmNoize();
-  int Camera::binarize();
+  cv::Mat rmNoize();
+  int binarize();
   cv::VideoCapture capture(0);
   string timePath;
   cv::Mat input;//入力画像
