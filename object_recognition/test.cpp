@@ -13,6 +13,6 @@ int main(){
   camera.countArea();
   camera.getCenter();
   clock_t end = clock();     // 終了時間
-  std::cout << "duration = " << (double)(end - start) / CLOCKS_PER_SEC << "sec.\n"<<endl;
+  std::cout << "duration = " << (double)(end - start) / CLOCKS_PER_SEC << "sec.\n"<<std::endl;
   }
 }
