@@ -22,8 +22,8 @@ Camera::Camera()
 	{
 		std::cout<<"capture is note opened"<<endl;
 	}
-	capture.set(CV_CAP_PROP_FRAME_WIDTH,WIDTH);
-	capture.set(CV_CAP_PROP_FRAME_HEIGHT,HEIGHT);
+	capture.set(CV_CAP_PROP_FRAME_WIDTH,int WIDTH);
+	capture.set(CV_CAP_PROP_FRAME_HEIGHT,int HEIGHT);
 	capture.set(CV_CAP_PROP_FPS,FPS);
 }
 
