@@ -79,7 +79,7 @@ int Camera::binarize()
 	cv::inRange(hsv, cv::Scalar(0, 70, 60), cv::Scalar(2, 255, MAX_VALUE), hsv_filtered15);
 	cv::inRange(hsv, cv::Scalar(160, 70, 60), cv::Scalar(180, 255, MAX_VALUE), hsv_filtered180);
 	cv::add(hsv_filtered15,hsv_filtered180,hsv);
-	output = Camera::rmNoise(hsv);
+	output = rmNoise(hsv);
 	imwrite(timePath+"BINARY"+FILE_EXTENTION,output);
 	return 0;
 }
