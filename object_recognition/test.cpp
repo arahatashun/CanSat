@@ -1,6 +1,6 @@
 #include <iostream>
-#include <camera.hpp>
 #include <ctime>
+#include "camera.hpp"
 
 int main(){
   Camera camera;
