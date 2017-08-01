@@ -13,7 +13,7 @@ private:
   void operator=(const Camera&){};
   Camera(const Camera&){};
   int makeTimePath();
-  cv::Mat rmNoize(cv::Mat src);
+  cv::Mat rmNoise(cv::Mat src);
   cv::VideoCapture capture;
   std::string timePath;
   cv::Mat input;//入力画像

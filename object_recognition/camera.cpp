@@ -60,7 +60,7 @@ int Camera::makeTimePath(void)
 }
 
 //ノイズ除去
-cv::Mat Camera::rmNoize(cv::Mat src)
+cv::Mat Camera::rmNoise(cv::Mat src)
 {
 	cv::erode(src,src,cv::Mat(),cv::Point(-1, -1),10);//縮小処理
 	cv::dilate(src,src,cv::Mat(),cv::Point(-1, -1),25);//膨張処理
