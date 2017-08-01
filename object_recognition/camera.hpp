@@ -7,8 +7,6 @@
 
 #pragma comment(lib,"opencv_world320.lib")
 
-static const int devid = 0;
-
 class Camera
 {
 private:
@@ -16,7 +14,7 @@ private:
   Camera(const Camera&){};
   int makeTimePath();
   cv::Mat rmNoize(cv::Mat src);
-  cv::VideoCapture capture(int devid);
+  cv::VideoCapture capture(0);
   std::string timePath;
   cv::Mat input;//入力画像
   cv::Mat output;//出力画像
