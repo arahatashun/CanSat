@@ -4,8 +4,8 @@
 
 #include "camera.hpp"
 
-static const int WIDTH = 800;
-static const int HEIGHT = 600;
+static const int IWIDTH = 800;
+static const int IHEIGHT = 600;
 static const int FPS = 10;
 
 static const std::string DIRECTORY_PATH = "/home/pi/Pictures/";//pathの先頭
@@ -20,10 +20,10 @@ Camera::Camera()
 {
 	if (!capture.isOpened())
 	{
-		std::cout<<"capture is note opened"<<endl;
+		std::cout<<"capture is note opened"<<std::endl;
 	}
-	capture.set(CV_CAP_PROP_FRAME_WIDTH,int WIDTH);
-	capture.set(CV_CAP_PROP_FRAME_HEIGHT,int HEIGHT);
+	capture.set(CV_CAP_PROP_FRAME_WIDTH,IWIDTH);
+	capture.set(CV_CAP_PROP_FRAME_HEIGHT,IHEIGHT);
 	capture.set(CV_CAP_PROP_FPS,FPS);
 }
 
