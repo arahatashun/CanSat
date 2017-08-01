@@ -17,7 +17,7 @@ private:
   int makeTimePath();
   cv::Mat rmNoize();
   int binarize();
-  cv::VideoCapture capture(0);
+  cv::VideoCapture capture(devid);
   string timePath;
   cv::Mat input;//入力画像
   cv::Mat output;//出力画像
