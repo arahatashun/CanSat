@@ -14,7 +14,7 @@ private:
   Camera(const Camera&){};
   int makeTimePath();
   cv::Mat rmNoize(cv::Mat src);
-  cv::VideoCapture capture(0);
+  cv::VideoCapture capture;
   std::string timePath;
   cv::Mat input;//入力画像
   cv::Mat output;//出力画像

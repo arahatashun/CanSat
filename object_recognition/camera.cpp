@@ -6,7 +6,7 @@
 static const int WIDTH = 800;
 static const int HEIGHT = 600;
 static const int FPS = 10;
-
+static const int DEVICE = 0;
 static const std::string DIRECTORY_PATH = "/home/pi/Pictures/";//pathの先頭
 static const std::string FILE_EXTENTION = ".jpg";//拡張子
 
@@ -17,6 +17,7 @@ static const int NO_VALUE = 0;//明るさ最小
 
 Camera::Camera()
 {
+	capture.cap(DEVICE);
 	if (!capture.isOpened())
 	{
 		std::cout<<"capture is note opened"<<std::endl;
