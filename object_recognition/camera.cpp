@@ -93,7 +93,7 @@ double Camera::countArea()
 	redCount = cv::countNonZero(output);//赤色部分の面積を計算
 	double percentage = 0; //割合
 	percentage = (redCount / Area)*100;//割合を計算
-	std::cout<<"面積のPercentageは%"<<percentage<<endl;
+	std::cout<<"面積のPercentageは%"<<percentage<<std::endl;
 	return percentage;
 }
 
@@ -103,6 +103,6 @@ double Camera::getCenter()
 	cv::Moments mu = cv::moments(output, false);//重心の計算結果をmuに代入
 	double mc = mu.m10 / mu.m00;//重心のx座標
 	double center = (mc - output.cols / 2) * AOV / output.cols;//正規化
-	std::cout<<"重心の位置は"<<center<<endl;
+	std::cout<<"重心の位置は"<<center<<std::endl;
 	return center;
 }
