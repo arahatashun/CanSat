@@ -17,7 +17,7 @@ static const int NO_VALUE = 0;//明るさ最小
 
 Camera::Camera()
 {
-	capture.cap(DEVICE);
+	capture.open(DEVICE);
 	if (!capture.isOpened())
 	{
 		std::cout<<"capture is note opened"<<std::endl;
@@ -32,7 +32,7 @@ Camera::~Camera()
 	capture.release();
 }
 
-Camera::takePhoto()
+int Camera::takePhoto()
 {
 	makeTimePath();
 	cv::Mat frame;
@@ -41,7 +41,8 @@ Camera::takePhoto()
 		capture>>frame;
 	} while(frame.empty());
 	input = frame;
-	imwrite(timePath+FILE_EXTENTION,src);
+	imwrite(timePath+FILE_EXTENTION,input);
+	return 0;
 }
 
 //時間を元にtimePathを作る
