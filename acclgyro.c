@@ -23,6 +23,13 @@ static const double CONVERT2G = 16384.0;
 static const double CONVERT2DEGREES = 131.0;
 static int fd = 0;
 
+//compass raw data格納
+typedef struct raw {
+	short xList[10];
+	short yList[10];
+	short zList[10];
+} Raw;
+
 int acclGyro_initialize(void)
 {
 	fd = wiringPiI2CSetup(MPU6050_ADDRESS);
@@ -39,7 +46,7 @@ int acclGyro_initialize(void)
 	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
 	if(WPI2CWReg8 == -1)
 	{
-		printf("compass write error register MODE_CONTINUOUS\n");
+		printf("acclGyro write error register MODE_CONTINUOUS\n");
 		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
 		printf("errno=%d: %s\n", errno, strerror(errno));
 	}
@@ -47,7 +54,7 @@ int acclGyro_initialize(void)
 }
 
 //ロック対策用の関数
-static int acclGyroModeChange()
+static int acclGyro_Mode_Change()
 {
 	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,POWER_MANAGEMENT_REG,MODE_SINGLE);
 	if(WPI2CWReg8 == -1)
@@ -68,10 +75,9 @@ static int acclGyroModeChange()
 
 static short read_out(int addr)  //レジスタの値を読み取る
 {
-	acclGyroModeChange();//ロック対策用の関数
 	uint8_t msb = 0;
-	msb = wiringPiI2CReadReg8(fd, addr);
 	uint8_t lsb = 0;
+	msb = wiringPiI2CReadReg8(fd, addr);
 	lsb = wiringPiI2CReadReg8(fd, addr+1);
 	short value = 0;
 	value = msb << 8 | lsb;
