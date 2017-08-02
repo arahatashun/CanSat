@@ -23,6 +23,35 @@ static const double CONVERT2G = 16384.0;
 static const double CONVERT2DEGREES = 131.0;
 static int fd = 0;
 
+//accl raw data格納
+typedef struct accl_raw {
+	short xList[10];
+	short yList[10];
+	short zList[10];
+} Accl_Raw;
+
+//gyro raw data格納
+typedef struct Gyro_raw {
+	short xList[10];
+	short yList[10];
+	short zList[10];
+} Gyro_Raw;
+
+//三軸加速度(単位G)
+typedef struct accl {
+	double acclX_scaled;//the values of accleration
+	double acclY_scaled;
+	double acclZ_scaled;
+}Accl;
+
+//角速度 degrees/second
+//NOTE z軸が上なので基本的にそれをみると良い
+typedef struct gyro {
+	double gyroX_scaled;//the values of accleration
+	double gyroY_scaled;
+	double gyroZ_scaled;
+}Gyro;
+
 int acclGyro_initialize(void)
 {
 	fd = wiringPiI2CSetup(MPU6050_ADDRESS);
@@ -84,7 +113,7 @@ static int sCmp (const void* p, const void* q)
 }
 
 //角速度を測定する
-int Gyro_read(Gyro *data)
+int GyroReadRaw(Gyro_Raw *data)
 {
 	short xList[10] = {};//0で初期化
 	short yList[10] = {};
@@ -100,13 +129,13 @@ int Gyro_read(Gyro *data)
 	qsort(xList,10, sizeof(short), sCmp);
 	qsort(yList,10, sizeof(short), sCmp);
 	qsort(zList,10, sizeof(short), sCmp);
-	data->gyroX_scaled = xList[4] / CONVERT2DEGREES;//中央値を取る
-	data->gyroY_scaled = yList[4] / CONVERT2DEGREES;
-	data->gyroZ_scaled = zList[4] / CONVERT2DEGREES;
+	/*data->gyroX_scaled = xList[4] / CONVERT2DEGREES;//中央値を取る
+	   data->gyroY_scaled = yList[4] / CONVERT2DEGREES;
+	   data->gyroZ_scaled = zList[4] / CONVERT2DEGREES;*/
 	return 0;
 }
 
-int Accl_read(Accl*data)
+int AcclReadRaw(Accl_Raw *data)
 {
 	short xList[10] = {};//0で初期化
 	short yList[10] = {};
@@ -122,9 +151,67 @@ int Accl_read(Accl*data)
 	qsort(xList,10, sizeof(short), sCmp);
 	qsort(yList,10, sizeof(short), sCmp);
 	qsort(zList,10, sizeof(short), sCmp);
-	data->acclX_scaled = xList[4] / CONVERT2G;
-	data->acclY_scaled = yList[4] / CONVERT2G;
-	data->acclZ_scaled = zList[4] / CONVERT2G;
+	/*data->acclX_scaled = xList[4] / CONVERT2G;
+	   data->acclY_scaled = yList[4] / CONVERT2G;
+	   data->acclZ_scaled = zList[4] / CONVERT2G;*/
+	return 0;
+}
+
+//acclgyro-1にLockした時に使う
+static int handleAcclErrorOne(Accl_Raw* accl_raw)
+{
+	acclGyro_initialize();//NOTE initialize
+	printf("acclGyro reinitialized\n");
+	AcclReadRaw(data);
+	printf("\n");
+	return 0;
+}
+
+//lock用、指定した値にlockされてたらreturn1する
+static int checkLock(short* values,const int lock)
+{
+	int len = 10; //配列の要素数を取得
+	int lock_count = 0;
+	int i;
+	for (i = 0; i < len; i++)
+	{
+		if (values[i] ==lock) lock_count++;
+	}
+	if (lock_count == len) return 1;
+	return 0;
+}
+
+static int Accl_read(Accl* data)
+{
+	Accl_Raw rawdata;
+	compassReadRaw(&rawdata);
+	int LockCounter = 0;
+	while((checkLock(rawdata.xList,-1)||checkLock(rawdata.yList,-1)||checkLock(rawdata.zList,-1))&&(LockCounter<100))
+	{
+		assert(LockCounter<100);//TODO いつか消す
+		printf("WARNING accl -1 lock\n");
+		printf("LockCounter %d\n",LockCounter);
+		handleAcclErrorOne(&rawdata);
+		LockCounter++;
+	}
+	while((checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0])&&checkLock(rawdata.zList,rawdata.zList[0]))&&(LockCounter<100))
+	{
+		assert(LockCounter<100);//TODO いつか消す
+		printf("WARNING accl lock\n");
+		printf("LockCounter %d\n",LockCounter);
+		handleAcclErrorOne(&rawdata);
+		LockCounter++;
+	}
+
+	if(LockCounter>=100)
+	{
+		printf("Lock Counter Max\n");
+		assert(LockCounter!=100);
+		;      //TODO 再起動?
+	}
+	data->acclX_scaled = (double)rawdata.xList[4]/CONVERT2G;
+	data->acclY_scaled = (double)rawdata.yList[4]/CONVERT2G;
+	data->acclZ_scaled = (double)rawdata.zList[4]/CONVERT2G;
 	return 0;
 }
 
@@ -144,7 +231,6 @@ int isReverse(void)
 		return 0;
 	}
 }
-
 
 //ロール角を計算
 double cal_roll(Accl* data)
