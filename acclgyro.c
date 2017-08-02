@@ -115,45 +115,33 @@ static int sCmp (const void* p, const void* q)
 //角速度を測定する
 int GyroReadRaw(Gyro_Raw *data)
 {
-	short xList[10] = {};//0で初期化
-	short yList[10] = {};
-	short zList[10] = {};
 	int i;
 	for(i=0; i<10; i++)
 	{
-		xList[i] = read_out(GYROX_REG);
-		yList[i] = read_out(GYROY_REG);
-		zList[i] = read_out(GYROZ_REG);
+		data->xList[i] = read_out(GYROX_REG);
+		data->yList[i] = read_out(GYROY_REG);
+		data->zList[i] = read_out(GYROZ_REG);
 		delay(10);
 	}
-	qsort(xList,10, sizeof(short), sCmp);
-	qsort(yList,10, sizeof(short), sCmp);
-	qsort(zList,10, sizeof(short), sCmp);
-	/*data->gyroX_scaled = xList[4] / CONVERT2DEGREES;//中央値を取る
-	   data->gyroY_scaled = yList[4] / CONVERT2DEGREES;
-	   data->gyroZ_scaled = zList[4] / CONVERT2DEGREES;*/
+	qsort(data->xList,10, sizeof(short), sCmp);
+	qsort(data->yList,10, sizeof(short), sCmp);
+	qsort(data->zList,10, sizeof(short), sCmp);
 	return 0;
 }
 
 int AcclReadRaw(Accl_Raw *data)
 {
-	short xList[10] = {};//0で初期化
-	short yList[10] = {};
-	short zList[10] = {};
 	int i;
 	for(i=0; i<10; i++)
 	{
-		xList[i] = read_out(ACCLX_REG);
-		yList[i] = read_out(ACCLY_REG);
-		zList[i] = read_out(ACCLZ_REG);
+		data->xList[i] = read_out(ACCLX_REG);
+		data->yList[i] = read_out(ACCLY_REG);
+		data->zList[i] = read_out(ACCLZ_REG);
 		delay(10);
 	}
-	qsort(xList,10, sizeof(short), sCmp);
-	qsort(yList,10, sizeof(short), sCmp);
-	qsort(zList,10, sizeof(short), sCmp);
-	/*data->acclX_scaled = xList[4] / CONVERT2G;
-	   data->acclY_scaled = yList[4] / CONVERT2G;
-	   data->acclZ_scaled = zList[4] / CONVERT2G;*/
+	qsort(data->xList,10, sizeof(short), sCmp);
+	qsort(data->yList,10, sizeof(short), sCmp);
+	qsort(data->zList,10, sizeof(short), sCmp);
 	return 0;
 }
 
