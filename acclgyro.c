@@ -76,7 +76,7 @@ int acclGyro_initialize(void)
 }
 
 //ロック対策用の関数
-static int acclGyro_Mode_Change()
+static int acclGyro_mode_change()
 {
 	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,POWER_MANAGEMENT_REG,MODE_SINGLE);
 	if(WPI2CWReg8 == -1)
