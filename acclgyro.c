@@ -51,7 +51,7 @@ int acclGyro_initialize(void)
 	{
 		printf("acclGyro wiringPiI2CSetup success\n");
 	}
-	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
+	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,POWER_MANAGEMENT_REG,MODE_CONTINUOUS);
 	if(WPI2CWReg8 == -1)
 	{
 		printf("acclGyro write error register MODE_CONTINUOUS\n");
@@ -136,7 +136,7 @@ static int handleAcclErrorOne(Accl_Raw* accl_raw)
 {
 	acclGyro_initialize();//NOTE initialize
 	printf("acclGyro reinitialized\n");
-	AcclReadRaw(data);
+	AcclReadRaw(accl_raw);
 	printf("\n");
 	return 0;
 }
