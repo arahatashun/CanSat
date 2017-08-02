@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
+#include <assert.h>
 #include "acclgyro.h"
 
 static const int MPU6050_ADDRESS = 0x68;
