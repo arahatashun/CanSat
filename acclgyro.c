@@ -23,13 +23,6 @@ static const double CONVERT2G = 16384.0;
 static const double CONVERT2DEGREES = 131.0;
 static int fd = 0;
 
-//compass raw data格納
-typedef struct raw {
-	short xList[10];
-	short yList[10];
-	short zList[10];
-} Raw;
-
 int acclGyro_initialize(void)
 {
 	fd = wiringPiI2CSetup(MPU6050_ADDRESS);
@@ -102,6 +95,7 @@ int readGyro(Gyro *data)
 		xList[i] = read_out(GYROX_REG);
 		yList[i] = read_out(GYROY_REG);
 		zList[i] = read_out(GYROZ_REG);
+		delay(10);
 	}
 	qsort(xList,10, sizeof(short), sCmp);
 	qsort(yList,10, sizeof(short), sCmp);
@@ -112,7 +106,7 @@ int readGyro(Gyro *data)
 	return 0;
 }
 
-int readAccl(Accl*data)
+int Accl_read(Accl*data)
 {
 	short xList[10] = {};//0で初期化
 	short yList[10] = {};

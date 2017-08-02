@@ -21,8 +21,8 @@ typedef struct gyro {
 }Gyro;
 
 int acclGyro_initialize(void);
-int readGyro(Gyro *data);
-int readAccl(Accl*data);
+int Gyro_read(Gyro *data);
+int Accl_read(Accl*data);
 int isReverse(void);
 double cal_roll(Accl* data);
 double cal_pitch(Accl* data);
