@@ -36,6 +36,13 @@ int acclGyro_initialize(void)
 	{
 		printf("acclGyro wiringPiI2CSetup success\n");
 	}
+	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
+	if(WPI2CWReg8 == -1)
+	{
+		printf("compass write error register MODE_CONTINUOUS\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		printf("errno=%d: %s\n", errno, strerror(errno));
+	}
 	return 0;
 }
 
