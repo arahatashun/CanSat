@@ -37,20 +37,6 @@ typedef struct Gyro_raw {
 	short zList[10];
 } Gyro_Raw;
 
-//三軸加速度(単位G)
-typedef struct accl {
-	double acclX_scaled;//the values of accleration
-	double acclY_scaled;
-	double acclZ_scaled;
-}Accl;
-
-//角速度 degrees/second
-//NOTE z軸が上なので基本的にそれをみると良い
-typedef struct gyro {
-	double gyroX_scaled;//the values of accleration
-	double gyroY_scaled;
-	double gyroZ_scaled;
-}Gyro;
 
 int acclGyro_initialize(void)
 {
@@ -113,7 +99,7 @@ static int sCmp (const void* p, const void* q)
 }
 
 //角速度を測定する
-int GyroReadRaw(Gyro_Raw *data)
+static int GyroReadRaw(Gyro_Raw *data)
 {
 	int i;
 	for(i=0; i<10; i++)
@@ -129,7 +115,7 @@ int GyroReadRaw(Gyro_Raw *data)
 	return 0;
 }
 
-int AcclReadRaw(Accl_Raw *data)
+static int AcclReadRaw(Accl_Raw *data)
 {
 	int i;
 	for(i=0; i<10; i++)
@@ -169,7 +155,7 @@ static int checkLock(short* values,const int lock)
 	return 0;
 }
 
-static int Accl_read(Accl* data)
+int Accl_read(Accl* data)
 {
 	Accl_Raw rawdata;
 	compassReadRaw(&rawdata);
