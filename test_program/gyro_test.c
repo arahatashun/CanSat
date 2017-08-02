@@ -5,7 +5,6 @@
 
 int main()
 {
-	Accl accl_data;
 	Gyro gyro_data;
 	acclGyro_initialize();
 	int now = 0;
