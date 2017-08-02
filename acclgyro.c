@@ -146,7 +146,7 @@ static int handleGyroErrorOne(Gyro_Raw* gyro_raw)
 {
 	acclGyro_initialize();//NOTE initialize
 	printf("acclGyro reinitialized\n");
-	GyroReadRaw(accl_raw);
+	GyroReadRaw(gyro_raw);
 	printf("\n");
 	return 0;
 }
