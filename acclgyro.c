@@ -141,6 +141,15 @@ static int handleAcclErrorOne(Accl_Raw* accl_raw)
 	printf("\n");
 	return 0;
 }
+//acclgyro-1にLockした時に使う
+static int handleGyroErrorOne(Gyro_Raw* gyro_raw)
+{
+	acclGyro_initialize();//NOTE initialize
+	printf("acclGyro reinitialized\n");
+	GyroReadRaw(accl_raw);
+	printf("\n");
+	return 0;
+}
 
 //lock用、指定した値にlockされてたらreturn1する
 static int checkLock(short* values,const int lock)
@@ -190,12 +199,46 @@ int Accl_read(Accl* data)
 	return 0;
 }
 
+int Gyro_read(Gyro* data)
+{
+	Gyro_Raw rawdata;
+	GyroReadRaw(&rawdata);
+	int LockCounter = 0;
+	while((checkLock(rawdata.xList,-1)||checkLock(rawdata.yList,-1)||checkLock(rawdata.zList,-1))&&(LockCounter<100))
+	{
+		assert(LockCounter<100);//TODO いつか消す
+		printf("WARNING gyro -1 lock\n");
+		printf("LockCounter %d\n",LockCounter);
+		handleGyroErrorOne(&rawdata);
+		LockCounter++;
+	}
+	while((checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0])&&checkLock(rawdata.zList,rawdata.zList[0]))&&(LockCounter<100))
+	{
+		assert(LockCounter<100);//TODO いつか消す
+		printf("WARNING gyro lock\n");
+		printf("LockCounter %d\n",LockCounter);
+		handleGyroErrorOne(&rawdata);
+		LockCounter++;
+	}
+
+	if(LockCounter>=100)
+	{
+		printf("Lock Counter Max\n");
+		assert(LockCounter!=100);
+		;      //TODO 再起動?
+	}
+	data->gyroX_scaled = (double)rawdata.xList[4]/CONVERT2G;
+	data->gyroY_scaled = (double)rawdata.yList[4]/CONVERT2G;
+	data->gyroZ_scaled = (double)rawdata.zList[4]/CONVERT2G;
+	return 0;
+}
+
 //if reverse,return -1
 int isReverse(void)
 {
 	Accl data;
 	Accl_read(&data);
-	if(data.acclZ_scaled < -0.2)
+	if(data.acclZ_scaled < 0)
 	{
 		printf("G:%f z_posture:reverse\n",data.acclZ_scaled);
 		return -1;
