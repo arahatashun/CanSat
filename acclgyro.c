@@ -84,7 +84,7 @@ static int sCmp (const void* p, const void* q)
 }
 
 //角速度を測定する
-int readGyro(Gyro *data)
+int Gyro_read(Gyro *data)
 {
 	short xList[10] = {};//0で初期化
 	short yList[10] = {};
@@ -117,6 +117,7 @@ int Accl_read(Accl*data)
 		xList[i] = read_out(ACCLX_REG);
 		yList[i] = read_out(ACCLY_REG);
 		zList[i] = read_out(ACCLZ_REG);
+		delay(10);
 	}
 	qsort(xList,10, sizeof(short), sCmp);
 	qsort(yList,10, sizeof(short), sCmp);
