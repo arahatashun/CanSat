@@ -158,7 +158,7 @@ static int checkLock(short* values,const int lock)
 int Accl_read(Accl* data)
 {
 	Accl_Raw rawdata;
-	compassReadRaw(&rawdata);
+	AcclReadRaw(&rawdata);
 	int LockCounter = 0;
 	while((checkLock(rawdata.xList,-1)||checkLock(rawdata.yList,-1)||checkLock(rawdata.zList,-1))&&(LockCounter<100))
 	{
