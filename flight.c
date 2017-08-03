@@ -236,6 +236,12 @@ int open_case(Sequence *seq)
 //TODO 電源瞬断対策復旧してシーケンス番号からのswitch-case文
 int main(void)
 {
+	int i=0;
+	for(i=0;i<900;i++)
+	{
+		printf("%d seconds to release judgement\n",900-i)
+		sleep(1);
+	}
 	xbee_init();
 	luxsensor_initialize();
 	gps_init();
