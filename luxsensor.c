@@ -53,7 +53,6 @@ int luxsensor_initialize()
 	else
 	{
 		printf("luxsensor wiringPiI2CSetup success\n");
-		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
 	}
 	int WPI2CWReg8  = wiringPiI2CWriteReg8(fd, TSL2561_COMMAND_BIT, TSL2561_CONTROL_POWERON);
 	if( WPI2CWReg8 == -1)
