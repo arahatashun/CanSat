@@ -17,10 +17,13 @@ static const int NO_VALUE = 0;//明るさ最小
 
 Camera::Camera()
 {
-	capture.open(DEVICE);
+	if(!capture.open(DEVICE))
+	{
+		std::cout<<"capture is not opened 1"<<std::endl;
+	}
 	if (!capture.isOpened())
 	{
-		std::cout<<"capture is note opened"<<std::endl;
+		std::cout<<"capture is not opened 2"<<std::endl;
 	}
 	capture.set(CV_CAP_PROP_FRAME_WIDTH,WIDTH);
 	capture.set(CV_CAP_PROP_FRAME_HEIGHT,HEIGHT);
