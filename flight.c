@@ -25,6 +25,7 @@ static const int ABSALT_THRESHOLD = 1; //GPS高度情報安定判定閾値
 static const int ALT_THRESHOLD = 40; //GPS高度情報一定値以下判定閾値(m)
 static const int GPS_ALT_INTERVAL = 2; //GPS高度取得間隔(gps_altstable内) second
 static const double INF = 10000;
+static const int WAIT_TIME = 600;
 typedef struct st_Sequence {
 	int sequence_num;//前のシーケンス番号
 	time_t last_time;//前のシーケンスの時間
@@ -105,10 +106,10 @@ int isTimeout(int timeout_min,Sequence seq)
 static int waitSeq()
 {
 	int i=0;
-	for(i=0;i<900;i++)
+	for(i=0;i<WAIT_TIME;i++)
 	{
-		printf("%d seconds to release judgement\n",900-i);
-		xbeePrintf("%d seconds to release judgement\n",900-i);
+		printf("%d seconds to release judgement\n",WAIT_TIME-i);
+		xbeePrintf("%d seconds to release judgement\n",WAIT_TIME-i);
 		sleep(1);
 	}
 	return 0;
