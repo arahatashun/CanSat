@@ -97,7 +97,7 @@ double Camera::countArea()
 	redCount = cv::countNonZero(output);//赤色部分の面積を計算
 	double percentage = 0; //割合
 	percentage = (redCount / Area)*100;//割合を計算
-	std::cout<<"面積のPercentageは%"<<percentage<<std::endl;
+	std::cout<<"面積のPercentageは"<<percentage<<std::endl;
 	return percentage;
 }
 
