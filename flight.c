@@ -239,7 +239,8 @@ int main(void)
 	int i=0;
 	for(i=0;i<900;i++)
 	{
-		printf("%d seconds to release judgement\n",900-i)
+		printf("%d seconds to release judgement\n",900-i);
+		xbeePrintf("%d seconds to release judgement\n",900-i);
 		sleep(1);
 	}
 	xbee_init();
