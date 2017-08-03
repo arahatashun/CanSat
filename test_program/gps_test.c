@@ -12,7 +12,7 @@ int main()
 		gps_init();
 		gps_location(&data);
 		printf("latitude:%f\nlongitude:%f\naltitude:%f\n", data.latitude, data.longitude
-		       data.altitude);
+		       ,data.altitude);
 		delay(1000);
 		gps_off();
 	}
