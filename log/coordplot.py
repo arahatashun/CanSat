@@ -93,7 +93,6 @@ if __name__ == '__main__':
                 time.append(line)
 
     txt.close
-    print(compass)
     print("control start time(GBT) is {0}".format(time[0]))
     print("control end time(GBT) is {0}".format(time[len(time) - 1]))
     print("distance from control start point to goal is {0}[m]\n".format(

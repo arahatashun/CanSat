@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
+#include <assert.h>
 #include "acclgyro.h"
 
 static const int MPU6050_ADDRESS = 0x68;
@@ -23,6 +24,21 @@ static const double CONVERT2G = 16384.0;
 static const double CONVERT2DEGREES = 131.0;
 static int fd = 0;
 
+//accl raw data格納
+typedef struct accl_raw {
+	short xList[10];
+	short yList[10];
+	short zList[10];
+} Accl_Raw;
+
+//gyro raw data格納
+typedef struct Gyro_raw {
+	short xList[10];
+	short yList[10];
+	short zList[10];
+} Gyro_Raw;
+
+
 int acclGyro_initialize(void)
 {
 	fd = wiringPiI2CSetup(MPU6050_ADDRESS);
@@ -36,11 +52,18 @@ int acclGyro_initialize(void)
 	{
 		printf("acclGyro wiringPiI2CSetup success\n");
 	}
+	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,POWER_MANAGEMENT_REG,MODE_CONTINUOUS);
+	if(WPI2CWReg8 == -1)
+	{
+		printf("acclGyro write error register MODE_CONTINUOUS\n");
+		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+		printf("errno=%d: %s\n", errno, strerror(errno));
+	}
 	return 0;
 }
 
 //ロック対策用の関数
-static int acclGyroModeChange()
+static int acclGyro_mode_change()
 {
 	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,POWER_MANAGEMENT_REG,MODE_SINGLE);
 	if(WPI2CWReg8 == -1)
@@ -61,10 +84,9 @@ static int acclGyroModeChange()
 
 static short read_out(int addr)  //レジスタの値を読み取る
 {
-	acclGyroModeChange();//ロック対策用の関数
 	uint8_t msb = 0;
-	msb = wiringPiI2CReadReg8(fd, addr);
 	uint8_t lsb = 0;
+	msb = wiringPiI2CReadReg8(fd, addr);
 	lsb = wiringPiI2CReadReg8(fd, addr+1);
 	short value = 0;
 	value = msb << 8 | lsb;
@@ -78,45 +100,136 @@ static int sCmp (const void* p, const void* q)
 }
 
 //角速度を測定する
-int readGyro(Gyro *data)
+static int GyroReadRaw(Gyro_Raw *data)
 {
-	short xList[10] = {};//0で初期化
-	short yList[10] = {};
-	short zList[10] = {};
 	int i;
 	for(i=0; i<10; i++)
 	{
-		xList[i] = read_out(GYROX_REG);
-		yList[i] = read_out(GYROY_REG);
-		zList[i] = read_out(GYROZ_REG);
+		data->xList[i] = read_out(GYROX_REG);
+		data->yList[i] = read_out(GYROY_REG);
+		data->zList[i] = read_out(GYROZ_REG);
+		delay(10);
 	}
-	qsort(xList,10, sizeof(short), sCmp);
-	qsort(yList,10, sizeof(short), sCmp);
-	qsort(zList,10, sizeof(short), sCmp);
-	data->gyroX_scaled = xList[4] / CONVERT2DEGREES;//中央値を取る
-	data->gyroY_scaled = yList[4] / CONVERT2DEGREES;
-	data->gyroZ_scaled = zList[4] / CONVERT2DEGREES;
+	qsort(data->xList,10, sizeof(short), sCmp);
+	qsort(data->yList,10, sizeof(short), sCmp);
+	qsort(data->zList,10, sizeof(short), sCmp);
 	return 0;
 }
 
-int readAccl(Accl*data)
+static int AcclReadRaw(Accl_Raw *data)
 {
-	short xList[10] = {};//0で初期化
-	short yList[10] = {};
-	short zList[10] = {};
 	int i;
 	for(i=0; i<10; i++)
 	{
-		xList[i] = read_out(ACCLX_REG);
-		yList[i] = read_out(ACCLY_REG);
-		zList[i] = read_out(ACCLZ_REG);
+		data->xList[i] = read_out(ACCLX_REG);
+		data->yList[i] = read_out(ACCLY_REG);
+		data->zList[i] = read_out(ACCLZ_REG);
+		delay(10);
 	}
-	qsort(xList,10, sizeof(short), sCmp);
-	qsort(yList,10, sizeof(short), sCmp);
-	qsort(zList,10, sizeof(short), sCmp);
-	data->acclX_scaled = xList[4] / CONVERT2G;
-	data->acclY_scaled = yList[4] / CONVERT2G;
-	data->acclZ_scaled = zList[4] / CONVERT2G;
+	qsort(data->xList,10, sizeof(short), sCmp);
+	qsort(data->yList,10, sizeof(short), sCmp);
+	qsort(data->zList,10, sizeof(short), sCmp);
+	return 0;
+}
+
+//acclgyro-1にLockした時に使う
+static int handleAcclErrorOne(Accl_Raw* accl_raw)
+{
+	acclGyro_initialize();//NOTE initialize
+	printf("acclGyro reinitialized\n");
+	AcclReadRaw(accl_raw);
+	printf("\n");
+	return 0;
+}
+//acclgyro-1にLockした時に使う
+static int handleGyroErrorOne(Gyro_Raw* gyro_raw)
+{
+	acclGyro_initialize();//NOTE initialize
+	printf("acclGyro reinitialized\n");
+	GyroReadRaw(gyro_raw);
+	printf("\n");
+	return 0;
+}
+
+//lock用、指定した値にlockされてたらreturn1する
+static int checkLock(short* values,const int lock)
+{
+	int len = 10; //配列の要素数を取得
+	int lock_count = 0;
+	int i;
+	for (i = 0; i < len; i++)
+	{
+		if (values[i] ==lock) lock_count++;
+	}
+	if (lock_count == len) return 1;
+	return 0;
+}
+
+int Accl_read(Accl* data)
+{
+	Accl_Raw rawdata;
+	AcclReadRaw(&rawdata);
+	int LockCounter = 0;
+	while((checkLock(rawdata.xList,-1)||checkLock(rawdata.yList,-1)||checkLock(rawdata.zList,-1))&&(LockCounter<100))
+	{
+		assert(LockCounter<100);//TODO いつか消す
+		printf("WARNING accl -1 lock\n");
+		printf("LockCounter %d\n",LockCounter);
+		handleAcclErrorOne(&rawdata);
+		LockCounter++;
+	}
+	while((checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0])&&checkLock(rawdata.zList,rawdata.zList[0]))&&(LockCounter<100))
+	{
+		assert(LockCounter<100);//TODO いつか消す
+		printf("WARNING accl lock\n");
+		printf("LockCounter %d\n",LockCounter);
+		handleAcclErrorOne(&rawdata);
+		LockCounter++;
+	}
+
+	if(LockCounter>=100)
+	{
+		printf("Lock Counter Max\n");
+		assert(LockCounter!=100);
+		;      //TODO 再起動?
+	}
+	data->acclX_scaled = (double)rawdata.xList[4]/CONVERT2G;
+	data->acclY_scaled = (double)rawdata.yList[4]/CONVERT2G;
+	data->acclZ_scaled = (double)rawdata.zList[4]/CONVERT2G;
+	return 0;
+}
+
+int Gyro_read(Gyro* data)
+{
+	Gyro_Raw rawdata;
+	GyroReadRaw(&rawdata);
+	int LockCounter = 0;
+	while((checkLock(rawdata.xList,-1)||checkLock(rawdata.yList,-1)||checkLock(rawdata.zList,-1))&&(LockCounter<100))
+	{
+		assert(LockCounter<100);//TODO いつか消す
+		printf("WARNING gyro -1 lock\n");
+		printf("LockCounter %d\n",LockCounter);
+		handleGyroErrorOne(&rawdata);
+		LockCounter++;
+	}
+	while((checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0])&&checkLock(rawdata.zList,rawdata.zList[0]))&&(LockCounter<100))
+	{
+		assert(LockCounter<100);//TODO いつか消す
+		printf("WARNING gyro lock\n");
+		printf("LockCounter %d\n",LockCounter);
+		handleGyroErrorOne(&rawdata);
+		LockCounter++;
+	}
+
+	if(LockCounter>=100)
+	{
+		printf("Lock Counter Max\n");
+		assert(LockCounter!=100);
+		;      //TODO 再起動?
+	}
+	data->gyroX_scaled = (double)rawdata.xList[4]/CONVERT2G;
+	data->gyroY_scaled = (double)rawdata.yList[4]/CONVERT2G;
+	data->gyroZ_scaled = (double)rawdata.zList[4]/CONVERT2G;
 	return 0;
 }
 
@@ -124,8 +237,8 @@ int readAccl(Accl*data)
 int isReverse(void)
 {
 	Accl data;
-	readAccl(&data);
-	if(data.acclZ_scaled < -0.2)
+	Accl_read(&data);
+	if(data.acclZ_scaled < 0)
 	{
 		printf("G:%f z_posture:reverse\n",data.acclZ_scaled);
 		return -1;
@@ -136,7 +249,6 @@ int isReverse(void)
 		return 0;
 	}
 }
-
 
 //ロール角を計算
 double cal_roll(Accl* data)

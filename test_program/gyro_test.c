@@ -5,7 +5,6 @@
 
 int main()
 {
-	Accl accl_data;
 	Gyro gyro_data;
 	acclGyro_initialize();
 	int now = 0;
@@ -13,7 +12,7 @@ int main()
 	double delat_theta = 0;
 	while(1)
 	{
-		readGyro(&gyro_data);
+		Gyro_read(&gyro_data);
 		now = millis();
 		int delta_time = now-lastTime;
 		printf("gyro_data.gyroZ_scaled %f\n",gyro_data.gyroZ_scaled);
