@@ -90,6 +90,7 @@ int diffmin(Sequence last_seq)
 	time(&tcurrent);
 	double delta_min=difftime(tcurrent,last_seq.last_time)/60;//分に変換
 	printf("diffmin:%f\n",delta_min);
+	xbeePrintf("diffmin:%f\n",delta_min);
 	return (int)delta_min;
 }
 
@@ -106,7 +107,7 @@ int isTimeout(int timeout_min,Sequence seq)
 static int waitSeq()
 {
 	int i=0;
-	for(i=0;i<WAIT_TIME;i++)
+	for(i=0; i<WAIT_TIME; i++)
 	{
 		printf("%d seconds to release judgement\n",WAIT_TIME-i);
 		xbeePrintf("%d seconds to release judgement\n",WAIT_TIME-i);
@@ -256,8 +257,8 @@ int main(void)
 	if(read_sequence(&sequence)!=0)
 	//file open に失敗
 	{
-		startSeq(&sequence);
 		waitSeq();
+		startSeq(&sequence);
 		releaseSeq(&sequence);
 		luxsensor_close();
 		landSeq(&sequence);
