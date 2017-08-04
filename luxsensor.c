@@ -106,6 +106,7 @@ int isLight()
 	}
 	else
 	{
+		printf("light:%d\n",lux);
 		return 0;
 	}
 }
