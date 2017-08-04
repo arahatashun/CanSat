@@ -85,6 +85,7 @@ double dequeue(Queue *que)
 //キューを削除
 int queue_delete(Queue *que)
 {
+	free(que->buff);
 	free(que);
 	return 0;
 }

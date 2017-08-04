@@ -36,7 +36,7 @@ static const int TSL2561_REGISTER_CHAN1_LOW = 0x8E;
 static const int TSL2561_REGISTER_CHAN1_HIGH = 0x8F;
 //Delay getLux function
 static const int LUXDELAY = 500;
-static const int LIGHT_THRESHOLD = 10;  //光センサー閾値
+static const int LIGHT_THRESHOLD = 1000;  //光センサー閾値
 static int fd = 0;
 
 
@@ -53,7 +53,6 @@ int luxsensor_initialize()
 	else
 	{
 		printf("luxsensor wiringPiI2CSetup success\n");
-		printf("fd = %d, errno=%d: %s\n", fd, errno, strerror(errno));
 	}
 	int WPI2CWReg8  = wiringPiI2CWriteReg8(fd, TSL2561_COMMAND_BIT, TSL2561_CONTROL_POWERON);
 	if( WPI2CWReg8 == -1)
@@ -107,6 +106,7 @@ int isLight()
 	}
 	else
 	{
+		printf("light:%d\n",lux);
 		return 0;
 	}
 }

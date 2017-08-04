@@ -2,7 +2,8 @@
 LIBS = -lwiringPi -lm -lgps
 objs_g = integration.o  motor.o mitibiki.o pid.o ring_buffer.o #GPSのみの制御
 objs_g_and_c = ground_compass.o motor.o mitibiki.o pid.o ring_buffer.o compass.o acclgyro.o#GPSとコンパス
-objs_f = flight.o gut.o luxsensor.o ring_buffer.o #flight
+objs_f = flight.o gut.o luxsensor.o ring_buffer.o xbee_at.o #flight
+
 
 integration.out: $(objs_g)
 	gcc -g -Wall -O2 -o integration.out $(objs_g) $(LIBS)
@@ -47,7 +48,10 @@ gut.o: gut.c
 	gcc -c -Wall gut.c
 
 compass.o: compass.c
-	gcc -c compass.c
+	gcc -c -Wall compass.c
 
 acclgyro.o: acclgyro.c
-	gcc -c acclgyro.c
+	gcc -c -Wall acclgyro.c
+
+xbee_at.o: xbee_at.h xbee_at.c
+	gcc -c -Wall xbee_at.c
