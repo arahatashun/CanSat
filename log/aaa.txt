@@ -1,0 +1,2659 @@
+compass wiringPiI2CSetup success
+Fri Aug  4 05:11:07 2017
+
+latitude:35.742423
+longitude:140.011445
+distance : 22270.730867
+GPS_target_angle : 274.150336
+compass_degree = 188.398820
+delta_angle:85.751517
+pid_output = 43
+Fri Aug  4 05:11:10 2017
+
+latitude:35.742423
+longitude:140.011445
+distance : 22270.730867
+GPS_target_angle : 274.150336
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 191.980606
+delta_angle:82.169730
+pid_output = 42
+Fri Aug  4 05:11:10 2017
+
+latitude:35.742423
+longitude:140.011445
+distance : 22270.730867
+GPS_target_angle : 274.150336
+compass_degree = 32.821443
+delta_angle:-118.671106
+pid_output = -61
+Fri Aug  4 05:11:11 2017
+
+latitude:35.742423
+longitude:140.011445
+distance : 22270.730867
+GPS_target_angle : 274.150336
+compass_degree = 2.252619
+delta_angle:-88.102283
+pid_output = -48
+Fri Aug  4 05:11:12 2017
+
+latitude:35.742423
+longitude:140.011445
+distance : 22270.730867
+GPS_target_angle : 274.150336
+compass_degree = 332.521513
+delta_angle:-58.371176
+pid_output = -34
+Fri Aug  4 05:11:14 2017
+
+latitude:35.742425
+longitude:140.011445
+distance : 22270.710763
+GPS_target_angle : 274.149872
+compass_degree = 329.501434
+delta_angle:-55.351562
+pid_output = -32
+Fri Aug  4 05:11:14 2017
+
+latitude:35.742425
+longitude:140.011445
+distance : 22270.710763
+GPS_target_angle : 274.149872
+compass_degree = 308.728915
+delta_angle:-34.579043
+pid_output = -23
+Fri Aug  4 05:11:15 2017
+
+latitude:35.742428
+longitude:140.011445
+distance : 22270.680611
+GPS_target_angle : 274.149176
+compass_degree = 285.422090
+delta_angle:-11.272914
+pid_output = -11
+Fri Aug  4 05:11:16 2017
+
+latitude:35.742430
+longitude:140.011443
+distance : 22270.480545
+GPS_target_angle : 274.148745
+compass_degree = 272.424702
+delta_angle:1.724043
+pid_output = -4
+Fri Aug  4 05:11:17 2017
+
+latitude:35.742435
+longitude:140.011437
+distance : 22269.890404
+GPS_target_angle : 274.147685
+compass_degree = 277.470294
+delta_angle:-3.322609
+delta_movement = 0.000020
+pid_output = -7
+Fri Aug  4 05:11:18 2017
+
+latitude:35.742438
+longitude:140.011428
+distance : 22269.050412
+GPS_target_angle : 274.147140
+compass_degree = 276.013213
+delta_angle:-1.866073
+delta_movement = 0.000032
+pid_output = -6
+Fri Aug  4 05:11:19 2017
+
+latitude:35.742440
+longitude:140.011418
+distance : 22268.130482
+GPS_target_angle : 274.146844
+compass_degree = 279.241071
+delta_angle:-5.094227
+delta_movement = 0.000044
+pid_output = -8
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:11:22 2017
+
+latitude:35.742443
+longitude:140.011410
+distance : 22267.380479
+GPS_target_angle : 274.146283
+compass_degree = 300.746805
+delta_angle:-26.600523
+delta_movement = 0.000055
+pid_output = -13
+Fri Aug  4 05:11:22 2017
+
+latitude:35.742445
+longitude:140.011403
+distance : 22266.730504
+GPS_target_angle : 274.145936
+compass_degree = 305.336999
+delta_angle:-31.191063
+delta_movement = 0.000064
+pid_output = -15
+Fri Aug  4 05:11:22 2017
+
+latitude:35.742448
+longitude:140.011398
+distance : 22266.250459
+GPS_target_angle : 274.145324
+compass_degree = 296.820137
+delta_angle:-22.674813
+delta_movement = 0.000070
+pid_output = -12
+Fri Aug  4 05:11:23 2017
+
+latitude:35.742452
+longitude:140.011392
+distance : 22265.670394
+GPS_target_angle : 274.144496
+compass_degree = 299.780791
+delta_angle:-25.636295
+delta_movement = 0.000080
+pid_output = -14
+Fri Aug  4 05:11:25 2017
+
+latitude:35.742457
+longitude:140.011383
+distance : 22264.810346
+GPS_target_angle : 274.143486
+compass_degree = 294.607502
+delta_angle:-20.464016
+delta_movement = 0.000091
+pid_output = -11
+Fri Aug  4 05:11:25 2017
+
+latitude:35.742460
+longitude:140.011375
+distance : 22264.060361
+GPS_target_angle : 274.142924
+compass_degree = 314.212797
+delta_angle:-40.069873
+delta_movement = 0.000098
+pid_output = -22
+Fri Aug  4 05:11:26 2017
+
+latitude:35.742465
+longitude:140.011368
+distance : 22263.380300
+GPS_target_angle : 274.141881
+compass_degree = 310.726311
+delta_angle:-36.584430
+delta_movement = 0.000099
+pid_output = -21
+Fri Aug  4 05:11:27 2017
+
+latitude:35.742470
+longitude:140.011360
+distance : 22262.610264
+GPS_target_angle : 274.140855
+compass_degree = 311.585274
+delta_angle:-37.444420
+delta_movement = 0.000100
+pid_output = -22
+Fri Aug  4 05:11:28 2017
+
+latitude:35.742475
+longitude:140.011352
+distance : 22261.840238
+GPS_target_angle : 274.139828
+compass_degree = 302.716000
+delta_angle:-28.576172
+delta_movement = 0.000101
+pid_output = -18
+Fri Aug  4 05:11:30 2017
+
+latitude:35.742478
+longitude:140.011342
+distance : 22260.910305
+GPS_target_angle : 274.139299
+compass_degree = 304.953519
+delta_angle:-30.814220
+delta_movement = 0.000103
+pid_output = -19
+Fri Aug  4 05:11:30 2017
+
+latitude:35.742482
+longitude:140.011333
+distance : 22260.060334
+GPS_target_angle : 274.138522
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 1
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 2
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 3
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 302.431658
+delta_angle:-28.293137
+delta_movement = 0.000107
+pid_output = -19
+Fri Aug  4 05:11:32 2017
+
+latitude:35.742485
+longitude:140.011325
+distance : 22259.310379
+GPS_target_angle : 274.137959
+compass_degree = 285.908635
+delta_angle:-11.770675
+delta_movement = 0.000110
+pid_output = -10
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:11:35 2017
+
+latitude:35.742488
+longitude:140.011315
+distance : 22258.380456
+GPS_target_angle : 274.137431
+compass_degree = 315.576155
+delta_angle:-41.438724
+delta_movement = 0.000113
+pid_output = -20
+Fri Aug  4 05:11:35 2017
+
+latitude:35.742492
+longitude:140.011305
+distance : 22257.440515
+GPS_target_angle : 274.136670
+compass_degree = 312.332314
+delta_angle:-38.195644
+delta_movement = 0.000113
+pid_output = -19
+Fri Aug  4 05:11:35 2017
+
+latitude:35.742493
+longitude:140.011298
+distance : 22256.800595
+GPS_target_angle : 274.136555
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 1
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 313.007972
+delta_angle:-38.871417
+delta_movement = 0.000110
+pid_output = -20
+Fri Aug  4 05:11:36 2017
+
+latitude:35.742495
+longitude:140.011293
+distance : 22256.330627
+GPS_target_angle : 274.136174
+compass_degree = 309.036245
+delta_angle:-34.900071
+delta_movement = 0.000105
+pid_output = -18
+Fri Aug  4 05:11:36 2017
+
+latitude:35.742498
+longitude:140.011285
+distance : 22255.580685
+GPS_target_angle : 274.135612
+compass_degree = 311.639865
+delta_angle:-37.504253
+delta_movement = 0.000103
+pid_output = -20
+Fri Aug  4 05:11:37 2017
+
+latitude:35.742503
+longitude:140.011275
+distance : 22254.630743
+GPS_target_angle : 274.134618
+compass_degree = 306.371876
+delta_angle:-32.237258
+delta_movement = 0.000105
+pid_output = -18
+Fri Aug  4 05:11:38 2017
+
+latitude:35.742507
+longitude:140.011267
+distance : 22253.870797
+GPS_target_angle : 274.133823
+compass_degree = 312.834406
+delta_angle:-38.700583
+delta_movement = 0.000104
+pid_output = -22
+Fri Aug  4 05:11:39 2017
+
+latitude:35.742510
+longitude:140.011257
+distance : 22252.940896
+GPS_target_angle : 274.133294
+compass_degree = 308.744059
+delta_angle:-34.610765
+delta_movement = 0.000104
+pid_output = -20
+Fri Aug  4 05:11:41 2017
+
+latitude:35.742513
+longitude:140.011247
+distance : 22252.010998
+GPS_target_angle : 274.132765
+compass_degree = 304.519144
+delta_angle:-30.386379
+delta_movement = 0.000106
+pid_output = -18
+Fri Aug  4 05:11:41 2017
+
+latitude:35.742518
+longitude:140.011238
+distance : 22251.151072
+GPS_target_angle : 274.131755
+compass_degree = 311.012788
+delta_angle:-36.881033
+delta_movement = 0.000107
+pid_output = -22
+Fri Aug  4 05:11:42 2017
+
+latitude:35.742522
+longitude:140.011228
+distance : 22250.211176
+GPS_target_angle : 274.130993
+compass_degree = 311.012788
+delta_angle:-36.881794
+delta_movement = 0.000107
+pid_output = -23
+Fri Aug  4 05:11:43 2017
+
+latitude:35.742525
+longitude:140.011220
+distance : 22249.461265
+GPS_target_angle : 274.130430
+compass_degree = 295.660913
+delta_angle:-21.530482
+delta_movement = 0.000110
+pid_output = -16
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:11:46 2017
+
+latitude:35.742527
+longitude:140.011212
+distance : 22248.721360
+GPS_target_angle : 274.130100
+compass_degree = 312.267893
+delta_angle:-38.137793
+delta_movement = 0.000113
+pid_output = -19
+Fri Aug  4 05:11:47 2017
+
+latitude:35.742528
+longitude:140.011202
+distance : 22247.811487
+GPS_target_angle : 274.130035
+compass_degree = 310.650690
+delta_angle:-36.520654
+delta_movement = 0.000113
+pid_output = -18
+Fri Aug  4 05:11:47 2017
+
+latitude:35.742530
+longitude:140.011197
+distance : 22247.341545
+GPS_target_angle : 274.129654
+compass_degree = 319.053463
+delta_angle:-44.923808
+delta_movement = 0.000105
+pid_output = -23
+Fri Aug  4 05:11:47 2017
+
+latitude:35.742533
+longitude:140.011193
+distance : 22246.951589
+GPS_target_angle : 274.129024
+compass_degree = 319.053463
+delta_angle:-44.924438
+delta_movement = 0.000100
+pid_output = -23
+Fri Aug  4 05:11:48 2017
+
+latitude:35.742537
+longitude:140.011185
+distance : 22246.191689
+GPS_target_angle : 274.128229
+compass_degree = 316.944128
+delta_angle:-42.815899
+delta_movement = 0.000099
+pid_output = -23
+Fri Aug  4 05:11:49 2017
+
+latitude:35.742538
+longitude:140.011177
+distance : 22245.461791
+GPS_target_angle : 274.128131
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 292.182946
+delta_angle:-18.054816
+delta_movement = 0.000095
+pid_output = -11
+Fri Aug  4 05:11:51 2017
+
+latitude:35.742542
+longitude:140.011168
+distance : 22244.611911
+GPS_target_angle : 274.127352
+compass_degree = 291.819626
+delta_angle:-17.692274
+delta_movement = 0.000094
+pid_output = -11
+Fri Aug  4 05:11:51 2017
+
+latitude:35.742545
+longitude:140.011160
+distance : 22243.862020
+GPS_target_angle : 274.126789
+compass_degree = 296.572898
+delta_angle:-22.446109
+delta_movement = 0.000091
+pid_output = -14
+Fri Aug  4 05:11:52 2017
+
+latitude:35.742545
+longitude:140.011152
+distance : 22243.142121
+GPS_target_angle : 274.126923
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 300.519114
+delta_angle:-26.392191
+delta_movement = 0.000088
+pid_output = -16
+Fri Aug  4 05:11:53 2017
+
+latitude:35.742547
+longitude:140.011143
+distance : 22242.312241
+GPS_target_angle : 274.126609
+compass_degree = 301.500654
+delta_angle:-27.374044
+delta_movement = 0.000089
+pid_output = -17
+Fri Aug  4 05:11:55 2017
+
+latitude:35.742548
+longitude:140.011135
+distance : 22241.582346
+GPS_target_angle : 274.126511
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 282.151109
+delta_angle:-8.024598
+delta_movement = 0.000087
+pid_output = -8
+Fri Aug  4 05:11:56 2017
+
+latitude:35.742550
+longitude:140.011127
+distance : 22240.842455
+GPS_target_angle : 274.126180
+compass_degree = 279.917006
+delta_angle:-5.790826
+delta_movement = 0.000090
+pid_output = -7
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:11:58 2017
+
+latitude:35.742552
+longitude:140.011118
+distance : 22240.012578
+GPS_target_angle : 274.125866
+compass_degree = 276.112198
+delta_angle:-1.986332
+delta_movement = 0.000094
+pid_output = -1
+Fri Aug  4 05:11:58 2017
+
+latitude:35.742552
+longitude:140.011110
+distance : 22239.292677
+GPS_target_angle : 274.126001
+compass_degree = 292.525987
+delta_angle:-18.399987
+delta_movement = 0.000090
+pid_output = -9
+Fri Aug  4 05:11:58 2017
+
+latitude:35.742553
+longitude:140.011105
+distance : 22238.832745
+GPS_target_angle : 274.125852
+compass_degree = 290.499139
+delta_angle:-16.373287
+delta_movement = 0.000087
+pid_output = -8
+Fri Aug  4 05:11:59 2017
+
+latitude:35.742553
+longitude:140.011098
+distance : 22238.202832
+GPS_target_angle : 274.125969
+compass_degree = 292.587763
+delta_angle:-18.461794
+delta_movement = 0.000081
+pid_output = -9
+Fri Aug  4 05:12:00 2017
+
+latitude:35.742553
+longitude:140.011088
+distance : 22237.302957
+GPS_target_angle : 274.126137
+compass_degree = 284.575689
+delta_angle:-10.449552
+delta_movement = 0.000080
+pid_output = -5
+Fri Aug  4 05:12:01 2017
+
+latitude:35.742555
+longitude:140.011080
+distance : 22236.563067
+GPS_target_angle : 274.125806
+compass_degree = 276.523161
+delta_angle:-2.397354
+delta_movement = 0.000082
+pid_output = -1
+Fri Aug  4 05:12:02 2017
+
+latitude:35.742557
+longitude:140.011068
+distance : 22235.463228
+GPS_target_angle : 274.125542
+compass_degree = 276.523161
+delta_angle:-2.397618
+delta_movement = 0.000085
+pid_output = -1
+Fri Aug  4 05:12:03 2017
+
+latitude:35.742557
+longitude:140.011058
+distance : 22234.563352
+GPS_target_angle : 274.125710
+compass_degree = 314.120549
+delta_angle:-39.994838
+delta_movement = 0.000086
+pid_output = -21
+Fri Aug  4 05:12:05 2017
+
+latitude:35.742558
+longitude:140.011048
+distance : 22233.653482
+GPS_target_angle : 274.125645
+compass_degree = 315.771510
+delta_angle:-41.645865
+delta_movement = 0.000087
+pid_output = -22
+Fri Aug  4 05:12:05 2017
+
+latitude:35.742560
+longitude:140.011038
+distance : 22232.733619
+GPS_target_angle : 274.125348
+compass_degree = 327.817153
+delta_angle:-53.691805
+delta_movement = 0.000088
+pid_output = -29
+Fri Aug  4 05:12:06 2017
+
+latitude:35.742565
+longitude:140.011030
+distance : 22231.963758
+GPS_target_angle : 274.124320
+compass_degree = 316.657552
+delta_angle:-42.533232
+delta_movement = 0.000093
+pid_output = -25
+Fri Aug  4 05:12:07 2017
+
+latitude:35.742570
+longitude:140.011022
+distance : 22231.193908
+GPS_target_angle : 274.123291
+compass_degree = 316.093885
+delta_angle:-41.970594
+delta_movement = 0.000100
+pid_output = -25
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:12:10 2017
+
+latitude:35.742577
+longitude:140.011013
+distance : 22230.314110
+GPS_target_angle : 274.121814
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 318.446965
+delta_angle:-44.325151
+delta_movement = 0.000109
+pid_output = -22
+Fri Aug  4 05:12:11 2017
+
+latitude:35.742582
+longitude:140.011007
+distance : 22229.724264
+GPS_target_angle : 274.120752
+compass_degree = 321.851419
+delta_angle:-47.730667
+delta_movement = 0.000110
+pid_output = -24
+Fri Aug  4 05:12:11 2017
+
+latitude:35.742583
+longitude:140.011002
+distance : 22229.264340
+GPS_target_angle : 274.120603
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 1
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 2
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 325.324090
+delta_angle:-51.203487
+delta_movement = 0.000106
+pid_output = -26
+Fri Aug  4 05:12:11 2017
+
+latitude:35.742587
+longitude:140.010997
+distance : 22228.774474
+GPS_target_angle : 274.119756
+compass_degree = 318.741130
+delta_angle:-44.621374
+delta_movement = 0.000101
+pid_output = -24
+Fri Aug  4 05:12:13 2017
+
+latitude:35.742592
+longitude:140.010988
+distance : 22227.914684
+GPS_target_angle : 274.118744
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 1
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 2
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 3
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 312.378969
+delta_angle:-38.260224
+delta_movement = 0.000105
+pid_output = -21
+Fri Aug  4 05:12:13 2017
+
+latitude:35.742597
+longitude:140.010982
+distance : 22227.324871
+GPS_target_angle : 274.117682
+compass_degree = 304.203330
+delta_angle:-30.085648
+delta_movement = 0.000105
+pid_output = -17
+Fri Aug  4 05:12:15 2017
+
+latitude:35.742600
+longitude:140.010973
+distance : 22226.485048
+GPS_target_angle : 274.117135
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 1
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 2
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 306.824867
+delta_angle:-32.707732
+delta_movement = 0.000105
+pid_output = -19
+Fri Aug  4 05:12:15 2017
+
+latitude:35.742605
+longitude:140.010963
+distance : 22225.535295
+GPS_target_angle : 274.116139
+compass_degree = 292.533285
+delta_angle:-18.417146
+delta_movement = 0.000107
+pid_output = -12
+Fri Aug  4 05:12:16 2017
+
+latitude:35.742607
+longitude:140.010955
+distance : 22224.795440
+GPS_target_angle : 274.115808
+compass_degree = 310.398421
+delta_angle:-36.282614
+delta_movement = 0.000104
+pid_output = -22
+Fri Aug  4 05:12:18 2017
+
+latitude:35.742610
+longitude:140.010945
+distance : 22223.865638
+GPS_target_angle : 274.115277
+compass_degree = 307.443748
+delta_angle:-33.328470
+delta_movement = 0.000101
+pid_output = -20
+Fri Aug  4 05:12:18 2017
+
+latitude:35.742612
+longitude:140.010937
+distance : 22223.125785
+GPS_target_angle : 274.114946
+compass_degree = 298.610852
+delta_angle:-24.495906
+delta_movement = 0.000100
+pid_output = -16
+Fri Aug  4 05:12:19 2017
+
+latitude:35.742615
+longitude:140.010928
+distance : 22222.285978
+GPS_target_angle : 274.114399
+compass_degree = 286.698174
+delta_angle:-12.583775
+delta_movement = 0.000106
+pid_output = -11
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:12:22 2017
+
+latitude:35.742618
+longitude:140.010920
+distance : 22221.536162
+GPS_target_angle : 274.113835
+compass_degree = 299.787220
+delta_angle:-25.673385
+delta_movement = 0.000108
+pid_output = -12
+Fri Aug  4 05:12:22 2017
+
+latitude:35.742620
+longitude:140.010912
+distance : 22220.796315
+GPS_target_angle : 274.113503
+compass_degree = 297.928411
+delta_angle:-23.814908
+delta_movement = 0.000104
+pid_output = -12
+Fri Aug  4 05:12:23 2017
+
+latitude:35.742620
+longitude:140.010907
+distance : 22220.346367
+GPS_target_angle : 274.113587
+compass_degree = 307.862600
+delta_angle:-33.749013
+delta_movement = 0.000098
+pid_output = -17
+Fri Aug  4 05:12:23 2017
+
+latitude:35.742622
+longitude:140.010900
+distance : 22219.696510
+GPS_target_angle : 274.113239
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 1
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 2
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 300.580629
+delta_angle:-26.467390
+delta_movement = 0.000095
+pid_output = -14
+Fri Aug  4 05:12:24 2017
+
+latitude:35.742623
+longitude:140.010890
+distance : 22218.786649
+GPS_target_angle : 274.113173
+compass_degree = 284.711955
+delta_angle:-10.598781
+delta_movement = 0.000091
+pid_output = -6
+Fri Aug  4 05:12:26 2017
+
+latitude:35.742625
+longitude:140.010882
+distance : 22218.046804
+GPS_target_angle : 274.112842
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 291.827841
+delta_angle:-17.714999
+delta_movement = 0.000091
+pid_output = -10
+Fri Aug  4 05:12:26 2017
+
+latitude:35.742627
+longitude:140.010873
+distance : 22217.216970
+GPS_target_angle : 274.112527
+compass_degree = 324.994382
+delta_angle:-50.881855
+delta_movement = 0.000089
+pid_output = -27
+Fri Aug  4 05:12:27 2017
+
+latitude:35.742628
+longitude:140.010865
+distance : 22216.487089
+GPS_target_angle : 274.112428
+compass_degree = 325.382389
+delta_angle:-51.269961
+delta_movement = 0.000088
+pid_output = -29
+Fri Aug  4 05:12:28 2017
+
+latitude:35.742630
+longitude:140.010857
+distance : 22215.747247
+GPS_target_angle : 274.112097
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 302.566619
+delta_angle:-28.454522
+delta_movement = 0.000086
+pid_output = -18
+Fri Aug  4 05:12:30 2017
+
+latitude:35.742635
+longitude:140.010848
+distance : 22214.887536
+GPS_target_angle : 274.111084
+compass_degree = 291.792613
+delta_angle:-17.681530
+delta_movement = 0.000089
+pid_output = -12
+Fri Aug  4 05:12:30 2017
+
+latitude:35.742638
+longitude:140.010842
+distance : 22214.317721
+GPS_target_angle : 274.110486
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 1
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 2
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 290.918243
+delta_angle:-16.807757
+delta_movement = 0.000088
+pid_output = -12
+Fri Aug  4 05:12:31 2017
+
+latitude:35.742642
+longitude:140.010838
+distance : 22213.917934
+GPS_target_angle : 274.109622
+compass_degree = 279.267418
+delta_angle:-5.157796
+delta_movement = 0.000091
+pid_output = -6
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:12:35 2017
+
+latitude:35.742642
+longitude:140.010838
+distance : 22213.917934
+GPS_target_angle : 274.109622
+compass_degree = 286.278949
+delta_angle:-12.169327
+delta_movement = 0.000082
+pid_output = -6
+Fri Aug  4 05:12:35 2017
+
+latitude:35.742642
+longitude:140.010838
+distance : 22213.917934
+GPS_target_angle : 274.109622
+compass_degree = 285.027279
+delta_angle:-10.917657
+delta_movement = 0.000071
+pid_output = -5
+Fri Aug  4 05:12:35 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 284.281566
+delta_angle:-10.172177
+delta_movement = 0.000062
+pid_output = -5
+Fri Aug  4 05:12:35 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 283.649704
+delta_angle:-9.540315
+delta_movement = 0.000051
+pid_output = -5
+Fri Aug  4 05:12:36 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 287.775141
+delta_angle:-13.665752
+delta_movement = 0.000042
+pid_output = -7
+Fri Aug  4 05:12:38 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 1
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 285.604033
+delta_angle:-11.494644
+delta_movement = 0.000032
+pid_output = -6
+Fri Aug  4 05:12:38 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 285.266588
+delta_angle:-11.157199
+delta_movement = 0.000018
+pid_output = -6
+Fri Aug  4 05:12:39 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 287.583615
+delta_angle:-13.474226
+delta_movement = 0.000009
+pid_output = -7
+Fri Aug  4 05:12:40 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 285.425862
+delta_angle:-11.316473
+delta_movement = 0.000001
+pid_output = -7
+Fri Aug  4 05:12:42 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 286.507082
+delta_angle:-12.397693
+delta_movement = 0.000001
+pid_output = -7
+Fri Aug  4 05:12:42 2017
+
+latitude:35.742643
+longitude:140.010840
+distance : 22214.087959
+GPS_target_angle : 274.109356
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 1
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 2
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 286.254110
+delta_angle:-12.144754
+delta_movement = 0.000003
+pid_output = -7
+Fri Aug  4 05:12:43 2017
+
+latitude:35.742643
+longitude:140.010840
+distance : 22214.087959
+GPS_target_angle : 274.109356
+compass_degree = 286.364345
+delta_angle:-12.254989
+delta_movement = 0.000002
+pid_output = -8
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:12:47 2017
+
+latitude:35.742643
+longitude:140.010840
+distance : 22214.087959
+GPS_target_angle : 274.109356
+compass_degree = 287.498574
+delta_angle:-13.389219
+delta_movement = 0.000002
+pid_output = -6
+Fri Aug  4 05:12:47 2017
+
+latitude:35.742643
+longitude:140.010840
+distance : 22214.087959
+GPS_target_angle : 274.109356
+compass_degree = 286.765296
+delta_angle:-12.655940
+delta_movement = 0.000002
+pid_output = -6
+Fri Aug  4 05:12:47 2017
+
+latitude:35.742643
+longitude:140.010840
+distance : 22214.087959
+GPS_target_angle : 274.109356
+compass_degree = 287.159081
+delta_angle:-13.049725
+delta_movement = 0.000002
+pid_output = -6
+Fri Aug  4 05:12:47 2017
+
+latitude:35.742643
+longitude:140.010840
+distance : 22214.087959
+GPS_target_angle : 274.109356
+compass_degree = 286.254110
+delta_angle:-12.144754
+delta_movement = 0.000002
+pid_output = -6
+Fri Aug  4 05:12:48 2017
+
+latitude:35.742643
+longitude:140.010840
+distance : 22214.087959
+GPS_target_angle : 274.109356
+compass_degree = 286.897626
+delta_angle:-12.788270
+delta_movement = 0.000002
+pid_output = -7
+Fri Aug  4 05:12:50 2017
+
+latitude:35.742643
+longitude:140.010840
+distance : 22214.087959
+GPS_target_angle : 274.109356
+compass_degree = 286.395870
+delta_angle:-12.286514
+delta_movement = 0.000002
+pid_output = -6
+Fri Aug  4 05:12:50 2017
+
+latitude:35.742643
+longitude:140.010840
+distance : 22214.087959
+GPS_target_angle : 274.109356
+compass_degree = 289.565051
+delta_angle:-15.455696
+delta_movement = 0.000002
+pid_output = -8
+Fri Aug  4 05:12:51 2017
+
+latitude:35.742643
+longitude:140.010840
+distance : 22214.087959
+GPS_target_angle : 274.109356
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 289.762282
+delta_angle:-15.652926
+delta_movement = 0.000000
+STACK JUDGEMENT
+get stacked
+MOTOR back
+MOTOR back
+MOTOR back
+MOTOR stop
+MOTOR right
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR stop
+MOTOR forward
+pid_output = -11
+Fri Aug  4 05:13:00 2017
+
+latitude:35.742643
+longitude:140.010840
+distance : 22214.087959
+GPS_target_angle : 274.109356
+compass_degree = 60.442754
+delta_angle:-146.333398
+delta_movement = 0.000000
+STACK JUDGEMENT
+get stacked
+MOTOR back
+MOTOR back
+MOTOR back
+MOTOR stop
+MOTOR right
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR stop
+MOTOR forward
+pid_output = -98
+Fri Aug  4 05:13:09 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 60.205000
+delta_angle:-146.095611
+delta_movement = 0.000002
+pid_output = -100
+Fri Aug  4 05:13:10 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 59.923640
+delta_angle:-145.814251
+delta_movement = 0.000002
+pid_output = -100
+Fri Aug  4 05:13:11 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 59.861437
+delta_angle:-145.752048
+delta_movement = 0.000002
+pid_output = -100
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:13:14 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 1
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 59.025512
+delta_angle:-144.916123
+delta_movement = 0.000002
+pid_output = -73
+Fri Aug  4 05:13:15 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 58.651411
+delta_angle:-144.542022
+delta_movement = 0.000002
+pid_output = -73
+Fri Aug  4 05:13:15 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 59.415885
+delta_angle:-145.306496
+delta_movement = 0.000002
+pid_output = -74
+Fri Aug  4 05:13:15 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 59.770819
+delta_angle:-145.661430
+delta_movement = 0.000002
+pid_output = -77
+Fri Aug  4 05:13:16 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 59.444962
+delta_angle:-145.335573
+delta_movement = 0.000002
+pid_output = -80
+Fri Aug  4 05:13:17 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 59.001843
+delta_angle:-144.892453
+delta_movement = 0.000002
+pid_output = -82
+Fri Aug  4 05:13:19 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 58.527015
+delta_angle:-144.417626
+delta_movement = 0.000000
+STACK JUDGEMENT
+get stacked
+MOTOR back
+MOTOR back
+MOTOR back
+MOTOR stop
+MOTOR right
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR stop
+MOTOR forward
+pid_output = -100
+Fri Aug  4 05:13:26 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 57.063397
+delta_angle:-142.954008
+delta_movement = 0.000000
+STACK JUDGEMENT
+get stacked
+MOTOR back
+MOTOR back
+MOTOR back
+MOTOR stop
+MOTOR right
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR stop
+MOTOR forward
+pid_output = -100
+Fri Aug  4 05:13:35 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 50.930124
+delta_angle:-136.820735
+delta_movement = 0.000000
+STACK JUDGEMENT
+get stacked
+MOTOR back
+MOTOR back
+MOTOR back
+MOTOR stop
+MOTOR right
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR stop
+MOTOR forward
+pid_output = -100
+Fri Aug  4 05:13:44 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 54.754895
+delta_angle:-140.645505
+delta_movement = 0.000000
+STACK JUDGEMENT
+get stacked
+MOTOR back
+MOTOR back
+MOTOR back
+MOTOR stop
+MOTOR right
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR stop
+MOTOR forward
+pid_output = -100
+Fri Aug  4 05:13:53 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 53.603947
+delta_angle:-139.494558
+delta_movement = 0.000000
+STACK JUDGEMENT
+get stacked
+MOTOR back
+MOTOR back
+MOTOR back
+MOTOR stop
+MOTOR right
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR stop
+MOTOR forward
+pid_output = -100
+Fri Aug  4 05:14:01 2017
+
+latitude:35.742643
+longitude:140.010838
+distance : 22213.907978
+GPS_target_angle : 274.109389
+compass_degree = 323.542932
+delta_angle:-49.433542
+delta_movement = 0.000000
+STACK JUDGEMENT
+get stacked
+MOTOR back
+MOTOR back
+MOTOR back
+MOTOR stop
+MOTOR right
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR stop
+MOTOR forward
+pid_output = -100
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:14:12 2017
+
+latitude:35.742655
+longitude:140.010865
+distance : 22216.218312
+GPS_target_angle : 274.106145
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 40.054973
+delta_angle:-125.948828
+delta_movement = 0.000039
+pid_output = -63
+Fri Aug  4 05:14:12 2017
+
+latitude:35.742657
+longitude:140.010865
+distance : 22216.198418
+GPS_target_angle : 274.105680
+compass_degree = 36.323099
+delta_angle:-122.217419
+delta_movement = 0.000041
+pid_output = -62
+Fri Aug  4 05:14:13 2017
+
+latitude:35.742662
+longitude:140.010868
+distance : 22216.418668
+GPS_target_angle : 274.104466
+compass_degree = 347.392035
+delta_angle:-73.287569
+delta_movement = 0.000049
+pid_output = -38
+Fri Aug  4 05:14:14 2017
+
+latitude:35.742667
+longitude:140.010870
+distance : 22216.548942
+GPS_target_angle : 274.103269
+compass_degree = 304.919790
+delta_angle:-30.816521
+delta_movement = 0.000056
+pid_output = -18
+Fri Aug  4 05:14:15 2017
+
+latitude:35.742672
+longitude:140.010867
+distance : 22216.229272
+GPS_target_angle : 274.102156
+compass_degree = 270.938265
+delta_angle:3.163891
+delta_movement = 0.000058
+pid_output = 0
+Fri Aug  4 05:14:16 2017
+
+latitude:35.742675
+longitude:140.010860
+distance : 22215.569520
+GPS_target_angle : 274.101575
+compass_degree = 268.810099
+delta_angle:5.291475
+delta_movement = 0.000054
+pid_output = 0
+Fri Aug  4 05:14:16 2017
+
+latitude:35.742675
+longitude:140.010850
+distance : 22214.669603
+GPS_target_angle : 274.101741
+compass_degree = 278.660029
+delta_angle:-4.558288
+delta_movement = 0.000044
+pid_output = -4
+Fri Aug  4 05:14:18 2017
+
+latitude:35.742673
+longitude:140.010840
+distance : 22213.789562
+GPS_target_angle : 274.102374
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 1
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 2
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 270.201377
+delta_angle:3.900997
+delta_movement = 0.000032
+pid_output = 0
+Fri Aug  4 05:14:19 2017
+
+latitude:35.742670
+longitude:140.010832
+distance : 22213.099448
+GPS_target_angle : 274.103206
+compass_degree = 265.746401
+delta_angle:8.356805
+delta_movement = 0.000033
+pid_output = 1
+Fri Aug  4 05:14:19 2017
+
+latitude:35.742668
+longitude:140.010820
+distance : 22212.039434
+GPS_target_angle : 274.103871
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 256.860318
+delta_angle:17.243554
+delta_movement = 0.000058
+pid_output = 6
+Fri Aug  4 05:14:21 2017
+
+latitude:35.742667
+longitude:140.010812
+distance : 22211.329447
+GPS_target_angle : 274.104238
+compass_degree = 264.097486
+delta_angle:10.006752
+delta_movement = 0.000063
+pid_output = 3
+Fri Aug  4 05:14:22 2017
+
+latitude:35.742667
+longitude:140.010803
+distance : 22210.519526
+GPS_target_angle : 274.104388
+compass_degree = 268.138676
+delta_angle:5.965712
+delta_movement = 0.000070
+pid_output = 1
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:14:25 2017
+
+latitude:35.742665
+longitude:140.010797
+distance : 22209.999467
+GPS_target_angle : 274.104954
+compass_degree = 279.034734
+delta_angle:-4.929781
+delta_movement = 0.000075
+pid_output = -2
+Fri Aug  4 05:14:25 2017
+
+latitude:35.742665
+longitude:140.010797
+distance : 22209.999467
+GPS_target_angle : 274.104954
+compass_degree = 282.999361
+delta_angle:-8.894407
+delta_movement = 0.000077
+pid_output = -4
+Fri Aug  4 05:14:25 2017
+
+latitude:35.742665
+longitude:140.010795
+distance : 22209.819484
+GPS_target_angle : 274.104987
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 280.753789
+delta_angle:-6.648802
+delta_movement = 0.000075
+pid_output = -3
+Fri Aug  4 05:14:26 2017
+
+latitude:35.742667
+longitude:140.010792
+distance : 22209.529623
+GPS_target_angle : 274.104572
+compass_degree = 273.057309
+delta_angle:1.047263
+delta_movement = 0.000066
+pid_output = 0
+Fri Aug  4 05:14:27 2017
+
+latitude:35.742667
+longitude:140.010785
+distance : 22208.899685
+GPS_target_angle : 274.104689
+compass_degree = 270.359088
+delta_angle:3.745601
+delta_movement = 0.000061
+pid_output = 1
+Fri Aug  4 05:14:28 2017
+
+latitude:35.742665
+longitude:140.010777
+distance : 22208.199645
+GPS_target_angle : 274.105288
+compass_degree = 272.585340
+delta_angle:1.519948
+delta_movement = 0.000060
+pid_output = 0
+Fri Aug  4 05:14:28 2017
+
+latitude:35.742665
+longitude:140.010767
+distance : 22207.299735
+GPS_target_angle : 274.105455
+compass_degree = 295.652412
+delta_angle:-21.546957
+delta_movement = 0.000056
+pid_output = -11
+Fri Aug  4 05:14:30 2017
+
+latitude:35.742663
+longitude:140.010758
+distance : 22206.509709
+GPS_target_angle : 274.106071
+compass_degree = 306.726970
+delta_angle:-32.620899
+delta_movement = 0.000058
+pid_output = -17
+Fri Aug  4 05:14:31 2017
+
+latitude:35.742665
+longitude:140.010750
+distance : 22205.769888
+GPS_target_angle : 274.105739
+compass_degree = 292.254822
+delta_angle:-18.149082
+delta_movement = 0.000055
+pid_output = -10
+Fri Aug  4 05:14:32 2017
+
+latitude:35.742667
+longitude:140.010743
+distance : 22205.120060
+GPS_target_angle : 274.105390
+compass_degree = 295.592582
+delta_angle:-21.487191
+delta_movement = 0.000056
+pid_output = -12
+Fri Aug  4 05:14:33 2017
+
+latitude:35.742668
+longitude:140.010735
+distance : 22204.390186
+GPS_target_angle : 274.105291
+compass_degree = 301.053374
+delta_angle:-26.948082
+delta_movement = 0.000065
+pid_output = -15
+Fri Aug  4 05:14:33 2017
+
+latitude:35.742668
+longitude:140.010727
+distance : 22203.670258
+GPS_target_angle : 274.105425
+compass_degree = 288.016894
+delta_angle:-13.911468
+delta_movement = 0.000071
+pid_output = -9
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:14:36 2017
+
+latitude:35.742670
+longitude:140.010718
+distance : 22202.840448
+GPS_target_angle : 274.105110
+compass_degree = 280.842765
+delta_angle:-6.737656
+delta_movement = 0.000077
+pid_output = -3
+Fri Aug  4 05:14:37 2017
+
+latitude:35.742672
+longitude:140.010715
+distance : 22202.550587
+GPS_target_angle : 274.104694
+compass_degree = 279.282884
+delta_angle:-5.178190
+delta_movement = 0.000075
+pid_output = -2
+Fri Aug  4 05:14:37 2017
+
+latitude:35.742672
+longitude:140.010710
+distance : 22202.100631
+GPS_target_angle : 274.104778
+compass_degree = 289.104854
+delta_angle:-15.000076
+delta_movement = 0.000074
+pid_output = -7
+Fri Aug  4 05:14:38 2017
+
+latitude:35.742672
+longitude:140.010702
+distance : 22201.380702
+GPS_target_angle : 274.104911
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 310.385944
+delta_angle:-36.281033
+delta_movement = 0.000072
+pid_output = -19
+Fri Aug  4 05:14:39 2017
+
+latitude:35.742672
+longitude:140.010695
+distance : 22200.750765
+GPS_target_angle : 274.105028
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 306.271772
+delta_angle:-32.166744
+delta_movement = 0.000072
+pid_output = -17
+Fri Aug  4 05:14:40 2017
+
+latitude:35.742673
+longitude:140.010687
+distance : 22200.020892
+GPS_target_angle : 274.104929
+compass_degree = 307.012240
+delta_angle:-32.907310
+delta_movement = 0.000071
+pid_output = -18
+Fri Aug  4 05:14:41 2017
+
+latitude:35.742675
+longitude:140.010677
+distance : 22199.101093
+GPS_target_angle : 274.104631
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 298.207080
+delta_angle:-24.102449
+delta_movement = 0.000074
+pid_output = -14
+Fri Aug  4 05:14:42 2017
+
+latitude:35.742678
+longitude:140.010668
+distance : 22198.261343
+GPS_target_angle : 274.104082
+compass_degree = 288.151654
+delta_angle:-14.047572
+delta_movement = 0.000077
+pid_output = -9
+Fri Aug  4 05:14:42 2017
+
+latitude:35.742678
+longitude:140.010660
+distance : 22197.541413
+GPS_target_angle : 274.104216
+compass_degree = 271.235619
+delta_angle:2.868597
+delta_movement = 0.000077
+pid_output = 0
+Fri Aug  4 05:14:44 2017
+
+latitude:35.742678
+longitude:140.010652
+distance : 22196.821484
+GPS_target_angle : 274.104350
+compass_degree = 292.151420
+delta_angle:-18.047070
+delta_movement = 0.000074
+pid_output = -11
+Fri Aug  4 05:14:45 2017
+
+latitude:35.742677
+longitude:140.010643
+distance : 22196.021507
+GPS_target_angle : 274.104733
+compass_degree = 291.505109
+delta_angle:-17.400376
+delta_movement = 0.000077
+pid_output = -11
+Fri Aug  4 05:14:46 2017
+
+latitude:35.742677
+longitude:140.010635
+distance : 22195.301578
+GPS_target_angle : 274.104867
+compass_degree = 244.769922
+delta_angle:29.334945
+delta_movement = 0.000080
+pid_output = 12
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:14:49 2017
+
+latitude:35.742677
+longitude:140.010627
+distance : 22194.581649
+GPS_target_angle : 274.105001
+compass_degree = 238.772255
+delta_angle:35.332746
+delta_movement = 0.000080
+pid_output = 17
+Fri Aug  4 05:14:49 2017
+
+latitude:35.742673
+longitude:140.010620
+distance : 22193.991495
+GPS_target_angle : 274.106049
+compass_degree = 230.094757
+delta_angle:44.011292
+delta_movement = 0.000076
+pid_output = 22
+Fri Aug  4 05:14:50 2017
+
+latitude:35.742672
+longitude:140.010617
+distance : 22193.731470
+GPS_target_angle : 274.106332
+compass_degree = 233.567432
+delta_angle:40.538901
+delta_movement = 0.000071
+pid_output = 20
+Fri Aug  4 05:14:50 2017
+
+latitude:35.742670
+longitude:140.010613
+distance : 22193.391403
+GPS_target_angle : 274.106865
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 243.361238
+delta_angle:30.745627
+delta_movement = 0.000069
+pid_output = 16
+Fri Aug  4 05:14:51 2017
+
+latitude:35.742667
+longitude:140.010608
+distance : 22192.971298
+GPS_target_angle : 274.107648
+compass_degree = 271.809701
+delta_angle:2.297947
+delta_movement = 0.000071
+pid_output = 2
+Fri Aug  4 05:14:52 2017
+
+latitude:35.742663
+longitude:140.010602
+distance : 22192.471163
+GPS_target_angle : 274.108680
+compass_degree = 271.621775
+delta_angle:2.486904
+delta_movement = 0.000073
+pid_output = 2
+Fri Aug  4 05:14:52 2017
+
+latitude:35.742660
+longitude:140.010595
+distance : 22191.871092
+GPS_target_angle : 274.109496
+compass_degree = 256.943048
+delta_angle:17.166448
+delta_movement = 0.000075
+pid_output = 10
+Fri Aug  4 05:14:54 2017
+
+latitude:35.742658
+longitude:140.010587
+distance : 22191.171082
+GPS_target_angle : 274.110096
+compass_degree = 244.151868
+delta_angle:29.958228
+delta_movement = 0.000075
+pid_output = 17
+Fri Aug  4 05:14:55 2017
+
+latitude:35.742657
+longitude:140.010582
+distance : 22190.731087
+GPS_target_angle : 274.110412
+compass_degree = 250.449757
+delta_angle:23.660655
+delta_movement = 0.000073
+pid_output = 14
+Fri Aug  4 05:14:56 2017
+
+latitude:35.742655
+longitude:140.010575
+distance : 22190.121073
+GPS_target_angle : 274.110996
+compass_degree = 240.937959
+delta_angle:33.173036
+delta_movement = 0.000074
+pid_output = 19
+Fri Aug  4 05:14:56 2017
+
+latitude:35.742652
+longitude:140.010570
+distance : 22189.701001
+GPS_target_angle : 274.111778
+compass_degree = 254.736807
+delta_angle:19.374972
+delta_movement = 0.000071
+pid_output = 12
+Fri Aug  4 05:14:57 2017
+
+latitude:35.742648
+longitude:140.010565
+distance : 22189.290898
+GPS_target_angle : 274.112794
+compass_degree = 291.434868
+delta_angle:-17.322074
+delta_movement = 0.000076
+pid_output = -6
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:15:01 2017
+
+latitude:35.742648
+longitude:140.010560
+distance : 22188.840950
+GPS_target_angle : 274.112878
+compass_degree = 303.274294
+delta_angle:-29.161417
+delta_movement = 0.000075
+pid_output = -14
+Fri Aug  4 05:15:01 2017
+
+latitude:35.742647
+longitude:140.010558
+distance : 22188.670934
+GPS_target_angle : 274.113144
+compass_degree = 303.643025
+delta_angle:-29.529881
+delta_movement = 0.000070
+pid_output = -15
+Fri Aug  4 05:15:01 2017
+
+latitude:35.742648
+longitude:140.010555
+distance : 22188.391001
+GPS_target_angle : 274.112961
+compass_degree = 303.643025
+delta_angle:-29.530064
+delta_movement = 0.000062
+pid_output = -15
+Fri Aug  4 05:15:02 2017
+
+latitude:35.742648
+longitude:140.010553
+distance : 22188.211022
+GPS_target_angle : 274.112995
+compass_degree = 301.745967
+delta_angle:-27.632972
+delta_movement = 0.000054
+pid_output = -14
+Fri Aug  4 05:15:02 2017
+
+latitude:35.742648
+longitude:140.010553
+distance : 22188.211022
+GPS_target_angle : 274.112995
+compass_degree = 305.849057
+delta_angle:-31.736062
+delta_movement = 0.000044
+pid_output = -17
+Fri Aug  4 05:15:04 2017
+
+latitude:35.742648
+longitude:140.010553
+distance : 22188.211022
+GPS_target_angle : 274.112995
+compass_degree = 309.794221
+delta_angle:-35.681226
+delta_movement = 0.000038
+pid_output = -20
+Fri Aug  4 05:15:05 2017
+
+latitude:35.742650
+longitude:140.010553
+distance : 22188.191096
+GPS_target_angle : 274.112529
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+WARNING compass lock
+LockCounter 1
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 309.489625
+delta_angle:-35.377097
+delta_movement = 0.000027
+pid_output = -20
+Fri Aug  4 05:15:06 2017
+
+latitude:35.742650
+longitude:140.010552
+distance : 22188.101106
+GPS_target_angle : 274.112546
+compass_degree = 311.041842
+delta_angle:-36.929297
+delta_movement = 0.000020
+pid_output = -21
+Fri Aug  4 05:15:06 2017
+
+latitude:35.742650
+longitude:140.010552
+distance : 22188.101106
+GPS_target_angle : 274.112546
+compass_degree = 304.790514
+delta_angle:-30.677968
+delta_movement = 0.000015
+pid_output = -19
+Fri Aug  4 05:15:08 2017
+
+latitude:35.742650
+longitude:140.010552
+distance : 22188.101106
+GPS_target_angle : 274.112546
+compass_degree = 305.499015
+delta_angle:-31.386470
+delta_movement = 0.000010
+pid_output = -20
+Fri Aug  4 05:15:09 2017
+
+latitude:35.742650
+longitude:140.010552
+distance : 22188.101106
+GPS_target_angle : 274.112546
+compass_degree = 307.606671
+delta_angle:-33.494126
+delta_movement = 0.000009
+pid_output = -21
+Fri Aug  4 05:15:10 2017
+
+latitude:35.742650
+longitude:140.010552
+distance : 22188.101106
+GPS_target_angle : 274.112546
+compass_degree = 306.825536
+delta_angle:-32.712990
+delta_movement = 0.000005
+pid_output = -21
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:15:12 2017
+
+latitude:35.742648
+longitude:140.010552
+distance : 22188.121032
+GPS_target_angle : 274.113012
+compass_degree = 307.483836
+delta_angle:-33.370824
+delta_movement = 0.000001
+STACK JUDGEMENT
+get stacked
+MOTOR back
+MOTOR back
+MOTOR back
+MOTOR stop
+MOTOR right
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR stop
+MOTOR forward
+pid_output = -16
+Fri Aug  4 05:15:20 2017
+
+latitude:35.742650
+longitude:140.010550
+distance : 22187.921127
+GPS_target_angle : 274.112579
+compass_degree = 327.098257
+delta_angle:-52.985678
+delta_movement = 0.000005
+pid_output = -27
+Fri Aug  4 05:15:21 2017
+
+latitude:35.742650
+longitude:140.010550
+distance : 22187.921127
+GPS_target_angle : 274.112579
+compass_degree = 327.520599
+delta_angle:-53.408020
+delta_movement = 0.000005
+pid_output = -29
+Fri Aug  4 05:15:22 2017
+
+latitude:35.742650
+longitude:140.010550
+distance : 22187.921127
+GPS_target_angle : 274.112579
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 331.404690
+delta_angle:-57.292110
+delta_movement = 0.000003
+pid_output = -32
+Fri Aug  4 05:15:24 2017
+
+latitude:35.742650
+longitude:140.010550
+distance : 22187.921127
+GPS_target_angle : 274.112579
+compass_degree = 329.582632
+delta_angle:-55.470052
+delta_movement = 0.000002
+pid_output = -31
+Fri Aug  4 05:15:24 2017
+
+latitude:35.742650
+longitude:140.010550
+distance : 22187.921127
+GPS_target_angle : 274.112579
+compass_degree = 320.768221
+delta_angle:-46.655642
+delta_movement = 0.000002
+pid_output = -27
+Fri Aug  4 05:15:25 2017
+
+latitude:35.742650
+longitude:140.010550
+distance : 22187.921127
+GPS_target_angle : 274.112579
+compass_degree = 335.399903
+delta_angle:-61.287324
+delta_movement = 0.000002
+pid_output = -36
+Fri Aug  4 05:15:26 2017
+
+latitude:35.742650
+longitude:140.010550
+distance : 22187.921127
+GPS_target_angle : 274.112579
+compass_degree = 316.161618
+delta_angle:-42.049039
+delta_movement = 0.000002
+pid_output = -27
+Fri Aug  4 05:15:27 2017
+
+latitude:35.742650
+longitude:140.010550
+distance : 22187.921127
+GPS_target_angle : 274.112579
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 328.308442
+delta_angle:-54.195863
+delta_movement = 0.000002
+pid_output = -34
+Fri Aug  4 05:15:29 2017
+
+latitude:35.742650
+longitude:140.010550
+distance : 22187.921127
+GPS_target_angle : 274.112579
+compass_degree = 343.256359
+delta_angle:-69.143780
+delta_movement = 0.000004
+pid_output = -42
+Fri Aug  4 05:15:29 2017
+
+latitude:35.742650
+longitude:140.010548
+distance : 22187.741147
+GPS_target_angle : 274.112613
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 329.390531
+delta_angle:-55.277918
+delta_movement = 0.000002
+pid_output = -36
+Fri Aug  4 05:15:30 2017
+
+latitude:35.742652
+longitude:140.010548
+distance : 22187.721223
+GPS_target_angle : 274.112147
+compass_degree = 316.130102
+delta_angle:-42.017956
+delta_movement = 0.000004
+pid_output = -31
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:15:33 2017
+
+latitude:35.742653
+longitude:140.010545
+distance : 22187.441292
+GPS_target_angle : 274.111964
+compass_degree = 319.773647
+delta_angle:-45.661683
+delta_movement = 0.000008
+pid_output = -23
+Fri Aug  4 05:15:34 2017
+
+latitude:35.742653
+longitude:140.010545
+distance : 22187.441292
+GPS_target_angle : 274.111964
+compass_degree = 325.920330
+delta_angle:-51.808366
+delta_movement = 0.000008
+pid_output = -26
+Fri Aug  4 05:15:34 2017
+
+latitude:35.742655
+longitude:140.010545
+distance : 22187.421372
+GPS_target_angle : 274.111498
+compass_degree = 334.868201
+delta_angle:-60.756703
+delta_movement = 0.000010
+pid_output = -31
+Fri Aug  4 05:15:34 2017
+
+latitude:35.742655
+longitude:140.010545
+distance : 22187.421372
+GPS_target_angle : 274.111498
+compass_degree = 338.703126
+delta_angle:-64.591628
+delta_movement = 0.000010
+pid_output = -34
+Fri Aug  4 05:15:35 2017
+
+latitude:35.742655
+longitude:140.010545
+distance : 22187.421372
+GPS_target_angle : 274.111498
+compass_degree = 342.585241
+delta_angle:-68.473743
+delta_movement = 0.000010
+pid_output = -37
+Fri Aug  4 05:15:36 2017
+
+latitude:35.742655
+longitude:140.010543
+distance : 22187.241392
+GPS_target_angle : 274.111531
+compass_degree = 343.909723
+delta_angle:-69.798192
+delta_movement = 0.000012
+pid_output = -39
+Fri Aug  4 05:15:38 2017
+
+latitude:35.742655
+longitude:140.010543
+distance : 22187.241392
+GPS_target_angle : 274.111531
+compass_degree = 343.362462
+delta_angle:-69.250931
+delta_movement = 0.000012
+pid_output = -39
+Fri Aug  4 05:15:38 2017
+
+latitude:35.742655
+longitude:140.010543
+distance : 22187.241392
+GPS_target_angle : 274.111531
+WARNING compass lock
+LockCounter 0
+compass wiringPiI2CSetup success
+compass reinitialized
+
+compass_degree = 333.835566
+delta_angle:-59.724034
+delta_movement = 0.000010
+pid_output = -36
+Fri Aug  4 05:15:39 2017
+
+latitude:35.742655
+longitude:140.010543
+distance : 22187.241392
+GPS_target_angle : 274.111531
+compass_degree = 331.608741
+delta_angle:-57.497209
+delta_movement = 0.000008
+pid_output = -36
+Fri Aug  4 05:15:40 2017
+
+latitude:35.742655
+longitude:140.010543
+distance : 22187.241392
+GPS_target_angle : 274.111531
+compass_degree = 326.290990
+delta_angle:-52.179458
+delta_movement = 0.000004
+pid_output = -34
+Fri Aug  4 05:15:42 2017
+
+latitude:35.742655
+longitude:140.010543
+distance : 22187.241392
+GPS_target_angle : 274.111531
+compass_degree = 327.993129
+delta_angle:-53.881597
+delta_movement = 0.000004
+pid_output = -35
+Fri Aug  4 05:15:42 2017
+
+latitude:35.742655
+longitude:140.010543
+distance : 22187.241392
+GPS_target_angle : 274.111531
+compass_degree = 325.490997
+delta_angle:-51.379466
+delta_movement = 0.000002
+pid_output = -35
+integral finish
+MOTOR stop
+MOTOR forward
+
+Fri Aug  4 05:15:45 2017
+
+latitude:35.742655
+longitude:140.010543
+distance : 22187.241392
+GPS_target_angle : 274.111531
+compass_degree = 329.630887
+delta_angle:-55.519355
+delta_movement = 0.000002
+pid_output = -28
+Fri Aug  4 05:15:45 2017
+
+latitude:35.742655
+longitude:140.010543
+distance : 22187.241392
+GPS_target_angle : 274.111531
+compass_degree = 330.716872
+delta_angle:-56.605340
+delta_movement = 0.000002
+pid_output = -28
+Fri Aug  4 05:15:45 2017
+
+latitude:35.742655
+longitude:140.010543
+distance : 22187.241392
+GPS_target_angle : 274.111531
+compass_degree = 327.782002
+delta_angle:-53.670471
+delta_movement = 0.000000
+STACK JUDGEMENT
+get stacked
+MOTOR back
+MOTOR back
+MOTOR back
+MOTOR stop
+MOTOR right
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR stop
+MOTOR forward
+pid_output = -34
+Fri Aug  4 05:15:54 2017
+
+latitude:35.742655
+longitude:140.010543
+distance : 22187.241392
+GPS_target_angle : 274.111531
+compass_degree = 158.732353
+delta_angle:115.379178
+delta_movement = 0.000000
+STACK JUDGEMENT
+get stacked
+MOTOR back
+MOTOR back
+MOTOR back
+MOTOR stop
+MOTOR right
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR stop
+MOTOR forward
+pid_output = 66
+Fri Aug  4 05:16:03 2017
+
+latitude:35.742655
+longitude:140.010543
+distance : 22187.241392
+GPS_target_angle : 274.111531
+compass_degree = 119.283843
+delta_angle:154.827688
+delta_movement = 0.000000
+STACK JUDGEMENT
+get stacked
+MOTOR back
+MOTOR back
+MOTOR back
+MOTOR stop
+MOTOR right
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR forward
+MOTOR stop
+MOTOR forward
+pid_output = 100
+Fri Aug  4 05:16:12 2017
+
+latitude:35.742655
+longitude:140.010545
+distance : 22187.421372
+GPS_target_angle : 274.111498
+compass_degree = 141.481691
+delta_angle:132.629807
+delta_movement = 0.000002
+pid_output = 100
+Fri Aug  4 05:16:13 2017
+
+latitude:35.742655
+longitude:140.010545
+distance : 22187.421372
+GPS_target_angle : 274.111498
+compass_degree = 141.619770
+delta_angle:132.491728
+delta_movement = 0.000002
+pid_output = 100
+Fri Aug  4 05:16:14 2017
+
+latitude:35.742655
+longitude:140.010545
+distance : 22187.421372
+GPS_target_angle : 274.111498
+compass_degree = 141.067212
+delta_angle:133.044286
+delta_movement = 0.000002
+pid_output = 100
+Fri Aug  4 05:16:15 2017
+
+latitude:35.742655
+longitude:140.010545
+distance : 22187.421372
+GPS_target_angle : 274.111498
+compass_degree = 141.157543
+delta_angle:132.953955
+delta_movement = 0.000002
+pid_output = 100
+Fri Aug  4 05:16:16 2017
+
+latitude:35.742655
+longitude:140.010545
+distance : 22187.421372
+GPS_target_angle : 274.111498
+compass_degree = 141.157543
+delta_angle:132.953955
+delta_movement = 0.000002
+pid_output = 100
+Fri Aug  4 05:16:18 2017
+
+latitude:35.742655
+longitude:140.010545
+distance : 22187.421372
+GPS_target_angle : 274.111498
+compass_degree = 141.594836
+delta_angle:132.516662
+delta_movement = 0.000002
+pid_output = 100
+Fri Aug  4 05:16:18 2017
+
+latitude:35.742655
+longitude:140.010545
+distance : 22187.421372
+GPS_target_angle : 274.111498
+compass_degree = 141.157543
+delta_angle:132.953955
+delta_movement = 0.000002
+pid_output = 100
+integral finish
+MOTOR stop
+^CSIGIN Handle
+wiringPisetup success
+Executing Sigint Handle
+MOTOR stop
