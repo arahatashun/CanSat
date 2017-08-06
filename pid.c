@@ -40,10 +40,13 @@ int compute_output(Pid* pid_comp)
 
 	pid_comp->prev_error = error;//prev_errorを更新
 	pid_comp->lastTime = now;//最後の時刻を更新
-	pid_comp->output = (int)(pid_comp->Kp * error +//propotional
-	                         pid_comp->Ki * pid_comp->integral+//integral
-	                         pid_comp->Kd * pid_comp->differential);//differential
-
+	double Kp_output = pid_comp->Kp * error;
+	double Ki_output = pid_comp->Ki * pid_comp->integral;
+	double Kd_output = pid_comp->Kd * pid_comp->differential;
+	printf("Kp_output:%f\n",Kp_output);
+	printf("Ki_output:%f\n",Ki_output);
+	printf("Kd_output:%f\n",Kd_output);
+	pid_comp->output = (int)(Kp_output+Ki_output+Kd_output);
 	pid_limiter(pid_comp);
 	return 0;
 }
