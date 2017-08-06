@@ -10,6 +10,7 @@
 #include "mitibiki.h"
 #include "ring_buffer.h"
 #include "pid.h"
+#include "acclgyro.h"
 
 static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
@@ -87,7 +88,7 @@ int stackJudge(Queue *latring,Queue *lonring)
 	double deltaMovement = 0;
 	deltaMovement=fabs(getLast(latring)-dequeue(latring))+fabs(getLast(lonring)-dequeue(lonring));
 	printf("deltaMovement = %f\n", deltaMovement);
-	if(delta_movement<STACK_THRESHOLD)
+	if(deltaMovement<STACK_THRESHOLD)
 	{
 		printf("STACK JUDGEMENT\n");
 		motor_escape();
@@ -161,6 +162,6 @@ int main()
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
 	while(Go2Goal(&DistAngle_data,gps_latring,gps_lonring) != -2);
 	queue_delete(gps_lonring);
-	queue_delete(gps_latring);
+	queue_delete(gps_latring);
 	return 0;
 }
