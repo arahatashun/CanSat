@@ -35,16 +35,6 @@ void handler(int signum)
 	exit(1);
 }
 
-
-int DistAngle_initialize(DistAngle *data)
-{
-	data->angle_by_compass = 0;
-	data->angle2goal = 0;
-	data->dist2goal = 100000;
-	data->delta_angle = 0;
-	return 0;
-}
-
 int printTime()
 {
 	time_t timer;
@@ -52,7 +42,6 @@ int printTime()
 	printf("%s\n", ctime(&timer));
 	return 0;
 }
-
 
 //DistAngleの更新
 int updateDistAngle(DistAngle *data,Queue* latring,Queue* lonring)
@@ -167,8 +156,7 @@ int main()
 	pwm_initialize();
 	gps_init();
 	compass_initialize();
-	DistAngle DistAngle_data;
-	DistAngle_initialize(&DistAngle_data);
+	DistAngle DistAngle_data = {0,0,100000,0};
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
 	while(Go2Goal(&DistAngle_data,gps_latring,gps_lonring) != -2);
