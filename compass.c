@@ -92,27 +92,27 @@ int compass_initialize()
 	return 0;
 }
 
-"""
-//地磁気ロック対策のmode_change関数(error時のみ表示)
-static int compass_mode_change()
-{
-	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_SINGLE);
-	if(WPI2CWReg8 == -1)
-	{
-		printf("compass write error register MODE_SINGLE\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		printf("errno=%d: %s\n", errno, strerror(errno));
-	}
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
-	if(WPI2CWReg8 == -1)
-	{
-		printf("compass write error register MODE_CONTINUOUS\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		printf("errno=%d: %s\n", errno, strerror(errno));
-	}
-	return 0;
-}
-"""
+/*
+   //地磁気ロック対策のmode_change関数(error時のみ表示)
+   static int compass_mode_change()
+   {
+        int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_SINGLE);
+        if(WPI2CWReg8 == -1)
+        {
+                printf("compass write error register MODE_SINGLE\n");
+                printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+                printf("errno=%d: %s\n", errno, strerror(errno));
+        }
+        WPI2CWReg8 = wiringPiI2CWriteReg8(fd,MODE_REG,MODE_CONTINUOUS);
+        if(WPI2CWReg8 == -1)
+        {
+                printf("compass write error register MODE_CONTINUOUS\n");
+                printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+                printf("errno=%d: %s\n", errno, strerror(errno));
+        }
+        return 0;
+   }
+ */
 
 static short read_out(int file,int msb_reg, int lsb_reg)
 {
