@@ -24,27 +24,23 @@ int main (void)
 	time_t lastTime;
 	time(&lastTime);
 	pwm_initialize();
+	Camera camera;
 	while(lastTime-startTime<TIME_LIMIT)
 	{
 		printf("lastTime - startTime %d\n",lastTime - startTime);
 		time(&lastTime);
-		cv::Mat red = Mred();
-		double count = countArea(red);
+		camera.takePhoto();
+	  camera.binarize();
+	  double count = camera.countArea();
 		if(count < EXIST_THRESHOLD)
 		{
 			//回転するだけ
 			motor_right(ROTATE_POWER);
-			delay(ROTATE_MILLISECONDS);
-			motor_stop();
-			delay(10);
 		}
 		else
 		{
 			//見つけれたら前進
 			motor_forward(100);
-			delay(400);
-			motor_stop();
-			delay(10);
 		}
 	}
 	printf("TIME IS OUT\n");
