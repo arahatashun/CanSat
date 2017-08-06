@@ -63,25 +63,27 @@ int acclGyro_initialize(void)
 	return 0;
 }
 
-//ロック対策用の関数
-static int acclGyro_mode_change()
-{
-	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,POWER_MANAGEMENT_REG,MODE_SINGLE);
-	if(WPI2CWReg8 == -1)
-	{
-		printf("acclGyro write error register POWER_MANAGEMENT_REG\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		printf("errno=%d: %s\n", errno, strerror(errno));
-	}
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,POWER_MANAGEMENT_REG,MODE_CONTINUOUS);
-	if(WPI2CWReg8 == -1)
-	{
-		printf("acclGyro write error register POWER_MANAGEMENT_REG\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		printf("errno=%d: %s\n", errno, strerror(errno));
-	}
-	return 0;
-}
+/*
+   //ロック対策用の関数
+   static int acclGyro_mode_change()
+   {
+        int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,POWER_MANAGEMENT_REG,MODE_SINGLE);
+        if(WPI2CWReg8 == -1)
+        {
+                printf("acclGyro write error register POWER_MANAGEMENT_REG\n");
+                printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+                printf("errno=%d: %s\n", errno, strerror(errno));
+        }
+        WPI2CWReg8 = wiringPiI2CWriteReg8(fd,POWER_MANAGEMENT_REG,MODE_CONTINUOUS);
+        if(WPI2CWReg8 == -1)
+        {
+                printf("acclGyro write error register POWER_MANAGEMENT_REG\n");
+                printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+                printf("errno=%d: %s\n", errno, strerror(errno));
+        }
+        return 0;
+   }
+ */
 
 static short read_out(int addr)  //レジスタの値を読み取る
 {
