@@ -102,11 +102,13 @@ int isLight()
 	if(lux>LIGHT_THRESHOLD)
 	{
 		printf("light:%d\n",lux);
+		printf("isLight True\n");
 		return 1;
 	}
 	else
 	{
 		printf("light:%d\n",lux);
+		printf("isLight False\n");
 		return 0;
 	}
 }
