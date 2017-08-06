@@ -55,89 +55,110 @@ int printTime()
 	return 0;
 }
 
-//地磁気の計測及びとそのオフセット値からマシンの向いている角度を計算
-int cal_compass_theta(DistAngle *data)
-{
-	data->angle_by_compass = readCompassAngle();                //偏角を調整
-	printf("compass_degree = %f\n",data->angle_by_compass);
-	return 0;
-}
 
-//地磁気の取得及びgpsと地磁気の計算
-int calc_all(loc_t coord,DistAngle *data,Queue* latring,Queue* lonring)
+//DistAngleの更新
+int updateDistAngle(DistAngle *data,Queue* latring,Queue* lonring)
 {
-	enqueue(latring,coord.latitude); //緯度を格納
-	enqueue(lonring,coord.longitude); //経度を格納
-	printf("latitude:%f\nlongitude:%f\n", coord.latitude, coord.longitude);
-	data->dist2goal = dist_on_sphere(coord.latitude,coord.longitude);
-	data->angle2goal = calc_target_angle(coord.latitude,coord.longitude);
-	cal_compass_theta(data);
+	data->dist2goal = dist_on_sphere(getLast(latring),getLast(lonring));
+	data->angle2goal = calc_target_angle(getLast(latring),getLast(lonring));
+	data->angle_by_compass = readCompassAngle();
 	data->delta_angle = cal_delta_angle(data->angle_by_compass,data->angle2goal);
 	printf("delta_angle:%f\n",data->delta_angle);
 	return 0;
 }
 
-//NOTE gps０問題対策
-//gps情報をring_bufferに入れずに地磁気によるdataの更新のみ
-int handle_gps_zero(DistAngle *data)
+//gps０問題対策
+int handleGpsZero(loc_t coord,Queue* latring,Queue* lonring)
 {
 	printf("GPS return 0 value\n");
-	printf("previous GPS_angle=%f\n",data->angle2goal);
-	cal_compass_theta(data); //地磁気だけ取っておく
-	data->delta_angle = cal_delta_angle(data->angle_by_compass,data->angle2goal);//GPS_angleは元の値を使用
-	printf("delta_angle:%f\n",data->delta_angle);
+	coord.latitude = getLast(latring);
+	coord.longitude = getLast(lonring);
+	//RING BUFFERの更新はしない(stack判定誤作動のため)
+	return 0;
+}
+
+int updateCoord(Queue* latring,Queue* lonring)
+{
+	loc_t coord;
+	gps_location(&coord);//gpsデータ取得
+	if((int)coord.latitude == 0)
+	{
+		handleGpsZero(coord,latring,lonring);
+	}
+	else
+	{
+	enqueue(latring,coord.latitude); //緯度を格納
+	enqueue(lonring,coord.longitude); //経度を格納
+	printf("latitude:%f\nlongitude:%f\n", coord.latitude, coord.longitude);
+	}
 	return 0;
 }
 
 //スタック判定をして抜け出す処理まで
-int stack(Queue *latring,Queue *lonring)
+int stackJudge(Queue *latring,Queue *lonring)
 {
-	double delta_movement = 0;
-	delta_movement = fabs(getLast(latring)-dequeue(latring)) +
-	                 fabs(getLast(lonring)-dequeue(lonring));
-	printf("delta_movement = %f\n", delta_movement);
+	double deltaMovement = 0;
+	deltaMovement=fabs(getLast(latring)-dequeue(latring))+fabs(getLast(lonring)-dequeue(lonring));
+	printf("deltaMovement = %f\n", deltaMovement);
 	if(delta_movement<STACK_THRESHOLD)
 	{
 		printf("STACK JUDGEMENT\n");
 		motor_escape();
+<<<<<<< HEAD
 		gps_off();
 		gps_init();
+=======
+		//gps_off();
+		//gps_init();
+>>>>>>> origin/cg
 	}
 	return 0;
 }
 
 //gpsと地磁気のデータを一回分更新し、リングバッファに格納
-int update_angle(DistAngle *data,Queue* latring,Queue* lonring)
+int updateAll(DistAngle* data,Queue* latring,Queue* lonring)
 {
 	printTime();
-	loc_t coord;
-	gps_location(&coord);//gpsデータ取得
-	if(coord.latitude != 0.0)
+	updateCoord(latring,lonring);
+	updateDistAngle(data,latring,lonring);
+	//GPS_RING_LENまでリングバッファが溜まった時から随時動的にstack 判定
+	if(queue_length(latring)==GPS_RING_LEN)
 	{
-		calc_all(coord,data,latring,lonring);
-	}
-	else//例外処理
-	{
+<<<<<<< HEAD
 		handle_gps_zero(data);
 	}
 	if(queue_length(latring)==GPS_RING_LEN)//stack 判定
 	{
 		stack(latring,lonring);
 		
+=======
+		stackJudge(latring,lonring);
+>>>>>>> origin/cg
 	}
 	return 0;
 }
 
 //goal判定で-2を返してそれ以外は0
-int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
+int Go2Goal(DistAngle *data,Queue *latring,Queue *lonring)
 {
 	Pid pid_data;
-	int i;
 	pid_initialize(&pid_data);
 	pid_const_initialize(&pid_data,SETPOINT,KP_VALUE,KI_VALUE,KD_VALUE);
+	int i;
 	for(i=0; i<PID_LEN; i++)
 	{
+<<<<<<< HEAD
 		update_angle(data,latring,lonring);
+=======
+		updateAll(data,latring,lonring);
+		if(isReverse())
+		{
+			motor_stop();
+			delay(1000);
+			motor_forward(100);
+			delay(2000);
+		}
+>>>>>>> origin/cg
 		if(data->dist2goal>GOAL_THRESHOLD)
 		{
 			pid_data.input = -(data->delta_angle);
@@ -154,12 +175,17 @@ int decide_route(DistAngle *data,Queue *latring,Queue *lonring)
 			return -2;        //ゴールに着いた
 		}
 	}
+<<<<<<< HEAD
 	printf("integral finish\n");
 	motor_stop();
 	delay(1000);
 	motor_forward(100);
 	delay(1000);
 	printf("\n"); //１つのシーケンスの終わり
+=======
+	printf("PID integral finish\n");
+	printf("\n");  //１つのシーケンスの終わり
+>>>>>>> origin/cg
 	return 0;
 }
 
@@ -174,6 +200,8 @@ int main()
 	DistAngle_initialize(&DistAngle_data);
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
-	while(decide_route(&DistAngle_data,gps_latring,gps_lonring) != -2) ;
+	while(Go2Goal(&DistAngle_data,gps_latring,gps_lonring) != -2);
+	queue_delete(gps_lonring);
+	queue_delete(gps_latring);
 	return 0;
 }

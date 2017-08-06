@@ -40,6 +40,11 @@ int is_full(Queue *que)
 //Queueの最後に追加した値を返すだけ
 double getLast(Queue *que)
 {
+	if (is_empty(que))
+	{
+	printf("queue is empty\n");
+	return 0;
+	}
 	return que->buff[que->rear-1];
 }
 

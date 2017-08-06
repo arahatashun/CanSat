@@ -233,7 +233,7 @@ int Gyro_read(Gyro* data)
 	return 0;
 }
 
-//if reverse,return -1
+//if reverse,return 1
 int isReverse(void)
 {
 	Accl data;
@@ -241,7 +241,7 @@ int isReverse(void)
 	if(data.acclZ_scaled < 0)
 	{
 		printf("G:%f z_posture:reverse\n",data.acclZ_scaled);
-		return -1;
+		return 1;
 	}
 	else
 	{
