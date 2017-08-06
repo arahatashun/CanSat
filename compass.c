@@ -92,7 +92,7 @@ int compass_initialize()
 	return 0;
 }
 
-
+"""
 //地磁気ロック対策のmode_change関数(error時のみ表示)
 static int compass_mode_change()
 {
@@ -112,7 +112,7 @@ static int compass_mode_change()
 	}
 	return 0;
 }
-
+"""
 
 static short read_out(int file,int msb_reg, int lsb_reg)
 {
@@ -154,6 +154,7 @@ static int compassReadRaw(Raw* data)
 	qsort(data->xList,10, sizeof(short), sCmp);
 	qsort(data->yList,10, sizeof(short), sCmp);
 	//qsort(zList,10, sizeof(short), sCmp);
+	return 0;
 }
 
 //地磁気が-1もしくは任意の値にLockなった時に使う
