@@ -22,6 +22,7 @@ static const int GYROZ_REG = 0x47;
 //取得した加速度値を分解能で割って加速度(G)に変換する
 static const double CONVERT2G = 16384.0;
 static const double CONVERT2DEGREES = 131.0;
+static const double REVERSE_THRESHOLD = 0;//TODO 調整
 static int fd = 0;
 
 //accl raw data格納
@@ -238,7 +239,7 @@ int isReverse(void)
 {
 	Accl data;
 	Accl_read(&data);
-	if(data.acclZ_scaled < 0)
+	if(data.acclZ_scaled < REVERSE_THRESHOLD)
 	{
 		printf("G:%f z_posture:reverse\n",data.acclZ_scaled);
 		return 1;

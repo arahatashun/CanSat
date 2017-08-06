@@ -104,13 +104,8 @@ int stackJudge(Queue *latring,Queue *lonring)
 	{
 		printf("STACK JUDGEMENT\n");
 		motor_escape();
-<<<<<<< HEAD
-		gps_off();
-		gps_init();
-=======
 		//gps_off();
 		//gps_init();
->>>>>>> origin/cg
 	}
 	return 0;
 }
@@ -124,16 +119,7 @@ int updateAll(DistAngle* data,Queue* latring,Queue* lonring)
 	//GPS_RING_LENまでリングバッファが溜まった時から随時動的にstack 判定
 	if(queue_length(latring)==GPS_RING_LEN)
 	{
-<<<<<<< HEAD
-		handle_gps_zero(data);
-	}
-	if(queue_length(latring)==GPS_RING_LEN)//stack 判定
-	{
-		stack(latring,lonring);
-		
-=======
 		stackJudge(latring,lonring);
->>>>>>> origin/cg
 	}
 	return 0;
 }
@@ -147,9 +133,6 @@ int Go2Goal(DistAngle *data,Queue *latring,Queue *lonring)
 	int i;
 	for(i=0; i<PID_LEN; i++)
 	{
-<<<<<<< HEAD
-		update_angle(data,latring,lonring);
-=======
 		updateAll(data,latring,lonring);
 		if(isReverse())
 		{
@@ -158,7 +141,6 @@ int Go2Goal(DistAngle *data,Queue *latring,Queue *lonring)
 			motor_forward(100);
 			delay(2000);
 		}
->>>>>>> origin/cg
 		if(data->dist2goal>GOAL_THRESHOLD)
 		{
 			pid_data.input = -(data->delta_angle);
@@ -175,17 +157,8 @@ int Go2Goal(DistAngle *data,Queue *latring,Queue *lonring)
 			return -2;        //ゴールに着いた
 		}
 	}
-<<<<<<< HEAD
-	printf("integral finish\n");
-	motor_stop();
-	delay(1000);
-	motor_forward(100);
-	delay(1000);
-	printf("\n"); //１つのシーケンスの終わり
-=======
 	printf("PID integral finish\n");
 	printf("\n");  //１つのシーケンスの終わり
->>>>>>> origin/cg
 	return 0;
 }
 
