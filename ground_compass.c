@@ -71,19 +71,19 @@ int updateCoord(Queue* latring,Queue* lonring)
 	gps_location(&coord);//gpsデータ取得
 	if(coord.latitude == 0.0)
 	{
-		handleGpsZero(coord,latring,lonring);
+		handleGpsZero(coord,latring,lonring);
 	}
 	else
 	{
-	enqueue(latring,coord.latitude); //緯度を格納
-	enqueue(lonring,coord.longitude); //経度を格納
-	printf("latitude:%f\nlongitude:%f\n", coord.latitude, coord.longitude);
+		enqueue(latring,coord.latitude); //緯度を格納
+		enqueue(lonring,coord.longitude); //経度を格納
+		printf("latitude:%f\nlongitude:%f\n", coord.latitude, coord.longitude);
 	}
 	return 0;
 }
 
 //スタック判定をして抜け出す処理まで
-int stackJudge(Queue *latring,Queue *lonring)
+int stackJudge(Queue* latring,Queue* lonring)
 {
 	double deltaMovement = 0;
 	deltaMovement=fabs(getLast(latring)-dequeue(latring))+fabs(getLast(lonring)-dequeue(lonring));
@@ -160,7 +160,7 @@ int main()
 	DistAngle DistAngle_data = {0,0,100000,0};
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
-	while(Go2Goal(&DistAngle_data,gps_latring,gps_lonring) != -2);
+	while(Go2Goal(&DistAngle_data,gps_latring,gps_lonring) != -2) ;
 	queue_delete(gps_lonring);
 	queue_delete(gps_latring);
 	return 0;
