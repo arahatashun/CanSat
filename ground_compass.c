@@ -20,14 +20,12 @@ static const double KI_VALUE = 0.00001625;
 static const double KD_VALUE = 0;
 static const int PID_LEN = 12;
 
-
 typedef struct dist_and_angle {
 	double angle_by_compass;//地磁気による向き
 	double angle2goal;//gpsによるゴールまでの角度
 	double dist2goal;
 	double delta_angle;
 }DistAngle;
-
 
 //シグナルハンドラ
 void handler(int signum)
@@ -81,7 +79,7 @@ int updateCoord(Queue* latring,Queue* lonring)
 {
 	loc_t coord;
 	gps_location(&coord);//gpsデータ取得
-	if((int)coord.latitude == 0)
+	if(coord.latitude == 0.0)
 	{
 		handleGpsZero(coord,latring,lonring);
 	}
@@ -125,7 +123,7 @@ int updateAll(DistAngle* data,Queue* latring,Queue* lonring)
 }
 
 //goal判定で-2を返してそれ以外は0
-int Go2Goal(DistAngle *data,Queue *latring,Queue *lonring)
+int Go2Goal(DistAngle* data,Queue* latring,Queue* lonring)
 {
 	Pid pid_data;
 	pid_initialize(&pid_data);
