@@ -133,7 +133,7 @@ int motor_escape(double angle_to_rotate)
 	motor_stop();
 	delay(3000);
 	double delta_angle = 180;
-	while(fabs(delta_angle) < 20)
+	while(fabs(delta_angle) < 10)
 	{
 		compass_angle =readCompassAngle();
 		printf("compass_angle: %f\n", compass_angle);
