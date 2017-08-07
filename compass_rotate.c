@@ -18,6 +18,6 @@ int main()
 	pwm_initialize();
 	while(1)
 	{
-		motor_escape(90);
+		motor_rotate_compass(90);
 	}
 }
