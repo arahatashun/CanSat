@@ -1,9 +1,8 @@
 #include <stdio.h>
-#include <math.h>
 #include <signal.h>
 #include <wiringPi.h>
 #include "motor.h"
-#include "acclgyro.h"
+#include "compass.h"
 
 //シグナルハンドラ
 void handler(int signum)
@@ -17,10 +16,8 @@ int main()
 {
 	signal(SIGINT, handler);
 	pwm_initialize();
-	acclGyro_initialize();
 	while(1)
 	{
-		isReverse();
-		delay(100);
+		motor_escape(90);
 	}
 }

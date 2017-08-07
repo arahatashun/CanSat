@@ -3,6 +3,7 @@
 #include <softPwm.h>
 #include "motor.h"
 #include "compass.h"
+#include "mitibiki.h"
 
 static const int LEFT_MOTOR1 = 23;//GPIO23
 static const int LEFT_MOTOR2 = 24;//GPIO24
@@ -125,16 +126,24 @@ int motor_slalom(int delta_pwm)
 	return 0;
 }
 
-int motor_escape(double angle_to_rotate) //delayは適当
+int motor_escape(double angle_to_rotate)
 {
 	double compass_angle = 0;
 	printf("get stacked\n");
-	compass_angle =readCompassAngle();
-	printf("compass_angle: %f\n", compass_angle);
-	double target_angle = cal_deviated_angle(0, compass_angle + angle_to_rotate);
 	motor_stop();
 	delay(3000);
-
+	double delta_angle = 180;
+	while(fabs(delta_angle) < 20)
+	{
+		compass_angle =readCompassAngle();
+		printf("compass_angle: %f\n", compass_angle);
+		double target_angle = cal_deviated_angle(0, compass_angle + angle_to_rotate);
+		printf("target_angle: %f\n", target_angle);
+		double delta_angle= cal_delta_angle(compass_angle,target_angle);
+		printf("delta_angle: %f\n", delta_angle);
+		motorslalom(delta_angle/180*100);
+		delay(200);
+	}
 
 	motor_stop();
 	delay(100000);
