@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <wiringPi.h>
 #include <softPwm.h>
+#include <math.h>
 #include "motor.h"
 #include "compass.h"
 #include "mitibiki.h"
