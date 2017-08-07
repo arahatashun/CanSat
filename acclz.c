@@ -12,7 +12,7 @@ int main()
 {
 	signal(SIGINT, handler);
 	pwm_initialize();
-	acclGyro_initialize(void);
+	acclGyro_initialize();
 	while(1)
 	{
 		is_Reverse();
