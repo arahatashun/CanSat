@@ -127,7 +127,7 @@ int motor_slalom(int delta_pwm)
 	return 0;
 }
 
-int motor_escape(double angle_to_rotate)
+int motor_rotate_compass(double angle_to_rotate)
 {
 	printf("get stacked\n");
 	motor_stop();
@@ -154,5 +154,12 @@ int motor_escape(double angle_to_rotate)
 
 	motor_stop();
 	delay(100000);
+	return 0;
+}
+
+int motor_escape()
+{
+	motor_rotate_compass(90);
+	motor_rotate_compass(-90);
 	return 0;
 }
