@@ -6,7 +6,13 @@
 #include "motor.h"
 #include "acclgyro.h"
 
-
+//シグナルハンドラ
+void handler(int signum)
+{
+	motor_stop();
+	delay(100);
+	exit(1);
+}
 
 int main()
 {
