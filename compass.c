@@ -283,8 +283,8 @@ int read_for_calib()
 	Cmps data;
 	compass_value_initialize(&data);
 	compass_read(&data);
-	printf("%f\n",data->x_value);
-	printf("%f\n",data->y_value);
+	printf("%f\n",data.x_value);
+	printf("%f\n",data.y_value);
 	return 0;
 }
 
