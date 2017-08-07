@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <signal.h>
 #include <wiringPi.h>
+#include <math.h>
+#include <stdlib.h>
 #include "motor.h"
 #include "compass.h"
 
