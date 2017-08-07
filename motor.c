@@ -132,10 +132,11 @@ int motor_rotate_compass(double angle_to_rotate)
 	printf("get stacked\n");
 	motor_stop();
 	delay(3000);
+	int c = 0;
 	double delta_angle = 180;
 	double compass_angle_fixed =readCompassAngle();
 	double target_angle = cal_deviated_angle(0, compass_angle_fixed + angle_to_rotate);
-	while(fabs(delta_angle) > 30)
+	while(fabs(delta_angle) > 30 || c <10)
 	{
 		double compass_angle =readCompassAngle();
 		printf("compass_angle: %f\n", compass_angle);
@@ -150,6 +151,11 @@ int motor_rotate_compass(double angle_to_rotate)
 			motor_left(100);
 		}
 		delay(100);
+		c++;
+	}
+	if(c >= 10)
+	{
+		printf("could not escape\n");
 	}
 
 	motor_stop();
