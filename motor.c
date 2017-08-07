@@ -15,7 +15,7 @@ static const int INITIAL_PWM_VAL = 0;
 static const int ZERO_PWM_VAL = 0;
 static const int MAX_PWM_VAL = 100;
 static const int ESCAPE_TURN_MILLISECONDS = 1250;
-
+static const int STACK_COUNTER = 50;
 int pwm_initialize()
 {
 	//wiring Pi initialize
@@ -130,15 +130,12 @@ int motor_slalom(int delta_pwm)
 int motor_rotate_compass(double angle_to_rotate)
 {
 	printf("get stacked\n");
-	motor_stop();
-	delay(3000);
-	int c = 0;
+	int c = 0;  //行きたい方角に回転できなくても無限ループにならないようにカウンター用意
 	double delta_angle = 180;
 	double compass_angle_fixed =readCompassAngle();
 	double target_angle = cal_deviated_angle(0, compass_angle_fixed + angle_to_rotate);
-	while(fabs(delta_angle) > 30 || c <10)
+	while(fabs(delta_angle) > 30 || c <STACK_COUNTER)
 	{
-		printf("%d\n", c);
 		double compass_angle =readCompassAngle();
 		printf("compass_angle: %f\n", compass_angle);
 		delta_angle= cal_delta_angle(compass_angle,target_angle);
@@ -154,7 +151,7 @@ int motor_rotate_compass(double angle_to_rotate)
 		delay(100);
 		c++;
 	}
-	if(c >= 10)
+	if(c >= STACK_COUNTER)
 	{
 		printf("could not escape\n");
 	}
