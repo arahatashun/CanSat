@@ -131,6 +131,12 @@ static int releaseSeq(Sequence *seq)
 	int isLightCount = 0;
 	while(!isTimeout(TIMEOUT_LUX,*seq))
 	{
+		loc_t lflight;
+		gps_location(&lflight);
+		printf("latitude:%f longitude:%f altitude:%f\n",
+		       lflight.latitude,lflight.longitude,lflight.altitude);
+		xbeePrintf("latitude:%f longitude:%f altitude:%f\n",
+		           lflight.latitude,lflight.longitude,lflight.altitude);
 		if(isLight())
 		{
 			isLightCount++;
