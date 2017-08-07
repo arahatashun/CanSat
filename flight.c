@@ -139,7 +139,7 @@ static int releaseSeq(Sequence *seq)
 		}
 		else
 		{
-			xbeePrintf("isLight False\n")
+			xbeePrintf("isLight False\n");
 			isLightCount = 0;
 		}
 		if(isLightCount==10)
