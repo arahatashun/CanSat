@@ -112,7 +112,7 @@ double queue_diff(Queue *que)
 	for(i=0; i<n; i++)
 	{
 		list[i] = (short)que->buff[i];
-		printf(list[i]);
+		printf("%d\n",list[i]);
 	}
 	qsort(list,n,sizeof(short),sCmp);
 	return list[n-1] - list[0];
