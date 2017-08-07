@@ -128,14 +128,13 @@ int motor_slalom(int delta_pwm)
 
 int motor_escape(double angle_to_rotate)
 {
-	double compass_angle = 0;
 	printf("get stacked\n");
 	motor_stop();
 	delay(3000);
 	double delta_angle = 180;
 	while(fabs(delta_angle) < 10)
 	{
-		compass_angle =readCompassAngle();
+		double compass_angle =readCompassAngle();
 		printf("compass_angle: %f\n", compass_angle);
 		double target_angle = cal_deviated_angle(0, compass_angle + angle_to_rotate);
 		printf("target_angle: %f\n", target_angle);
