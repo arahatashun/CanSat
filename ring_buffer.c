@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 #include "ring_buffer.h"
 
 /*
@@ -42,8 +43,8 @@ double getLast(Queue *que)
 {
 	if (is_empty(que))
 	{
-	printf("queue is empty\n");
-	return 0;
+		printf("queue is empty\n");
+		return 0;
 	}
 	return que->buff[que->rear-1];
 }
@@ -74,7 +75,8 @@ int is_empty(Queue *que)
 // データを取り出す
 double dequeue(Queue *que)
 {
-	if (is_empty(que)) {
+	if (is_empty(que))
+	{
 		printf("queue is empty\n");
 		return 0;
 	}
@@ -93,4 +95,25 @@ int queue_delete(Queue *que)
 	free(que->buff);
 	free(que);
 	return 0;
+}
+
+//short型用の比較関数
+static int sCmp (const void* p, const void* q)
+{
+	return *(short*)p - *(short*)q;
+}
+
+//キューの中身のmaxとminの差を計算
+double queue_diff(Queue *que)
+{
+	int i;
+	int n = que->size;
+	short list[n];
+	for(i=0; i<n; i++)
+	{
+		list[i] = (short)que->buff[i];
+		print(list[i]);
+	}
+	qsort(list,n,sizeof(short),sCmp);
+	return list[n-1] - list[0];
 }
