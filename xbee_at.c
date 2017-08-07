@@ -20,7 +20,7 @@ static void usb_init(void)
 
     if (usb_filestream == -1)
     {
-        printf("error\n");//TODO error handling...
+        printf("xbee setup error\n");//TODO error handling...
     }
 }
 
