@@ -21,7 +21,7 @@ int main()
 	acclGyro_initialize();
 	while(1)
 	{
-		is_Reverse();
+		isReverse();
 		delay(100);
 	}
 }
