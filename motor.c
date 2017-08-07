@@ -134,7 +134,7 @@ int motor_rotate_compass(double angle_to_rotate)
 	double delta_angle = 180;
 	double compass_angle_fixed =readCompassAngle();
 	double target_angle = cal_deviated_angle(0, compass_angle_fixed + angle_to_rotate);
-	while(fabs(delta_angle) > 30 || c <STACK_COUNTER)
+	while(fabs(delta_angle) > 30 && c <STACK_COUNTER)
 	{
 		double compass_angle =readCompassAngle();
 		delta_angle= cal_delta_angle(compass_angle,target_angle);
