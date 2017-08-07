@@ -31,7 +31,7 @@ int is_empty(Queue *que);
 
 int queue_delete(Queue *que);
 
-double queue_diff(Queue *que)
+double queue_diff(Queue *que);
 
 #ifdef __cplusplus
 }
