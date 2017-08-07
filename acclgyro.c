@@ -3,6 +3,7 @@
 #include <math.h>
 #include <errno.h>
 #include <stdint.h>
+#include <string.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include <assert.h>
