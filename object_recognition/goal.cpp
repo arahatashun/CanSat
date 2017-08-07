@@ -48,7 +48,7 @@ int main (void)
 			motor_right(ROTATE_POWER);
 			delay(ROTATE_MILLISECONDS);
 			motor_stop();
-			delay(150);
+			delay(300);
 		}
 		else
 		{
@@ -56,7 +56,7 @@ int main (void)
 			motor_forward(100);
 			delay(400);
 			motor_stop();
-			delay(150);
+			delay(300);
 		}
 	}
 	printf("TIME IS OUT\n");
