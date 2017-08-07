@@ -8,7 +8,7 @@
 #include "compass.h"
 #include "motor.h"
 
-static const int ANGLE_OF_DEVIATION = -7.2;
+static const double ANGLE_OF_DEVIATION = -7.2;
 static const int HMC5883L_ADDRESS = 0x1e; //I2C address
 static const int MODE_REG = 0x02;
 static const int MODE_CONTINUOUS = 0x00;
@@ -230,10 +230,10 @@ static int compass_read(Cmps* data)
 }
 
 //偏角を考慮を考慮して計算
-static double cal_deviated_angle(double theta_degree)
+static double cal_deviated_angle(double angle_of_deviation, double theta_degree)
 {
 	double true_theta = 0;
-	true_theta = theta_degree + ANGLE_OF_DEVIATION;
+	true_theta = theta_degree + angle_of_deviation;
 	if (true_theta > 360)
 	{
 		true_theta = true_theta - 360;
@@ -262,7 +262,7 @@ static double calc_compass_angle(Cmps data)
 	{
 		cal_theta = 270 - cal_theta;
 	}
-	return cal_deviated_angle(cal_theta);
+	return cal_deviated_angle(ANGLE_OF_DEVIATION, cal_theta);
 }
 
 //コンパスで測った角度を返す

@@ -2,6 +2,7 @@
 #include <wiringPi.h>
 #include <softPwm.h>
 #include "motor.h"
+#include ""
 
 static const int LEFT_MOTOR1 = 23;//GPIO23
 static const int LEFT_MOTOR2 = 24;//GPIO24
@@ -124,29 +125,18 @@ int motor_slalom(int delta_pwm)
 	return 0;
 }
 
-int motor_escape() //delayは適当
+int motor_escape(double angle_to_rotate) //delayは適当
 {
-	int i;
+	double compass_angle = 0;
 	printf("get stacked\n");
-	for(i=2; i<5; i++) //ひっくり返らないようにうまくバックしたい
-	{
-		motor_back(100-20*i);
-		delay(100);
-	}
+	compass_angle =readCompassAngle();
+	printf("compass_angle: %f\n", compass_angle);
+	double target_angle = cal_deviated_angle(0,compass_angle + angle_to_rotate);
 	motor_stop();
-	delay(200);
-	motor_right(100);
-	delay(ESCAPE_TURN_MILLISECONDS);
-	motor_forward(100);
 	delay(3000);
-	for(i=1; i<5; i++) //ひっくり帰らないようにうまく停止したい
-	{
-		motor_forward(100-20*i);
-		delay(200);
-	}
+
+
 	motor_stop();
-	delay(1000);
-	motor_forward(100);
-	delay(1000);
+	delay(100000);
 	return 0;
 }
