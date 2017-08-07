@@ -252,10 +252,3 @@ int isReverse(void)
 		return 0;
 	}
 }
-
-//XとYの加速度の大きさを計算
-static double calc_norm (Accl* data)
-{
-	return sqrt((data->acclX_scaled*data->acclX_scaled) +
-	            (data->acclY_scaled*data->acclY_scaled));
-}
