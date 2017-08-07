@@ -2,7 +2,7 @@
 #include <wiringPi.h>
 #include <softPwm.h>
 #include "motor.h"
-#include ""
+#include "compass.h"
 
 static const int LEFT_MOTOR1 = 23;//GPIO23
 static const int LEFT_MOTOR2 = 24;//GPIO24
@@ -131,7 +131,7 @@ int motor_escape(double angle_to_rotate) //delayは適当
 	printf("get stacked\n");
 	compass_angle =readCompassAngle();
 	printf("compass_angle: %f\n", compass_angle);
-	double target_angle = cal_deviated_angle(0,compass_angle + angle_to_rotate);
+	double target_angle = cal_deviated_angle(0, compass_angle + angle_to_rotate);
 	motor_stop();
 	delay(3000);
 
