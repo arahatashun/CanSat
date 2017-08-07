@@ -149,7 +149,7 @@ int motor_rotate_compass(double angle_to_rotate)
 		{
 			motor_left(100);
 		}
-		delay(200);
+		delay(100);
 	}
 
 	motor_stop();
