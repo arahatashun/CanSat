@@ -230,7 +230,7 @@ static int compass_read(Cmps* data)
 }
 
 //偏角を考慮を考慮して計算
-static double cal_deviated_angle(double angle_of_deviation, double theta_degree)
+double cal_deviated_angle(double angle_of_deviation, double theta_degree)
 {
 	double true_theta = 0;
 	true_theta = theta_degree + angle_of_deviation;
