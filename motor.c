@@ -141,7 +141,14 @@ int motor_escape(double angle_to_rotate)
 		printf("target_angle: %f\n", target_angle);
 		double delta_angle= cal_delta_angle(compass_angle,target_angle);
 		printf("delta_angle: %f\n", delta_angle);
-		motorslalom(delta_angle/180*100);
+		if(delta_angle>0)
+		{
+			motor_right(100);
+		}
+		else
+		{
+			motor_left(100);
+		}
 		delay(200);
 	}
 
