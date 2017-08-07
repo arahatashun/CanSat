@@ -22,7 +22,7 @@ gps:
 	gcc -o gps.out gps_test.c $(LIBS) -lgps -lm
 
 escape:
-	gcc -o escape.out escape.c ../motor.c $(LIBS)
+	gcc -o escape.out escape.c ../motor.c ../compass.c ../mitibiki.c $(LIBS)
 
 gyromotor:
 	gcc -o  gyromotor.out gyromotor.c ../motor.c  ../acclgyro.c ../pid.c $(LIBS) -lm
