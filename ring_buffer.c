@@ -97,7 +97,14 @@ int queue_delete(Queue *que)
 	return 0;
 }
 
-//short型用の比較関数
+//double型用の比較関数
+static int dCmp(const void *p, const void *q )
+{
+	if( *(double*)p > *(double*)q ) return 1;
+	if( *(double*)p < *(double*)q ) return -1;
+	return 0;
+}
+//double型用の比較関数
 static int sCmp (const void* p, const void* q)
 {
 	return *(short*)p - *(short*)q;
@@ -108,12 +115,12 @@ double queue_diff(Queue *que)
 {
 	int i;
 	int n = que->size;
-	short list[n];
+	double list[n];
 	for(i=0; i<n; i++)
 	{
-		list[i] = (short)que->buff[i];
+		list[i] = (double)que->buff[i];
 		printf("%d\n",list[i]);
 	}
-	qsort(list,n,sizeof(short),sCmp);
+	qsort(list,n,sizeof(double),dCmp);
 	return list[n-1] - list[0];
 }
