@@ -1,7 +1,7 @@
 LIBS =-lwiringPi
 
 motor:
-	gcc -o motor.out motor_test.c ../motor.c ../mitibiki.c ../compass.c $(LIBS)
+	gcc -o motor.out motor_test.c ../motor.c ../mitibiki.c ../compass.c $(LIBS) -lm
 
 gut:
 	gcc -o gut.out gut_test.c ../gut.c $(LIBS)
