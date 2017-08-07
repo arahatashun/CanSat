@@ -13,3 +13,5 @@ scp pi@raspberrypi.local:/home/pi/Pictures/*.jpg .
 ```shell
 sudo modprobe bcm2835-v4l2
 ```
+## 起動時にカーネルモジュールの組み込みを行うために
+/etc/modulesにbcm2835-v4l2を追加する
