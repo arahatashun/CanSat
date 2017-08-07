@@ -21,7 +21,7 @@ int main()
 	acclGyro_initialize();
 	while(1)
 	{
-		motor_foward();
+		motor_foward(100);
 		isReverse();
 		delay(100);
 	}
