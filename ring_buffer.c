@@ -104,11 +104,6 @@ static int dCmp(const void *p, const void *q )
 	if( *(double*)p < *(double*)q ) return -1;
 	return 0;
 }
-//double型用の比較関数
-static int sCmp (const void* p, const void* q)
-{
-	return *(short*)p - *(short*)q;
-}
 
 //キューの中身のmaxとminの差を計算
 double queue_diff(Queue *que)
