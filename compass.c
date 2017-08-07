@@ -277,29 +277,16 @@ double readCompassAngle(void)
 	return angle;
 }
 
-/*
-   //6軸を用いた方角の計算
-   double cal_deg_acclcompass(double x, double y,double z,
-                           double sin_phi, double sin_psi,
-                           double cos_phi, double cos_psi)
-   {
-        double y1 = z*sin_phi;;//y1~x3は見やすさと計算のために用意した物理的に意味はない変数
-        double y2 = y*cos_phi;
-        double x1 = x*cos_psi;
-        double x2 = y*sin_psi*sin_phi;
-        double x3 = z*sin_psi*cos_phi;
-        double cal_theta = atan2((y1 - y2)*K_PARAMETER,x1 + x2 + x3)*(180.0/PI);
-        if(cal_theta  < -90)  //詳しい計算方法はkndまで
-        {
-                cal_theta = -cal_theta - 90;
-        }
-        else
-        {
-                cal_theta = 270 - cal_theta;
-        }
-        return cal_deviated_angle(cal_theta);
-   }
- */
+//キャリブレーション用にxyの生データ
+int read_for_calib()
+{
+	Cmps data;
+	compass_value_initialize(&data);
+	compass_read(&data);
+	printf("%f\n",data->x_value);
+	printf("%f\n",data->y_value);
+	return 0;
+}
 
 /*******************************************/
 /***以下はマシンによる自動地磁気calibration用****/

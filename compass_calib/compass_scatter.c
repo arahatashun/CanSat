@@ -4,13 +4,9 @@
 
 int main()
 {
-	compass_initialize();
-	Cmps compass_data;
 	while(1)
 	{
-		compass_read(&compass_data);
-		printf("%f\n", compass_data.x_value);
-		printf("%f\n", compass_data.y_value);
+		read_for_calib();
 		delay(200);
 	}
 	return 0;
