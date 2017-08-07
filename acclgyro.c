@@ -253,22 +253,6 @@ int isReverse(void)
 	}
 }
 
-//ロール角を計算
-double cal_roll(Accl* data)
-{
-	double phi = atan2(data->acclY_scaled,data->acclZ_scaled);
-	return phi;
-}
-
-//ピッチ角を計算
-double cal_pitch(Accl* data)
-{
-	double phi = cal_roll(data);
-	double psi = atan2(-data->acclX_scaled,
-	                   data->acclY_scaled*sin(phi)+data->acclZ_scaled*cos(phi));
-	return psi;
-}
-
 //XとYの加速度の大きさを計算
 static double calc_norm (Accl* data)
 {

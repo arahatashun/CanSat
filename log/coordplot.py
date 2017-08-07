@@ -14,6 +14,7 @@ all_time = []  # 年月曜日日時を格納するリストを用意
 time_format = []  # datetime型の時間を格納するリストを用意
 control_time = []  # 制御開始時間を0として
 pid_output = []  # pid_outputを格納するリストを用意
+delta_angle = []  # 目的地と向いてる角度の偏差を格納するリストを用意
 
 
 # 緯度経度たちを便宜上xyz座標に変換してそれをリストで返す
@@ -58,10 +59,13 @@ def plot_coordinate(latlong_coord, compass):
     plt.show()
 
 
-def plot_pid_output(control_time, pid_output):
-    plt.plot(control_time, pid_output)
-    plt.xlabel('time[s]')
-    plt.ylabel('pid_output')
+def plot_pid_compass(control_time, pid_output, delta_angle):
+    plt.plot(control_time, pid_output, label='pid_output', color='g')
+    plt.plot(control_time, delta_angle, label='delta_angle', color='b')
+    plt.legend()
+    plt.xlabel('time[min]')
+    plt.ylabel('pid_output &delta_angle[deg]')
+    plt.plot(control_time, delta_angle)
     plt.show()
 
 
@@ -107,24 +111,28 @@ if __name__ == '__main__':
             elif(line.count('pid_output')):
                 lis = line.split("=")
                 pid_output.append(float(lis[1]))
+            elif(line.count('delta_angle')):
+                lis = line.split(':')
+                delta_angle.append(lis[1])
     txt.close
+
     print("control start time(GBT) is {0}".format(all_time[0]))
     print("control end time(GBT) is {0}".format(all_time[-1]))
     print("distance from control start point to goal is {0}[m]\n".format(
         round(dist[0], 4)))
     print("distance from control end point to goal is {0}[m]\n".format(
         round(dist[-1], 4)))
+
     # 制御開始時の緯度経度から便宜上のxyz座標を計算
     start_xyz = latlng_to_xyz(latlong_coord[0][0], latlong_coord[1][0])
     # 制御終了時の緯度経度から便宜上のxyz座標を計算
-    end_xyz = latlng_to_xyz(
-        latlong_coord[0][-1], latlong_coord[1][-1])
-    print("distance from control start point to control end point is {0}[m]\n".format
-          (round(dist_on_sphere(start_xyz, end_xyz), 4)))
+    end_xyz = latlng_to_xyz(latlong_coord[0][-1], latlong_coord[1][-1])
+    print("distance from control start point to control end point is {0}[m]\n".format(
+        round(dist_on_sphere(start_xyz, end_xyz), 4)))
 
     for i in range(len(time_format)):
         delta_time = time_format[i] - time_format[0]
-        control_time.append(delta_time.seconds)
-    print(control_time)
+        control_time.append(delta_time.seconds / 60)
+
     plot_coordinate(latlong_coord, compass)
-    plot_pid_output(control_time, pid_output)
+    plot_pid_compass(control_time, pid_output, delta_angle)
