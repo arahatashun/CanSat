@@ -13,7 +13,7 @@ int motor_right(int);
 int motor_left(int);
 int motor_rotate(int);
 int motor_slalom(int);
-int motor_escape();
+int motor_escape(double angle_to_rotate);
 
 #ifdef __cplusplus
 }
