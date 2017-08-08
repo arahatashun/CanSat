@@ -33,6 +33,17 @@ void serial_config(void)
 	tcsetattr(uart0_filestream, TCSANOW, &options);
 }
 
+/*
+ * serialFlush:
+ *	Flush the serial buffers (both tx & rx)
+ *********************************************************************************
+ */
+
+void serialFlush (void)
+{
+	tcflush (uart0_filestream, TCIOFLUSH);
+}
+
 void serial_println(const char *line, int len)
 {
 	if (uart0_filestream != -1) {
@@ -60,10 +71,10 @@ int serial_readln(char *buffer, int len)
 	while(1) {
 		rx_length = read(uart0_filestream, (void*)(&c), 1);
 		if(i==5)
-    {
-      printf("GPS CONNECTION TIMEOUT\n");
-      return -1;
-    }
+		{
+			printf("GPS CONNECTION TIMEOUT\n");
+			return -1;
+		}
 		if (rx_length <= 0)
 		{
 			//wait for messages

@@ -10,6 +10,7 @@
 
 void serial_init(void);
 void serial_config(void);
+void serialFlush (void);
 void serial_println(const char *, int);
 int serial_readln(char *, int);
 void serial_close(void);
