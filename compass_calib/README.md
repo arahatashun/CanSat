@@ -9,7 +9,7 @@
 
 これを
 
-`scp pi@raspberrypi.local:/home/pi/casnat/compass_calib/compass.log`
+`scp pi@raspberrypi.local:/home/pi/casnat/compass_calib/compasslog.txt`
 
 でpcに送信して
 
