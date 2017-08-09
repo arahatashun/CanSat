@@ -9,14 +9,13 @@
 
 これを
 
+`scp pi@raspberrypi.local:/home/pi/casnat/compass_calib/compass.log`
+
+でpcに送信して
+
 pythonが使えるコンソール上で同じディレクトリに`compasslog.txt`があるところで
 
 `python calib.py`
-
-calib.py
-
-(compasslog.txtをpythonでparseし、楕円プロットやoffset値などを計算するプログラム)
-
 
 ## 関数の名前一覧
 
