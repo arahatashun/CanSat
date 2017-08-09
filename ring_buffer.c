@@ -81,7 +81,7 @@ double dequeue(Queue *que)
 		return 0;
 	}
 	double x = que->buff[que->front];
-	que->front++
+	que->front++;
 	que->count--;
 	if (que->front == que->size)
 	{
