@@ -95,7 +95,6 @@ int updateCoord(Queue* latring,Queue* lonring)
 //スタック判定をして抜け出す処理まで
 int stackJudge(Queue *latring,Queue *lonring)
 {
-	queue_diff(latring);
 	double deltaMovement = 0;
 	deltaMovement=fabs(getLast(latring)-dequeue(latring))+fabs(getLast(lonring)-dequeue(lonring));
 	printf("deltaMovement = %f\n", deltaMovement);
