@@ -129,7 +129,6 @@ int motor_slalom(int delta_pwm)
 
 int motor_rotate_compass(double angle_to_rotate)
 {
-	printf("get stacked\n");
 	int c = 0;  //行きたい方角に回転できなくても無限ループにならないようにカウンター用意
 	double delta_angle = 180;
 	double compass_angle_fixed =readCompassAngle();
@@ -156,12 +155,13 @@ int motor_rotate_compass(double angle_to_rotate)
 	}
 
 	motor_stop();
-	delay(10000);
+	delay(2000);
 	return 0;
 }
 
 int motor_escape()
 {
+	printf("get stacked\n");
 	motor_rotate_compass(90);
 	motor_rotate_compass(-90);
 	return 0;
