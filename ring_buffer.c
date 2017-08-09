@@ -114,7 +114,7 @@ double queue_diff(Queue *que)
 	double list[n];
 	for(i=0; i<n; i++)
 	{
-		if(que->front+i <= que->size)
+		if(que->front+i <= que->size-1)
 		{
 			list[i] = (double)que->buff[que->front+i];
 		}
