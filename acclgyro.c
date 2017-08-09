@@ -6,7 +6,6 @@
 #include <string.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
-#include <assert.h>
 #include "acclgyro.h"
 
 static const int MPU6050_ADDRESS = 0x68;
@@ -176,7 +175,6 @@ int Accl_read(Accl* data)
 	int LockCounter = 0;
 	while((checkLock(rawdata.xList,-1)||checkLock(rawdata.yList,-1)||checkLock(rawdata.zList,-1))&&(LockCounter<100))
 	{
-		assert(LockCounter<100);//TODO いつか消す
 		printf("WARNING accl -1 lock\n");
 		printf("LockCounter %d\n",LockCounter);
 		handleAcclErrorOne(&rawdata);
@@ -184,7 +182,6 @@ int Accl_read(Accl* data)
 	}
 	while((checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0])&&checkLock(rawdata.zList,rawdata.zList[0]))&&(LockCounter<100))
 	{
-		assert(LockCounter<100);//TODO いつか消す
 		printf("WARNING accl lock\n");
 		printf("LockCounter %d\n",LockCounter);
 		handleAcclErrorOne(&rawdata);
@@ -194,7 +191,6 @@ int Accl_read(Accl* data)
 	if(LockCounter>=100)
 	{
 		printf("Lock Counter Max\n");
-		assert(LockCounter!=100);
 		;      //TODO 再起動?
 	}
 	data->acclX_scaled = (double)rawdata.xList[4]/CONVERT2G;
@@ -210,7 +206,6 @@ int Gyro_read(Gyro* data)
 	int LockCounter = 0;
 	while((checkLock(rawdata.xList,-1)||checkLock(rawdata.yList,-1)||checkLock(rawdata.zList,-1))&&(LockCounter<100))
 	{
-		assert(LockCounter<100);//TODO いつか消す
 		printf("WARNING gyro -1 lock\n");
 		printf("LockCounter %d\n",LockCounter);
 		handleGyroErrorOne(&rawdata);
@@ -218,7 +213,6 @@ int Gyro_read(Gyro* data)
 	}
 	while((checkLock(rawdata.xList,rawdata.xList[0])&&checkLock(rawdata.yList,rawdata.yList[0])&&checkLock(rawdata.zList,rawdata.zList[0]))&&(LockCounter<100))
 	{
-		assert(LockCounter<100);//TODO いつか消す
 		printf("WARNING gyro lock\n");
 		printf("LockCounter %d\n",LockCounter);
 		handleGyroErrorOne(&rawdata);
@@ -228,7 +222,6 @@ int Gyro_read(Gyro* data)
 	if(LockCounter>=100)
 	{
 		printf("Lock Counter Max\n");
-		assert(LockCounter!=100);
 		;      //TODO 再起動?
 	}
 	data->gyroX_scaled = (double)rawdata.xList[4]/CONVERT2G;
