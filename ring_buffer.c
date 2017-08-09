@@ -114,7 +114,14 @@ double queue_diff(Queue *que)
 	double list[n];
 	for(i=0; i<n; i++)
 	{
-		list[i] = (double)que->buff[que->front+i];
+		if(que->front+i <= que->size)
+		{
+			list[i] = (double)que->buff[que->front+i];
+		}
+		else
+		{
+			list[i] = (double)que->buff[que->front+i-que->size];
+		}
 		printf("%f\n",list[i]);
 	}
 	qsort(list,n,sizeof(double),dCmp);
