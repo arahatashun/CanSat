@@ -131,7 +131,6 @@ int Go2Goal(DistAngle* data,Queue* latring,Queue* lonring)
 	int i;
 	for(i=0; i<PID_LEN; i++)
 	{
-		queue_diff(latring);
 		updateAll(data,latring,lonring);
 		if(isReverse())
 		{
