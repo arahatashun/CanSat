@@ -1,14 +1,17 @@
 # 地磁気キャリブレーション用フォルダ
 
-このフォルダにあるのは
+`make scatter`
 
-compass_scatter.c
+でコンパイル.
+`sudo stdbuf -o0 -e0 ./scatter.out | tee /home/pi/cansat/compass_calib/compasslog.txt`
 
-(地磁気のx,yのraw_dataをcompasslog.txtというテキストファイルに書き込むプログラム)
+で実行し、地磁気のxy軸のraw_dataのcompassslogを作成する.
 
-calib_test.c(今は使ってない)
+これを
 
-(マシンが自分でその場で回転しながらcalibrationを行い、キャリブレーションが終わったらそのあとcompass_angleを吐き続けるプログラム)
+pythonが使えるコンソール上で同じディレクトリに`compasslog.txt`があるところで
+
+`python calib.py`
 
 calib.py
 
@@ -21,7 +24,3 @@ calib.py
 |:--|:--|:--|
 |compass_scatter.c|make scatter|sudo ./scatter.out|
 |calib_test.c|make test|sudo ./test.out|
-
-pythonが使えるコンソール上で同じディレクトリに`compasslog.txt`があるところで
-
-`python calib.py`
