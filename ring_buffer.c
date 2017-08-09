@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 #include "ring_buffer.h"
 
 /*
@@ -42,8 +43,8 @@ double getLast(Queue *que)
 {
 	if (is_empty(que))
 	{
-	printf("queue is empty\n");
-	return 0;
+		printf("queue is empty\n");
+		return 0;
 	}
 	return que->buff[que->rear-1];
 }
@@ -74,11 +75,13 @@ int is_empty(Queue *que)
 // データを取り出す
 double dequeue(Queue *que)
 {
-	if (is_empty(que)) {
+	if (is_empty(que))
+	{
 		printf("queue is empty\n");
 		return 0;
 	}
-	double x = que->buff[que->front++];
+	double x = que->buff[que->front];
+	que->front++;
 	que->count--;
 	if (que->front == que->size)
 	{
@@ -93,4 +96,35 @@ int queue_delete(Queue *que)
 	free(que->buff);
 	free(que);
 	return 0;
+}
+
+//double型用の比較関数
+static int dCmp(const void *p, const void *q )
+{
+	if( *(double*)p > *(double*)q ) return 1;
+	if( *(double*)p < *(double*)q ) return -1;
+	return 0;
+}
+
+//キューの中身のmaxとminの差を計算
+double queue_diff(Queue *que)
+{
+	int i;
+	int n = que->count;
+	double list[n];
+	for(i=0; i<n; i++)
+	{
+		if(que->front+i <= que->size-1)
+		{
+			list[i] = (double)que->buff[que->front+i];
+		}
+		else
+		{
+			list[i] = (double)que->buff[que->front+i-que->size];
+		}
+		printf("%f\n",list[i]);
+	}
+	qsort(list,n,sizeof(double),dCmp);
+	printf("%f\n", list[n-1] - list[0]);
+	return list[n-1] - list[0];
 }

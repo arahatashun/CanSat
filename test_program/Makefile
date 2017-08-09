@@ -1,7 +1,7 @@
 LIBS =-lwiringPi
 
 motor:
-	gcc -o motor.out motor_test.c ../motor.c $(LIBS)
+	gcc -o motor.out motor_test.c ../motor.c ../mitibiki.c ../compass.c $(LIBS) -lm
 
 gut:
 	gcc -o gut.out gut_test.c ../gut.c $(LIBS)
@@ -10,7 +10,7 @@ lux:
 	gcc -o lux.out luxsensor_test.c ../luxsensor.c $(LIBS)
 
 accl:
-	gcc -o accl.out accl_test.c ../acclgyro.c $(LIBS) -lm	
+	gcc -o accl.out accl_test.c ../acclgyro.c $(LIBS) -lm
 
 gyro:
 	gcc -o gyro.out gyro_test.c ../acclgyro.c $(LIBS) -lm
@@ -22,7 +22,7 @@ gps:
 	gcc -o gps.out gps_test.c $(LIBS) -lgps -lm
 
 escape:
-	gcc -o escape.out escape.c ../motor.c $(LIBS)
+	gcc -o escape.out escape.c ../motor.c ../compass.c ../mitibiki.c $(LIBS) -lm
 
 gyromotor:
 	gcc -o  gyromotor.out gyromotor.c ../motor.c  ../acclgyro.c ../pid.c $(LIBS) -lm

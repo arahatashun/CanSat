@@ -1,10 +1,21 @@
 import csv
 import os
 import math
+from datetime import datetime
 import matplotlib.pyplot as plt
 
 EARTH_RADIUS = 6378137
 vector_scale = 0.00001
+
+latlong_coord = [[], []]  # 緯度経度を多次元配列に格納するためのリストを用意
+dist = []  # 距離を格納するリストを用意
+compass = [[], []]  # 地磁気のxy成分をそれぞれ格納
+all_time = []  # 年月曜日日時を格納するリストを用意
+time_format = []  # datetime型の時間を格納するリストを用意
+control_time = []  # 制御開始時間を0として
+pid_output = []  # pid_outputを格納するリストを用意
+delta_angle = []  # 目的地と向いてる角度の偏差を格納するリストを用意
+
 
 # 緯度経度たちを便宜上xyz座標に変換してそれをリストで返す
 
@@ -48,6 +59,16 @@ def plot_coordinate(latlong_coord, compass):
     plt.show()
 
 
+def plot_pid_compass(control_time, pid_output, delta_angle):
+    plt.plot(control_time, pid_output, label='pid_output', color='g')
+    plt.plot(control_time, delta_angle, label='delta_angle', color='b')
+    plt.legend()
+    plt.xlabel('time[min]')
+    plt.ylabel('pid_output &delta_angle[deg]')
+    plt.plot(control_time, delta_angle)
+    plt.show()
+
+
 if __name__ == '__main__':
     # カレントディレクトリから.txtファイルだけを選別して辞書を作る
     dir_dict = {}
@@ -59,12 +80,6 @@ if __name__ == '__main__':
         print("{0}:{1}".format(num, dir_dict[num]))
     got_number = int(
         input("Enter the index of the file you want to analyze: "))
-
-    latlong_coord = [[], []]  # 緯度経度を多次元配列に格納するためのリストを用意
-    dist = []  # 距離を格納するリストを用意
-    compass = [[], []]
-    time = []  # 日時を格納するリストを用意
-
     txt = open(dir_dict[got_number])  # ログtxtファイルを開く
     with open('gmplot.csv', 'w') as csvfile:  # GPS visualizerのための緯度経度csvファイルを用意
         writer = csv.writer(csvfile, lineterminator='\n')
@@ -90,20 +105,34 @@ if __name__ == '__main__':
                 compass[1].append(
                     vector_scale * math.cos(float(lis[1]) / 360 * 2 * math.pi))
             elif(line.count('2017')):
-                time.append(line)
-
+                all_time.append(line)
+                lis = line.split(' ')
+                time_format.append(datetime.strptime(lis[4], '%H:%M:%S'))
+            elif(line.count('pid_output')):
+                lis = line.split("=")
+                pid_output.append(float(lis[1]))
+            elif(line.count('delta_angle')):
+                lis = line.split(':')
+                delta_angle.append(lis[1])
     txt.close
-    print("control start time(GBT) is {0}".format(time[0]))
-    print("control end time(GBT) is {0}".format(time[len(time) - 1]))
+
+    print("control start time(GBT) is {0}".format(all_time[0]))
+    print("control end time(GBT) is {0}".format(all_time[-1]))
     print("distance from control start point to goal is {0}[m]\n".format(
         round(dist[0], 4)))
     print("distance from control end point to goal is {0}[m]\n".format(
-        round(dist[len(dist) - 1], 4)))
+        round(dist[-1], 4)))
+
     # 制御開始時の緯度経度から便宜上のxyz座標を計算
     start_xyz = latlng_to_xyz(latlong_coord[0][0], latlong_coord[1][0])
-    end_xyz = latlng_to_xyz(latlong_coord[0][len(
-        latlong_coord[0]) - 1], latlong_coord[1][len(latlong_coord[1]) - 1])  # 制御終了時の緯度経度から便宜上のxyz座標を計算
-    print("distance from control start point to control end point is {0}[m]\n".format
-          (round(dist_on_sphere(start_xyz, end_xyz), 4)))
+    # 制御終了時の緯度経度から便宜上のxyz座標を計算
+    end_xyz = latlng_to_xyz(latlong_coord[0][-1], latlong_coord[1][-1])
+    print("distance from control start point to control end point is {0}[m]\n".format(
+        round(dist_on_sphere(start_xyz, end_xyz), 4)))
+
+    for i in range(len(time_format)):
+        delta_time = time_format[i] - time_format[0]
+        control_time.append(delta_time.seconds / 60)
 
     plot_coordinate(latlong_coord, compass)
+    plot_pid_compass(control_time, pid_output, delta_angle)

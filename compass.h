@@ -6,12 +6,10 @@ extern "C" {
 #endif
 
 int compass_initialize();
+double cal_deviated_angle(double angle_of_deviation, double theta_degree);
 double readCompassAngle(void);
-
+int read_for_calib();
 /*
-double cal_deg_acclcompass(double x, double y,
-                           double z, double sin_phi, double sin_psi,
-                           double cos_phi, double cos_psi);
 int cal_maxmin_compass(Cmps_offset *compass_offset,Cmps *compass_data);
 */
 

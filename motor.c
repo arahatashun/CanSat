@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <wiringPi.h>
 #include <softPwm.h>
+#include <math.h>
 #include "motor.h"
+#include "compass.h"
+#include "mitibiki.h"
 
 static const int LEFT_MOTOR1 = 23;//GPIO23
 static const int LEFT_MOTOR2 = 24;//GPIO24
@@ -12,7 +15,7 @@ static const int INITIAL_PWM_VAL = 0;
 static const int ZERO_PWM_VAL = 0;
 static const int MAX_PWM_VAL = 100;
 static const int ESCAPE_TURN_MILLISECONDS = 1250;
-
+static const int STACK_COUNTER = 50;
 int pwm_initialize()
 {
 	//wiring Pi initialize
@@ -124,29 +127,42 @@ int motor_slalom(int delta_pwm)
 	return 0;
 }
 
-int motor_escape() //delayは適当
+int motor_rotate_compass(double angle_to_rotate)
 {
-	int i;
 	printf("get stacked\n");
-	for(i=2; i<5; i++) //ひっくり返らないようにうまくバックしたい
+	int c = 0;  //行きたい方角に回転できなくても無限ループにならないようにカウンター用意
+	double delta_angle = 180;
+	double compass_angle_fixed =readCompassAngle();
+	double target_angle = cal_deviated_angle(0, compass_angle_fixed + angle_to_rotate);
+	while(fabs(delta_angle) > 30 && c <STACK_COUNTER)
 	{
-		motor_back(100-20*i);
+		double compass_angle =readCompassAngle();
+		delta_angle= cal_delta_angle(compass_angle,target_angle);
+		printf("delta_angle: %f\n", delta_angle);
+		if(delta_angle>0)
+		{
+			motor_right(100);
+		}
+		else
+		{
+			motor_left(100);
+		}
 		delay(100);
+		c++;
 	}
-	motor_stop();
-	delay(200);
-	motor_right(100);
-	delay(ESCAPE_TURN_MILLISECONDS);
-	motor_forward(100);
-	delay(3000);
-	for(i=1; i<5; i++) //ひっくり帰らないようにうまく停止したい
+	if(c >= STACK_COUNTER)
 	{
-		motor_forward(100-20*i);
-		delay(200);
+		printf("could not escape\n");
 	}
+
 	motor_stop();
-	delay(1000);
-	motor_forward(100);
-	delay(1000);
+	delay(10000);
+	return 0;
+}
+
+int motor_escape()
+{
+	motor_rotate_compass(90);
+	motor_rotate_compass(-90);
 	return 0;
 }

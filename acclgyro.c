@@ -3,6 +3,7 @@
 #include <math.h>
 #include <errno.h>
 #include <stdint.h>
+#include <string.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include <assert.h>
@@ -63,25 +64,27 @@ int acclGyro_initialize(void)
 	return 0;
 }
 
-//ロック対策用の関数
-static int acclGyro_mode_change()
-{
-	int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,POWER_MANAGEMENT_REG,MODE_SINGLE);
-	if(WPI2CWReg8 == -1)
-	{
-		printf("acclGyro write error register POWER_MANAGEMENT_REG\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		printf("errno=%d: %s\n", errno, strerror(errno));
-	}
-	WPI2CWReg8 = wiringPiI2CWriteReg8(fd,POWER_MANAGEMENT_REG,MODE_CONTINUOUS);
-	if(WPI2CWReg8 == -1)
-	{
-		printf("acclGyro write error register POWER_MANAGEMENT_REG\n");
-		printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
-		printf("errno=%d: %s\n", errno, strerror(errno));
-	}
-	return 0;
-}
+/*
+   //ロック対策用の関数
+   static int acclGyro_mode_change()
+   {
+        int WPI2CWReg8 = wiringPiI2CWriteReg8(fd,POWER_MANAGEMENT_REG,MODE_SINGLE);
+        if(WPI2CWReg8 == -1)
+        {
+                printf("acclGyro write error register POWER_MANAGEMENT_REG\n");
+                printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+                printf("errno=%d: %s\n", errno, strerror(errno));
+        }
+        WPI2CWReg8 = wiringPiI2CWriteReg8(fd,POWER_MANAGEMENT_REG,MODE_CONTINUOUS);
+        if(WPI2CWReg8 == -1)
+        {
+                printf("acclGyro write error register POWER_MANAGEMENT_REG\n");
+                printf("wiringPiI2CWriteReg8 = %d\n", WPI2CWReg8);
+                printf("errno=%d: %s\n", errno, strerror(errno));
+        }
+        return 0;
+   }
+ */
 
 static short read_out(int addr)  //レジスタの値を読み取る
 {
@@ -249,27 +252,4 @@ int isReverse(void)
 		printf("G:%f z_posture:normal\n",data.acclZ_scaled);
 		return 0;
 	}
-}
-
-//ロール角を計算
-double cal_roll(Accl* data)
-{
-	double phi = atan2(data->acclY_scaled,data->acclZ_scaled);
-	return phi;
-}
-
-//ピッチ角を計算
-double cal_pitch(Accl* data)
-{
-	double phi = cal_roll(data);
-	double psi = atan2(-data->acclX_scaled,
-	                   data->acclY_scaled*sin(phi)+data->acclZ_scaled*cos(phi));
-	return psi;
-}
-
-//XとYの加速度の大きさを計算
-static double calc_norm (Accl* data)
-{
-	return sqrt((data->acclX_scaled*data->acclX_scaled) +
-	            (data->acclY_scaled*data->acclY_scaled));
 }
