@@ -110,7 +110,7 @@ static int dCmp(const void *p, const void *q )
 double queue_diff(Queue *que)
 {
 	int i;
-	int n = que->size;
+	int n = que->count;
 	double list[n];
 	for(i=0; i<n; i++)
 	{
