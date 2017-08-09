@@ -125,13 +125,13 @@ int updateAll(DistAngle* data,Queue* latring,Queue* lonring)
 //goal判定で-2を返してそれ以外は0
 int Go2Goal(DistAngle* data,Queue* latring,Queue* lonring)
 {
-	queue_diff(latring);
 	Pid pid_data;
 	pid_initialize(&pid_data);
 	pid_const_initialize(&pid_data,SETPOINT,KP_VALUE,KI_VALUE,KD_VALUE);
 	int i;
 	for(i=0; i<PID_LEN; i++)
 	{
+		queue_diff(latring);
 		updateAll(data,latring,lonring);
 		if(isReverse())
 		{
