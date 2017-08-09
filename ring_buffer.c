@@ -80,7 +80,8 @@ double dequeue(Queue *que)
 		printf("queue is empty\n");
 		return 0;
 	}
-	double x = que->buff[que->front++];
+	double x = que->buff[que->front];
+	que->front++
 	que->count--;
 	if (que->front == que->size)
 	{
