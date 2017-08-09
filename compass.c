@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <errno.h>
-#include <assert.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "compass.h"
