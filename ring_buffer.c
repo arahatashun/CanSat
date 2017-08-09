@@ -117,5 +117,6 @@ double queue_diff(Queue *que)
 		printf("%f\n",list[i]);
 	}
 	qsort(list,n,sizeof(double),dCmp);
+	printf("%f\n", list[n-1] - list[0]);
 	return list[n-1] - list[0];
 }

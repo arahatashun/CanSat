@@ -62,6 +62,7 @@ int updateDistAngle(DistAngle *data,Queue* latring,Queue* lonring)
 	data->angle_by_compass = readCompassAngle();
 	data->delta_angle = cal_delta_angle(data->angle_by_compass,data->angle2goal);
 	printf("delta_angle:%f\n",data->delta_angle);
+	queue_diff(latring);
 	return 0;
 }
 
@@ -131,7 +132,6 @@ int Go2Goal(DistAngle* data,Queue* latring,Queue* lonring)
 	int i;
 	for(i=0; i<PID_LEN; i++)
 	{
-		queue_diff(latring);
 		updateAll(data,latring,lonring);
 		if(isReverse())
 		{
