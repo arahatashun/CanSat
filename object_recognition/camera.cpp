@@ -3,8 +3,8 @@
 #include <opencv2/highgui/highgui.hpp>
 #include "camera.hpp"
 
-static const int WIDTH = 800;
-static const int HEIGHT = 600;
+static const int WIDTH = 640;
+static const int HEIGHT = 480;
 static const int FPS = 5;
 static const int DEVICE = 0;
 static const std::string DIRECTORY_PATH = "/home/pi/Pictures/";//pathの先頭
