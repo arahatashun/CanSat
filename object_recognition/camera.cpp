@@ -28,6 +28,7 @@ Camera::Camera()
 	capture.set(CV_CAP_PROP_FRAME_WIDTH,WIDTH);
 	capture.set(CV_CAP_PROP_FRAME_HEIGHT,HEIGHT);
 	capture.set(CV_CAP_PROP_FPS,FPS);
+	cap.set(CV_CAP_PROP_BUFFERSIZE, 2);
 }
 
 Camera::~Camera()
