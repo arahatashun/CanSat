@@ -19,12 +19,7 @@ static const double EXIST_THRESHOLD = 0.1;//ゴール存在判定 パーセン�
 static const int TIME_LIMIT = 900;//10分
 static const int DELAY_TIME = 4000;
 
-void handler(int signum)
-{
-	motor_stop();
-	delay(100);
-	exit(1);
-}
+void handler(int signum);
 
 
 int main (void)
@@ -62,4 +57,12 @@ int main (void)
 	}
 	printf("TIME IS OUT\n");
 	return 0;
+}
+
+void handler(int signum)
+{
+	motor_stop();
+	delete camera;
+	delay(100);
+	exit(1);
 }
