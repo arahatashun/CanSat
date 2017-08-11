@@ -21,6 +21,7 @@ static const int DELAY_TIME = 4000;
 
 void handler(int signum);
 
+Camera camera;
 
 int main (void)
 {
@@ -30,7 +31,6 @@ int main (void)
 	time_t lastTime;
 	time(&lastTime);
 	pwm_initialize();
-	Camera camera;
 	while(lastTime-startTime<TIME_LIMIT)
 	{
 		printf("lastTime - startTime %d\n",lastTime - startTime);
