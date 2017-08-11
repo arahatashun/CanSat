@@ -5,7 +5,7 @@
 
 static const int WIDTH = 640;
 static const int HEIGHT = 480;
-static const int FPS = 5;
+static const int FPS = 2;
 static const int DEVICE = 0;
 static const std::string DIRECTORY_PATH = "/home/pi/Pictures/";//pathの先頭
 static const std::string FILE_EXTENTION = ".jpg";//拡張子
@@ -40,8 +40,13 @@ int Camera::takePhoto()
 {
 	makeTimePath();
 	cv::Mat frame;
+
 	do
 	{
+		for (int i = 0; i < 20; i++)
+		{
+        capture>>frame
+    }
 		capture>>frame;
 	} while(frame.empty());
 	input = frame;
