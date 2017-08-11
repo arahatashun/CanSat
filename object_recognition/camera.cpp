@@ -41,13 +41,12 @@ int Camera::takePhoto()
 {
 	makeTimePath();
 	cv::Mat frame;
-
+	for (int i = 0; i < 5; i++)
+	{
+			capture.grab();
+	}
 	do
 	{
-		for (int i = 0; i < 5; i++)
-		{
-        capture.grab();
-    }
 		capture>>frame;
 	} while(frame.empty());
 	input = frame;
