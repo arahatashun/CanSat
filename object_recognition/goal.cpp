@@ -62,7 +62,7 @@ int main (void)
 void handler(int signum)
 {
 	motor_stop();
-	delete camera;
+	camera.~Camera();
 	delay(100);
 	exit(1);
 }
