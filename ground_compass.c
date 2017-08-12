@@ -102,7 +102,7 @@ int motor_rotate_compass(double angle_to_rotate)
 		{
 			motor_left(100);
 		}
-		delay(100);
+		delay(50);
 		c++;
 	}
 	if(c >= STACK_COUNTER)
