@@ -9,7 +9,7 @@ opencvをインストールする
 ```shell
 scp pi@raspberrypi.local:/home/pi/Pictures/*.jpg .
 ```
-## In order to enable the camera for openv automatically
+## In order to enable the camera for opencv automatically
 ```shell
 sudo modprobe bcm2835-v4l2
 ```
