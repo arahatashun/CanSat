@@ -12,8 +12,7 @@ static const int PWM_RANGE = 100;
 static const int INITIAL_PWM_VAL = 0;
 static const int ZERO_PWM_VAL = 0;
 static const int MAX_PWM_VAL = 100;
-static const int ESCAPE_TURN_MILLISECONDS = 1250;
-static const int STACK_COUNTER = 50;
+
 int pwm_initialize()
 {
 	//wiring Pi initialize
