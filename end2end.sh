@@ -1,6 +1,7 @@
 #!/bin/bash
 #NOTE 事前に実行ファイルの用意
-sudo modprobe bcm2835-v4l2 #カメラのドライバー
+sudo modprobe bcm2835-v4l2 
+echo "camera driver setup"
 trap 'echo "SIGIN Handle"; sudo ./sigintHandle.out; exit 1' 2
 echo "start flight sequence"
 sudo stdbuf -o0 -e0 ./flight.out | tee /home/pi/Documents/`date +%Y%m%d_%H-%M-%S`.txt
