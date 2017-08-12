@@ -117,8 +117,10 @@ int motor_rotate_compass(double angle_to_rotate)
 
 int motor_escape()
 {
+	motor_back(100);
+	delay(100);
 	printf("get stacked\n");
-	motor_rotate_compass(90);
+	motor_rotate_compass(180);
 	motor_rotate_compass(-90);
 	return 0;
 }
