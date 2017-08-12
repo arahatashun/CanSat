@@ -1,5 +1,7 @@
 #!/bin/bash
 #NOTE 事前に実行ファイルの用意
+sudo modprobe bcm2835-v4l2 
+echo "camera driver setup"
 trap 'echo "SIGIN Handle"; sudo ./sigintHandle.out; exit 1' 2
 echo "start ground run"
 echo "Executing, ground_compass.out"
