@@ -5,7 +5,7 @@
 
 static const int WIDTH = 640;
 static const int HEIGHT = 480;
-static const int FPS = 2;
+static const int FPS = 6;
 static const int DEVICE = 0;
 static const std::string DIRECTORY_PATH = "/home/pi/Pictures/";//pathの先頭
 static const std::string FILE_EXTENTION = ".jpg";//拡張子
