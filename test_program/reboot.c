@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <linux/reboot.h>
+#include <stdio.h>
 #include <errno.h>
 
 int main()
