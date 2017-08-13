@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include <errno.h>
+#include <unistd.h>
+#include <linux/reboot.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include "compass.h"
@@ -26,7 +28,7 @@ static const double PI = 3.14159265;
 static const double K_PARAMETER = 1.0;//地磁気の感度補正パラメータ
 
 
-static const double COMPASS_X_OFFSET =-20.5 ;    //ここに手動でキャリブレーションしたoffset値を代入(FM2についてるコンパスの値)
+static const double COMPASS_X_OFFSET =-20.5;     //ここに手動でキャリブレーションしたoffset値を代入(FM2についてるコンパスの値)
 static const double COMPASS_Y_OFFSET = -120.0;
 /*
    static const double COMPASS_X_OFFSET = 59.0;    //ここに手動でキャリブレーションしたoffset値を代入(FM3についてるコンパスの値)
@@ -222,7 +224,13 @@ static int compass_read(Cmps* data)
 
 	if(LockCounter>=100)
 	{
-		printf("Lock Counter Max\n");//TODO 再起動
+		printf("Lock Counter Max\n");//TODO
+		sync();
+		if(reboot(LINUX_REBOOT_CMD_RESTART)== -1)
+		{
+			printf("WARNING! REBOOT FAILED\n");
+			printf("errno=%d: %s\n",errno, strerror(errno));
+		}
 	}
 
 	data->x_value = (double)rawdata.xList[4] - COMPASS_X_OFFSET;
