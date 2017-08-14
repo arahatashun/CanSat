@@ -2,6 +2,7 @@
 #include <iostream>
 #include <opencv2/highgui/highgui.hpp>
 #include "camera.hpp"
+#include <vector>
 
 static const int WIDTH = 640;
 static const int HEIGHT = 480;
