@@ -15,6 +15,7 @@ static const int AOV = 62.2;//ANGLE OF VIEW
 //明度について
 static const int MAX_VALUE = 255;//明るさ最大
 static const int NO_VALUE = 0;//明るさ最小
+static const int minArea = 1;//抽出する面積の最小値
 
 Camera::Camera()
 {
@@ -99,7 +100,7 @@ int Camera::binarize()
 	cv::inRange(hsv, cv::Scalar(0, 70, 60), cv::Scalar(2, 255, MAX_VALUE), hsv_filtered15);
 	cv::inRange(hsv, cv::Scalar(160, 70, 60), cv::Scalar(180, 255, MAX_VALUE), hsv_filtered180);
 	cv::add(hsv_filtered15,hsv_filtered180,hsv);
-	output = rmNoise(hsv, 1);
+	output = rmNoise(hsv, minArea);
 	imwrite(timePath+"BINARY"+FILE_EXTENTION,output);
 	return 0;
 }
