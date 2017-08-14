@@ -73,7 +73,7 @@ int Camera::makeTimePath(void)
 //ノイズ除去,引数aは抽出する輪郭の面積の最小値
 cv::Mat Camera::rmNoise(cv::Mat src)
 {
-	std::vector<std::vector<cv::Point> > contours; //輪郭座標の二次元配列
+	std::vector<std::vector<cv::Point>> contours; //輪郭座標の二次元配列
 	cv::findContours(src,contours,CV_RETR_EXTERNAL,CV_CHAIN_APPROX_NONE); //CV_RETR_EXTERNAL:最も外側の輪郭を検出、CV_CHAIN_APPROX_NONE:近似手法
  	std::vector<std::vector<cv::Point>> contours_subset;
  	for (int i = 0;i<contours.size();i++)  
