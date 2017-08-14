@@ -72,7 +72,8 @@ int Camera::makeTimePath(void)
 //ノイズ除去
 cv::Mat Camera::rmNoise(cv::Mat src, int a)
 {
-	std::vector<std::vector<cv::Point> > contours; cv::findContours(src, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);
+	std::vector<std::vector<cv::Point> > contours; 
+	cv::findContours(src, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);
  	std::vector<std::vector<cv::Point> > contours_subset;
  	for (int i = 0; i<contours.size(); i++)  
 	{  
