@@ -15,7 +15,7 @@ static const int AOV = 62.2;//ANGLE OF VIEW
 //明度について
 static const int MAX_VALUE = 255;//明るさ最大
 static const int NO_VALUE = 0;//明るさ最小
-static const double minArea = 1;//抽出する面積の最小値
+static const double MIN_AREA = 1;//抽出する面積の最小値
 
 Camera::Camera()
 {
@@ -71,7 +71,7 @@ int Camera::makeTimePath(void)
 }
 
 //ノイズ除去,引数aは抽出する輪郭の面積の最小値
-cv::Mat Camera::rmNoise(cv::Mat src, double a)
+cv::Mat Camera::rmNoise(cv::Mat src)
 {
 	std::vector<std::vector<cv::Point> > contours; //輪郭座標の二次元配列
 	cv::findContours(src, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE); //CV_RETR_EXTERNAL:最も外側の輪郭を検出、CV_CHAIN_APPROX_NONE:近似手法
@@ -79,9 +79,9 @@ cv::Mat Camera::rmNoise(cv::Mat src, double a)
  	for (int i = 0; i<contours.size(); i++)  
 	{  
 		double area = cv::contourArea(contours.at(i)); //各輪郭の面積 
-		if (area>a)   
+		if (area>MIN_AREA)   
 		{   
-			contours_subset.push_back(contours.at(i)); //contours_subsetに一定面積以上の輪郭を追加i				
+			contours_subset.push_back(contours.at(i)); //contours_subsetに一定面積以上の輪郭を追加i
 		} 
 	}
 	cv::Mat mask = cv::Mat::zeros(src.rows, src.cols, CV_8UC1); 
@@ -100,7 +100,7 @@ int Camera::binarize()
 	cv::inRange(hsv, cv::Scalar(0, 70, 60), cv::Scalar(2, 255, MAX_VALUE), hsv_filtered15);
 	cv::inRange(hsv, cv::Scalar(160, 70, 60), cv::Scalar(180, 255, MAX_VALUE), hsv_filtered180);
 	cv::add(hsv_filtered15,hsv_filtered180,hsv);
-	output = rmNoise(hsv, minArea);
+	output = rmNoise(hsv);
 	imwrite(timePath+"BINARY"+FILE_EXTENTION,output);
 	return 0;
 }
