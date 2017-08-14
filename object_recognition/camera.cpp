@@ -69,12 +69,21 @@ int Camera::makeTimePath(void)
 }
 
 //ノイズ除去
-cv::Mat Camera::rmNoise(cv::Mat src)
+cv::Mat Camera::rmNoise(cv::Mat src, int a)
 {
-	cv::erode(src,src,cv::Mat(),cv::Point(-1, -1),10);//縮小処理
-	cv::dilate(src,src,cv::Mat(),cv::Point(-1, -1),25);//膨張処理
-	cv::erode(src,src,cv::Mat(),cv::Point(-1, -1),15);//縮小処理
-	return src;
+	std::vector<std::vector<cv::Point> > contours; cv::findContours(src, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);
+ 	std::vector<std::vector<cv::Point> > contours_subset;
+ 	for (int i = 0; i<contours.size(); i++)  
+	{  
+		double area = cv::contourArea(contours.at(i));  
+		if (area>a)   
+		{   
+			contours_subset.push_back(contours.at(i));  
+		} 
+	}
+	cv::Mat mask = cv::Mat::zeros(src.rows, src.cols, CV_8UC1); 
+	cv::drawContours(mask, contours_subset, -1, cv::Scalar(255), -1);
+ 	return mask;
 }
 
 int Camera::binarize()
@@ -88,7 +97,7 @@ int Camera::binarize()
 	cv::inRange(hsv, cv::Scalar(0, 70, 60), cv::Scalar(2, 255, MAX_VALUE), hsv_filtered15);
 	cv::inRange(hsv, cv::Scalar(160, 70, 60), cv::Scalar(180, 255, MAX_VALUE), hsv_filtered180);
 	cv::add(hsv_filtered15,hsv_filtered180,hsv);
-	output = rmNoise(hsv);
+	output = rmNoise(hsv, 1);
 	imwrite(timePath+"BINARY"+FILE_EXTENTION,output);
 	return 0;
 }
