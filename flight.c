@@ -270,6 +270,7 @@ int main(void)
 		luxsensor_close();
 		landSeq(&sequence);
 		open_case(&sequence);
+		gps_off();
 		return 0;
 	}
 	switch (sequence.sequence_num)
@@ -282,6 +283,7 @@ int main(void)
 	case 3:
 		open_case(&sequence);
 	case 4:
+		gps_off();
 		break;
 		//TODO default 追加する
 	}
