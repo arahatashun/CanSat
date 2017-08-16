@@ -28,7 +28,7 @@ Camera::Camera()
 		std::cout<<"capture is not opened 2"<<std::endl;
 	}
 	//capture.set(CV_CAP_PROP_FRAME_WIDTH,WIDTH);
-	capture.set(CV_CAP_PROP_FRAME_HEIGHT,HEIGHT);
+	//capture.set(CV_CAP_PROP_FRAME_HEIGHT,HEIGHT);
 	capture.set(CV_CAP_PROP_FPS,FPS);
 	//以下 対応してない
 	//capture.set(CV_CAP_PROP_BUFFERSIZE, 1);
