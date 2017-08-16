@@ -64,7 +64,7 @@ def plot_pid_compass(control_time, pid_output, delta_angle):
     plt.plot(control_time, delta_angle, label='delta_angle', color='b')
     plt.legend()
     plt.xlabel('time[min]')
-    plt.ylabel('pid_output &delta_angle[deg]')
+    plt.ylabel('pid_output & delta_angle[deg]')
     plt.plot(control_time, delta_angle)
     plt.show()
 
@@ -98,8 +98,8 @@ if __name__ == '__main__':
                 csvlist[1] = float(lis[1])
                 latlong_coord[1].append(round(float(lis[1]), 5))
                 writer.writerow(csvlist)
-            elif(line.count('compass_degree')):
-                lis = line.split("=")
+            elif(line.count('Compass Angle')):
+                lis = line.split(":")
                 compass[0].append(
                     vector_scale * math.sin(float(lis[1]) / 360 * 2 * math.pi))
                 compass[1].append(
@@ -107,7 +107,7 @@ if __name__ == '__main__':
             elif(line.count('2017')):
                 all_time.append(line)
                 lis = line.split(' ')
-                time_format.append(datetime.strptime(lis[4], '%H:%M:%S'))
+                time_format.append(datetime.strptime(lis[3], '%H:%M:%S'))
             elif(line.count('pid_output')):
                 lis = line.split("=")
                 pid_output.append(float(lis[1]))
