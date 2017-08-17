@@ -21,7 +21,7 @@ extern void gps_on(void);
 // Get the actual location
 extern void gps_location(loc_t *);
 
-
+extern void gps_flush(void);
 // Turn off device (low-power consumption)
 extern void gps_off(void);
 

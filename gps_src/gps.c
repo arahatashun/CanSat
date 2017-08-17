@@ -60,6 +60,11 @@ extern void gps_location(loc_t *coord) {
 	}
 }
 
+extern void gps_flush(void)
+{
+	serialFlush();
+}
+
 extern void gps_off(void) {
 	//Write off
 	serial_close();
