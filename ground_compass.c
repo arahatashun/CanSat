@@ -20,7 +20,7 @@ static const double KP_VALUE= 0.50625;
 static const double KI_VALUE = 0.00001625;
 static const double KD_VALUE = 0;
 static const int PID_LEN = 12;
-static const int STACK_COUNTER = 50;
+static const int STACK_COUNTER = 20;
 
 typedef struct dist_and_angle {
 	double angle_by_compass;//地磁気による向き
@@ -139,9 +139,8 @@ int stackJudge(Queue* latring,Queue* lonring)
 	{
 		printf("-------STACK JUDGEMENT------\n");
 		motor_escape();
-		//gps_flush();
-		//gps_off();
-		//gps_init();
+		gps_off();
+		gps_init();
 	}
 	return 0;
 }
