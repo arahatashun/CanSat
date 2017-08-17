@@ -15,7 +15,7 @@ static const int AOV = 62.2;//ANGLE OF VIEW
 //明度について
 static const int MAX_VALUE = 255;//明るさ最大
 static const int NO_VALUE = 0;//明るさ最小
-static const double MIN_AREA = 10;//抽出する面積の最小値
+static const double MIN_AREA = 0;//抽出する面積の最小値
 
 Camera::Camera()
 {
