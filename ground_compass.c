@@ -137,8 +137,9 @@ int stackJudge(Queue* latring,Queue* lonring)
 	printf("deltaMovement = %f\n", deltaMovement);
 	if(deltaMovement<STACK_THRESHOLD)
 	{
-		printf("STACK JUDGEMENT\n");
+		printf("-------STACK JUDGEMENT------\n");
 		motor_escape();
+		//gps_flush();
 		//gps_off();
 		//gps_init();
 	}
