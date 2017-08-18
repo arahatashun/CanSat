@@ -135,8 +135,8 @@ static int releaseSeq(Sequence *seq)
 		Accl acclflight;
 		Gyro gyroflight;
 		gps_location(&lflight);
-		readGyro(&gyroflight);
-		readAccl(&acclflight);
+		Gyro_read(&gyroflight);
+		Accl_read(&acclflight);
 		printf("latitude:%f longitude:%f altitude:%f\n",
 		       lflight.latitude,lflight.longitude,lflight.altitude);
 		printf("acclx:%f accly:%f acclz:%f\n",
