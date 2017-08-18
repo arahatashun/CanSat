@@ -131,7 +131,11 @@ static int releaseSeq(Sequence *seq)
 	while(!isTimeout(TIMEOUT_LUX,*seq))
 	{
 		loc_t lflight;
+		Accl acclglight;
+		Gyro gyroflight;
 		gps_location(&lflight);
+		readGyro(&gyroflight);
+		readAccl(&acclflight);
 		printf("latitude:%f longitude:%f altitude:%f\n",
 		       lflight.latitude,lflight.longitude,lflight.altitude);
 		xbeePrintf("latitude:%f longitude:%f altitude:%f\n",
@@ -257,7 +261,9 @@ int open_case(Sequence *seq)
 //TODO 電源瞬断対策復旧してシーケンス番号からのswitch-case文
 int main(void)
 {
+	
 	xbee_init();
+	acclGyro_initialize();
 	luxsensor_initialize();
 	gps_init();
 	Sequence sequence;
