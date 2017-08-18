@@ -4,8 +4,8 @@
 #include "camera.hpp"
 #include <vector>
 
-static const int WIDTH = 1920;
-static const int HEIGHT = 1080;
+//static const int WIDTH = 1920;
+//static const int HEIGHT = 1080;
 static const int FPS = 6;
 static const int DEVICE = 0;
 static const std::string DIRECTORY_PATH = "/home/pi/Pictures/";//pathの先頭
@@ -27,8 +27,8 @@ Camera::Camera()
 	{
 		std::cout<<"capture is not opened 2"<<std::endl;
 	}
-	capture.set(CV_CAP_PROP_FRAME_WIDTH,WIDTH);
-	capture.set(CV_CAP_PROP_FRAME_HEIGHT,HEIGHT);
+	//capture.set(CV_CAP_PROP_FRAME_WIDTH,WIDTH);
+	//capture.set(CV_CAP_PROP_FRAME_HEIGHT,HEIGHT);
 	capture.set(CV_CAP_PROP_FPS,FPS);
 	//以下 対応してない
 	//capture.set(CV_CAP_PROP_BUFFERSIZE, 1);
