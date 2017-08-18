@@ -17,5 +17,7 @@ int main()
 	pwm_initialize();
 	motor_forward(2000);
 	delay(2000);
+	motor_stop();
+	delay(100);
 	return 0;
 }
