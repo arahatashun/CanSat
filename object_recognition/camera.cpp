@@ -4,8 +4,8 @@
 #include "camera.hpp"
 #include <vector>
 
-//static const int WIDTH = 640;
-//static const int HEIGHT = 480;
+static const int WIDTH = 1920;
+static const int HEIGHT = 1080;
 static const int FPS = 6;
 static const int DEVICE = 0;
 static const std::string DIRECTORY_PATH = "/home/pi/Pictures/";//pathの先頭
@@ -15,7 +15,7 @@ static const int AOV = 62.2;//ANGLE OF VIEW
 //明度について
 static const int MAX_VALUE = 255;//明るさ最大
 static const int NO_VALUE = 0;//明るさ最小
-static const double MIN_AREA = 10;//抽出する面積の最小値
+static const double MIN_AREA = 5;//抽出する面積の最小値
 
 Camera::Camera()
 {
@@ -27,8 +27,8 @@ Camera::Camera()
 	{
 		std::cout<<"capture is not opened 2"<<std::endl;
 	}
-	//capture.set(CV_CAP_PROP_FRAME_WIDTH,WIDTH);
-	//capture.set(CV_CAP_PROP_FRAME_HEIGHT,HEIGHT);
+	capture.set(CV_CAP_PROP_FRAME_WIDTH,WIDTH);
+	capture.set(CV_CAP_PROP_FRAME_HEIGHT,HEIGHT);
 	capture.set(CV_CAP_PROP_FPS,FPS);
 	//以下 対応してない
 	//capture.set(CV_CAP_PROP_BUFFERSIZE, 1);
@@ -97,8 +97,8 @@ int Camera::binarize()
 	cv::cvtColor(input,hsv,CV_BGR2HSV);//入力画像(src)をhsv色空間(dst)に変換
 	//inRange(入力画像,下界画像,上界画像,出力画像)
 	//「HSV」は、色を色相(Hue)・彩度(Saturation)・明度(Value)
-	cv::inRange(hsv,cv::Scalar(0,160,0),cv::Scalar(8,255,MAX_VALUE),hsv_filtered15);
-	cv::inRange(hsv,cv::Scalar(175,160,0),cv::Scalar(180,255,MAX_VALUE),hsv_filtered180);
+	cv::inRange(hsv,cv::Scalar(0,120,0),cv::Scalar(8,255,MAX_VALUE),hsv_filtered15);
+	cv::inRange(hsv,cv::Scalar(175,120,0),cv::Scalar(180,255,MAX_VALUE),hsv_filtered180);
 	cv::add(hsv_filtered15,hsv_filtered180,hsv);
 	output = rmNoise(hsv);
 	imwrite(timePath+"BINARY"+FILE_EXTENTION,output);
