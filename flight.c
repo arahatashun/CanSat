@@ -214,14 +214,26 @@ static int isLanded(Queue* ring)
 	while(!is_full(ring))
 	{
 		loc_t lflight;
+		Accl acclflight;
+		Gyro gyroflight;
+		Gyro_read(&gyroflight);
+		Accl_read(&acclflight);
 		gps_location(&lflight);
 		time_t tcurrent;
 		time(&tcurrent);
 		printf("%s\n",ctime(&tcurrent));
 		printf("latitude:%f longitude:%f altitude:%f\n",
 		       lflight.latitude,lflight.longitude,lflight.altitude);
+		printf("acclx:%f accly:%f acclz:%f\n",
+		       acclflight.acclX_scaled,acclflight.acclY_scaled,acclflight.acclZ_scaled);
+		printf("gyrox:%f gyroy:%f gyroz:%f\n",
+		      gyroflight.gyroX_scaled,gyroflight.gyroY_scaled,gyroflight.gyroZ_scaled);
 		xbeePrintf("latitude:%f longitude:%f altitude:%f\n",
 		           lflight.latitude,lflight.longitude,lflight.altitude);
+		xbeePrintf("acclx:%f accly:%f acclz:%f\n",
+		       acclflight.acclX_scaled,acclflight.acclY_scaled,acclflight.acclZ_scaled);
+		xbeePrintf("gyrox:%f gyroy:%f gyroz:%f\n",
+		      gyroflight.gyroX_scaled,gyroflight.gyroY_scaled,gyroflight.gyroZ_scaled);
 		enqueue(ring,lflight.altitude);
 		sleep(GPS_ALT_INTERVAL);
 	}
