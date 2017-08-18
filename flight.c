@@ -132,7 +132,7 @@ static int releaseSeq(Sequence *seq)
 	while(!isTimeout(TIMEOUT_LUX,*seq))
 	{
 		loc_t lflight;
-		Accl acclglight;
+		Accl acclflight;
 		Gyro gyroflight;
 		gps_location(&lflight);
 		readGyro(&gyroflight);
