@@ -5,8 +5,8 @@
 //note: seikei toukei ni izon
 
 
-static const double target_latitude = 40.142338;//緯度
-static const double target_longitude = 139.987257;//経度
+static const double target_latitude = 40.142345;//緯度
+static const double target_longitude = 139.987252;//経度
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
 
