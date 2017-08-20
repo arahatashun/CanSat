@@ -8,5 +8,5 @@ Runback 1st prize
 
 ||record|time|weight|
 |:--|:--:|:--:|:--:|
-|1st experiment|0m|14m24s|1039g|
+|1st experiment|0.00m|14m24s|1039g|
 |2nd experimetn|0.08m|7m47s|1027g|
