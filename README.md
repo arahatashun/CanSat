@@ -3,7 +3,7 @@
 This is the University of Tokyo team THE-O's repository for Noshiro Space
 Event and ARLISS 2017.
 
-## Nosihro Space Event 2017  Result
+## Noshiro Space Event 2017  Result
 Runback 1st prize
 
 ||record|time|weight|
