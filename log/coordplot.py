@@ -13,6 +13,8 @@ compass = [[], []]  # 地磁気のxy成分をそれぞれ格納
 all_time = []  # 年月曜日日時を格納するリストを用意
 time_format = []  # datetime型の時間を格納するリストを用意
 control_time = []  # 制御開始時間を0として
+p_output = []  # p_outputを格納するリストを用意
+i_output = []  # i_outputを格納するリストを用意
 pid_output = []  # pid_outputを格納するリストを用意
 delta_angle = []  # 目的地と向いてる角度の偏差を格納するリストを用意
 
@@ -59,7 +61,9 @@ def plot_coordinate(latlong_coord, compass):
     plt.show()
 
 
-def plot_pid_compass(control_time, pid_output, delta_angle):
+def plot_pid_compass(control_time, p_output, i_output, pid_output, delta_angle):
+    plt.plot(control_time, p_output, label='p_output', color='r')
+    plt.plot(control_time, i_output, label='i_output', color='y')
     plt.plot(control_time, pid_output, label='pid_output', color='g')
     plt.plot(control_time, delta_angle, label='delta_angle', color='b')
     plt.legend()
@@ -108,6 +112,12 @@ if __name__ == '__main__':
                 all_time.append(line)
                 lis = line.split(' ')
                 time_format.append(datetime.strptime(lis[3], '%H:%M:%S'))
+            elif(line.count('Kp_output')):
+                lis = line.split(":")
+                p_output.append(float(lis[1]))
+            elif(line.count('Ki_output')):
+                lis = line.split(":")
+                i_output.append(float(lis[1]))
             elif(line.count('pid_output')):
                 lis = line.split("=")
                 pid_output.append(float(lis[1]))
@@ -115,7 +125,9 @@ if __name__ == '__main__':
                 lis = line.split(':')
                 delta_angle.append(lis[1])
     txt.close
-
+    print(len(p_output))
+    print(len(i_output))
+    print(len(pid_output))
     print("control start time(GBT) is {0}".format(all_time[0]))
     print("control end time(GBT) is {0}".format(all_time[-1]))
     print("distance from control start point to goal is {0}[m]\n".format(
@@ -135,4 +147,5 @@ if __name__ == '__main__':
         control_time.append(delta_time.seconds / 60)
 
     plot_coordinate(latlong_coord, compass)
-    plot_pid_compass(control_time, pid_output, delta_angle)
+    plot_pid_compass(control_time,  p_output,
+                     i_output, pid_output, delta_angle)

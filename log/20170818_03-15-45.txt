@@ -1,0 +1,1025 @@
+lastTime - startTime 0
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 0
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 3
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 4
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 6
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 8
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 9
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 10
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 12
+面積のPercentageは1.47135
+MOTOR forward
+MOTOR stop
+lastTime - startTime 13
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 15
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 17
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 18
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 20
+面積のPercentageは2.25521
+MOTOR forward
+MOTOR stop
+lastTime - startTime 21
+面積のPercentageは3.87012
+MOTOR forward
+MOTOR stop
+lastTime - startTime 23
+面積のPercentageは9.15169
+MOTOR forward
+MOTOR stop
+lastTime - startTime 25
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 27
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 28
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 30
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 31
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 33
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 34
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 36
+面積のPercentageは26.9948
+MOTOR forward
+MOTOR stop
+lastTime - startTime 37
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 39
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 40
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 42
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 43
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 45
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 46
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 48
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 49
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 51
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 52
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 54
+面積のPercentageは28.3298
+MOTOR forward
+MOTOR stop
+lastTime - startTime 55
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 57
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 59
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 60
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 62
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 63
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 65
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 66
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 68
+面積のPercentageは37.0602
+MOTOR forward
+MOTOR stop
+lastTime - startTime 69
+面積のPercentageは83.9118
+MOTOR forward
+MOTOR stop
+lastTime - startTime 71
+面積のPercentageは51.3135
+MOTOR forward
+MOTOR stop
+lastTime - startTime 73
+面積のPercentageは15.3066
+MOTOR forward
+MOTOR stop
+lastTime - startTime 75
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 76
+面積のPercentageは58.194
+MOTOR forward
+MOTOR stop
+lastTime - startTime 78
+面積のPercentageは69.5192
+MOTOR forward
+MOTOR stop
+lastTime - startTime 80
+面積のPercentageは63.2959
+MOTOR forward
+MOTOR stop
+lastTime - startTime 82
+面積のPercentageは53.3695
+MOTOR forward
+MOTOR stop
+lastTime - startTime 83
+面積のPercentageは54.1048
+MOTOR forward
+MOTOR stop
+lastTime - startTime 85
+面積のPercentageは49.9421
+MOTOR forward
+MOTOR stop
+lastTime - startTime 87
+面積のPercentageは48.4098
+MOTOR forward
+MOTOR stop
+lastTime - startTime 89
+面積のPercentageは56.9049
+MOTOR forward
+MOTOR stop
+lastTime - startTime 91
+面積のPercentageは0.256836
+MOTOR forward
+MOTOR stop
+lastTime - startTime 92
+面積のPercentageは0.564128
+MOTOR forward
+MOTOR stop
+lastTime - startTime 94
+面積のPercentageは1.7487
+MOTOR forward
+MOTOR stop
+lastTime - startTime 96
+面積のPercentageは0.0589193
+MOTOR right
+MOTOR stop
+lastTime - startTime 98
+面積のPercentageは3.4362
+MOTOR forward
+MOTOR stop
+lastTime - startTime 100
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 102
+面積のPercentageは0.0777995
+MOTOR right
+MOTOR stop
+lastTime - startTime 104
+面積のPercentageは0.576823
+MOTOR forward
+MOTOR stop
+lastTime - startTime 105
+面積のPercentageは0.0061849
+MOTOR right
+MOTOR stop
+lastTime - startTime 107
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 108
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 110
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 112
+面積のPercentageは0.0104167
+MOTOR right
+MOTOR stop
+lastTime - startTime 113
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 114
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 116
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 117
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 119
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 120
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 122
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 123
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 125
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 127
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 128
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 129
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 131
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 132
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 134
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 136
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 137
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 139
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 140
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 142
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 143
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 145
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 146
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 148
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 149
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 151
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 152
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 154
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 155
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 157
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 158
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 160
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 161
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 163
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 164
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 166
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 167
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 169
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 170
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 172
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 173
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 175
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 176
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 178
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 179
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 181
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 182
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 184
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 185
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 187
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 188
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 190
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 191
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 193
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 194
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 196
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 197
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 199
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 200
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 202
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 203
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 206
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 208
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 209
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 211
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 212
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 214
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 215
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 217
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 218
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 220
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 221
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 223
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 225
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 226
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 228
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 229
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 231
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 232
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 234
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 235
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 237
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 238
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 240
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 241
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 243
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 244
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 246
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 247
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 249
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 250
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 252
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 253
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 255
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 256
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 258
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 259
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 261
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 262
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 264
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 265
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 267
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 268
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 270
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 271
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 273
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 274
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 276
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 279
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 280
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 282
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 283
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 285
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 286
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 288
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 289
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 291
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 292
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 294
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 296
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 297
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 299
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 300
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 302
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 303
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 305
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 307
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 308
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 310
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 311
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 313
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 315
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 317
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 318
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 320
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 321
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 323
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 324
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 326
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 327
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 329
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 330
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 332
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 333
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 335
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 336
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 338
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 339
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 341
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 342
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 344
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 345
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 347
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 348
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 350
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 352
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 354
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 355
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 357
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 358
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 360
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 362
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 364
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 365
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 367
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 368
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 370
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 371
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 373
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 374
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 376
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 377
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 379
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 380
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 382
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 383
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 385
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 386
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 388
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 389
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 391
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 392
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 394
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 395
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 397
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+lastTime - startTime 398
+面積のPercentageは0
+MOTOR right
+MOTOR stop
+TIME IS OUT

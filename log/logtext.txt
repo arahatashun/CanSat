@@ -1,0 +1,9 @@
+control start time(GBT) is Fri Aug 18 03:09:43 2017
+
+control end time(GBT) is Fri Aug 18 03:15:42 2017
+
+distance from control start point to goal is 42.3894[m]
+
+distance from control end point to goal is 5.4299[m]
+
+distance from control start point to control end point is 47.6676[m]

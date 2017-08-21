@@ -1,0 +1,396 @@
+luxsensor wiringPiI2CSetup success
+Cannot open sequence.txt
+180 seconds to release judgement
+179 seconds to release judgement
+178 seconds to release judgement
+177 seconds to release judgement
+176 seconds to release judgement
+175 seconds to release judgement
+174 seconds to release judgement
+173 seconds to release judgement
+172 seconds to release judgement
+171 seconds to release judgement
+170 seconds to release judgement
+169 seconds to release judgement
+168 seconds to release judgement
+167 seconds to release judgement
+166 seconds to release judgement
+165 seconds to release judgement
+164 seconds to release judgement
+163 seconds to release judgement
+162 seconds to release judgement
+161 seconds to release judgement
+160 seconds to release judgement
+159 seconds to release judgement
+158 seconds to release judgement
+157 seconds to release judgement
+156 seconds to release judgement
+155 seconds to release judgement
+154 seconds to release judgement
+153 seconds to release judgement
+152 seconds to release judgement
+151 seconds to release judgement
+150 seconds to release judgement
+149 seconds to release judgement
+148 seconds to release judgement
+147 seconds to release judgement
+146 seconds to release judgement
+145 seconds to release judgement
+144 seconds to release judgement
+143 seconds to release judgement
+142 seconds to release judgement
+141 seconds to release judgement
+140 seconds to release judgement
+139 seconds to release judgement
+138 seconds to release judgement
+137 seconds to release judgement
+136 seconds to release judgement
+135 seconds to release judgement
+134 seconds to release judgement
+133 seconds to release judgement
+132 seconds to release judgement
+131 seconds to release judgement
+130 seconds to release judgement
+129 seconds to release judgement
+128 seconds to release judgement
+127 seconds to release judgement
+126 seconds to release judgement
+125 seconds to release judgement
+124 seconds to release judgement
+123 seconds to release judgement
+122 seconds to release judgement
+121 seconds to release judgement
+120 seconds to release judgement
+119 seconds to release judgement
+118 seconds to release judgement
+117 seconds to release judgement
+116 seconds to release judgement
+115 seconds to release judgement
+114 seconds to release judgement
+113 seconds to release judgement
+112 seconds to release judgement
+111 seconds to release judgement
+110 seconds to release judgement
+109 seconds to release judgement
+108 seconds to release judgement
+107 seconds to release judgement
+106 seconds to release judgement
+105 seconds to release judgement
+104 seconds to release judgement
+103 seconds to release judgement
+102 seconds to release judgement
+101 seconds to release judgement
+100 seconds to release judgement
+99 seconds to release judgement
+98 seconds to release judgement
+97 seconds to release judgement
+96 seconds to release judgement
+95 seconds to release judgement
+94 seconds to release judgement
+93 seconds to release judgement
+92 seconds to release judgement
+91 seconds to release judgement
+90 seconds to release judgement
+89 seconds to release judgement
+88 seconds to release judgement
+87 seconds to release judgement
+86 seconds to release judgement
+85 seconds to release judgement
+84 seconds to release judgement
+83 seconds to release judgement
+82 seconds to release judgement
+81 seconds to release judgement
+80 seconds to release judgement
+79 seconds to release judgement
+78 seconds to release judgement
+77 seconds to release judgement
+76 seconds to release judgement
+75 seconds to release judgement
+74 seconds to release judgement
+73 seconds to release judgement
+72 seconds to release judgement
+71 seconds to release judgement
+70 seconds to release judgement
+69 seconds to release judgement
+68 seconds to release judgement
+67 seconds to release judgement
+66 seconds to release judgement
+65 seconds to release judgement
+64 seconds to release judgement
+63 seconds to release judgement
+62 seconds to release judgement
+61 seconds to release judgement
+60 seconds to release judgement
+59 seconds to release judgement
+58 seconds to release judgement
+57 seconds to release judgement
+56 seconds to release judgement
+55 seconds to release judgement
+54 seconds to release judgement
+53 seconds to release judgement
+52 seconds to release judgement
+51 seconds to release judgement
+50 seconds to release judgement
+49 seconds to release judgement
+48 seconds to release judgement
+47 seconds to release judgement
+46 seconds to release judgement
+45 seconds to release judgement
+44 seconds to release judgement
+43 seconds to release judgement
+42 seconds to release judgement
+41 seconds to release judgement
+40 seconds to release judgement
+39 seconds to release judgement
+38 seconds to release judgement
+37 seconds to release judgement
+36 seconds to release judgement
+35 seconds to release judgement
+34 seconds to release judgement
+33 seconds to release judgement
+32 seconds to release judgement
+31 seconds to release judgement
+30 seconds to release judgement
+29 seconds to release judgement
+28 seconds to release judgement
+27 seconds to release judgement
+26 seconds to release judgement
+25 seconds to release judgement
+24 seconds to release judgement
+23 seconds to release judgement
+22 seconds to release judgement
+21 seconds to release judgement
+20 seconds to release judgement
+19 seconds to release judgement
+18 seconds to release judgement
+17 seconds to release judgement
+16 seconds to release judgement
+15 seconds to release judgement
+14 seconds to release judgement
+13 seconds to release judgement
+12 seconds to release judgement
+11 seconds to release judgement
+10 seconds to release judgement
+9 seconds to release judgement
+8 seconds to release judgement
+7 seconds to release judgement
+6 seconds to release judgement
+5 seconds to release judgement
+4 seconds to release judgement
+3 seconds to release judgement
+2 seconds to release judgement
+1 seconds to release judgement
+write sequence 1:Fri Aug 18 03:07:32 2017
+
+write sequence success
+FIRST SEQUENCE START
+diffmin:0.000000
+latitude:40.142572 longitude:139.987378 altitude:25.800000
+light:121
+isLight False
+diffmin:0.050000
+latitude:40.142578 longitude:139.987370 altitude:25.900000
+light:30
+isLight False
+diffmin:0.083333
+latitude:40.142582 longitude:139.987358 altitude:26.000000
+light:29
+isLight False
+diffmin:0.133333
+latitude:40.142587 longitude:139.987348 altitude:26.100000
+light:29
+isLight False
+diffmin:0.166667
+latitude:40.142590 longitude:139.987335 altitude:26.200000
+light:27
+isLight False
+diffmin:0.216667
+latitude:40.142597 longitude:139.987320 altitude:26.400000
+light:26
+isLight False
+diffmin:0.250000
+latitude:40.142602 longitude:139.987307 altitude:26.500000
+light:29
+isLight False
+diffmin:0.300000
+latitude:40.142605 longitude:139.987293 altitude:26.600000
+light:27
+isLight False
+diffmin:0.333333
+latitude:40.142615 longitude:139.987278 altitude:26.700000
+light:24
+isLight False
+diffmin:0.383333
+latitude:40.142620 longitude:139.987270 altitude:26.900000
+light:25
+isLight False
+diffmin:0.416667
+latitude:40.142625 longitude:139.987258 altitude:27.000000
+light:43
+isLight False
+diffmin:0.466667
+latitude:40.142628 longitude:139.987245 altitude:27.200000
+light:37
+isLight False
+diffmin:0.500000
+latitude:40.142637 longitude:139.987230 altitude:27.300000
+light:39
+isLight False
+diffmin:0.550000
+latitude:40.142643 longitude:139.987218 altitude:27.400000
+light:35
+isLight False
+diffmin:0.583333
+latitude:40.142652 longitude:139.987205 altitude:27.600000
+light:39
+isLight False
+diffmin:0.633333
+latitude:40.142660 longitude:139.987190 altitude:27.600000
+light:35
+isLight False
+diffmin:0.666667
+latitude:40.142662 longitude:139.987175 altitude:27.700000
+light:43
+isLight False
+diffmin:0.716667
+latitude:40.142663 longitude:139.987165 altitude:27.700000
+light:34
+isLight False
+diffmin:0.750000
+latitude:40.142662 longitude:139.987158 altitude:27.800000
+light:37
+isLight False
+diffmin:0.800000
+latitude:40.142660 longitude:139.987155 altitude:27.900000
+light:30
+isLight False
+diffmin:0.833333
+latitude:40.142658 longitude:139.987153 altitude:28.000000
+light:35
+isLight False
+diffmin:0.883333
+latitude:40.142657 longitude:139.987152 altitude:28.100000
+light:33
+isLight False
+diffmin:0.916667
+latitude:40.142657 longitude:139.987153 altitude:28.100000
+light:34
+isLight False
+diffmin:0.966667
+latitude:40.142657 longitude:139.987157 altitude:28.100000
+light:33
+isLight False
+diffmin:1.000000
+latitude:40.142655 longitude:139.987157 altitude:28.000000
+light:32
+isLight False
+diffmin:1.050000
+latitude:40.142655 longitude:139.987155 altitude:28.100000
+light:27
+isLight False
+diffmin:1.083333
+latitude:40.142653 longitude:139.987153 altitude:28.200000
+light:12784
+isLight True
+light_counter:1
+diffmin:1.133333
+latitude:40.142653 longitude:139.987152 altitude:28.300000
+light:13345
+isLight True
+light_counter:2
+diffmin:1.166667
+latitude:40.142652 longitude:139.987150 altitude:28.300000
+light:12201
+isLight True
+light_counter:3
+diffmin:1.216667
+latitude:40.142652 longitude:139.987148 altitude:28.400000
+light:11510
+isLight True
+light_counter:4
+diffmin:1.250000
+latitude:40.142650 longitude:139.987147 altitude:28.400000
+light:10864
+isLight True
+light_counter:5
+diffmin:1.300000
+latitude:40.142650 longitude:139.987145 altitude:28.500000
+light:15105
+isLight True
+light_counter:6
+diffmin:1.333333
+latitude:40.142650 longitude:139.987143 altitude:28.500000
+light:2139
+isLight True
+light_counter:7
+diffmin:1.383333
+latitude:40.142648 longitude:139.987143 altitude:28.500000
+light:23333
+isLight True
+light_counter:8
+diffmin:1.416667
+latitude:40.142648 longitude:139.987142 altitude:28.500000
+light:24973
+isLight True
+light_counter:9
+diffmin:1.466667
+latitude:40.142648 longitude:139.987140 altitude:28.500000
+light:29341
+isLight True
+light_counter:10
+release complete:lux sensor
+write sequence 2:Fri Aug 18 03:09:00 2017
+
+write sequence success
+Landing Sequence
+diffmin:0.000000
+Fri Aug 18 03:09:00 2017
+
+latitude:40.142648 longitude:139.987140 altitude:28.500000
+Fri Aug 18 03:09:02 2017
+
+latitude:40.142648 longitude:139.987138 altitude:28.600000
+Fri Aug 18 03:09:04 2017
+
+latitude:40.142648 longitude:139.987138 altitude:28.600000
+Fri Aug 18 03:09:06 2017
+
+latitude:40.142648 longitude:139.987137 altitude:28.600000
+Fri Aug 18 03:09:08 2017
+
+latitude:40.142648 longitude:139.987135 altitude:28.600000
+Fri Aug 18 03:09:10 2017
+
+latitude:40.142648 longitude:139.987133 altitude:28.600000
+Fri Aug 18 03:09:12 2017
+
+latitude:40.142648 longitude:139.987132 altitude:28.600000
+Fri Aug 18 03:09:14 2017
+
+latitude:40.142648 longitude:139.987130 altitude:28.600000
+Fri Aug 18 03:09:16 2017
+
+latitude:40.142648 longitude:139.987130 altitude:28.600000
+Fri Aug 18 03:09:18 2017
+
+latitude:40.142650 longitude:139.987128 altitude:28.600000
+VARIATION :0.100000
+ALT IS LOW
+ALT IS STABLE and LOW
+landing_complete:landed
+write sequence 3:Fri Aug 18 03:09:20 2017
+
+write sequence success
+started open case sequence
+wiringPisetup success
+first cut start
+count:1
+count:2
+first cut end
+second cut start
+count:1
+count:2
+second cut end
+write sequence 4:Fri Aug 18 03:09:40 2017
+
+write sequence success
