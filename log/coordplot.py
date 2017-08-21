@@ -125,9 +125,14 @@ if __name__ == '__main__':
                 lis = line.split(':')
                 delta_angle.append(lis[1])
     txt.close
+    print(len(latlong_coord[0]))
+    print(len(latlong_coord[1]))
+    print(len(compass[0]))
+    print(len(compass[1]))
     print(len(p_output))
     print(len(i_output))
     print(len(pid_output))
+    print(len(delta_angle))
     print("control start time(GBT) is {0}".format(all_time[0]))
     print("control end time(GBT) is {0}".format(all_time[-1]))
     print("distance from control start point to goal is {0}[m]\n".format(
@@ -146,6 +151,7 @@ if __name__ == '__main__':
         delta_time = time_format[i] - time_format[0]
         control_time.append(delta_time.seconds / 60)
 
+    print(len(control_time))
     plot_coordinate(latlong_coord, compass)
     plot_pid_compass(control_time,  p_output,
                      i_output, pid_output, delta_angle)
