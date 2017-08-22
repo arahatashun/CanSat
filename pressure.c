@@ -4,6 +4,7 @@
 
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
+#include <math.h>
 
 #define BME280_ADDRESS 0x76
 unsigned long int hum_raw,temp_raw,pres_raw;
@@ -29,6 +30,8 @@ int dig_H5;
 char  dig_H6;
 
 static int dev;
+double dPOFIX = 1013;
+double GROUND_ALT = 21;
 
 static int init_dev(void)
 {
@@ -170,6 +173,23 @@ unsigned long int calibration_H(signed long int adc_H)
    return (unsigned long int)(v_x1 >> 12);
 }
 
+double cal_alt(double temp,double pressure)
+{
+    double dpow = 1.0/5.256;
+    double dP0 = 1013.25;
+    double alt = 0.0;
+    alt = (pow(dP0/pressure,dpow)-pow(dP0/dPOFIX,dpow))
+    *(temp+273.15)/0.0065;
+    return alt;
+}
+
+double cal_dpofix(double temp,double pressure)
+{
+    dPOFIX = pressure
+    *pow(1-0.0065*GROUND_ALT/(temp+0.0065*GROUND_ALT+273.15),-5.257);
+    printf("dPOFIX:%f",dPOFIX);
+}
+
 void main(int argc, char **argv)
 {
     unsigned char osrs_t = 1;             //Temperature oversampling x 1
@@ -185,7 +205,7 @@ void main(int argc, char **argv)
     unsigned char ctrl_hum_reg  = osrs_h;
 
 
-    double temp_act = 0.0, press_act = 0.0,hum_act=0.0;
+    double temp_act = 0.0, press_act = 0.0, hum_act=0.0, altitude=0.0;
     signed long int temp_cal;
     unsigned long int press_cal,hum_cal;
 
@@ -195,7 +215,16 @@ void main(int argc, char **argv)
     writeReg(0xF2,ctrl_hum_reg);
     writeReg(0xF4,ctrl_meas_reg);
     writeReg(0xF5,config_reg);
-    readTrim();                    //
+    readTrim();
+   
+    readData();
+    temp_cal = calibration_T(temp_raw);
+    press_cal = calibration_P(pres_raw);
+    hum_cal = calibration_H(hum_raw);
+    temp_act = (double)temp_cal / 100.0;
+    press_act = (double)press_cal / 100.0;
+    hum_act = (double)hum_cal / 1024.0;
+    cal_dpofix(temp_act,press_act);
 
     while(1)
     {
@@ -208,7 +237,9 @@ void main(int argc, char **argv)
         temp_act = (double)temp_cal / 100.0;
         press_act = (double)press_cal / 100.0;
         hum_act = (double)hum_cal / 1024.0;
-        printf("TEMP :%f  DegC  PRESS :%f  hPa  HUM :%f \n",temp_act,press_act,hum_act);
+        altitude = cal_alt(temp_act,press_act);
 
+        printf("TEMP :%f  DegC  PRESS :%f  hPa  HUM :%f ALT :%f\n",temp_act,press_act,hum_act,altitude);
+        
     }
 }
