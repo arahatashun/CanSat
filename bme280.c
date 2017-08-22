@@ -59,7 +59,7 @@ int main() {
     printf("Device not found");
     return -1;
   }
-
+while(1){
   bme280_calib_data cal;
   readCalibrationData(fd, &cal);
 
@@ -67,6 +67,8 @@ int main() {
   wiringPiI2CWriteReg8(fd, 0xf4, 0x25);   // pressure and temperature oversampling x 1, mode normal
 
   bme280_raw_data raw;
+ 
+  delay(1000);        
   getRawData(fd, &raw);
 
   int32_t t_fine = getTemperatureCalibration(&cal, raw.temperature);
@@ -78,7 +80,7 @@ int main() {
   printf("{\"sensor\":\"bme280\", \"humidity\":%.2f, \"pressure\":%.2f,"
     " \"temperature\":%.2f, \"altitude\":%.2f, \"timestamp\":%d}\n",
     h, p, t, a, (int)time(NULL));
-
+}
   return 0;
 }
 
@@ -205,6 +207,3 @@ float getAltitude(float pressure) {
   return 44330.0 * (1.0 - pow(pressure / MEAN_SEA_LEVEL_PRESSURE, 0.190294957));
 }
 
-int main(){
-  
-}
