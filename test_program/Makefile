@@ -32,3 +32,9 @@ compass:motor.o
 
 motor.o:
 	gcc -c ../motor.c $(LIBS)
+
+buffer:
+	gcc -o buffer.out gps_havebuffer.c $(LIBS) -lgps -lm
+
+nobuffer:
+	gcc -o nobuffer.out gps_nobuffer.c $(LIBS) -lgps -lm
