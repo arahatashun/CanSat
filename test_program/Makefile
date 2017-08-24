@@ -37,7 +37,7 @@ compass:motor.o
 	gcc -o compass.out compass_test.c ../compass.c motor.o $(LIBS) -lm
 
 bme280.o:
-	gcc -c -Wall ../bne280.c $(LIBS) -lm
+	gcc -c -Wall ../bme280.c $(LIBS) -lm
 
 motor.o:
 	gcc -c ../motor.c $(LIBS)
