@@ -4,7 +4,7 @@
 #include <time.h>
 #include <math.h>
 #include <wiringPiI2C.h>
-#include "bme280.h"
+#include "../bme280.h"
 
 int main() {
 

@@ -165,7 +165,7 @@ void getRawData(int fd, bme280_raw_data *raw) {
 }
 
 float cal_sealevel_pressure(float pressure,float temperature,float altitude){
-  return p * pow(1-0.0065*altitude/(0.0065*altitude + temp + 273.15),-5.257)
+  return pressure * pow(1-0.0065*altitude/(0.0065*altitude + temperature + 273.15),-5.257);
 }
 
 float getAltitude(float pressure,float temperature) {
