@@ -139,9 +139,9 @@ typedef struct
 
 typedef struct
 {
-	uint32_t temperature[10];
-	uint32_t pressure[10];
-	uint32_t humidity[10];
+	uint32_t temperatureList[10];
+	uint32_t pressureList[10];
+	uint32_t humidityList[10];
 } bme280_data_list;
 
 typedef struct
