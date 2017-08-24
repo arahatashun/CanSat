@@ -289,11 +289,6 @@ static void getRawData(bme280_raw_data *raw)
 	}
 }
 
-float cal_sealevel_pressure(float pressure,float temperature,float altitude)
-{
-	return pressure * pow(1-0.0065*altitude/(0.0065*altitude + temperature + 273.15),-5.257);
-}
-
 float getAltitude(float pressure,float temperature)
 {
 	// Equation taken from BMP180 datasheet (page 16):
@@ -308,7 +303,7 @@ float getAltitude(float pressure,float temperature)
 }
 
 //lock用、指定した値にlockされてたらreturn1する
-static int isLocked(uint32_t* values,const int lock)
+static int isLocked(uint32_t* values,const uint32_t lock)
 {
 	int len = 10; //配列の要素数を取得
 	int lock_count = 0;
@@ -322,14 +317,14 @@ static int isLocked(uint32_t* values,const int lock)
 }
 
 //uint32_t型用の比較関数
-static int uint32_tCmp (const void* p, const void* q)
+static int uint32_tCmp(const void* p, const void* q)
 {
 	return *(uint32_t*)p - *(uint32_t*)q;
 }
 
 int getRawList(bme280_data_list* data)
 {
-  int i=0;
+  int i;
   for(i=0;i++;i<10)
   {
   bme280_raw_data raw;
@@ -339,9 +334,9 @@ int getRawList(bme280_data_list* data)
   data->humidityList[i]= raw->humidity;
   delay(10);
   }
-  qsort(data->temperatureList,10, sizeof(uint32_t), sCmp);
-	qsort(data->pressureList,10, sizeof(uint32_t), sCmp);
-	qsort(data->humidityList,10, sizeof(uint32_t), sCmp);
+  qsort(data->temperatureList,10, sizeof(uint32_t), uint32_tCmp);
+	qsort(data->pressureList,10, sizeof(uint32_t), uint32_tCmp);
+	qsort(data->humidityList,10, sizeof(uint32_t), uint32_tCmp);
   return 0;
 }
 
@@ -364,7 +359,9 @@ int getProcessedData(bme280_processed_data* data)
 	data->humidity = list.humidityList[4];
 }
 
-float readPressure(void)
+
+
+float readAltitude(void)
 {
   bme280_processed_data data;
   getProcessedData(&data);
@@ -373,6 +370,19 @@ float readPressure(void)
 	float p = compensatePressure(data.pressure, &cal, t_fine) / 100;// hPa
 	float h = compensateHumidity(data.humidity, &cal, t_fine);// %
 	float a = getAltitude(p); // meters
-	printf("pressure\":%f\naltitude\":%f\n",p,a);
+	printf("pressure:%f\naltitude:%f\n",p,a);
 	return a;
+}
+
+float getSealevelPressure(float altitude)
+{
+  bme280_processed_data data;
+  getProcessedData(&data);
+	int32_t t_fine = getTemperatureCalibration(&cal, data.temperature);
+	float t = compensateTemperature(t_fine); // C
+	float p = compensatePressure(data.pressure, &cal, t_fine) / 100;// hPa
+	float h = compensateHumidity(data.humidity, &cal, t_fine);// %
+  float sealevelPressure = p* pow(1-0.0065*altitude/(0.0065*altitude + t + 273.15),-5.257);
+  printf("%f\n",sealevelPressure);
+	return sealevelPressure;
 }
