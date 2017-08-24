@@ -113,6 +113,7 @@ typedef struct
 	int16_t dig_H5;
 	int8_t dig_H6;
 } bme280_calib_data;
+
 static const bme280_calib_data cal;
 /*
  * Raw sensor measurement data from bme280
@@ -165,7 +166,7 @@ int bme280_initialize()
 	else
 	{
 		printf("BME280 wiringPiI2CSetup success\n");
-		readCalibrationData(fd, &cal);
+		readCalibrationData(&cal);
 		wiringPiI2CWriteReg8(fd, 0xf2, 0x01); // humidity oversampling x 1
 		wiringPiI2CWriteReg8(fd, 0xf4, 0x25); // pressure and temperature oversampling x 1, mode normal
 	}
