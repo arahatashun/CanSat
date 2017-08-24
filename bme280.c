@@ -86,7 +86,7 @@ static const int BME280_REGISTER_HUMIDDATA = 0xFD;
 //海水面気圧
 //TODO 計算値の書き換え
 static const float MEAN_SEA_LEVEL_PRESSURE = 1005.6;
-
+static const int LOCL_COUNTER_MAX = 50;
 static int fd = 0;
 /*
  * Immutable calibration data read from bme280
@@ -334,7 +334,6 @@ int getRawList(bme280_data_list* data)
 		getRawData(&raw);
 		data->temperatureList[i] = raw.temperature;
 		data->pressureList[i] = raw.pressure;
-		printf("%f\n",raw.pressure);
 		data->humidityList[i]= raw.humidity;
 		delay(10);
 	}
@@ -349,7 +348,7 @@ int getProcessedData(bme280_processed_data* data)
 	bme280_data_list list;
 	getRawList(&list);
 	int LockCounter = 0;
-	while(isLocked(list.pressureList,list.pressureList[0])&&(LockCounter<100))
+	while(isLocked(list.pressureList,list.pressureList[0])&&(LockCounter<LOCL_COUNTER_MAX))
 	{
 		printf("WARNING Pressure lock\n");
 		printf("LockCounter %d\n",LockCounter);
