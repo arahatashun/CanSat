@@ -52,38 +52,6 @@ https://github.com/adafruit/Adafruit_BME280_Library/blob/master/Adafruit_BME280.
 #include <wiringPiI2C.h>
 #include "bme280.h"
 
-/*int main() {
-
-  int fd = wiringPiI2CSetup(BME280_ADDRESS);
-  if(fd < 0) {
-    printf("Device not found");
-    return -1;
-  }
-while(1){
-  bme280_calib_data cal;
-  readCalibrationData(fd, &cal);
-
-  wiringPiI2CWriteReg8(fd, 0xf2, 0x01);   // humidity oversampling x 1
-  wiringPiI2CWriteReg8(fd, 0xf4, 0x25);   // pressure and temperature oversampling x 1, mode normal
-
-  bme280_raw_data raw;
-
-  delay(1000);
-  getRawData(fd, &raw);
-
-  int32_t t_fine = getTemperatureCalibration(&cal, raw.temperature);
-  float t = compensateTemperature(t_fine); // C
-  float p = compensatePressure(raw.pressure, &cal, t_fine) / 100; // hPa
-  float h = compensateHumidity(raw.humidity, &cal, t_fine);       // %
-  float a = getAltitude(p,t);                         // meters
-
-  printf("{\"sensor\":\"bme280\", \"humidity\":%.2f, \"pressure\":%.2f,"
-    " \"temperature\":%.2f, \"altitude\":%.2f, \"timestamp\":%d}\n",
-    h, p, t, a, (int)time(NULL));
-}
-  return 0;
-}*/
-
 int32_t getTemperatureCalibration(bme280_calib_data *cal, int32_t adc_T) {
   int32_t var1  = ((((adc_T>>3) - ((int32_t)cal->dig_T1 <<1))) *
      ((int32_t)cal->dig_T2)) >> 11;
@@ -194,6 +162,10 @@ void getRawData(int fd, bme280_raw_data *raw) {
   raw->humidity = 0;
   raw->humidity = (raw->humidity | raw->hmsb) << 8;
   raw->humidity = (raw->humidity | raw->hlsb);
+}
+
+float cal_sealevel_pressure(float pressure,float temperature,float altitude){
+  return p * pow(1-0.0065*altitude/(0.0065*altitude + temp + 273.15),-5.257)
 }
 
 float getAltitude(float pressure,float temperature) {

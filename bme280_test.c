@@ -6,15 +6,13 @@
 #include <wiringPiI2C.h>
 #include "bme280.h"
 
-static const float ALTITUDE = 21.0 //現在地の高度
-
 int main() {
+
   int fd = wiringPiI2CSetup(BME280_ADDRESS);
   if(fd < 0) {
     printf("Device not found");
     return -1;
   }
-
 while(1){
   bme280_calib_data cal;
   readCalibrationData(fd, &cal);
@@ -31,10 +29,10 @@ while(1){
   float t = compensateTemperature(t_fine); // C
   float p = compensatePressure(raw.pressure, &cal, t_fine) / 100; // hPa
   float h = compensateHumidity(raw.humidity, &cal, t_fine);       // %
-  float p_0 = cal_sealevel_pressure(p,t,ALTITUDE)
+  float a = getAltitude(p,t);                         // meters
 
-  printf("pressure:%.2f,temperature:%.2f,sealevel_pressure:%.2f",
-    p, t, p_0);
+  printf("pressure:%.2f,temperature:%.2f,altitude\":%.2f,timestamp:%d\n",
+   p, t, a, (int)time(NULL));
 }
   return 0;
 }
