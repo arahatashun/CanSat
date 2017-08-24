@@ -114,7 +114,7 @@ typedef struct
 	int8_t dig_H6;
 } bme280_calib_data;
 
-static const bme280_calib_data cal;
+static bme280_calib_data cal;
 /*
  * Raw sensor measurement data from bme280
  */
