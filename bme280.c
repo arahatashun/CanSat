@@ -49,6 +49,7 @@
 #include <stdint.h>
 #include <time.h>
 #include <math.h>
+#include <assert.h>
 #include <wiringPiI2C.h>
 #include "bme280.h"
 //ADRESS
@@ -347,7 +348,7 @@ int getProcessedData(bme280_processed_data* data)
 	bme280_data_list list;
 	getRawList(&list);
 	int LockCounter = 0;
-	printf("Lock\n");
+	assert(isLocked(list.pressureList,list.pressureList[0]));
 	while(isLocked(list.pressureList,list.pressureList[0])&&(LockCounter<100))
 	{
 		printf("WARNING Pressure lock\n");
