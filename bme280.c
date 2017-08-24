@@ -245,7 +245,7 @@ static float compensateHumidity(int32_t adc_H,int32_t t_fine)
 
 	v_x1_u32r = (t_fine - ((int32_t)76800));
 
-	v_x1_u32r = (((((adc_H << 14) - (((int32_t)cal.dig_H2dig_H4) << 20) -
+	v_x1_u32r = (((((adc_H << 14) - (((int32_t)cal.dig_H4) << 20) -
 	                (((int32_t)cal.dig_H5) * v_x1_u32r)) + ((int32_t)16384)) >> 15) *
 	             (((((((v_x1_u32r * ((int32_t)cal.dig_H6)) >> 10) *
 	                  (((v_x1_u32r * ((int32_t)cal.dig_H3)) >> 11) + ((int32_t)32768))) >> 10) +
@@ -369,7 +369,7 @@ float readAltitude(void)
 	float t = compensateTemperature(t_fine); // C
 	float p = compensatePressure(data.pressure,t_fine) / 100;// hPa
 	float h = compensateHumidity(data.humidity,t_fine);// %
-	float a = getAltitude(p); // meters
+	float a = getAltitude(p,t); // meters
 	printf("pressure:%f\naltitude:%f\n",p,a);
 	return a;
 }
