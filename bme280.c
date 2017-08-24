@@ -330,9 +330,9 @@ int getRawList(bme280_data_list* data)
 	{
 		bme280_raw_data raw;
 		getRawData(&raw);
-		data->temperatureList[i] = raw->temperature;
-		data->pressureList[i] = raw->pressure;
-		data->humidityList[i]= raw->humidity;
+		data->temperatureList[i] = raw.temperature;
+		data->pressureList[i] = raw.pressure;
+		data->humidityList[i]= raw.humidity;
 		delay(10);
 	}
 	qsort(data->temperatureList,10, sizeof(uint32_t), uint32_tCmp);
@@ -359,8 +359,6 @@ int getProcessedData(bme280_processed_data* data)
 	data->pressure = list.pressureList[4];
 	data->humidity = list.humidityList[4];
 }
-
-
 
 float readAltitude(void)
 {
