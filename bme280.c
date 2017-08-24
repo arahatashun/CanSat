@@ -327,7 +327,7 @@ static int uint32_tCmp(const void* p, const void* q)
 
 int getRawList(bme280_data_list* data)
 {
-	int i;
+	int i = 0;
 	for(i=0; i++; i<10)
 	{
 		bme280_raw_data raw;
