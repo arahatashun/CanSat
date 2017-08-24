@@ -347,6 +347,7 @@ int getProcessedData(bme280_processed_data* data)
 	bme280_data_list list;
 	getRawList(&list);
 	int LockCounter = 0;
+	printf("Lock\n");
 	while(isLocked(list.pressureList,list.pressureList[0])&&(LockCounter<100))
 	{
 		printf("WARNING Pressure lock\n");
