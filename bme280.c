@@ -87,7 +87,7 @@ static const int BME280_REGISTER_HUMIDDATA = 0xFD;
 //TODO 計算値の書き換え
 static const float MEAN_SEA_LEVEL_PRESSURE = 1005.6;
 static const int LOCL_COUNTER_MAX = 50;
-static const int MAX_ALTITUDE = 10000;
+static const float MAX_ALTITUDE = 10000;
 static int fd = 0;
 /*
  * Immutable calibration data read from bme280
