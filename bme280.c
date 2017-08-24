@@ -67,15 +67,15 @@ while(1){
   wiringPiI2CWriteReg8(fd, 0xf4, 0x25);   // pressure and temperature oversampling x 1, mode normal
 
   bme280_raw_data raw;
- 
-  delay(1000);        
+
+  delay(1000);
   getRawData(fd, &raw);
 
   int32_t t_fine = getTemperatureCalibration(&cal, raw.temperature);
   float t = compensateTemperature(t_fine); // C
   float p = compensatePressure(raw.pressure, &cal, t_fine) / 100; // hPa
   float h = compensateHumidity(raw.humidity, &cal, t_fine);       // %
-  float a = getAltitude(p);                         // meters
+  float a = getAltitude(p,t);                         // meters
 
   printf("{\"sensor\":\"bme280\", \"humidity\":%.2f, \"pressure\":%.2f,"
     " \"temperature\":%.2f, \"altitude\":%.2f, \"timestamp\":%d}\n",
@@ -196,7 +196,7 @@ void getRawData(int fd, bme280_raw_data *raw) {
   raw->humidity = (raw->humidity | raw->hlsb);
 }
 
-float getAltitude(float pressure) {
+float getAltitude(float pressure,float temperature) {
   // Equation taken from BMP180 datasheet (page 16):
   //  http://www.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf
 
@@ -204,6 +204,6 @@ float getAltitude(float pressure) {
   // at high altitude.  See this thread for more information:
   //  http://forums.adafruit.com/viewtopic.php?f=22&t=58064
 
-  return 44330.0 * (1.0 - pow(pressure / MEAN_SEA_LEVEL_PRESSURE, 0.190294957));
+  return (temperature + 273.15)
+  * (pow(pressure / MEAN_SEA_LEVEL_PRESSURE, 0.190294957)-1.0) / 0.0065;
 }
-
