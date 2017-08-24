@@ -215,43 +215,44 @@ static float compensateTemperature(int32_t t_fine) {
 	return T/100;
 }
 
-static float compensatePressure(int32_t adc_P, bme280_calib_data *cal, int32_t t_fine) {
+static float compensatePressure(int32_t adc_P, int32_t t_fine) {
 	int64_t var1, var2, p;
 
 	var1 = ((int64_t)t_fine) - 128000;
-	var2 = var1 * var1 * (int64_t)cal->dig_P6;
-	var2 = var2 + ((var1*(int64_t)cal->dig_P5)<<17);
-	var2 = var2 + (((int64_t)cal->dig_P4)<<35);
-	var1 = ((var1 * var1 * (int64_t)cal->dig_P3)>>8) +
-	       ((var1 * (int64_t)cal->dig_P2)<<12);
-	var1 = (((((int64_t)1)<<47)+var1))*((int64_t)cal->dig_P1)>>33;
+	var2 = var1 * var1 * (int64_t)cal.dig_P6;
+	var2 = var2 + ((var1*(int64_t)cal.dig_P5)<<17);
+	var2 = var2 + (((int64_t)cal.dig_P4)<<35);
+	var1 = ((var1 * var1 * (int64_t)cal.dig_P3)>>8) +
+	       ((var1 * (int64_t)cal.dig_P2)<<12);
+	var1 = (((((int64_t)1)<<47)+var1))*((int64_t)cal.dig_P1)>>33;
 
 	if (var1 == 0) {
 		return 0; // avoid exception caused by division by zero
 	}
 	p = 1048576 - adc_P;
 	p = (((p<<31) - var2)*3125) / var1;
-	var1 = (((int64_t)cal->dig_P9) * (p>>13) * (p>>13)) >> 25;
-	var2 = (((int64_t)cal->dig_P8) * p) >> 19;
+	var1 = (((int64_t)cal.dig_P9) * (p>>13) * (p>>13)) >> 25;
+	var2 = (((int64_t)cal.dig_P8) * p) >> 19;
 
-	p = ((p + var1 + var2) >> 8) + (((int64_t)cal->dig_P7)<<4);
+	p = ((p + var1 + var2) >> 8) + (((int64_t)cal.dig_P7)<<4);
 	return (float)p/256;
 }
 
 
-static float compensateHumidity(int32_t adc_H, bme280_calib_data *cal, int32_t t_fine) {
+static float compensateHumidity(int32_t adc_H,int32_t t_fine)
+{
 	int32_t v_x1_u32r;
 
 	v_x1_u32r = (t_fine - ((int32_t)76800));
 
-	v_x1_u32r = (((((adc_H << 14) - (((int32_t)cal->dig_H4) << 20) -
-	                (((int32_t)cal->dig_H5) * v_x1_u32r)) + ((int32_t)16384)) >> 15) *
-	             (((((((v_x1_u32r * ((int32_t)cal->dig_H6)) >> 10) *
-	                  (((v_x1_u32r * ((int32_t)cal->dig_H3)) >> 11) + ((int32_t)32768))) >> 10) +
-	                ((int32_t)2097152)) * ((int32_t)cal->dig_H2) + 8192) >> 14));
+	v_x1_u32r = (((((adc_H << 14) - (((int32_t)cal.dig_H2dig_H4) << 20) -
+	                (((int32_t)cal.dig_H5) * v_x1_u32r)) + ((int32_t)16384)) >> 15) *
+	             (((((((v_x1_u32r * ((int32_t)cal.dig_H6)) >> 10) *
+	                  (((v_x1_u32r * ((int32_t)cal.dig_H3)) >> 11) + ((int32_t)32768))) >> 10) +
+	                ((int32_t)2097152)) * ((int32_t)cal.dig_H2) + 8192) >> 14));
 
 	v_x1_u32r = (v_x1_u32r - (((((v_x1_u32r >> 15) * (v_x1_u32r >> 15)) >> 7) *
-	                           ((int32_t)cal->dig_H1)) >> 4));
+	                           ((int32_t)cal.dig_H1)) >> 4));
 
 	v_x1_u32r = (v_x1_u32r < 0) ? 0 : v_x1_u32r;
 	v_x1_u32r = (v_x1_u32r > 419430400) ? 419430400 : v_x1_u32r;
@@ -364,10 +365,10 @@ float readAltitude(void)
 {
 	bme280_processed_data data;
 	getProcessedData(&data);
-	int32_t t_fine = getTemperatureCalibration(&cal, data.temperature);
+	int32_t t_fine = getTemperatureCalibration(data.temperature);
 	float t = compensateTemperature(t_fine); // C
-	float p = compensatePressure(data.pressure, &cal, t_fine) / 100;// hPa
-	float h = compensateHumidity(data.humidity, &cal, t_fine);// %
+	float p = compensatePressure(data.pressure,t_fine) / 100;// hPa
+	float h = compensateHumidity(data.humidity,t_fine);// %
 	float a = getAltitude(p); // meters
 	printf("pressure:%f\naltitude:%f\n",p,a);
 	return a;
@@ -377,10 +378,10 @@ float getSealevelPressure(float altitude)
 {
 	bme280_processed_data data;
 	getProcessedData(&data);
-	int32_t t_fine = getTemperatureCalibration(&cal, data.temperature);
+	int32_t t_fine = getTemperatureCalibration(data.temperature);
 	float t = compensateTemperature(t_fine); // C
-	float p = compensatePressure(data.pressure, &cal, t_fine) / 100;// hPa
-	float h = compensateHumidity(data.humidity, &cal, t_fine);// %
+	float p = compensatePressure(data.pressure,t_fine) / 100;// hPa
+	float h = compensateHumidity(data.humidity,t_fine);// %
 	float sealevelPressure = p* pow(1-0.0065*altitude/(0.0065*altitude + t + 273.15),-5.257);
 	printf("%f\n",sealevelPressure);
 	return sealevelPressure;
