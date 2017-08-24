@@ -6,10 +6,10 @@
 #include <wiringPiI2C.h>
 #include "bme280.h"
 
-static const float ALTITUDE = 21.0
+static const float ALTITUDE = 21.0;
 
 float cal_sealevel_pressure(p,temp){
-  return p * pow(1-0.0065*ALTITUDE/(0.0065*ALT + temp + 273.15),-5.257)
+  return p * pow(1-0.0065*ALTITUDE/(0.0065*ALTITUDE + temp + 273.15),-5.257);
 }
 
 int main() {
@@ -36,7 +36,7 @@ while(1){
   float t = compensateTemperature(t_fine); // C
   float p = compensatePressure(raw.pressure, &cal, t_fine) / 100; // hPa
   float h = compensateHumidity(raw.humidity, &cal, t_fine);       // %
-  float p_0 = cal_sealevel_pressure(p,t)
+  float p_0 = cal_sealevel_pressure(p,t);
 
   printf("pressure:%.2f,temperature:%.2f,sealevel_pressure:%.2f",
     p, t, p_0);

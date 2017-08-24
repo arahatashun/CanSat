@@ -122,6 +122,6 @@ float compensateTemperature(int32_t t_fine);
 float compensatePressure(int32_t adc_P, bme280_calib_data *cal, int32_t t_fine);
 float compensateHumidity(int32_t adc_H, bme280_calib_data *cal, int32_t t_fine);
 void getRawData(int fd, bme280_raw_data *raw);
-float getAltitude(float pressure);
+float getAltitude(float pressure,float temperature);
 
 #endif
