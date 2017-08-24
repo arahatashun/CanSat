@@ -3,7 +3,7 @@
 
 int main()
 {
-	bme280_initialize()
+	bme280_initialize();
 	while (1)
 	{
 		readAltitude();
