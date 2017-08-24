@@ -139,14 +139,14 @@ typedef struct
 
 typedef struct
 {
-  uint32_t temperature[10];
+	uint32_t temperature[10];
 	uint32_t pressure[10];
 	uint32_t humidity[10];
 } bme280_data_list;
 
 typedef struct
 {
-  uint32_t temperature;
+	uint32_t temperature;
 	uint32_t pressure;
 	uint32_t humidity;
 } bme280_processed_data;
@@ -261,33 +261,33 @@ static float compensateHumidity(int32_t adc_H, bme280_calib_data *cal, int32_t t
 
 static void getRawData(bme280_raw_data *raw)
 {
-		wiringPiI2CWrite(fd,0xf7);
+	wiringPiI2CWrite(fd,0xf7);
 
-		raw->pmsb = wiringPiI2CRead(fd);
-		raw->plsb = wiringPiI2CRead(fd);
-		raw->pxsb = wiringPiI2CRead(fd);
+	raw->pmsb = wiringPiI2CRead(fd);
+	raw->plsb = wiringPiI2CRead(fd);
+	raw->pxsb = wiringPiI2CRead(fd);
 
-		raw->tmsb = wiringPiI2CRead(fd);
-		raw->tlsb = wiringPiI2CRead(fd);
-		raw->txsb = wiringPiI2CRead(fd);
+	raw->tmsb = wiringPiI2CRead(fd);
+	raw->tlsb = wiringPiI2CRead(fd);
+	raw->txsb = wiringPiI2CRead(fd);
 
-		raw->hmsb = wiringPiI2CRead(fd);
-		raw->hlsb = wiringPiI2CRead(fd);
+	raw->hmsb = wiringPiI2CRead(fd);
+	raw->hlsb = wiringPiI2CRead(fd);
 
-		raw->temperature = 0;
-		raw->temperature = (raw->temperature | raw->tmsb) << 8;
-		raw->temperature = (raw->temperature | raw->tlsb) << 8;
-		raw->temperature = (raw->temperature | raw->txsb) >> 4;
+	raw->temperature = 0;
+	raw->temperature = (raw->temperature | raw->tmsb) << 8;
+	raw->temperature = (raw->temperature | raw->tlsb) << 8;
+	raw->temperature = (raw->temperature | raw->txsb) >> 4;
 
-		raw->pressure = 0;
-		raw->pressure = (raw->pressure | raw->pmsb) << 8;
-		raw->pressure = (raw->pressure | raw->plsb) << 8;
-		raw->pressure = (raw->pressure | raw->pxsb) >> 4;
+	raw->pressure = 0;
+	raw->pressure = (raw->pressure | raw->pmsb) << 8;
+	raw->pressure = (raw->pressure | raw->plsb) << 8;
+	raw->pressure = (raw->pressure | raw->pxsb) >> 4;
 
-		raw->humidity = 0;
-		raw->humidity = (raw->humidity | raw->hmsb) << 8;
-		raw->humidity = (raw->humidity | raw->hlsb);
-	}
+	raw->humidity = 0;
+	raw->humidity = (raw->humidity | raw->hmsb) << 8;
+	raw->humidity = (raw->humidity | raw->hlsb);
+
 }
 
 float getAltitude(float pressure,float temperature)
@@ -325,37 +325,37 @@ static int uint32_tCmp(const void* p, const void* q)
 
 int getRawList(bme280_data_list* data)
 {
-  int i;
-  for(i=0;i++;i<10)
-  {
-  bme280_raw_data raw;
-	getRawData(&raw);
-  data->temperatureList[i] = raw->temperature;
-  data->pressureList[i] = raw->pressure;
-  data->humidityList[i]= raw->humidity;
-  delay(10);
-  }
-  qsort(data->temperatureList,10, sizeof(uint32_t), uint32_tCmp);
+	int i;
+	for(i=0; i++; i<10)
+	{
+		bme280_raw_data raw;
+		getRawData(&raw);
+		data->temperatureList[i] = raw->temperature;
+		data->pressureList[i] = raw->pressure;
+		data->humidityList[i]= raw->humidity;
+		delay(10);
+	}
+	qsort(data->temperatureList,10, sizeof(uint32_t), uint32_tCmp);
 	qsort(data->pressureList,10, sizeof(uint32_t), uint32_tCmp);
 	qsort(data->humidityList,10, sizeof(uint32_t), uint32_tCmp);
-  return 0;
+	return 0;
 }
 
 int getProcessedData(bme280_processed_data* data)
 {
-  bme280_data_list list;
-  getRawList(&list);
-  int LockCounter = 0;
+	bme280_data_list list;
+	getRawList(&list);
+	int LockCounter = 0;
 	while(isLocked(list.pressureList,list.pressureList[0])&&(LockCounter<100))
 	{
 		printf("WARNING Pressure lock\n");
 		printf("LockCounter %d\n",LockCounter);
-    bme280_initialize();
-	  printf("BME280 reinitialized\n");
+		bme280_initialize();
+		printf("BME280 reinitialized\n");
 		getRawList(&list);
 		LockCounter++;
 	}
-  data->temperature = list.temperatureList[4];
+	data->temperature = list.temperatureList[4];
 	data->pressure = list.pressureList[4];
 	data->humidity = list.humidityList[4];
 }
@@ -364,8 +364,8 @@ int getProcessedData(bme280_processed_data* data)
 
 float readAltitude(void)
 {
-  bme280_processed_data data;
-  getProcessedData(&data);
+	bme280_processed_data data;
+	getProcessedData(&data);
 	int32_t t_fine = getTemperatureCalibration(&cal, data.temperature);
 	float t = compensateTemperature(t_fine); // C
 	float p = compensatePressure(data.pressure, &cal, t_fine) / 100;// hPa
@@ -377,13 +377,13 @@ float readAltitude(void)
 
 float getSealevelPressure(float altitude)
 {
-  bme280_processed_data data;
-  getProcessedData(&data);
+	bme280_processed_data data;
+	getProcessedData(&data);
 	int32_t t_fine = getTemperatureCalibration(&cal, data.temperature);
 	float t = compensateTemperature(t_fine); // C
 	float p = compensatePressure(data.pressure, &cal, t_fine) / 100;// hPa
 	float h = compensateHumidity(data.humidity, &cal, t_fine);// %
-  float sealevelPressure = p* pow(1-0.0065*altitude/(0.0065*altitude + t + 273.15),-5.257);
-  printf("%f\n",sealevelPressure);
+	float sealevelPressure = p* pow(1-0.0065*altitude/(0.0065*altitude + t + 273.15),-5.257);
+	printf("%f\n",sealevelPressure);
 	return sealevelPressure;
 }
