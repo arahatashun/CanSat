@@ -200,12 +200,12 @@ static void readCalibrationData(bme280_calib_data *data)
 
 
 static int32_t getTemperatureCalibration(int32_t adc_T) {
-	int32_t var1  = ((((adc_T>>3) - ((int32_t)cal->dig_T1 <<1))) *
-	                 ((int32_t)cal->dig_T2)) >> 11;
+	int32_t var1  = ((((adc_T>>3) - ((int32_t)cal.dig_T1 <<1))) *
+	                 ((int32_t)cal.dig_T2)) >> 11;
 
-	int32_t var2  = (((((adc_T>>4) - ((int32_t)cal->dig_T1)) *
-	                   ((adc_T>>4) - ((int32_t)cal->dig_T1))) >> 12) *
-	                 ((int32_t)cal->dig_T3)) >> 14;
+	int32_t var2  = (((((adc_T>>4) - ((int32_t)cal.dig_T1)) *
+	                   ((adc_T>>4) - ((int32_t)cal.dig_T1))) >> 12) *
+	                 ((int32_t)cal.dig_T3)) >> 14;
 
 	return var1 + var2;
 }
