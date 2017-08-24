@@ -22,7 +22,7 @@ gps:
 	gcc -o gps.out gps_test.c $(LIBS) -lgps -lm
 
 bme280:
-	gcc -o bme280.out bme280_test.c ../bme280.c $(LIBS) -lm
+	gcc -o -Wall bme280.out bme280_test.c ../bme280.c $(LIBS) -lm
 
 sealevel:
 	gcc -o  sealevel.out sealevel.c ../bme280.c $(LIBS) -lm
