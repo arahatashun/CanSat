@@ -87,6 +87,7 @@ static const int BME280_REGISTER_HUMIDDATA = 0xFD;
 //TODO 計算値の書き換え
 static const float MEAN_SEA_LEVEL_PRESSURE = 1005.6;
 static const int LOCL_COUNTER_MAX = 50;
+static const int MAX_ALTITUDE = 10000;
 static int fd = 0;
 /*
  * Immutable calibration data read from bme280
@@ -357,15 +358,24 @@ int getProcessedData(bme280_processed_data* data)
 		getRawList(&list);
 		LockCounter++;
 	}
+	if(LockCounter>=LOCL_COUNTER_MAX)
+	{
+		printf("LockCounter MAX\n");
+		return -1;
+	}
 	data->temperature = list.temperatureList[4];
 	data->pressure = list.pressureList[4];
 	data->humidity = list.humidityList[4];
+	return 0;
 }
 
 float readAltitude(void)
 {
 	bme280_processed_data data;
-	getProcessedData(&data);
+	if(getProcessedData(&data)==-1)
+	{
+		return MAX_ALTITUDE;
+	}
 	int32_t t_fine = getTemperatureCalibration(data.temperature);
 	float t = compensateTemperature(t_fine); // C
 	float p = compensatePressure(data.pressure,t_fine) / 100;// hPa
