@@ -64,7 +64,7 @@ https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/
 #define BME280_REGISTER_TEMPDATA      0xFA
 #define BME280_REGISTER_HUMIDDATA     0xFD
 
-#define MEAN_SEA_LEVEL_PRESSURE       1005.6
+static const double MEAN_SEA_LEVEL_PRESSURE 1013
 
 /*
 * Immutable calibration data read from bme280
@@ -122,7 +122,7 @@ float compensateTemperature(int32_t t_fine);
 float compensatePressure(int32_t adc_P, bme280_calib_data *cal, int32_t t_fine);
 float compensateHumidity(int32_t adc_H, bme280_calib_data *cal, int32_t t_fine);
 void getRawData(int fd, bme280_raw_data *raw);
-float cal_sealevel_pressure(float pressure,float temperature,float altitude);
+float cal_sealevel_pressure(float pressure,float temperature);
 float getAltitude(float pressure,float temperature);
 
 #endif
