@@ -334,6 +334,7 @@ int getRawList(bme280_data_list* data)
 		getRawData(&raw);
 		data->temperatureList[i] = raw.temperature;
 		data->pressureList[i] = raw.pressure;
+		printf("%f\n",raw.pressure);
 		data->humidityList[i]= raw.humidity;
 		delay(10);
 	}
@@ -348,7 +349,6 @@ int getProcessedData(bme280_processed_data* data)
 	bme280_data_list list;
 	getRawList(&list);
 	int LockCounter = 0;
-	assert(isLocked(list.pressureList,list.pressureList[0]));
 	while(isLocked(list.pressureList,list.pressureList[0])&&(LockCounter<100))
 	{
 		printf("WARNING Pressure lock\n");
