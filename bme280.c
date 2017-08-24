@@ -52,7 +52,7 @@ https://github.com/adafruit/Adafruit_BME280_Library/blob/master/Adafruit_BME280.
 #include <wiringPiI2C.h>
 #include "bme280.h"
 
-static const float MEAN_SEA_LEVEL_PRESSURE = 1005.6;
+static const float MEAN_SEA_LEVEL_PRESSURE = 1005.6; //海水面気圧 sealevel.cの結果をここに書き込む
 
 int32_t getTemperatureCalibration(bme280_calib_data *cal, int32_t adc_T) {
   int32_t var1  = ((((adc_T>>3) - ((int32_t)cal->dig_T1 <<1))) *
