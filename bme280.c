@@ -374,6 +374,8 @@ float readAltitude(void)
 	bme280_processed_data data;
 	if(getProcessedData(&data)==-1)
 	{
+		printf("CANNNOT READ ALTITUDE\n");
+		printf("SET ALTITUDE MAX\n");
 		return MAX_ALTITUDE;
 	}
 	int32_t t_fine = getTemperatureCalibration(data.temperature);
