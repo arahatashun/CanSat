@@ -49,7 +49,7 @@
 #include <stdint.h>
 #include <time.h>
 #include <math.h>
-#include <assert.h>
+#include <string.h>
 #include <wiringPiI2C.h>
 #include "bme280.h"
 //ADRESS
