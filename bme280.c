@@ -385,7 +385,7 @@ double readAltitude(void)
 	int32_t t_fine = getTemperatureCalibration(data.temperature);
 	float t = compensateTemperature(t_fine); // C
 	float p = compensatePressure(data.pressure,t_fine) / 100;// hPa
-	float h = compensateHumidity(data.humidity,t_fine);// %
+	//float h = compensateHumidity(data.humidity,t_fine);// %
 	double a = getAltitude(p,t); // meters
 	printf("pressure:%f\naltitude:%f\n",p,a);
 	return a;
@@ -398,7 +398,7 @@ float getSealevelPressure(float altitude)
 	int32_t t_fine = getTemperatureCalibration(data.temperature);
 	float t = compensateTemperature(t_fine); // C
 	float p = compensatePressure(data.pressure,t_fine) / 100;// hPa
-	float h = compensateHumidity(data.humidity,t_fine);// %
+	//float h = compensateHumidity(data.humidity,t_fine);// %
 	float sealevelPressure = p* pow(1-0.0065*altitude/(0.0065*altitude + t + 273.15),-5.257);
 	printf("%f\n",sealevelPressure);
 	return sealevelPressure;
