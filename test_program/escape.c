@@ -6,6 +6,8 @@
 #include "../compass.h"
 #include "../mitibiki.h"
 
+static const int STACK_COUNTER = 20;
+
 void handler(int signum)
 {
 	motor_stop();
