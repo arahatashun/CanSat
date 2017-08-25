@@ -203,7 +203,8 @@ static void readCalibrationData(bme280_calib_data *data)
 }
 
 
-static int32_t getTemperatureCalibration(int32_t adc_T) {
+static int32_t getTemperatureCalibration(int32_t adc_T)
+{
 	int32_t var1  = ((((adc_T>>3) - ((int32_t)cal.dig_T1 <<1))) *
 	                 ((int32_t)cal.dig_T2)) >> 11;
 
@@ -304,9 +305,10 @@ double getAltitude(float pressure,float temperature)
 	// at high altitude.  See this thread for more information:
 	//  http://forums.adafruit.com/viewtopic.php?f=22&t=58064
 	double altitude = (temperature + 273.15)
-	       * (pow(MEAN_SEA_LEVEL_PRESSURE/pressure, 0.190294957)-1.0) / 0.0065;
+	                  * (pow(MEAN_SEA_LEVEL_PRESSURE/pressure, 0.190294957)-1.0) / 0.0065;
 
 	return altitude;
+}
 
 //lock用、指定した値にlockされてたらreturn1する
 static int isLocked(uint32_t* values,const uint32_t lock)
