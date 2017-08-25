@@ -57,4 +57,4 @@ xbee_at.o: xbee_at.h xbee_at.c
 	gcc -c -Wall xbee_at.c
 
 bme280.o:bme280.h bme280.c
-	gcc -o bme280.c
+	gcc -c -Wall bme280.c
