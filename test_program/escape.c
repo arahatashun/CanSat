@@ -2,6 +2,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <wiringPi.h>
+#include <math.h>
 #include "../motor.h"
 #include "../compass.h"
 #include "../mitibiki.h"
