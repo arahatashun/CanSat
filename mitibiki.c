@@ -2,14 +2,18 @@
 #include <math.h>
 #include <gps.h>
 #include "mitibiki.h"
+#include "motor.h"
 //note: seikei toukei ni izon
-
 
 static const double target_latitude = 40.142345;//緯度
 static const double target_longitude = 139.987252;//経度
 static const double PI = 3.14159265;
 static const double EARTH_RADIUS = 6378137;
 
+static const int DANGER_MAX_LATITUDE = 36.0000; //とりあえず適当な値
+static const int DANGER_MIN_LATITUDE = 35.7100;
+static const int DANGER_MAX_LONGITUDE = 140.0000;
+static const int DANGER_MIN_LONGITUDE = 139.7590;
 
 //デカルト座標
 typedef struct cartesian_coordinates {
@@ -91,4 +95,22 @@ double cal_delta_angle(double going_angle_cld, double gps_angle_cld)
 		delta_angle_cld = -360.0 + gps_angle_cld - going_angle_cld;
 	}
 	return delta_angle_cld;
+}
+
+int danger_zone(double current_lat, double current_lon)
+{
+ if(DANGER_MAX_LATITUDE > current_lat && DANGER_MIN_LATITUDE < current_lat &&
+    DANGER_MAX_LONGITUDE > current_lon && DANGER_MIN_LONGITUDE < current_lon)
+		{
+			printf("WARNING DANGER ZONE!!!\n");
+			int i;
+			for(i=1; i<6; i++)
+			{
+				motor_back(i*20);
+				delay(200);
+			}
+			motor_stop();
+			delay(1000);
+		}
+ return 0;
 }
