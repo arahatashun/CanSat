@@ -50,7 +50,9 @@
 #include <time.h>
 #include <math.h>
 #include <string.h>
+#include <stdlib.h>
 #include <wiringPiI2C.h>
+#include <wiringPi.h>
 #include "bme280.h"
 //ADRESS
 static const int BME280_ADDRESS = 0x76;
