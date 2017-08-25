@@ -87,7 +87,7 @@ static const int BME280_REGISTER_HUMIDDATA = 0xFD;
 //TODO 計算値の書き換え
 static const float MEAN_SEA_LEVEL_PRESSURE = 1005.6;
 static const int LOCL_COUNTER_MAX = 50;
-static const float MAX_ALTITUDE = 10000;
+static const double INF_ALTITUDE = 1000000000;
 static int fd = 0;
 /*
  * Immutable calibration data read from bme280
@@ -293,7 +293,7 @@ static void getRawData(bme280_raw_data *raw)
 
 }
 
-float getAltitude(float pressure,float temperature)
+double getAltitude(float pressure,float temperature)
 {
 	// Equation taken from BMP180 datasheet (page 16):
 	//  http://www.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf
@@ -301,10 +301,10 @@ float getAltitude(float pressure,float temperature)
 	// Note that using the equation from wikipedia can give bad results
 	// at high altitude.  See this thread for more information:
 	//  http://forums.adafruit.com/viewtopic.php?f=22&t=58064
-
-	return (temperature + 273.15)
+	double altitude = (temperature + 273.15)
 	       * (pow(MEAN_SEA_LEVEL_PRESSURE/pressure, 0.190294957)-1.0) / 0.0065;
-}
+
+	return altitude;
 
 //lock用、指定した値にlockされてたらreturn1する
 static int isLocked(uint32_t* values,const uint32_t lock)
@@ -369,20 +369,20 @@ int getProcessedData(bme280_processed_data* data)
 	return 0;
 }
 
-float readAltitude(void)
+double readAltitude(void)
 {
 	bme280_processed_data data;
 	if(getProcessedData(&data)==-1)
 	{
 		printf("CANNNOT READ ALTITUDE\n");
 		printf("SET ALTITUDE MAX\n");
-		return MAX_ALTITUDE;
+		return INF_ALTITUDE;
 	}
 	int32_t t_fine = getTemperatureCalibration(data.temperature);
 	float t = compensateTemperature(t_fine); // C
 	float p = compensatePressure(data.pressure,t_fine) / 100;// hPa
 	float h = compensateHumidity(data.humidity,t_fine);// %
-	float a = getAltitude(p,t); // meters
+	double a = getAltitude(p,t); // meters
 	printf("pressure:%f\naltitude:%f\n",p,a);
 	return a;
 }

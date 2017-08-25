@@ -33,6 +33,6 @@ https://projects.drogon.net/raspberry-pi/wiringpi/i2c-library/
 #define __BME280_H__
 
 int bme280_initialize();
-float readAltitude(void);
+double readAltitude(void);
 float getSealevelPressure(float altitude);
 #endif

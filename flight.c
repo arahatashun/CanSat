@@ -3,6 +3,7 @@
 #include <math.h>
 #include <unistd.h>
 #include <gps.h>
+#include "bme280.h"
 #include "acclgyro.h"
 #include "luxsensor.h"
 #include "gut.h"
@@ -12,27 +13,39 @@
 //sequence_numの定義について
 static const int START_SEQ = 1;
 static const int RELEASE_SEQ = 2; //放出判定
-static const int LAND_SEQ = 3;
-static const int OPEN_SEQ = 4;//ケーシング展開終了
+static const int LAND_WAIT_SEQ = 3;
+static const int LAND_SEQ = 4;
+static const int OPEN_SEQ = 5;//ケーシング展開終了
 //タイムアウト時間 (分)
 static const int TIMEOUT_LUX = 60; //光センサー放出判定
 static const int TIMEOUT_ALT_STABLE = 40; //gps高度着地判定
 static const int GPS_FLIGHT_RING = 10;//ring_bufferの長さ
 //THRESHOLD
-static const float ABSLAT_THRESHOLD = 0.00005; //GPS緯度情報安定判定閾値
-static const float ABSLON_THRESHOLD = 0.00005; //GPS経度情報安定判定閾値
 static const int ABSALT_THRESHOLD = 1; //GPS高度情報安定判定閾値
 static const int ALT_THRESHOLD = 100; //GPS高度情報一定値以下判定閾値(m)
-static const int GPS_ALT_INTERVAL = 2; //GPS高度取得間隔(gps_altstable内) second
+static const int ALT_INTERVAL = 10;
 static const double INF = 10000;
-static const int WAIT_TIME = 180;
+static const int WAIT4START_SECONDS = 180;
+static const int WAIT4LAND_SECONDS = 600;
+//NOTE 終端速度に依存
 
-typedef struct st_Sequence {
+typedef struct st_Sequence
+{
 	int sequence_num;//前のシーケンス番号
 	time_t last_time;//前のシーケンスの時間
 	//longと同じ
 }Sequence;
 
+int getGPScoords(void)
+{
+	loc_t coord;
+	gps_location(&coord);
+	printf("latitude:%f longitude:%f altitude:%f\n",
+	       coord.latitude,coord.longitude,coord.altitude);
+	xbeePrintf("latitude:%f longitude:%f altitude:%f\n",
+	           coord.latitude,coord.longitude,coord.altitude);
+	return 0;
+}
 
 //前回のシーケンスの終了時刻と現在のシーケンスを取得
 int read_sequence(Sequence* sequence2read)
@@ -105,13 +118,13 @@ int isTimeout(int timeout_min,Sequence seq)
 	}else return 0;
 }
 
-static int waitSeq()
+static int wait4Start()
 {
 	int i=0;
-	for(i=0; i<WAIT_TIME; i++)
+	for(i=0; i<WAIT4START_SECONDS; i++)
 	{
-		printf("%d seconds to release judgement\n",WAIT_TIME-i);
-		xbeePrintf("%d seconds to release judgement\n",WAIT_TIME-i);
+		printf("%d seconds to release judgement\n",WAIT4START_SECONDS-i);
+		xbeePrintf("%d seconds to release judgement\n",WAIT4START_SECONDS-i);
 		sleep(1);
 	}
 	return 0;
@@ -131,24 +144,8 @@ static int releaseSeq(Sequence *seq)
 	int isLightCount = 0;
 	while(!isTimeout(TIMEOUT_LUX,*seq))
 	{
-		loc_t lflight;
-		Accl acclflight;
-		Gyro gyroflight;
-		gps_location(&lflight);
-		Gyro_read(&gyroflight);
-		Accl_read(&acclflight);
-		printf("latitude:%f longitude:%f altitude:%f\n",
-		       lflight.latitude,lflight.longitude,lflight.altitude);
-		printf("acclx:%f accly:%f acclz:%f\n",
-		       acclflight.acclX_scaled,acclflight.acclY_scaled,acclflight.acclZ_scaled);
-		printf("gyrox:%f gyroy:%f gyroz:%f\n",
-		      gyroflight.gyroX_scaled,gyroflight.gyroY_scaled,gyroflight.gyroZ_scaled);
-		xbeePrintf("latitude:%f longitude:%f altitude:%f\n",
-		           lflight.latitude,lflight.longitude,lflight.altitude);
-		xbeePrintf("acclx:%f accly:%f acclz:%f\n",
-		       acclflight.acclX_scaled,acclflight.acclY_scaled,acclflight.acclZ_scaled);
-		xbeePrintf("gyrox:%f gyroy:%f gyroz:%f\n",
-		      gyroflight.gyroX_scaled,gyroflight.gyroY_scaled,gyroflight.gyroZ_scaled);
+		getGPScoords();
+		readAltitude();
 		if(isLight())
 		{
 			isLightCount++;
@@ -175,19 +172,29 @@ static int releaseSeq(Sequence *seq)
 	return 0;
 }
 
+static int wait4Land(Sequence* seq)
+{
+	getGPScoords();
+	readAltitude();
+	int i=0;
+	for(i=0; i<WAIT4LAND_SECONDS; i++)
+	{
+		printf("%d seconds to LAND judgement\n",WAIT4LAND_SECONDS-i);
+		xbeePrintf("%d seconds to LAND judgement\n",WAIT4LAND_SECONDS-i);
+		sleep(1);
+	}
+	xbeePrintf("LAND WAIT SEQUENCE FINISHED\n");
+	write_sequence(seq,LAND_WAIT_SEQ);
+	return 0;
+}
 
 //Queueの中の値の変動を返す
 //NOTE 内部でdequeue
 static double calc_variation(Queue *ring)
 {
 	double variation= INF;//0にするよりも大きくする方があとでtheresholdと比較するので適切
-	double first = dequeue(ring);
-	double last = getLast(ring);
-	//gps return 0 hanle
-	if(first!=0.0&&last!=0.0)
-	{
-		variation = fabs(first - last);
-	}
+	dequeue(ring);
+	variation = queue_diff(ring);
 	printf("VARIATION :%f\n",variation);
 	return variation;
 }
@@ -196,7 +203,7 @@ static double calc_variation(Queue *ring)
 static int isAltlow(Queue* ring)
 {
 	double alt = getLast(ring);
-	if(alt!=0.0&&alt<ALT_THRESHOLD)
+	if(alt<ALT_THRESHOLD)
 	{
 		printf("ALT IS LOW\n");
 		xbeePrintf("ALT IS LOW\n");
@@ -213,29 +220,15 @@ static int isLanded(Queue* ring)
 {
 	while(!is_full(ring))
 	{
-		loc_t lflight;
-		Accl acclflight;
-		Gyro gyroflight;
-		Gyro_read(&gyroflight);
-		Accl_read(&acclflight);
-		gps_location(&lflight);
+		getGPScoords();
 		time_t tcurrent;
 		time(&tcurrent);
 		printf("%s\n",ctime(&tcurrent));
-		printf("latitude:%f longitude:%f altitude:%f\n",
-		       lflight.latitude,lflight.longitude,lflight.altitude);
-		printf("acclx:%f accly:%f acclz:%f\n",
-		       acclflight.acclX_scaled,acclflight.acclY_scaled,acclflight.acclZ_scaled);
-		printf("gyrox:%f gyroy:%f gyroz:%f\n",
-		      gyroflight.gyroX_scaled,gyroflight.gyroY_scaled,gyroflight.gyroZ_scaled);
-		xbeePrintf("latitude:%f longitude:%f altitude:%f\n",
-		           lflight.latitude,lflight.longitude,lflight.altitude);
-		xbeePrintf("acclx:%f accly:%f acclz:%f\n",
-		       acclflight.acclX_scaled,acclflight.acclY_scaled,acclflight.acclZ_scaled);
-		xbeePrintf("gyrox:%f gyroy:%f gyroz:%f\n",
-		      gyroflight.gyroX_scaled,gyroflight.gyroY_scaled,gyroflight.gyroZ_scaled);
-		enqueue(ring,lflight.altitude);
-		sleep(GPS_ALT_INTERVAL);
+		double altitude = readAltitude();
+		printf("ALTITUDE %f\n",altitude);
+		xbeePrintf("ALTITUDE%f\n"altitude);
+		enqueue(ring,altitude);
+		sleep(ALT_INTERVAL);
 	}
 	if(calc_variation(ring)<ABSALT_THRESHOLD&&isAltlow(ring))
 	{
@@ -279,11 +272,12 @@ int open_case(Sequence *seq)
 	return 0;
 }
 
-//TODO 電源瞬断対策復旧してシーケンス番号からのswitch-case文
+
 int main(void)
 {
-	
+
 	xbee_init();
+	bme280_initialize();
 	acclGyro_initialize();
 	luxsensor_initialize();
 	gps_init();
@@ -295,6 +289,7 @@ int main(void)
 		startSeq(&sequence);
 		releaseSeq(&sequence);
 		luxsensor_close();
+		wait4Land(&sequence);
 		landSeq(&sequence);
 		open_case(&sequence);
 		gps_off();
@@ -306,10 +301,12 @@ int main(void)
 		releaseSeq(&sequence);
 		luxsensor_close();
 	case 2:
-		landSeq(&sequence);
+		wait4Land(&sequence)
 	case 3:
-		open_case(&sequence);
+		landSeq(&sequence);
 	case 4:
+		open_case(&sequence);
+	case 5:
 		gps_off();
 		break;
 		//TODO default 追加する
