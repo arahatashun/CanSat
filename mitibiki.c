@@ -107,7 +107,7 @@ int danger_zone(double current_lat, double current_lon)
 			for(i=1; i<6; i++)
 			{
 				motor_back(i*20);
-				delay(200);
+				delay(2000);
 			}
 			motor_stop();
 			delay(1000);
