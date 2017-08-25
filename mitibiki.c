@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <gps.h>
+#include <wiringPi.h>
 #include "mitibiki.h"
 #include "motor.h"
 //note: seikei toukei ni izon
