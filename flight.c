@@ -285,7 +285,7 @@ int main(void)
 	if(read_sequence(&sequence)!=0)
 	//file open に失敗
 	{
-		waitSeq();
+		wait4Start();
 		startSeq(&sequence);
 		releaseSeq(&sequence);
 		luxsensor_close();
@@ -301,7 +301,7 @@ int main(void)
 		releaseSeq(&sequence);
 		luxsensor_close();
 	case 2:
-		wait4Land(&sequence)
+		wait4Land(&sequence);
 	case 3:
 		landSeq(&sequence);
 	case 4:
