@@ -81,7 +81,7 @@ int write_sequence(Sequence *sequence2write,int seq_num2write)
 	printf("write sequence %d:%s\n",seq_num2write,ctime(&tcurrent));
 	xbeePrintf("write sequence %d:%s\n",seq_num2write,ctime(&tcurrent));
 	FILE *fp=fopen("sequence.txt","a");//追加書き込み
-	//FILEが存在しないときは追加書き込み
+	//FILEが存在しないときは新規作成
 	if(fp==NULL)
 	{
 		printf("Cannot open sequence\n");
