@@ -18,15 +18,15 @@ static const int LAND_SEQ = 4;
 static const int OPEN_SEQ = 5;//ケーシング展開終了
 //タイムアウト時間 (分)
 static const int TIMEOUT_LUX = 60; //光センサー放出判定
-static const int TIMEOUT_ALT_STABLE = 40; //gps高度着地判定
-static const int GPS_FLIGHT_RING = 10;//ring_bufferの長さ
+static const int TIMEOUT_ALT_STABLE = 40; //高度着地判定
+static const int ALTUTUDE_RING_LEN = 10;//ring_bufferの長さ
 //THRESHOLD
-static const int ABSALT_THRESHOLD = 1; //GPS高度情報安定判定閾値
-static const int ALT_THRESHOLD = 100; //GPS高度情報一定値以下判定閾値(m)
+static const int ALT_CHANGE_THRESHOLD = 1; //GPS高度情報安定判定閾値
+static const int MINIMUM_ALTITUDE = 100; //GPS高度情報一定値以下判定閾値(m)
 static const int ALT_INTERVAL = 10;
 static const double INF = 10000;
 static const int WAIT4START_SECONDS = 180;
-static const int WAIT4LAND_SECONDS = 600;
+static const int WAIT4LAND_SECONDS = 900;
 //NOTE 終端速度に依存
 
 typedef struct st_Sequence
@@ -203,7 +203,7 @@ static double calc_variation(Queue *ring)
 static int isAltlow(Queue* ring)
 {
 	double alt = getLast(ring);
-	if(alt<ALT_THRESHOLD)
+	if(alt<MINIMUM_ALTITUDE)
 	{
 		printf("ALT IS LOW\n");
 		xbeePrintf("ALT IS LOW\n");
@@ -230,7 +230,7 @@ static int isLanded(Queue* ring)
 		enqueue(ring,altitude);
 		sleep(ALT_INTERVAL);
 	}
-	if(calc_variation(ring)<ABSALT_THRESHOLD&&isAltlow(ring))
+	if(calc_variation(ring)<ALT_CHANGE_THRESHOLD&&isAltlow(ring))
 	{
 		printf("ALT IS STABLE and LOW\n");
 		xbeePrintf("ALT IS STABLE and LOW\n");
@@ -245,7 +245,7 @@ static int isLanded(Queue* ring)
 static int landSeq(Sequence* seq)
 {
 	printf("Landing Sequence\n");
-	Queue *ring = make_queue(GPS_FLIGHT_RING);
+	Queue *ring = make_queue(ALTUTUDE_RING_LEN);
 	while(!isTimeout(TIMEOUT_ALT_STABLE,*seq))
 	{
 		if(isLanded(ring))
