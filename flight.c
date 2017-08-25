@@ -226,7 +226,7 @@ static int isLanded(Queue* ring)
 		printf("%s\n",ctime(&tcurrent));
 		double altitude = readAltitude();
 		printf("ALTITUDE %f\n",altitude);
-		xbeePrintf("ALTITUDE%f\n"altitude);
+		xbeePrintf("ALTITUDE%f\n",altitude);
 		enqueue(ring,altitude);
 		sleep(ALT_INTERVAL);
 	}
