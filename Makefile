@@ -26,6 +26,8 @@ sigintHandle.o: sigintHandle.c
 ground_compass.o: ground_compass.c
 	gcc -c -Wall ground_compass.c
 
+flight.o: flight.c
+	gcc -c -Wall flight.c
 
 integration.o: integration.c
 	gcc -c -Wall integration.c
