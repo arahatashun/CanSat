@@ -309,7 +309,10 @@ int main(void)
 	case 5:
 		gps_off();
 		break;
-		//TODO default 追加する
+
+	default:
+		printf("Sequence number is Strange\n");
+		break;
 	}
 	return 0;
 }
