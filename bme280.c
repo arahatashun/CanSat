@@ -296,7 +296,7 @@ static void getRawData(bme280_raw_data *raw)
 
 }
 
-double getAltitude(float pressure,float temperature)
+double calcAltitude(float pressure,float temperature)
 {
 	// Equation taken from BMP180 datasheet (page 16):
 	//  http://www.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf
@@ -386,7 +386,7 @@ double readAltitude(void)
 	float t = compensateTemperature(t_fine); // C
 	float p = compensatePressure(data.pressure,t_fine) / 100;// hPa
 	//float h = compensateHumidity(data.humidity,t_fine);// %
-	double a = getAltitude(p,t); // meters
+	double a = calcAltitude(p,t); // meters
 	printf("pressure:%f\naltitude:%f\n",p,a);
 	return a;
 }

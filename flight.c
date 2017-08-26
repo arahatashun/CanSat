@@ -16,18 +16,22 @@ static const int RELEASE_SEQ = 2; //放出判定
 static const int LAND_WAIT_SEQ = 3;
 static const int LAND_SEQ = 4;
 static const int OPEN_SEQ = 5;//ケーシング展開終了
+
 //タイムアウト時間 (分)
 static const int TIMEOUT_LUX = 60; //光センサー放出判定
 static const int TIMEOUT_ALT_STABLE = 40; //高度着地判定
 static const int ALTUTUDE_RING_LEN = 10;//ring_bufferの長さ
 //THRESHOLD
-static const int ALT_CHANGE_THRESHOLD = 1; //GPS高度情報安定判定閾値
-static const int MINIMUM_ALTITUDE = 100; //GPS高度情報一定値以下判定閾値(m)
+static const int ALT_CHANGE_THRESHOLD = 1; //高度情報安定判定閾値
+static const int MINIMUM_ALTITUDE = 100; //高度情報一定値以下判定閾値(m)
+//センサーデータ取得感覚
+static const int LIGHT_INTERVAL = 2;
 static const int ALT_INTERVAL_SECONDS = 10;//seconds
-static const double INF = 10000;
+
 static const int WAIT4START_SECONDS = 180;
-static const int WAIT4LAND_SECONDS = 900;
-//NOTE 終端速度に依存
+static const int WAIT4LAND_SECONDS = 900;//NOTE 終端速度に依存
+static const double INF = 10000;
+
 
 typedef struct st_Sequence
 {
@@ -36,6 +40,7 @@ typedef struct st_Sequence
 	//longと同じ
 }Sequence;
 
+//GPS座標を取得して送信
 int getGPScoords(void)
 {
 	loc_t coord;
@@ -45,6 +50,15 @@ int getGPScoords(void)
 	xbeePrintf("latitude:%f longitude:%f altitude:%f\n",
 	           coord.latitude,coord.longitude,coord.altitude);
 	return 0;
+}
+
+//高度を取得して送信
+double getAltitude(void)
+{
+	double altitude = readAltitude();
+	printf("ALTITUDE %f\n",altitude);
+	xbeePrintf("ALTITUDE%f\n",altitude);
+	return altitude;
 }
 
 //前回のシーケンスの終了時刻と現在のシーケンスを取得
@@ -145,7 +159,7 @@ static int releaseSeq(Sequence *seq)
 	while(!isTimeout(TIMEOUT_LUX,*seq))
 	{
 		getGPScoords();
-		readAltitude();
+		getAltitude();
 		if(isLight())
 		{
 			isLightCount++;
@@ -164,7 +178,7 @@ static int releaseSeq(Sequence *seq)
 			write_sequence(seq,RELEASE_SEQ);
 			return 0;
 		}
-		sleep(2);
+		sleep(LIGHT_INTERVAL);
 	}
 	printf("release_complete:time out\n");
 	xbeePrintf("release_complete:time out\n");
@@ -175,7 +189,7 @@ static int releaseSeq(Sequence *seq)
 static int wait4Land(Sequence* seq)
 {
 	getGPScoords();
-	readAltitude();
+	getAltitude();
 	int i=0;
 	for(i=0; i<WAIT4LAND_SECONDS; i++)
 	{
@@ -224,9 +238,7 @@ static int isLanded(Queue* ring)
 		time_t tcurrent;
 		time(&tcurrent);
 		printf("%s\n",ctime(&tcurrent));
-		double altitude = readAltitude();
-		printf("ALTITUDE %f\n",altitude);
-		xbeePrintf("ALTITUDE%f\n",altitude);
+		double altitude = getAltitude();
 		enqueue(ring,altitude);
 		sleep(ALT_INTERVAL_SECONDS);
 	}
@@ -282,6 +294,7 @@ int main(void)
 	luxsensor_initialize();
 	gps_init();
 	Sequence sequence;
+
 	if(read_sequence(&sequence)!=0)
 	//file open に失敗
 	{
@@ -309,7 +322,6 @@ int main(void)
 	case 5:
 		gps_off();
 		break;
-
 	default:
 		printf("Sequence number is Strange\n");
 		break;
