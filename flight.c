@@ -23,7 +23,7 @@ static const int ALTUTUDE_RING_LEN = 10;//ring_bufferの長さ
 //THRESHOLD
 static const int ALT_CHANGE_THRESHOLD = 1; //GPS高度情報安定判定閾値
 static const int MINIMUM_ALTITUDE = 100; //GPS高度情報一定値以下判定閾値(m)
-static const int ALT_INTERVAL = 10;
+static const int ALT_INTERVAL_SECONDS = 10;//seconds
 static const double INF = 10000;
 static const int WAIT4START_SECONDS = 180;
 static const int WAIT4LAND_SECONDS = 900;
@@ -228,7 +228,7 @@ static int isLanded(Queue* ring)
 		printf("ALTITUDE %f\n",altitude);
 		xbeePrintf("ALTITUDE%f\n",altitude);
 		enqueue(ring,altitude);
-		sleep(ALT_INTERVAL);
+		sleep(ALT_INTERVAL_SECONDS);
 	}
 	if(calc_variation(ring)<ALT_CHANGE_THRESHOLD&&isAltlow(ring))
 	{
