@@ -243,27 +243,28 @@ static float compensatePressure(int32_t adc_P, int32_t t_fine) {
 	return (float)p/256;
 }
 
+/**********************************
+   static float compensateHumidity(int32_t adc_H,int32_t t_fine)
+   {
+        int32_t v_x1_u32r;
 
-static float compensateHumidity(int32_t adc_H,int32_t t_fine)
-{
-	int32_t v_x1_u32r;
+        v_x1_u32r = (t_fine - ((int32_t)76800));
 
-	v_x1_u32r = (t_fine - ((int32_t)76800));
+        v_x1_u32r = (((((adc_H << 14) - (((int32_t)cal.dig_H4) << 20) -
+                        (((int32_t)cal.dig_H5) * v_x1_u32r)) + ((int32_t)16384)) >> 15) *
+                     (((((((v_x1_u32r * ((int32_t)cal.dig_H6)) >> 10) *
+                          (((v_x1_u32r * ((int32_t)cal.dig_H3)) >> 11) + ((int32_t)32768))) >> 10) +
+                        ((int32_t)2097152)) * ((int32_t)cal.dig_H2) + 8192) >> 14));
 
-	v_x1_u32r = (((((adc_H << 14) - (((int32_t)cal.dig_H4) << 20) -
-	                (((int32_t)cal.dig_H5) * v_x1_u32r)) + ((int32_t)16384)) >> 15) *
-	             (((((((v_x1_u32r * ((int32_t)cal.dig_H6)) >> 10) *
-	                  (((v_x1_u32r * ((int32_t)cal.dig_H3)) >> 11) + ((int32_t)32768))) >> 10) +
-	                ((int32_t)2097152)) * ((int32_t)cal.dig_H2) + 8192) >> 14));
+        v_x1_u32r = (v_x1_u32r - (((((v_x1_u32r >> 15) * (v_x1_u32r >> 15)) >> 7) *
+                                   ((int32_t)cal.dig_H1)) >> 4));
 
-	v_x1_u32r = (v_x1_u32r - (((((v_x1_u32r >> 15) * (v_x1_u32r >> 15)) >> 7) *
-	                           ((int32_t)cal.dig_H1)) >> 4));
-
-	v_x1_u32r = (v_x1_u32r < 0) ? 0 : v_x1_u32r;
-	v_x1_u32r = (v_x1_u32r > 419430400) ? 419430400 : v_x1_u32r;
-	float h = (v_x1_u32r>>12);
-	return h / 1024.0;
-}
+        v_x1_u32r = (v_x1_u32r < 0) ? 0 : v_x1_u32r;
+        v_x1_u32r = (v_x1_u32r > 419430400) ? 419430400 : v_x1_u32r;
+        float h = (v_x1_u32r>>12);
+        return h / 1024.0;
+   }
+ *****************************************/
 
 static void getRawData(bme280_raw_data *raw)
 {
