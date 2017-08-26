@@ -129,7 +129,8 @@ int isTimeout(int timeout_min,Sequence seq)
 	{
 		//前のステータス終了からの経過時間 > タイムアウト時間
 		return 1;
-	}else return 0;
+	}
+	return 0;
 }
 
 static int wait4Start()
@@ -137,8 +138,8 @@ static int wait4Start()
 	int i=0;
 	for(i=0; i<WAIT4START_SECONDS; i++)
 	{
-		printf("%d seconds to release judgement\n",WAIT4START_SECONDS-i);
-		xbeePrintf("%d seconds to release judgement\n",WAIT4START_SECONDS-i);
+		printf("%d seconds to start\n",WAIT4START_SECONDS-i);
+		xbeePrintf("%d seconds to start\n",WAIT4START_SECONDS-i);
 		sleep(1);
 	}
 	return 0;
@@ -168,6 +169,7 @@ static int releaseSeq(Sequence *seq)
 		}
 		else
 		{
+			printf("isLight false\n", );
 			xbeePrintf("isLight False\n");
 			isLightCount = 0;
 		}
@@ -229,7 +231,7 @@ static int isAltlow(Queue* ring)
 	return 0;
 }
 
-//着地判定
+//着地判定ロジック
 static int isLanded(Queue* ring)
 {
 	while(!is_full(ring))
@@ -253,7 +255,7 @@ static int isLanded(Queue* ring)
 	return 0;
 }
 
-
+//着地判定シーケンス
 static int landSeq(Sequence* seq)
 {
 	printf("Landing Sequence\n");
