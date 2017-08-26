@@ -32,25 +32,25 @@ flight.o: flight.c
 integration.o: integration.c
 	gcc -c -Wall integration.c
 
-mitibiki.o: mitibiki.c
+mitibiki.o: mitibiki.h mitibiki.c
 	gcc -c -Wall mitibiki.c
 
-motor.o: motor.c
+motor.o: motor.h motor.c
 	gcc -c -Wall motor.c
 
-pid.o: pid.c
+pid.o: pid.h pid.c
 	gcc -c -Wall pid.c
 
-ring_buffer.o: ring_buffer.c
+ring_buffer.o: ring_buffer.h ring_buffer.c
 	gcc -c -Wall ring_buffer.c
 
-gut.o: gut.c
+gut.o: gut.h gut.c
 	gcc -c -Wall gut.c
 
-compass.o: compass.c
+compass.o: compass.h compass.c
 	gcc -c -Wall compass.c
 
-acclgyro.o: acclgyro.c
+acclgyro.o: acclgyro.h acclgyro.c
 	gcc -c -Wall acclgyro.c
 
 xbee_at.o: xbee_at.h xbee_at.c
