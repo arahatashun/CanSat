@@ -96,9 +96,7 @@ int serial_readln(char *buffer, int len)
 int serial_data_avail (void)
 {
 	int result;
-
-	if (ioctl (uart0_filestream, FIONREAD, &result) == -1)
-		return -1;
+	if (ioctl (uart0_filestream, FIONREAD, &result) == -1) return -1;
 	return result;
 }
 
