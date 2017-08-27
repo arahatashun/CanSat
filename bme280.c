@@ -31,6 +31,7 @@
    Compensation functions and altitude function originally from:
    https://github.com/adafruit/Adafruit_BME280_Library/blob/master/Adafruit_BME280.cpp
  ***************************************************************************
+   https://github.com/andreiva/raspberry-pi-bme280
    This is a library for the BME280 humidity, temperature & pressure sensor
    Designed specifically to work with the Adafruit BME280 Breakout
    ----> http://www.adafruit.com/products/2650
