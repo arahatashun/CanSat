@@ -91,6 +91,7 @@ static const int BME280_REGISTER_HUMIDDATA = 0xFD;
 static const float MEAN_SEA_LEVEL_PRESSURE = 1005.6;
 static const int LOCL_COUNTER_MAX = 50;
 static const double INF_ALTITUDE = 1000000000;
+static const int SAMPLING_INTERVAL = 100;//milliseconds
 static int fd = 0;
 /*
  * Immutable calibration data read from bme280
@@ -343,7 +344,7 @@ int getRawList(bme280_data_list* data)
 		data->temperatureList[i] = raw.temperature;
 		data->pressureList[i] = raw.pressure;
 		data->humidityList[i]= raw.humidity;
-		delay(10);
+		delay(SAMPLING_INTERVAL);
 	}
 	qsort(data->temperatureList,10, sizeof(uint32_t), uint32_tCmp);
 	qsort(data->pressureList,10, sizeof(uint32_t), uint32_tCmp);
