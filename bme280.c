@@ -347,6 +347,7 @@ int getRawList(bme280_data_list* data)
 		data->pressureList[i] = raw.pressure;
 		data->humidityList[i]= raw.humidity;
 		delay(SAMPLING_INTERVAL);
+		readCalibrationData(&cal);
 	}
 	qsort(data->temperatureList,10, sizeof(uint32_t), uint32_tCmp);
 	qsort(data->pressureList,10, sizeof(uint32_t), uint32_tCmp);
