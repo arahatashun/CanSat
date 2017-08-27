@@ -36,7 +36,7 @@ gyromotor:
 compass:motor.o
 	gcc -o compass.out compass_test.c ../compass.c motor.o $(LIBS) -lm
 
-bme280.o:
+bme280.o:bme280.c
 	gcc -c -Wall ../bme280.c $(LIBS) -lm
 
 motor.o:
