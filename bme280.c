@@ -347,8 +347,6 @@ int getRawList(bme280_data_list* data)
 		data->pressureList[i] = raw.pressure;
 		data->humidityList[i]= raw.humidity;
 		delay(SAMPLING_INTERVAL);
-		wiringPiI2CWriteReg8(fd, 0xf2, 0x01); // humidity oversampling x 1
-		wiringPiI2CWriteReg8(fd, 0xf4, 0x25); // pressure and temperature oversampling x 1, mode normal
 	}
 	qsort(data->temperatureList,10, sizeof(uint32_t), uint32_tCmp);
 	qsort(data->pressureList,10, sizeof(uint32_t), uint32_tCmp);
