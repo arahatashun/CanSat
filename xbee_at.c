@@ -70,7 +70,8 @@ void xbee_readln(char *buffer, int len)
 	while(1) {
 		rx_length = read(usb_filestream, (void*)(&c), 1);
 
-		if (rx_length <= 0) {
+		if (rx_length <= 0)
+		{
 			//wait for messages
 			sleep(1);
 		} else {

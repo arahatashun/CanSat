@@ -19,6 +19,7 @@ static const int OPEN_SEQ = 5;//ケーシング展開終了
 
 //タイムアウト時間 (分)
 static const int TIMEOUT_LUX = 60; //光センサー放出判定
+static const int WAIT4LAND_MINS = 10;//NOTE 終端速度に依存
 static const int TIMEOUT_ALT_STABLE = 40; //高度着地判定
 static const int ALTUTUDE_RING_LEN = 10;//ring_bufferの長さ
 //THRESHOLD
@@ -29,7 +30,6 @@ static const int LIGHT_INTERVAL = 2;
 static const int ALT_INTERVAL_SECONDS = 10;//seconds
 
 static const int WAIT4START_SECONDS = 180;
-static const int WAIT4LAND_SECONDS = 900;//NOTE 終端速度に依存
 static const double INF = 10000;
 
 
@@ -190,16 +190,15 @@ static int releaseSeq(Sequence *seq)
 
 static int wait4Land(Sequence* seq)
 {
-	getGPScoords();
-	getAltitude();
-	int i=0;
-	for(i=0; i<WAIT4LAND_SECONDS; i++)
+	xbeePrintf("LAND WAIT SEQUENCE START\n");
+	printf("LAND WAIT SEQUENCE START\n");
+	while(!isTimeout(WAIT4LAND_MINS,*seq)
 	{
-		printf("%d seconds to LAND judgement\n",WAIT4LAND_SECONDS-i);
-		xbeePrintf("%d seconds to LAND judgement\n",WAIT4LAND_SECONDS-i);
-		sleep(1);
+		getGPScoords();
+		getAltitude();
 	}
 	xbeePrintf("LAND WAIT SEQUENCE FINISHED\n");
+	printf("LAND WAIT SEQUENCE FINISHED\n");
 	write_sequence(seq,LAND_WAIT_SEQ);
 	return 0;
 }
