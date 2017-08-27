@@ -56,8 +56,8 @@ int getGPScoords(void)
 double getAltitude(void)
 {
 	double altitude = readAltitude();
-	printf("ALTITUDE %f\n",altitude);
-	xbeePrintf("ALTITUDE%f\n",altitude);
+	printf("ALTITUDE:%f\n",altitude);
+	xbeePrintf("ALTITUDE:%f\n",altitude);
 	return altitude;
 }
 
