@@ -91,7 +91,7 @@ static const int BME280_REGISTER_HUMIDDATA = 0xFD;
 static const float MEAN_SEA_LEVEL_PRESSURE = 1005.6;
 static const int LOCL_COUNTER_MAX = 50;
 static const double INF_ALTITUDE = 1000000000;
-static const int SAMPLING_INTERVAL = 100;//milliseconds
+static const int SAMPLING_INTERVAL = 10;//milliseconds
 static int fd = 0;
 /*
  * Immutable calibration data read from bme280
@@ -162,7 +162,7 @@ static void readCalibrationData(bme280_calib_data *data);
 
 int bme280_initialize()
 {
-	int fd = wiringPiI2CSetup(BME280_ADDRESS);
+	fd = wiringPiI2CSetup(BME280_ADDRESS);
 	if(fd < 0)
 	{
 		printf("WARNING! BME280 wiringPiI2CSetup error\n");
