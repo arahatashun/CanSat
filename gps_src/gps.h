@@ -25,6 +25,7 @@ extern void gps_flush(void);
 // Turn off device (low-power consumption)
 extern void gps_off(void);
 
+extern void gps_avail(void);
 // -------------------------------------------------------------------------
 // Internal functions
 // -------------------------------------------------------------------------

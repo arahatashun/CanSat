@@ -9,7 +9,7 @@
 
 #include "serial.h"
 
-int uart0_filestream = -1;
+static int uart0_filestream = -1;
 
 void serial_init(void)
 {
@@ -39,7 +39,7 @@ void serial_config(void)
  *********************************************************************************
  */
 
-void serialFlush (void)
+void serial_flush (void)
 {
 	tcflush (uart0_filestream, TCIOFLUSH);
 }
@@ -91,6 +91,16 @@ int serial_readln(char *buffer, int len)
 		}
 	}
 }
+
+int serial_aata_avail (void)
+{
+	int result;
+
+	if (ioctl (uart0_filestream, FIONREAD, &result) == -1)
+		return -1;
+	return result;
+}
+
 
 void serial_close(void)
 {

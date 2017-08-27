@@ -62,7 +62,13 @@ extern void gps_location(loc_t *coord) {
 
 extern void gps_flush(void)
 {
-	serialFlush();
+	serial_flush();
+}
+
+extern void gps_avail(void)
+{
+	int i = serial_DataAvail();
+	printf("the number of bytes of data avalable is %d\n",i);
 }
 
 extern void gps_off(void) {
