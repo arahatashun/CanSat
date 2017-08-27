@@ -330,7 +330,9 @@ static int isLocked(uint32_t* values,const uint32_t lock)
 //uint32_t型用の比較関数
 static int uint32_tCmp(const void* p, const void* q)
 {
-	return *(uint32_t*)p - *(uint32_t*)q;
+	if( *(uint32_t*)p > *(uint32_t*)q ) return 1;
+	if( *(uint32_t*)p < *(uint32_t*)q ) return -1;
+	return 0;
 }
 
 int getRawList(bme280_data_list* data)
