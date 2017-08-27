@@ -6,6 +6,7 @@
 #include <inttypes.h>
 #include <string.h>
 #include <errno.h>
+#include <sys/ioctl.h>
 
 #include "serial.h"
 
@@ -92,7 +93,7 @@ int serial_readln(char *buffer, int len)
 	}
 }
 
-int serial_aata_avail (void)
+int serial_data_avail (void)
 {
 	int result;
 
