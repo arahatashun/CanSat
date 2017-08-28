@@ -42,7 +42,7 @@ void serial_config(void)
 
 void serial_flush (void)
 {
-	tcflush (uart0_filestream, TCIOFLUSH);
+	tcflush (uart0_filestream, TCIFLUSH);
 }
 
 void serial_println(const char *line, int len)
