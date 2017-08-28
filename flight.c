@@ -43,7 +43,7 @@ typedef struct st_Sequence
 //GPS座標を取得して送信
 int getGPScoords(void)
 {
-	gps_avail();
+	gps_flush();
 	loc_t coord;
 	gps_location(&coord);
 	printf("latitude:%f longitude:%f altitude:%f\n",
