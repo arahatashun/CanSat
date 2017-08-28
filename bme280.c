@@ -342,7 +342,7 @@ int getRawList(bme280_data_list* data)
 	{
 		bme280_raw_data raw;
 		getRawData(&raw);
-		printf("%dth pressure %d\n",i,raw.pressure);
+		//printf("%dth pressure %d\n",i,raw.pressure);
 		data->temperatureList[i] = raw.temperature;
 		data->pressureList[i] = raw.pressure;
 		data->humidityList[i]= raw.humidity;
