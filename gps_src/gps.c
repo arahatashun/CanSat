@@ -67,7 +67,7 @@ extern void gps_flush(void)
 
 extern void gps_avail(void)
 {
-	int i = serial_dataavail();
+	int i = serial_data_avail();
 	printf("the number of bytes of data avalable is %d\n",i);
 }
 
