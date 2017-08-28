@@ -157,7 +157,7 @@ static int startSeq(Sequence *seq)
 //放出判定シーケンス
 static int releaseSeq(Sequence *seq)
 {
-	printf("RELEASE SEQUENCE START")
+	printf("RELEASE SEQUENCE START");
 	int isLightCount = 0;
 	while(!isTimeout(TIMEOUT_LUX,*seq))
 	{
