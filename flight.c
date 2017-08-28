@@ -192,7 +192,7 @@ static int wait4Land(Sequence* seq)
 {
 	xbeePrintf("LAND WAIT SEQUENCE START\n");
 	printf("LAND WAIT SEQUENCE START\n");
-	while(!isTimeout(WAIT4LAND_MINS,*seq)
+	while(!isTimeout(WAIT4LAND_MINS,*seq))
 	{
 		getGPScoords();
 		getAltitude();
