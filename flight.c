@@ -25,11 +25,12 @@ static const int ALTUTUDE_RING_LEN = 10;//ring_bufferの長さ
 //THRESHOLD
 static const int ALT_CHANGE_THRESHOLD = 1; //高度情報安定判定閾値
 static const int MINIMUM_ALTITUDE = 100; //高度情報一定値以下判定閾値(m)
+static const int CONTINUOUS_ISLIGHT_TIME = 5;
 //センサーデータ取得感覚
 static const int LIGHT_INTERVAL = 2;
 static const int ALT_INTERVAL_SECONDS = 10;//seconds
 
-static const int WAIT4START_SECONDS = 180;
+static const int WAIT4START_SECONDS = 10;
 static const double INF = 10000;
 
 
@@ -43,6 +44,7 @@ typedef struct st_Sequence
 //GPS座標を取得して送信
 int getGPScoords(void)
 {
+	gps_flush();
 	loc_t coord;
 	gps_location(&coord);
 	printf("latitude:%f longitude:%f altitude:%f\n",
@@ -156,6 +158,7 @@ static int startSeq(Sequence *seq)
 //放出判定シーケンス
 static int releaseSeq(Sequence *seq)
 {
+	printf("RELEASE SEQUENCE START");
 	int isLightCount = 0;
 	while(!isTimeout(TIMEOUT_LUX,*seq))
 	{
@@ -173,7 +176,7 @@ static int releaseSeq(Sequence *seq)
 			xbeePrintf("isLight False\n");
 			isLightCount = 0;
 		}
-		if(isLightCount==10)
+		if(isLightCount>=CONTINUOUS_ISLIGHT_TIME)
 		{
 			printf("release complete:lux sensor\n");
 			xbeePrintf("release complete:lux sensor\n");
@@ -192,7 +195,7 @@ static int wait4Land(Sequence* seq)
 {
 	xbeePrintf("LAND WAIT SEQUENCE START\n");
 	printf("LAND WAIT SEQUENCE START\n");
-	while(!isTimeout(WAIT4LAND_MINS,*seq)
+	while(!isTimeout(WAIT4LAND_MINS,*seq))
 	{
 		getGPScoords();
 		getAltitude();
