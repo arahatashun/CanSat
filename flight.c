@@ -29,7 +29,7 @@ static const int MINIMUM_ALTITUDE = 100; //高度情報一定値以下判定閾�
 static const int LIGHT_INTERVAL = 2;
 static const int ALT_INTERVAL_SECONDS = 10;//seconds
 
-static const int WAIT4START_SECONDS = 180;
+static const int WAIT4START_SECONDS = 10;
 static const double INF = 10000;
 
 
@@ -157,6 +157,7 @@ static int startSeq(Sequence *seq)
 //放出判定シーケンス
 static int releaseSeq(Sequence *seq)
 {
+	printf("RELEASE SEQUENCE START")
 	int isLightCount = 0;
 	while(!isTimeout(TIMEOUT_LUX,*seq))
 	{
