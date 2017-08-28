@@ -118,9 +118,9 @@ int motor_rotate_compass(double angle_to_rotate)
 int motor_escape()
 {
 	int i;
-	for(i=1; i<6; i++)
+	for(i=1; i<11; i++)
 	{
-		motor_back(i*20);
+		motor_back(i*10);
 		delay(200);
 	}
 	printf("get stacked\n");
