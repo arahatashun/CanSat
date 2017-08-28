@@ -10,7 +10,7 @@ int main()
 	gps_init();
 	while(1)
 	{
-
+		gps_avail();
 		gps_location(&data);
 		printf("latitude:%f\nlongitude:%f\naltitude:%f\n", data.latitude, data.longitude
 		       ,data.altitude);
