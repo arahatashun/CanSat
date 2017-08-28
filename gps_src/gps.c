@@ -7,7 +7,7 @@
 #include "nmea.h"
 #include "serial.h"
 
-static const int MAXIMUM_BUFFER_SIZE = 96;
+static const int MAXIMUM_BUFFER_SIZE = 256;
 
 extern void gps_init(void)
 {
@@ -22,7 +22,7 @@ extern void gps_on(void)
 }
 
 // Compute the GPS location using decimal scale
-extern void gps_location(loc_t *coord)
+extern int gps_location(loc_t *coord)
 {
 	if(gps_avail()>MAXIMUM_BUFFER_SIZE)
 	{
@@ -30,7 +30,8 @@ extern void gps_location(loc_t *coord)
 	}
 
 	uint8_t status = _EMPTY;
-	while(status != _COMPLETED) {
+	while(status != _COMPLETED)
+	{
 		gpgga_t gpgga;
 		gprmc_t gprmc;
 		char buffer[256];
@@ -42,9 +43,12 @@ extern void gps_location(loc_t *coord)
 			coord->altitude = 0;
 			coord->speed = 0;
 			coord->course = 0;
-			break;
-		}else{
-			switch (nmea_get_message_type(buffer)) {
+			return -1;
+		}
+		else
+		{
+			switch (nmea_get_message_type(buffer))
+			{
 			case NMEA_GPGGA:
 				nmea_parse_gpgga(buffer, &gpgga);
 
@@ -67,6 +71,7 @@ extern void gps_location(loc_t *coord)
 			}
 		}
 	}
+	return 0;
 }
 
 extern void gps_flush(void)
