@@ -7,19 +7,28 @@
 #include "nmea.h"
 #include "serial.h"
 
-extern void gps_init(void) {
+static const int MAXIMUM_BUFFER_SIZE = 96;
+
+extern void gps_init(void)
+{
 	serial_init();
 	serial_config();
-
 	//Write commands
 }
 
-extern void gps_on(void) {
+extern void gps_on(void)
+{
 	//Write on
 }
 
 // Compute the GPS location using decimal scale
-extern void gps_location(loc_t *coord) {
+extern void gps_location(loc_t *coord)
+{
+	if(gps_avail()>MAXIMUM_BUFFER_SIZE)
+	{
+		serial_flush();
+	}
+
 	uint8_t status = _EMPTY;
 	while(status != _COMPLETED) {
 		gpgga_t gpgga;
@@ -65,10 +74,11 @@ extern void gps_flush(void)
 	serial_flush();
 }
 
-extern void gps_avail(void)
+extern int gps_avail(void)
 {
 	int i = serial_data_avail();
 	printf("the number of bytes of data avalable is %d\n",i);
+	return i;
 }
 
 extern void gps_off(void) {
