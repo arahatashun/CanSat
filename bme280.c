@@ -92,6 +92,7 @@ static const float MEAN_SEA_LEVEL_PRESSURE = 1005.6;
 static const int LOCL_COUNTER_MAX = 50;
 static const double INF_ALTITUDE = 1000000000;
 static const int SAMPLING_INTERVAL = 10;//milliseconds
+static const int LIST_LEN = 20;
 static int fd = 0;
 /*
  * Immutable calibration data read from bme280
@@ -316,7 +317,7 @@ double calcAltitude(float pressure,float temperature)
 //lock用、指定した値にlockされてたらreturn1する
 static int isLocked(uint32_t* values,const uint32_t lock)
 {
-	int len = 10; //配列の要素数を取得
+	int len = LIST_LEN; //配列の要素数を取得
 	int lock_count = 0;
 	int i;
 	for (i = 0; i < len; i++)
@@ -338,7 +339,7 @@ static int uint32_tCmp(const void* p, const void* q)
 int getRawList(bme280_data_list* data)
 {
 	int i;
-	for(i=0; i<10; i++)
+	for(i=0; i<LIST_LEN; i++)
 	{
 		bme280_raw_data raw;
 		getRawData(&raw);
@@ -348,9 +349,9 @@ int getRawList(bme280_data_list* data)
 		data->humidityList[i]= raw.humidity;
 		delay(SAMPLING_INTERVAL);
 	}
-	qsort(data->temperatureList,10, sizeof(uint32_t), uint32_tCmp);
-	qsort(data->pressureList,10, sizeof(uint32_t), uint32_tCmp);
-	qsort(data->humidityList,10, sizeof(uint32_t), uint32_tCmp);
+	qsort(data->temperatureList,LIST_LEN, sizeof(uint32_t), uint32_tCmp);
+	qsort(data->pressureList,LIST_LEN, sizeof(uint32_t), uint32_tCmp);
+	qsort(data->humidityList,LIST_LEN, sizeof(uint32_t), uint32_tCmp);
 	return 0;
 }
 
@@ -374,9 +375,9 @@ int getProcessedData(bme280_processed_data* data)
 		printf("LockCounter MAX\n");
 		return -1;
 	}
-	data->temperature = list.temperatureList[4];
-	data->pressure = list.pressureList[4];
-	data->humidity = list.humidityList[4];
+	data->temperature = list.temperatureList[LIST_LEN/2];
+	data->pressure = list.pressureList[LIST_LEN/2];
+	data->humidity = list.humidityList[LIST_LEN/2];
 	return 0;
 }
 
