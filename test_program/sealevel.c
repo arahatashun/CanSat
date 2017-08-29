@@ -8,6 +8,6 @@ int main()
 	printf("高度を入力してください\n");
 	scanf("%f",&altitude);
 	float sealevel = getSealevelPressure(altitude);
-	printf("SEALEVEL is %f",sealevel);
+	printf("SEALEVEL PRESSURE  is %f",sealevel);
 	return 0;
 }
