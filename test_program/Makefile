@@ -15,13 +15,13 @@ accl:
 gyro:
 	gcc -o gyro.out gyro_test.c ../acclgyro.c $(LIBS) -lm
 
-xbee:
+xbee:xbee_test.c
 	gcc -o xbee.out xbee_test.c ../xbee_at.c $(LIBS) -lgps -lm
 
-gps:
+gps:gps_test.c
 	gcc -o gps.out gps_test.c $(LIBS) -lgps -lm
 
-bme280:bme280.o
+bme280:bme280.o ../bme280.c
 	gcc -o bme280.out bme280_test.c bme280.o $(LIBS) -lm
 
 sealevel:bme280.o
