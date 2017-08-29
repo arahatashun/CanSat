@@ -362,9 +362,9 @@ int getProcessedData(bme280_processed_data* data)
 	int LockCounter = 0;
 	while(isLocked(list.pressureList,list.pressureList[0])&&(LockCounter<LOCL_COUNTER_MAX))
 	{
-		printf("raw int pressure %d\n",list.pressureList[0]);
-		printf("WARNING Pressure lock\n");
-		printf("LockCounter %d\n",LockCounter);
+		//printf("raw int pressure %d\n",list.pressureList[0]);
+		//printf("WARNING Pressure lock\n");
+		//printf("LockCounter %d\n",LockCounter);
 		bme280_initialize();
 		printf("BME280 reinitialized\n");
 		getRawList(&list);
