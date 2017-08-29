@@ -369,6 +369,9 @@ int getProcessedData(bme280_processed_data* data)
 		printf("BME280 reinitialized\n");
 		getRawList(&list);
 		LockCounter++;
+	}else{
+		printf("PRESSURE NOT LOCK\n");
+		printf("LockCounter %d\n",LockCounter);
 	}
 	if(LockCounter>=LOCL_COUNTER_MAX)
 	{
