@@ -359,16 +359,21 @@ int getProcessedData(bme280_processed_data* data)
 {
 	bme280_data_list list;
 	getRawList(&list);
-	int LockCounter = 0;
-	while(isLocked(list.pressureList,list.pressureList[0])&&(LockCounter<LOCL_COUNTER_MAX))
+	static int LockCounter = 0;
+	if(isLocked(list.pressureList,list.pressureList[0])&&(LockCounter<LOCL_COUNTER_MAX))
 	{
+		LockCounter++;
 		printf("raw int pressure %d\n",list.pressureList[0]);
 		printf("WARNING Pressure lock\n");
 		printf("LockCounter %d\n",LockCounter);
+		if(LockCounter>=5)
+		{
 		bme280_initialize();
 		printf("BME280 reinitialized\n");
 		getRawList(&list);
-		LockCounter++;
+		}
+	}else{
+		LockCounter = 0;
 	}
 	if(LockCounter>=LOCL_COUNTER_MAX)
 	{
