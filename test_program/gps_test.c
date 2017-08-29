@@ -8,12 +8,16 @@ loc_t data;//gpsのデータを確認するものをグローバル変数宣言
 int main()
 {
 	gps_init();
+	time_t startTime;
+	time(&startTime);
 	while(1)
 	{
-
+		time_t now;
+		time(&now);
+		printf("time = %d[s]\n", (int)(now-startTime));
 		gps_location(&data);
-		printf("latitude:%f\nlongitude:%f\naltitude:%f\n", data.latitude, data.longitude
-		       ,data.altitude);
+		printf("latitude:%f\nlongitude:%f\naltitude:%f\n",
+		       data.latitude, data.longitude,data.altitude);
 
 	}
 }
