@@ -369,15 +369,14 @@ int getProcessedData(bme280_processed_data* data)
 		printf("BME280 reinitialized\n");
 		getRawList(&list);
 		LockCounter++;
-	}else{
-		printf("PRESSURE NOT LOCK\n");
-		printf("LockCounter %d\n",LockCounter);
 	}
 	if(LockCounter>=LOCL_COUNTER_MAX)
 	{
 		printf("LockCounter MAX\n");
 		return -1;
 	}
+	printf("PRESSURE NOT LOCK\n");
+	printf("LockCounter %d\n",LockCounter);
 	//printf("%d\n",LIST_LEN/2);
 	data->temperature = list.temperatureList[LIST_LEN/2];
 	data->pressure = list.pressureList[LIST_LEN/2];
