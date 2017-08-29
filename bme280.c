@@ -355,32 +355,27 @@ int getRawList(bme280_data_list* data)
 	return 0;
 }
 
-int getProcessedData(bme280_processed_data* data)
+iint getProcessedData(bme280_processed_data* data)
 {
 	bme280_data_list list;
 	getRawList(&list);
-	static int LockCounter = 0;
-	if(isLocked(list.pressureList,list.pressureList[0])&&(LockCounter<LOCL_COUNTER_MAX))
+	int LockCounter = 0;
+	while(isLocked(list.pressureList,list.pressureList[0])&&(LockCounter<LOCL_COUNTER_MAX))
 	{
-		LockCounter++;
 		printf("raw int pressure %d\n",list.pressureList[0]);
 		printf("WARNING Pressure lock\n");
 		printf("LockCounter %d\n",LockCounter);
-		if(LockCounter>=5)
-		{
 		bme280_initialize();
 		printf("BME280 reinitialized\n");
 		getRawList(&list);
-		}
-	}else{
-		LockCounter = 0;
+		LockCounter++;
 	}
 	if(LockCounter>=LOCL_COUNTER_MAX)
 	{
 		printf("LockCounter MAX\n");
 		return -1;
 	}
-	printf("%d\n",LIST_LEN/2);
+	//printf("%d\n",LIST_LEN/2);
 	data->temperature = list.temperatureList[LIST_LEN/2];
 	data->pressure = list.pressureList[LIST_LEN/2];
 	data->humidity = list.humidityList[LIST_LEN/2];
