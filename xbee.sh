@@ -1,1 +1,1 @@
-cat /dev/tty.usbserial-AL01T0PA | tee log.txt
+cat /dev/tty.usbserial-AL01T0PA | tee ~/Documents/log.txt
