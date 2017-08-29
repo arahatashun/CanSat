@@ -375,6 +375,7 @@ int getProcessedData(bme280_processed_data* data)
 		printf("LockCounter MAX\n");
 		return -1;
 	}
+	printf("%d\n",LIST_LEN/2);
 	data->temperature = list.temperatureList[LIST_LEN/2];
 	data->pressure = list.pressureList[LIST_LEN/2];
 	data->humidity = list.humidityList[LIST_LEN/2];
