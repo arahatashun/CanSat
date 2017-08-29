@@ -92,7 +92,7 @@ static const float MEAN_SEA_LEVEL_PRESSURE = 1005.6;
 static const int LOCL_COUNTER_MAX = 50;
 static const double INF_ALTITUDE = 1000000000;
 static const int SAMPLING_INTERVAL = 10;//milliseconds
-static const int LIST_LEN = 20;
+enum { LIST_LEN = 20 };
 static int fd = 0;
 /*
  * Immutable calibration data read from bme280
