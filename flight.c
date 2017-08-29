@@ -27,7 +27,7 @@ static const int ALT_CHANGE_THRESHOLD = 1; //高度情報安定判定閾値
 static const int MINIMUM_ALTITUDE = 100; //高度情報一定値以下判定閾値(m)
 static const int CONTINUOUS_ISLIGHT_TIME = 5;
 //センサーデータ取得感覚
-static const int LIGHT_INTERVAL = 2;
+static const int LIGHT_INTERVAL = 1;
 static const int ALT_INTERVAL_SECONDS = 10;//seconds
 
 static const int WAIT4START_SECONDS = 10;
@@ -164,26 +164,24 @@ static int releaseSeq(Sequence *seq)
 	{
 		getGPScoords();
 		getAltitude();
-		if(isLight())
+		while(isLightCount<CONTINUOUS_ISLIGHT_TIME)
 		{
-			isLightCount++;
-			printf("light_counter:%d\n",isLightCount);
-			xbeePrintf("light_counter:%d\n",isLightCount);
+			if(isLight())
+			{
+				isLightCount++;
+				printf("light_counter:%d\n",isLightCount);
+				xbeePrintf("light_counter:%d\n",isLightCount);
+			}else{
+				printf("isLight False\n");
+				xbeePrintf("isLight False\n");
+				isLightCount = 0;
+			}
+			sleep(LIGHT_INTERVAL);
 		}
-		else
-		{
-			printf("isLight False\n");
-			xbeePrintf("isLight False\n");
-			isLightCount = 0;
-		}
-		if(isLightCount>=CONTINUOUS_ISLIGHT_TIME)
-		{
-			printf("release complete:lux sensor\n");
-			xbeePrintf("release complete:lux sensor\n");
-			write_sequence(seq,RELEASE_SEQ);
-			return 0;
-		}
-		sleep(LIGHT_INTERVAL);
+		printf("release complete:lux sensor\n");
+		xbeePrintf("release complete:lux sensor\n");
+		write_sequence(seq,RELEASE_SEQ);
+		return 0;
 	}
 	printf("release_complete:time out\n");
 	xbeePrintf("release_complete:time out\n");
