@@ -104,7 +104,7 @@ int serial_data_avail (void)
 	int result;
 	if (ioctl (uart0_filestream, FIONREAD, &result) == -1)
 	{
-		printf("WARNING!! SERIAL FLASH FAIL\n");
+		printf("WARNING!! SERIAL AVAIL FAIL\n");
 		return -1;
 	}
 	return result;
