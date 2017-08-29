@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <gps.h>
+#include <time.h>
 #include <wiringPi.h>
 
 loc_t data;//gpsのデータを確認するものをグローバル変数宣言
