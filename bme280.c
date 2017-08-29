@@ -355,7 +355,7 @@ int getRawList(bme280_data_list* data)
 	return 0;
 }
 
-iint getProcessedData(bme280_processed_data* data)
+int getProcessedData(bme280_processed_data* data)
 {
 	bme280_data_list list;
 	getRawList(&list);
