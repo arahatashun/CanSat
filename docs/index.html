@@ -15,14 +15,14 @@
         {
           checksum++;
         } else {
-          target.innerHTML = "チェック項目1がチェックされていません。<br/>";
+          target.innerHTML = "pullがチェックされていません。<br/>";
         }
         if (check2 == true)
         {
           checksum++;
         } else
         {
-          target.innerHTML += "チェック項目2がチェックされていません。<br/>";
+          target.innerHTML += "I2C系とGPSがチェックされていません。<br/>";
         }
         if (checksum==SUM)
         {
@@ -33,9 +33,15 @@
 </head>
 <body>
   <form name="form1" action="">
-    <input id="Checkbox1" type="checkbox" /><label for="Checkbox1">チェック項目1</label><br />
-    <input id="Checkbox2" type="checkbox" /><label for="Checkbox2">チェック項目2</label><br />
-    <input type="button" value="Exec" onclick="onButtonClick();" />
+    <input id="Checkbox1" type="checkbox" /><label for="Checkbox1">pull</label><br />
+  GitHubのmasterから最新のコードをraspberry piのlocalに持ってくる.<br />
+  git pull origin master<br />
+  <input id="Checkbox2" type="checkbox" /><label for="Checkbox2">I2C系とGPSのチェック</label><br />
+  sudo i2cdetect 1でI2C系の接続チェック.<br />
+  cd test_program<br />
+  make gps<br />
+  sudo ./gps.out<br />
+  <input type="button" value="Check" onclick="onButtonClick();" />
   </form>
 
   <div id="output"></div>
