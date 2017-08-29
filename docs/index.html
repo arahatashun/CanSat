@@ -1,10 +1,43 @@
-<!doctype html>
-<html lang="ja">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <title>Check list</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script type="text/javascript" language="javascript">
+      const SUM =2;
+      var checksum = 0;
+      function onButtonClick() {
+        check1 = document.form1.Checkbox1.checked;
+        check2 = document.form1.Checkbox2.checked;
+
+        target = document.getElementById("output");
+        if (check1 == true)
+        {
+          checksum++;
+        } else {
+          target.innerHTML = "チェック項目1がチェックされていません。<br/>";
+        }
+        if (check2 == true)
+        {
+          checksum++;
+        } else
+        {
+          target.innerHTML += "チェック項目2がチェックされていません。<br/>";
+        }
+        if (checksum==SUM)
+        {
+          target.innerHTML += "READY FOR LUNCH<br/>";
+        }
+      }
+    </script>
 </head>
 <body>
-  本文
+  <form name="form1" action="">
+    <input id="Checkbox1" type="checkbox" /><label for="Checkbox1">チェック項目1</label><br />
+    <input id="Checkbox2" type="checkbox" /><label for="Checkbox2">チェック項目2</label><br />
+    <input type="button" value="Exec" onclick="onButtonClick();" />
+  </form>
+
+  <div id="output"></div>
 </body>
 </html>
