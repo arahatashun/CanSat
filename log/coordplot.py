@@ -9,7 +9,8 @@ import matplotlib.pyplot as plt
 
 EARTH_RADIUS = 6378137
 vector_scale = 0.00001
-
+goal_latitude = 40.142300
+goal_longitude = 139.987257
 latlong_coord = [[], []]  # 緯度経度を多次元配列に格納するためのリストを用意
 dist = []  # 距離を格納するリストを用意
 compass = [[], []]  # 地磁気のxy成分をそれぞれ格納
@@ -46,17 +47,18 @@ def dist_on_sphere(start_xyz, end_xyz):
     distance = abs(math.acos(dot_product_sum) * EARTH_RADIUS)
     return distance
 
+
 # 緯度経度の多次元配列から軌跡をプロット
-
-
 def plot_coordinate(latlong_coord, compass):
     plt.plot(latlong_coord[1], latlong_coord[0])
     plt.quiver(latlong_coord[1], latlong_coord[0], compass[0],
                compass[1], angles='xy', scale_units='xy', scale=1)
+    plt.plot(goal_longitude, goal_latitude, color='k',
+             marker="$GOAL$", markersize=30)
     plt.plot(latlong_coord[1][0], latlong_coord[0][0],
-             color='k', marker="$START$", markersize=50)
+             color='k', marker="$CONTROL START$", markersize=80)
     plt.plot(latlong_coord[1][len(latlong_coord[0]) - 1], latlong_coord[0]
-             [len(latlong_coord[1]) - 1], color='k', marker="$GOAL$", markersize=50)
+             [len(latlong_coord[1]) - 1], color='k', marker="$CONTROL END$", markersize=80)
     plt.gca().get_xaxis().get_major_formatter().set_useOffset(False)
     plt.gca().get_yaxis().get_major_formatter().set_useOffset(False)
     plt.xlabel('longitude')
@@ -67,7 +69,7 @@ def plot_coordinate(latlong_coord, compass):
 def plot_pid_compass(control_time, p_output, i_output, pid_output, delta_angle):
     plt.plot(control_time, p_output, label='p_output', color='r')
     plt.plot(control_time, i_output, label='i_output', color='y')
-    plt.plot(control_time, pid_output, label='pid_output', color='g')
+    plt.plot(control_time, pid_output, label='pi_output', color='g')
     plt.plot(control_time, delta_angle, label='delta_angle', color='b')
     plt.legend()
     plt.xlabel('time[min]')
