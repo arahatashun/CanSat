@@ -107,9 +107,12 @@ int motor_rotate_compass(double angle_to_rotate)
 	}
 	if(c >= STACK_COUNTER)
 	{
-		printf("could not escape\n");
+		printf("-------Could Not Move-------\n");
 	}
-
+	else
+	{
+		printf("-------Successfully Moved-------\n");
+	}
 	motor_stop();
 	delay(2000);
 	return 0;
@@ -123,7 +126,6 @@ int motor_escape()
 		motor_back(i*10);
 		delay(200);
 	}
-	printf("get stacked\n");
 	motor_rotate_compass(90);
 	motor_rotate_compass(-45);
 	return 0;
@@ -137,7 +139,7 @@ int stackJudge(Queue* latring,Queue* lonring)
 	printf("deltaMovement = %f\n", deltaMovement);
 	if(deltaMovement<STACK_THRESHOLD)
 	{
-		printf("-------STACK JUDGEMENT------\n");
+		printf("-------STACK JUDGEMENT-------\n");
 		motor_escape();
 		gps_off();
 		gps_init();
