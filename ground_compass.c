@@ -20,7 +20,7 @@ static const double KP_VALUE= 0.65;
 static const double KI_VALUE = 0.00001625;
 static const double KD_VALUE = 0;
 static const int PID_LEN = 12;
-static const int STACK_COUNTER = 20;
+static const int MAX_STACK_ROTATE_TIMES = 20;
 
 typedef struct dist_and_angle {
 	double angle_by_compass;//地磁気による向き
@@ -85,11 +85,11 @@ int updateCoord(Queue* latring,Queue* lonring)
 
 int motor_rotate_compass(double angle_to_rotate)
 {
-	int count = 0;  //行きたい方角に回転できなくても無限ループにならないようにカウンター用意
+	int stack_count = 0;  //行きたい方角に回転できなくても無限ループにならないようにカウンター用意
 	double delta_angle = 180;
 	double compass_angle_fixed =readCompassAngle();
 	double target_angle = cal_deviated_angle(0, compass_angle_fixed + angle_to_rotate);
-	while(fabs(delta_angle) > 30 && count <STACK_COUNTER)
+	while(fabs(delta_angle) > 30 && stack_count <MAX_STACK_ROTATE_TIMES)
 	{
 		double compass_angle =readCompassAngle();
 		delta_angle= cal_delta_angle(compass_angle,target_angle);
@@ -103,9 +103,9 @@ int motor_rotate_compass(double angle_to_rotate)
 			motor_left(100);
 		}
 		delay(50);
-		count++;
+		stack_count++;
 	}
-	if(count >= STACK_COUNTER)
+	if(stack_count >= MAX_STACK_ROTATE_TIMES)
 	{
 		printf("-------Could Not Move-------\n");
 	}
@@ -126,8 +126,8 @@ int motor_escape()
 		motor_back(i*10);
 		delay(200);
 	}
-	motor_rotate_compass(90);
-	motor_rotate_compass(-45);
+	motor_rotate_compass(120);
+	motor_rotate_compass(-75);
 	return 0;
 }
 
