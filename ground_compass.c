@@ -85,11 +85,11 @@ int updateCoord(Queue* latring,Queue* lonring)
 
 int motor_rotate_compass(double angle_to_rotate)
 {
-	int c = 0;  //行きたい方角に回転できなくても無限ループにならないようにカウンター用意
+	int count = 0;  //行きたい方角に回転できなくても無限ループにならないようにカウンター用意
 	double delta_angle = 180;
 	double compass_angle_fixed =readCompassAngle();
 	double target_angle = cal_deviated_angle(0, compass_angle_fixed + angle_to_rotate);
-	while(fabs(delta_angle) > 30 && c <STACK_COUNTER)
+	while(fabs(delta_angle) > 30 && count <STACK_COUNTER)
 	{
 		double compass_angle =readCompassAngle();
 		delta_angle= cal_delta_angle(compass_angle,target_angle);
@@ -103,9 +103,9 @@ int motor_rotate_compass(double angle_to_rotate)
 			motor_left(100);
 		}
 		delay(50);
-		c++;
+		count++;
 	}
-	if(c >= STACK_COUNTER)
+	if(count >= STACK_COUNTER)
 	{
 		printf("-------Could Not Move-------\n");
 	}
