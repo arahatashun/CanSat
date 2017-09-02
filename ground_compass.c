@@ -14,12 +14,12 @@
 
 static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
-static const int GOAL_THRESHOLD = 5;
+static const int GOAL_THRESHOLD = 3;
 static const int SETPOINT = 0.0;//delta_angleの目標値
 static const double KP_VALUE= 0.65;
-static const double KI_VALUE = 0.00001625;
+static const double KI_VALUE = 0.00001;
 static const double KD_VALUE = 0;
-static const int PID_LEN = 12;
+static const int PID_LEN = 20;
 static const int MAX_STACK_ROTATE_TIMES = 20;
 
 typedef struct dist_and_angle {
