@@ -17,8 +17,8 @@ int main()
 		time(&now);
 		printf("time = %d[s]\n", (int)(now-startTime));
 		gps_location(&data);
-		printf("latitude:%f\nlongitude:%f\naltitude:%f\n",
-		       data.latitude, data.longitude,data.altitude);
+		printf("time:%f\nlatitude:%f\nlongitude:%f\naltitude:%f\n",
+		       data.time; data.latitude, data.longitude,data.altitude);
 
 	}
 }

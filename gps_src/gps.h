@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 struct location {
+    double time;
     double latitude;
     double longitude;
     double speed;

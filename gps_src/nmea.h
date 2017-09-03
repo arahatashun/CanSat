@@ -35,6 +35,7 @@ struct gpgga {
 typedef struct gpgga gpgga_t;
 
 struct gprmc {
+    double time;
     double latitude;
     char lat;
     double longitude;
@@ -50,4 +51,3 @@ void nmea_parse_gpgga(char *, gpgga_t *);
 void nmea_parse_gprmc(char *, gprmc_t *);
 
 #endif
-

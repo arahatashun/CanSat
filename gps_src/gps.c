@@ -38,6 +38,7 @@ extern int gps_location(loc_t *coord)
 
 		if(serial_readln(buffer, 256)==-1)
 		{
+			coord->time = 0;
 			coord->latitude = 0;
 			coord->longitude = 0;
 			coord->altitude = 0;
@@ -62,7 +63,7 @@ extern int gps_location(loc_t *coord)
 				break;
 			case NMEA_GPRMC:
 				nmea_parse_gprmc(buffer, &gprmc);
-
+				coord->time = gprmc.time;
 				coord->speed = gprmc.speed;
 				coord->course = gprmc.course;
 
