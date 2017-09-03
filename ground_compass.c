@@ -78,7 +78,7 @@ int updateCoord(Queue* latring,Queue* lonring)
 	{
 		enqueue(latring,coord.latitude); //緯度を格納
 		enqueue(lonring,coord.longitude); //経度を格納
-		printf("latitude:%f\nlongitude:%f\n", coord.latitude, coord.longitude);
+		printf("time:%f\nlatitude:%f\nlongitude:%f\n",coord.time,coord.latitude, coord.longitude);
 	}
 	return 0;
 }
