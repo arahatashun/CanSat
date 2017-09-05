@@ -23,7 +23,7 @@ static const int WAIT4LAND_MINS = 10;//NOTE 終端速度に依存
 static const int TIMEOUT_ALT_STABLE = 40; //高度着地判定
 static const int ALTUTUDE_RING_LEN = 10;//ring_bufferの長さ
 //THRESHOLD
-static const int ALT_CHANGE_THRESHOLD = 1; //高度情報安定判定閾値
+static const int ALT_CHANGE_THRESHOLD = 1.5; //高度情報安定判定閾値
 static const int MINIMUM_ALTITUDE = 100; //高度情報一定値以下判定閾値(m)
 static const int CONTINUOUS_ISLIGHT_TIME = 5;
 //センサーデータ取得感覚
