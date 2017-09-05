@@ -17,10 +17,10 @@ static const int LAND_WAIT_SEQ = 3;
 static const int LAND_SEQ = 4;
 static const int OPEN_SEQ = 5;//ケーシング展開終了
 
-//タイムアウト時間 (分)
-static const int TIMEOUT_LUX = 60; //光センサー放出判定
-static const int WAIT4LAND_MINS = 10;//NOTE 終端速度に依存
-static const int TIMEOUT_ALT_STABLE = 40; //高度着地判定
+//タイムアウト時間 seconds
+static const int LUX_TIMEOUT_SECONDS = 3600; //光センサー放出判定
+static const int WAIT4LAND_SECONDS = 600;//NOTE 終端速度に依存
+static const int LANDTIMEOUT_SECONDS = 2400; //高度着地判定
 static const int ALTUTUDE_RING_LEN = 10;//ring_bufferの長さ
 //THRESHOLD
 static const int ALT_CHANGE_THRESHOLD = 1.5; //高度情報安定判定閾値
@@ -114,20 +114,20 @@ int write_sequence(Sequence *sequence2write,int seq_num2write)
 }
 
 //前回のシーケンスの終了時間からの分を返す
-int diffmin(Sequence last_seq)
+double diffsec(Sequence last_seq)
 {
 	time_t tcurrent;
 	time(&tcurrent);
-	double delta_min=difftime(tcurrent,last_seq.last_time)/60;//分に変換
-	printf("diffmin:%f\n",delta_min);
-	xbeePrintf("diffmin:%f\n",delta_min);
-	return (int)delta_min;
+	double delta_seconds = difftime(tcurrent,last_seq.last_time);
+	printf("diffsecond:%f\n",delta_seconds);
+	xbeePrintf("diffsecond%f\n",delta_seconds);
+	return delta_seconds;
 }
 
 //timeout 判定の関数 引数はタイムアウト時間(分)とSequence構造体
-int isTimeout(int timeout_min,Sequence seq)
+int isTimeout(int timeout_sec,Sequence seq)
 {
-	if(diffmin(seq) > timeout_min)
+	if(diffsec(seq) > timeout_sec)
 	{
 		//前のステータス終了からの経過時間 > タイムアウト時間
 		return 1;
@@ -160,7 +160,7 @@ static int releaseSeq(Sequence *seq)
 {
 	printf("RELEASE SEQUENCE START");
 	int isLightCount = 0;
-	while(!isTimeout(TIMEOUT_LUX,*seq))
+	while(!isTimeout(LUX_TIMEOUT_SECONDS,*seq))
 	{
 		getGPScoords();
 		getAltitude();
@@ -193,7 +193,7 @@ static int wait4Land(Sequence* seq)
 {
 	xbeePrintf("LAND WAIT SEQUENCE START\n");
 	printf("LAND WAIT SEQUENCE START\n");
-	while(!isTimeout(WAIT4LAND_MINS,*seq))
+	while(!isTimeout(WAIT4LAND_SECONDS,*seq))
 	{
 		getGPScoords();
 		getAltitude();
@@ -260,7 +260,7 @@ static int landSeq(Sequence* seq)
 {
 	printf("Landing Sequence\n");
 	Queue *ring = make_queue(ALTUTUDE_RING_LEN);
-	while(!isTimeout(TIMEOUT_ALT_STABLE,*seq))
+	while(!isTimeout(LANDTIMEOUT_SECONDS,*seq))
 	{
 		if(isLanded(ring))
 		{
