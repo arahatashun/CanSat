@@ -1,7 +1,7 @@
 # Makefile
 LIBS = -lwiringPi -lm -lgps
 objs_g = integration.o  motor.o mitibiki.o pid.o ring_buffer.o #GPSのみの制御
-objs_g_and_c = ground_compass.o motor.o mitibiki.o pid.o ring_buffer.o compass.o acclgyro.o#GPSとコンパス
+objs_g_and_c = ground_compass.o motor.o mitibiki.o pid.o ring_buffer.o compass.o acclgyro.o xbee_at.o#GPSとコンパス
 objs_f = flight.o gut.o luxsensor.o ring_buffer.o xbee_at.o acclgyro.o bme280.o #flight
 
 

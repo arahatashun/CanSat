@@ -11,6 +11,7 @@
 #include "ring_buffer.h"
 #include "pid.h"
 #include "acclgyro.h"
+#include "xbee_at.h"
 
 static const int GPS_RING_LEN = 10;//gpsのリングバッファの長さ
 static const double STACK_THRESHOLD = 0.000001; //stack判定するときの閾値
