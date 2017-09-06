@@ -308,6 +308,7 @@ int main(void)
 		landSeq(&sequence);
 		open_case(&sequence);
 		gps_off();
+		xbee_close();
 		return 0;
 	}
 	switch (sequence.sequence_num)
@@ -323,6 +324,7 @@ int main(void)
 		open_case(&sequence);
 	case 5:
 		gps_off();
+		xbee_close();
 		break;
 	default:
 		printf("Sequence number is Strange\n");

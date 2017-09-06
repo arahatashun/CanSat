@@ -79,6 +79,7 @@ int updateCoord(Queue* latring,Queue* lonring)
 		enqueue(latring,coord.latitude); //緯度を格納
 		enqueue(lonring,coord.longitude); //経度を格納
 		printf("time:%f\nlatitude:%f\nlongitude:%f\n",coord.time,coord.latitude, coord.longitude);
+		xbeePrintf("latitude:%f\nlongitude:%f\n",coord.latitude, coord.longitude);
 	}
 	return 0;
 }
@@ -206,6 +207,7 @@ int main()
 	pwm_initialize();
 	gps_init();
 	compass_initialize();
+	xbee_init();
 	DistAngle DistAngle_data = {0,0,100000,0};
 	Queue* gps_latring = make_queue(GPS_RING_LEN);
 	Queue* gps_lonring = make_queue(GPS_RING_LEN);
