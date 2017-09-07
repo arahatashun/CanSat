@@ -314,15 +314,20 @@ int main(void)
 	switch (sequence.sequence_num)
 	{
 	case 1:
+		printf("READ:last sequence num is 1");
 		releaseSeq(&sequence);
 		luxsensor_close();
 	case 2:
+		printf("READ:last sequence num is 2");
 		wait4Land(&sequence);
 	case 3:
+		printf("READ:last sequence num is 3");
 		landSeq(&sequence);
 	case 4:
+		printf("READ:last sequence num is 4");
 		open_case(&sequence);
 	case 5:
+		printf("READ:last sequence num is 5");
 		gps_off();
 		xbee_close();
 		break;
