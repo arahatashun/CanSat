@@ -333,6 +333,8 @@ int main(void)
 		break;
 	default:
 		printf("Sequence number is Strange\n");
+		gps_off();
+		xbee_close();
 		break;
 	}
 	return 0;
