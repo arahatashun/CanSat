@@ -23,6 +23,7 @@ static const int GYROZ_REG = 0x47;
 static const double CONVERT2G = 16384.0;
 static const double CONVERT2DEGREES = 131.0;
 static const double REVERSE_THRESHOLD = -0.8;//TODO 調整
+static const int LOCK_MAX = 25;
 static int fd = 0;
 
 //accl raw data格納
@@ -188,11 +189,14 @@ int Accl_read(Accl* data)
 		LockCounter++;
 	}
 
-	if(LockCounter>=100)
+	if(LockCounter>=LOCK_MAX)
 	{
 		printf("Lock Counter Max\n");
-		;      //TODO 再起動?
+		data->acclX_scaled = (double)rawdata.xList[4]/CONVERT2G;
+		data->acclY_scaled = (double)rawdata.yList[4]/CONVERT2G;
+		data->acclZ_scaled = 1;
 	}
+
 	data->acclX_scaled = (double)rawdata.xList[4]/CONVERT2G;
 	data->acclY_scaled = (double)rawdata.yList[4]/CONVERT2G;
 	data->acclZ_scaled = (double)rawdata.zList[4]/CONVERT2G;
