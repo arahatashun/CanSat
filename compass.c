@@ -26,14 +26,17 @@ static const int Y_LSB_REG = 0x08;
 static const double PI = 3.14159265;
 
 ///キャリブレーション関係のパラメーター
-static const double K_PARAMETER = 1.0;//地磁気の感度補正パラメータ
+static const double K_PARAMETER = 1.0;
+//地磁気の感度補正パラメータ
 
 /*
-static const double COMPASS_X_OFFSET = 170.5;     //ここに手動でキャリブレーションしたoffset値を代入(ver3.1についてるコンパスの値)
-static const double COMPASS_Y_OFFSET = -362.0;
-*/
+   static const double COMPASS_X_OFFSET = 170.5;
+   //ここに手動でキャリブレーションしたoffset値を代入(ver3.1についてるコンパスの値)
+   static const double COMPASS_Y_OFFSET = -362.0;
+ */
 
-static const double COMPASS_X_OFFSET = -125.5;    //ここに手動でキャリブレーションしたoffset値を代入(ver3.3についてるコンパスの値)
+static const double COMPASS_X_OFFSET = -125.5;
+//ここに手動でキャリブレーションしたoffset値を代入(ver3.3についてるコンパスの値)
 static const double COMPASS_Y_OFFSET = 204.5;
 
 
@@ -42,8 +45,10 @@ static const int MAX_PWM_VAL = 100;
 static const int ESCAPE_TIME = 1000;
 
 //calibration時の回転
-static const int TURN_CALIB_POWER = 25;//地磁気補正時turnするpower
-static const int TURN_CALIB_MILLISECONDS = 75;//地磁気補正時turnするmilliseconds
+static const int TURN_CALIB_POWER = 25;
+//地磁気補正時turnするpower
+static const int TURN_CALIB_MILLISECONDS = 75;
+//地磁気補正時turnするmilliseconds
 
 static int fd = 0;
 
