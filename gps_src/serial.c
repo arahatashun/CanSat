@@ -93,6 +93,7 @@ int serial_readln(char *buffer, int len)
 			if(rx_length<0)
 			{
 				printf("read returns %d\n",rx_length);
+				printf("fd = %d, errno=%d: %s\n", rx_length, errno, strerror(errno));
 			}
 		}
 		else
