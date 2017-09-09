@@ -34,7 +34,7 @@ static const double K_PARAMETER = 1.0;
 *************************************/
 
 static const double COMPASS_X_OFFSET = -211.5;
-static const double COMPASS_Y_OFFSET = 360.5;
+static const double COMPASS_Y_OFFSET = 245.5;
 
 /**************************************
    (ver3.3についてるコンパスの値)
