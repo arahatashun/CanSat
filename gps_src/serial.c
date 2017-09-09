@@ -79,11 +79,22 @@ int serial_readln(char *buffer, int len)
 			printf("GPS CONNECTION TIMEOUT\n");
 			return -1;
 		}
+
 		if (rx_length <= 0)
-		{ i++;
-		  printf("%d times read fail\n",i);
+		{
+			i++;
+			printf("%d times read fail\n",i);
 			//wait for messages
-		  sleep(1);}
+			sleep(1);
+			if(rx_length==0)
+			{
+				printf("read returns 0\n");
+			}
+			if(rx_length<0)
+			{
+				printf("read returns %d\n",rx_length);
+			}
+		}
 		else
 		{
 			i = 0;
