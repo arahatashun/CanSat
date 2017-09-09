@@ -23,7 +23,7 @@ static const int GYROZ_REG = 0x47;
 static const double CONVERT2G = 16384.0;
 static const double CONVERT2DEGREES = 131.0;
 static const double REVERSE_THRESHOLD = -0.8;//TODO 調整
-static const int LOCK_MAX = 25;
+static const int LOCK_MAX = 5;
 static int fd = 0;
 
 //accl raw data格納
