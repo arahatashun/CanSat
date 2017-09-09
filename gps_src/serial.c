@@ -80,12 +80,10 @@ int serial_readln(char *buffer, int len)
 			return -1;
 		}
 		if (rx_length <= 0)
-		{
-			printf("%d times read fail\n",i);
+		{ i++;
+		  printf("%d times read fail\n",i);
 			//wait for messages
-			sleep(1);
-			i++;
-		}
+		  sleep(1);}
 		else
 		{
 			i = 0;
