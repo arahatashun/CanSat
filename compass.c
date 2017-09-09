@@ -33,8 +33,8 @@ static const double COMPASS_X_OFFSET =-20.5;     //ここに手動でキャリ�
 static const double COMPASS_Y_OFFSET = -120.0;
 */
 
-static const double COMPASS_X_OFFSET = 59.0;    //ここに手動でキャリブレーションしたoffset値を代入(FM3についてるコンパスの値)
-static const double COMPASS_Y_OFFSET = 120.5;
+static const double COMPASS_X_OFFSET = -125.5;    //ここに手動でキャリブレーションしたoffset値を代入(ver3.3についてるコンパスの値)
+static const double COMPASS_Y_OFFSET = 204.5;
 
 
 //周囲に強磁場がある時の退避
