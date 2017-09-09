@@ -33,17 +33,17 @@ static const double K_PARAMETER = 1.0;
    (ver3.1についてるコンパスの値)
 *************************************/
 
-/*
-   static const double COMPASS_X_OFFSET = 170.5;
-   static const double COMPASS_Y_OFFSET = -362.0;
- */
+static const double COMPASS_X_OFFSET = 170.5;
+static const double COMPASS_Y_OFFSET = -362.0;
 
 /**************************************
    (ver3.3についてるコンパスの値)
 **************************************/
+
+/*
 static const double COMPASS_X_OFFSET = 126.0;
 static const double COMPASS_Y_OFFSET = 1.0;
-
+*/
 
 //周囲に強磁場がある時の退避
 static const int MAX_PWM_VAL = 100;
