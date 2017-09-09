@@ -29,14 +29,21 @@ static const double PI = 3.14159265;
 static const double K_PARAMETER = 1.0;
 //地磁気の感度補正パラメータ
 
+/*************************************
+   ここに手動でキャリブレーションしたoffset値を代入
+   (ver3.1についてるコンパスの値)
+*************************************/
+
 /*
    static const double COMPASS_X_OFFSET = 170.5;
-   //ここに手動でキャリブレーションしたoffset値を代入(ver3.1についてるコンパスの値)
    static const double COMPASS_Y_OFFSET = -362.0;
  */
 
+/**************************************
+   ここに手動でキャリブレーションしたoffset値を代入
+        (ver3.3についてるコンパスの値)
+ *************************************/
 static const double COMPASS_X_OFFSET = -125.5;
-//ここに手動でキャリブレーションしたoffset値を代入(ver3.3についてるコンパスの値)
 static const double COMPASS_Y_OFFSET = 204.5;
 
 
