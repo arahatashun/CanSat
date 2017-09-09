@@ -12,7 +12,7 @@
 #include "compass.h"
 #include "motor.h"
 
-static const double ANGLE_OF_DEVIATION = -7.2;
+static const double ANGLE_OF_DEVIATION = 13.5;
 static const int HMC5883L_ADDRESS = 0x1e; //I2C address
 static const int MODE_REG = 0x02;
 static const int MODE_CONTINUOUS = 0x00;
