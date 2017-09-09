@@ -74,6 +74,7 @@ int serial_readln(char *buffer, int len)
 	while(1)
 	{
 		rx_length = read(uart0_filestream, (void*)(&c), 1);
+		i++;
 		if(i==5)
 		{
 			printf("GPS CONNECTION TIMEOUT\n");
@@ -82,7 +83,6 @@ int serial_readln(char *buffer, int len)
 
 		if (rx_length <= 0)
 		{
-			i++;
 			printf("%d times read fail\n",i);
 			//wait for messages
 			sleep(1);
