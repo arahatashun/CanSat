@@ -26,34 +26,24 @@ static const int Y_LSB_REG = 0x08;
 static const double PI = 3.14159265;
 
 ///キャリブレーション関係のパラメーター
-static const double K_PARAMETER = 1.0;
-//地磁気の感度補正パラメータ
-
-/*************************************
-   (ver3.1についてるコンパスの値)
-*************************************/
-
-static const double COMPASS_X_OFFSET = -106.0;
-static const double COMPASS_Y_OFFSET = 186.0;
-
-/**************************************
-   (ver3.3についてるコンパスの値)
-**************************************/
+static const double K_PARAMETER = 1.0;//地磁気の感度補正パラメータ
 
 /*
-static const double COMPASS_X_OFFSET = 126.0;
-static const double COMPASS_Y_OFFSET = 1.0;
+static const double COMPASS_X_OFFSET =-20.5;     //ここに手動でキャリブレーションしたoffset値を代入(FM2についてるコンパスの値)
+static const double COMPASS_Y_OFFSET = -120.0;
 */
+
+static const double COMPASS_X_OFFSET = -125.5;    //ここに手動でキャリブレーションしたoffset値を代入(ver3.3についてるコンパスの値)
+static const double COMPASS_Y_OFFSET = 204.5;
+
 
 //周囲に強磁場がある時の退避
 static const int MAX_PWM_VAL = 100;
 static const int ESCAPE_TIME = 1000;
 
 //calibration時の回転
-static const int TURN_CALIB_POWER = 25;
-//地磁気補正時turnするpower
-static const int TURN_CALIB_MILLISECONDS = 75;
-//地磁気補正時turnするmilliseconds
+static const int TURN_CALIB_POWER = 25;//地磁気補正時turnするpower
+static const int TURN_CALIB_MILLISECONDS = 75;//地磁気補正時turnするmilliseconds
 
 static int fd = 0;
 
@@ -310,6 +300,24 @@ int read_for_calib()
 	return 0;
 }
 
+//キャリブレーション用にxyの生データ
+double read_for_calib2(double x, double y)
+{
+    Cmps data;
+    compass_value_initialize(&data);
+    read_for_calib();
+    double cal_theta = atan2(-(data.y_value- y)*K_PARAMETER,data.x_value-x)*(180/PI);
+    if(cal_theta  < -90)  //詳しい計算方法はkndまで
+    {
+        cal_theta = -cal_theta - 90;
+    }
+    else
+    {
+        cal_theta = 270 - cal_theta;
+    }
+    return cal_deviated_angle(ANGLE_OF_DEVIATION, cal_theta);
+}
+
 /*******************************************/
 /***以下はマシンによる自動地磁気calibration用****/
 /*******************************************/
@@ -374,22 +382,26 @@ static int rotate_to_calib(Cmps *compass_data)
 	delay(TURN_CALIB_MILLISECONDS);
 	motor_stop();
 	delay(2000);
-	read_for_calib();
+    read_for_calib();
 	printf( "compass_x= %f, compass_y= %f\n",compass_data->x_value
 	        ,compass_data->y_value);
 	delay(50);
 	return 0;
 }
 
-int cal_maxmin_compass(Cmps_offset *compass_offset,Cmps *compass_data)
+int cal_maxmin_compass(double *x_offset,double *y_offset)
 {
 	int i = 0;
-	compass_offset_initialize(compass_offset,compass_data);
+    Cmps data;
+    Cmps_offset offset;
+	compass_offset_initialize(offset,data);
 	for(i = 0; i<75; i++)
 	{
-		rotate_to_calib(compass_data);
-		maxmin_compass(compass_offset,compass_data);
+		rotate_to_calib(data);
+		maxmin_compass(offset,data);
 	}
-	mean_compass_offset(compass_offset);
+	mean_compass_offset(offset);
+    *x_offset = offset.x_offset();
+    *y_offset = offset.y_offset();
 	return 0;
 }
