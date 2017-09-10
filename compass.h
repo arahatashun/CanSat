@@ -9,9 +9,7 @@ int compass_initialize();
 double cal_deviated_angle(double angle_of_deviation, double theta_degree);
 double readCompassAngle(void);
 int read_for_calib();
-/*
 int cal_maxmin_compass(Cmps_offset *compass_offset,Cmps *compass_data);
-*/
 
 #ifdef __cplusplus
 }
