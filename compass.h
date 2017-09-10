@@ -7,7 +7,6 @@ extern "C" {
 
 int compass_initialize();
 double cal_deviated_angle(double angle_of_deviation, double theta_degree);
-int compass_read(Cmps* data);
 double readCompassAngle(void);
 int read_for_calib();
 double read_for_calib2(double x, double y);
