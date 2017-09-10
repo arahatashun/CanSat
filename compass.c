@@ -392,16 +392,16 @@ static int rotate_to_calib(Cmps *compass_data)
 int cal_maxmin_compass(double *x_offset,double *y_offset)
 {
 	int i = 0;
-    Cmps data;
-    Cmps_offset offset;
-	compass_offset_initialize(offset,data);
+        Cmps data;
+        Cmps_offset offset;
+	compass_offset_initialize(&offset,&data);
 	for(i = 0; i<75; i++)
 	{
-		rotate_to_calib(data);
-		maxmin_compass(offset,data);
+		rotate_to_calib(&data);
+		maxmin_compass(&offset,&data);
 	}
-	mean_compass_offset(offset);
-    *x_offset = offset.x_offset();
-    *y_offset = offset.y_offset();
+	mean_compass_offset(&offset);
+        *x_offset = offset.x_offset();
+        *y_offset = offset.y_offset();
 	return 0;
 }
