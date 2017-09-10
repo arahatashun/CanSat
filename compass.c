@@ -397,6 +397,8 @@ int cal_maxmin_compass(double *x_offset,double *y_offset)
 		rotate_to_calib(&data);
 		maxmin_compass(&offset,&data);
 	}
+	motor_stop();
+	delay(1000);
 	mean_compass_offset(&offset);
         *x_offset = offset.x_offset;
         *y_offset = offset.y_offset;
