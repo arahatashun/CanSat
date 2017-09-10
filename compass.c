@@ -28,14 +28,14 @@ static const double PI = 3.14159265;
 ///キャリブレーション関係のパラメーター
 static const double K_PARAMETER = 1.0;//地磁気の感度補正パラメータ
 
-/*
-static const double COMPASS_X_OFFSET =-20.5;     //ここに手動でキャリブレーションしたoffset値を代入(FM2についてるコンパスの値)
-static const double COMPASS_Y_OFFSET = -120.0;
-*/
 
+static const double COMPASS_X_OFFSET = 109.0;     //ここに手動でキャリブレーションしたoffset値を代入(FM2についてるコンパスの値)
+static const double COMPASS_Y_OFFSET = -147.0;
+
+/*
 static const double COMPASS_X_OFFSET = -125.5;    //ここに手動でキャリブレーションしたoffset値を代入(ver3.3についてるコンパスの値)
 static const double COMPASS_Y_OFFSET = 204.5;
-
+*/
 
 //周囲に強磁場がある時の退避
 static const int MAX_PWM_VAL = 100;
