@@ -69,7 +69,6 @@ static int compass_value_initialize(Cmps *compass_init)
 	return 0;
 }
 
-
 int compass_initialize()
 {
 	//I2c setup
@@ -197,7 +196,7 @@ static int checkLock(short* values,const int lock)
 	return 0;
 }
 
-int compass_read(Cmps* data)
+static int compass_read(Cmps* data)
 {
 	Raw rawdata;
 	compassReadRaw(&rawdata);
@@ -382,7 +381,7 @@ static int rotate_to_calib(Cmps *compass_data)
 	delay(TURN_CALIB_MILLISECONDS);
 	motor_stop();
 	delay(2000);
-        compass_read(&compass_data);
+        compass_read(compass_data);
 	printf( "compass_x= %f, compass_y= %f\n",compass_data->x_value
 	        ,compass_data->y_value);
 	delay(50);
