@@ -4,6 +4,7 @@
 #include "../compass.h"
 #include <stdio.h>
 #include <signal.h>
+#include <stdlib.h>
 
 void handler(int signum)
 {
