@@ -80,7 +80,7 @@ int updateCoord(Queue* latring,Queue* lonring)
 		enqueue(latring,coord.latitude); //緯度を格納
 		enqueue(lonring,coord.longitude); //経度を格納
 		printf("time:%f\nlatitude:%f\nlongitude:%f\n",coord.time,coord.latitude, coord.longitude);
-		xbeePrintf("latitude:%f\nlongitude:%f\n",coord.latitude, coord.longitude);
+		xbeePrintf("latitude:%f\r\nlongitude:%f\r\n",coord.latitude, coord.longitude);
 	}
 	return 0;
 }

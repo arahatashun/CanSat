@@ -49,7 +49,7 @@ int getGPScoords(void)
 	gps_location(&coord);
 	printf("latitude:%f longitude:%f altitude:%f\n",
 	       coord.latitude,coord.longitude,coord.altitude);
-	xbeePrintf("latitude:%f longitude:%f altitude:%f\n",
+	xbeePrintf("latitude:%f longitude:%f altitude:%f\r\n",
 	           coord.latitude,coord.longitude,coord.altitude);
 	return 0;
 }
@@ -59,7 +59,7 @@ double getAltitude(void)
 {
 	double altitude = readAltitude();
 	printf("ALTITUDE:%f\n",altitude);
-	xbeePrintf("ALTITUDE:%f\n",altitude);
+	xbeePrintf("ALTITUDE:%f\r\n",altitude);
 	return altitude;
 }
 
@@ -71,7 +71,7 @@ int read_sequence(Sequence* sequence2read)
 	{
 		//FILEは存在しないとき
 		printf("Cannot open sequence.txt\n");
-		xbeePrintf("Cannot opem sequence txt\n");
+		xbeePrintf("Cannot opem sequence txt\r\n");
 		return -1;
 	}
 	else
@@ -81,7 +81,7 @@ int read_sequence(Sequence* sequence2read)
 			;//pass
 		}
 		printf("read_sequence %d:%ld\n",sequence2read->sequence_num,sequence2read->last_time);
-		xbeePrintf("read_sequence %d:%ld\n",sequence2read->sequence_num,sequence2read->last_time);
+		xbeePrintf("read_sequence %d:%ld\r\n",sequence2read->sequence_num,sequence2read->last_time);
 		fclose(fp);
 	}
 	return 0;
@@ -95,19 +95,19 @@ int write_sequence(Sequence *sequence2write,int seq_num2write)
 	sequence2write->last_time = tcurrent;
 	sequence2write->sequence_num = seq_num2write;
 	printf("write sequence %d:%s\n",seq_num2write,ctime(&tcurrent));
-	xbeePrintf("write sequence %d:%s\n",seq_num2write,ctime(&tcurrent));
+	xbeePrintf("write sequence %d:%s\r\n",seq_num2write,ctime(&tcurrent));
 	FILE *fp=fopen("sequence.txt","a");//追加書き込み
 	//FILEが存在しないときは新規作成
 	if(fp==NULL)
 	{
 		printf("Cannot open sequence\n");
-		xbeePrintf("Cannot open sequence\n");
+		xbeePrintf("Cannot open sequence\r\n");
 		return -1;
 	}else
 	{
 		fprintf(fp,"%d:%ld\n",seq_num2write,tcurrent);
 		printf("write sequence success\n");
-		xbeePrintf("write sequence success\n");
+		xbeePrintf("write sequence success\r\n");
 		fclose(fp);
 	}
 	return 0;
@@ -120,7 +120,7 @@ double diffsec(Sequence last_seq)
 	time(&tcurrent);
 	double delta_seconds = difftime(tcurrent,last_seq.last_time);
 	printf("diffsecond:%f\n",delta_seconds);
-	xbeePrintf("diffsecond%f\n",delta_seconds);
+	xbeePrintf("diffsecond%f\r\n",delta_seconds);
 	return delta_seconds;
 }
 
@@ -141,7 +141,7 @@ static int wait4Start()
 	for(i=0; i<WAIT4START_SECONDS; i++)
 	{
 		printf("%d seconds to start\n",WAIT4START_SECONDS-i);
-		xbeePrintf("%d seconds to start\n",WAIT4START_SECONDS-i);
+		xbeePrintf("%d seconds to start\r\n",WAIT4START_SECONDS-i);
 		sleep(1);
 	}
 	return 0;
@@ -170,35 +170,35 @@ static int releaseSeq(Sequence *seq)
 			{
 				isLightCount++;
 				printf("light_counter:%d\n",isLightCount);
-				xbeePrintf("light_counter:%d\n",isLightCount);
+				xbeePrintf("light_counter:%d\r\n",isLightCount);
 			}else{
 				printf("isLight False\n");
-				xbeePrintf("isLight False\n");
+				xbeePrintf("isLight False\r\n");
 				isLightCount = 0;
 			}
 			sleep(LIGHT_INTERVAL);
 		}
 		printf("release complete:lux sensor\n");
-		xbeePrintf("release complete:lux sensor\n");
+		xbeePrintf("release complete:lux sensor\r\n");
 		write_sequence(seq,RELEASE_SEQ);
 		return 0;
 	}
 	printf("release_complete:time out\n");
-	xbeePrintf("release_complete:time out\n");
+	xbeePrintf("release_complete:time out\r\n");
 	write_sequence(seq,RELEASE_SEQ);
 	return 0;
 }
 
 static int wait4Land(Sequence* seq)
 {
-	xbeePrintf("LAND WAIT SEQUENCE START\n");
+	xbeePrintf("LAND WAIT SEQUENCE START\r\n");
 	printf("LAND WAIT SEQUENCE START\n");
 	while(!isTimeout(WAIT4LAND_SECONDS,*seq))
 	{
 		getGPScoords();
 		getAltitude();
 	}
-	xbeePrintf("LAND WAIT SEQUENCE FINISHED\n");
+	xbeePrintf("LAND WAIT SEQUENCE FINISHED\r\n");
 	printf("LAND WAIT SEQUENCE FINISHED\n");
 	write_sequence(seq,LAND_WAIT_SEQ);
 	return 0;
@@ -223,12 +223,12 @@ static int isAltlow(Queue* ring)
 	if(alt<MINIMUM_ALTITUDE)
 	{
 		printf("ALT IS LOW\n");
-		xbeePrintf("ALT IS LOW\n");
+		xbeePrintf("ALT IS LOW\r\n");
 		return 1;
 	}
 	//高度が基準以上
 	printf("ALT IS HIGH\n");
-	xbeePrintf("ALT IS HIGH\n");
+	xbeePrintf("ALT IS HIGH\r\n");
 	return 0;
 }
 
@@ -248,11 +248,11 @@ static int isLanded(Queue* ring)
 	if(calc_variation(ring)<ALT_CHANGE_THRESHOLD&&isAltlow(ring))
 	{
 		printf("ALT IS STABLE and LOW\n");
-		xbeePrintf("ALT IS STABLE and LOW\n");
+		xbeePrintf("ALT IS STABLE and LOW\r\n");
 		return 1;
 	}
 	printf("ALT IS NOT STABLE OR NOT LOW\n");
-	xbeePrintf("ALT IS NOT STABLE OR NOT LOW\n");
+	xbeePrintf("ALT IS NOT STABLE OR NOT LOW\r\n");
 	return 0;
 }
 
@@ -266,7 +266,7 @@ static int landSeq(Sequence* seq)
 		if(isLanded(ring))
 		{
 			printf("landing_complete:landed\n");
-			xbeePrintf("landing_complete:landed\n");
+			xbeePrintf("landing_complete:landed\r\n");
 			write_sequence(seq, LAND_SEQ);
 			queue_delete(ring);
 			return 0;
