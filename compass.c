@@ -313,24 +313,6 @@ int read_for_calib()
 	return 0;
 }
 
-//キャリブレーション用にxyの生データ
-double read_for_calib2(double x, double y)
-{
-    Cmps data;
-    compass_value_initialize(&data);
-    compass_read(&data);
-    double cal_theta = atan2(-(data.y_value- y)*K_PARAMETER,data.x_value-x)*(180/PI);
-    if(cal_theta  < -90)  //詳しい計算方法はkndまで
-    {
-        cal_theta = -cal_theta - 90;
-    }
-    else
-    {
-        cal_theta = 270 - cal_theta;
-    }
-    return cal_deviated_angle(ANGLE_OF_DEVIATION, cal_theta);
-}
-
 /*******************************************/
 /***以下はマシンによる自動地磁気calibration用****/
 /*******************************************/
@@ -417,4 +399,22 @@ int cal_maxmin_compass(double *x_offset,double *y_offset)
         *x_offset = offset.x_offset;
         *y_offset = offset.y_offset;
 	return 0;
+}
+
+//キャリブレーション用にxyの生データ
+double read_for_calib2(double x, double y)
+{
+    Cmps data;
+    compass_value_initialize(&data);
+    compass_read(&data);
+    double cal_theta = atan2(-(data.y_value- y)*K_PARAMETER,data.x_value-x)*(180/PI);
+    if(cal_theta  < -90)  //詳しい計算方法はkndまで
+    {
+        cal_theta = -cal_theta - 90;
+    }
+    else
+    {
+        cal_theta = 270 - cal_theta;
+    }
+    return cal_deviated_angle(ANGLE_OF_DEVIATION, cal_theta);
 }
