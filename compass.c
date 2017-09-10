@@ -379,8 +379,6 @@ static int rotate_to_calib(Cmps *compass_data)
 	compass_value_initialize(compass_data);
 	motor_right(TURN_CALIB_POWER);
 	delay(TURN_CALIB_MILLISECONDS);
-	motor_stop();
-	delay(2000);
         compass_read(compass_data);
 	printf( "compass_x= %f, compass_y= %f\n",compass_data->x_value
 	        ,compass_data->y_value);
