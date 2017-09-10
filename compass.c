@@ -197,7 +197,7 @@ static int checkLock(short* values,const int lock)
 	return 0;
 }
 
-static int compass_read(Cmps* data)
+int compass_read(Cmps* data)
 {
 	Raw rawdata;
 	compassReadRaw(&rawdata);
