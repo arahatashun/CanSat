@@ -304,7 +304,7 @@ double read_for_calib2(double x, double y)
 {
     Cmps data;
     compass_value_initialize(&data);
-    compass_read(data);
+    compass_read(&data);
     double cal_theta = atan2(-(data.y_value- y)*K_PARAMETER,data.x_value-x)*(180/PI);
     if(cal_theta  < -90)  //詳しい計算方法はkndまで
     {
