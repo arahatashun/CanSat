@@ -98,13 +98,14 @@ int serial_readln(char *buffer, int len)
 		}
 		else
 		{
-			i = 0;
 			if (c == '\n')
 			{
 				*b++ = '\0';
 				return 0;
 			}
 			*b++ = c;
+			printf("%s\n",&c);
+			i = 0;
 		}
 	}
 }
