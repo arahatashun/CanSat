@@ -8,19 +8,16 @@ int main()
 {
 	pwm_initialize();
 	compass_initialize();
-	Cmps compass_data;
-	Cmps_offset compass_offset;
-	cal_maxmin_compass(&compass_offset,&compass_data);
+    double x_fuck = 0;
+    double y_fuck = 0;
+	cal_maxmin_compass(&x_fuck, &y_fuck);
 	delay(2000);
-	printf("compassx_offset = %f\n", compass_offset.compassx_offset);
-	printf("compassy_offset = %f\n", compass_offset.compassy_offset);
+	printf("compassx_offset = %f\n", x_fuck);
+	printf("compassy_offset = %f\n", y_fuck);
 	while(1)
 	{
-		compass_read(&compass_data);
-		double compass_x = compass_data.x_value - compass_offset.compassx_offset;
-		double compass_y = compass_data.y_value - compass_offset.compassy_offset;
-		double compass_angle = calc_compass_angle(compass_x, compass_y);
-		printf("compass_angle=%f\n",compass_angle);
+        double compass_angle = read_for_calib2(x_fuck,y_fuck);
+        printf("compass_angle=%f\n",compass_angle);
 		delay(1000);
 	}
 	return 0;
