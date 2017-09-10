@@ -392,7 +392,7 @@ int cal_maxmin_compass(double *x_offset,double *y_offset)
         Cmps data;
         Cmps_offset offset;
 	compass_offset_initialize(&offset,&data);
-	for(i = 0; i<75; i++)
+	for(i = 0; i<50; i++)
 	{
 		rotate_to_calib(&data);
 		maxmin_compass(&offset,&data);
