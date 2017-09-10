@@ -209,8 +209,9 @@ static int wait4Land(Sequence* seq)
 static double calc_variation(Queue *ring)
 {
 	double variation= INF;//0にするよりも大きくする方があとでtheresholdと比較するので適切
-	dequeue(ring);
-	variation = queue_diff(ring);
+	double first = dequeue(ring);
+	double last = getLast(ring);
+	variation = fabs(first - last);
 	printf("VARIATION :%f\n",variation);
 	return variation;
 }
