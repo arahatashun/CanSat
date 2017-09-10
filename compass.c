@@ -401,7 +401,7 @@ int cal_maxmin_compass(double *x_offset,double *y_offset)
 		maxmin_compass(&offset,&data);
 	}
 	mean_compass_offset(&offset);
-        *x_offset = offset.x_offset();
-        *y_offset = offset.y_offset();
+        *x_offset = offset.x_offset;
+        *y_offset = offset.y_offset;
 	return 0;
 }
