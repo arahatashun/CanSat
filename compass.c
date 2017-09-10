@@ -31,10 +31,10 @@ static const double K_PARAMETER = 1.0;//地磁気の感度補正パラメータ
 /*************
 calibrationするとき
 *************/
-
+/*
 static const double COMPASS_X_OFFSET = 0;
 static const double COMPASS_Y_OFFSET = 0;
-
+*/
 /*************
 ver3.1のoffset
 *************/
