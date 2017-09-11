@@ -33,7 +33,7 @@ int Camera::takePhoto()
 	full_command_string = front_command+timePath+FILE_EXTENTION;//コマンドの文字列をつなげる。
 	const char * full_command = full_command_string.c_str();
 	system(full_command);//raspistillで静止画を撮って日時を含むファイル名で保存。
-	cout<<("%s\n",full_command);
+	std::cout<<("%s\n",full_command);
 	input = cv::imread(timePath+FILE_EXTENTION);
 	return 0;
 }
