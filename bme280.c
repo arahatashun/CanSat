@@ -88,7 +88,7 @@ static const int BME280_REGISTER_TEMPDATA = 0xFA;
 static const int BME280_REGISTER_HUMIDDATA = 0xFD;
 //海水面気圧
 //TODO 計算値の書き換え
-static const float MEAN_SEA_LEVEL_PRESSURE = 993.16;
+static const float MEAN_SEA_LEVEL_PRESSURE = 998.12;
 static const int LOCL_COUNTER_MAX = 50;
 static const double INF_ALTITUDE = 1000000000;
 static const int SAMPLING_INTERVAL = 10;//milliseconds
