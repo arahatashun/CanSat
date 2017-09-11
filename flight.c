@@ -213,6 +213,7 @@ static double calc_variation(Queue *ring)
 	double last = getLast(ring);
 	variation = fabs(first - last);
 	printf("VARIATION :%f\n",variation);
+	xbeePrintf("VARIATION :%f\r\n",variation);
 	return variation;
 }
 
