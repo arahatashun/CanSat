@@ -20,5 +20,5 @@ cv::cvtColor(input,hsv,CV_BGR2HSV);//入力画像(src)をhsv色空間(dst)に変
 cv::inRange(hsv,cv::Scalar(0,120,97),cv::Scalar(13,255,255),hsv_filtered15);
 cv::inRange(hsv,cv::Scalar(175,120,97),cv::Scalar(180,255,255),hsv_filtered180);
 cv::add(hsv_filtered15,hsv_filtered180,output);
-cv::imwrite(path+"BINARY"+"jpg",output);
+cv::imwrite(path+"BINARY"+".jpg",output);
 }
