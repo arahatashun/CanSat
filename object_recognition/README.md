@@ -20,3 +20,9 @@ sudo modprobe bcm2835-v4l2
 ```shell
 scp pi@raspberrypi.local:/home/pi/Pictures/*.jpg ~/Desktop
 ```
+
+## パラメーターの検査
+```shell
+ls|grep jpg|sed -e "s/\.[^.]*$//"|./hsv.out
+```
+画像が同じディレクトリにある状態でする。
