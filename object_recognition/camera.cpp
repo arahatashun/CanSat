@@ -29,7 +29,7 @@ int Camera::takePhoto()
 {
 	makeTimePath();
 	std::string full_command_string;
-	std::string front_command= "raspistill -w 1920 -h 1080 -o ";//command
+	std::string front_command= "raspistill -w 1920 -h 1080 -o -ex beach ";//command
 	full_command_string = front_command+timePath+FILE_EXTENTION;//コマンドの文字列をつなげる。
 	const char * full_command = full_command_string.c_str();
 	system(full_command);//raspistillで静止画を撮って日時を含むファイル名で保存。
