@@ -6,7 +6,7 @@ using namespace std;
 int main()
 {
 cout<<"enter path";
-string parh;
+string path;
 cin>>path;
 cv::Mat input = imread(path);
 cv::Mat hsv_filtered15;//画像の初期化
