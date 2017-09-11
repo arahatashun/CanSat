@@ -28,3 +28,8 @@ ls|grep jpg|sed -e "s/\.[^.]*$//"|./hsv.out
 scp pi@raspberrypi.local:/home/pi/cansat/object_recognition/*.jpg .
 ```
 画像が同じディレクトリにある状態でする。
+
+## v4l2-ctlのinstall
+```shell
+sudo apt-get install v4l-utils
+```
