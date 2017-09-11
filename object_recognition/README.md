@@ -23,6 +23,7 @@ scp pi@raspberrypi.local:/home/pi/Pictures/*.jpg ~/Desktop
 
 ## パラメーターの検査
 ```shell
+scp pi@raspberrypi.local:/home/pi/cansat/object_recognition/*.jpg .
 ls|grep jpg|sed -e "s/\.[^.]*$//"|./hsv.out
 ```
 画像が同じディレクトリにある状態でする。
