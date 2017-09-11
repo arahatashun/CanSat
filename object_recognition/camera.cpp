@@ -6,8 +6,6 @@
 
 //static const int WIDTH = 1920;
 //static const int HEIGHT = 1080;
-static const int FPS = 3;
-static const int DEVICE = 0;
 static const std::string DIRECTORY_PATH = "/home/pi/Pictures/";//pathの先頭
 static const std::string FILE_EXTENTION = ".jpg";//拡張子
 
@@ -19,40 +17,23 @@ static const double MIN_AREA = 1;//抽出する面積の最小値
 
 Camera::Camera()
 {
-	if(!capture.open(DEVICE))
-	{
-		std::cout<<"capture is not opened 1"<<std::endl;
-	}
-	if (!capture.isOpened())
-	{
-		std::cout<<"capture is not opened 2"<<std::endl;
-	}
-	//capture.set(CV_CAP_PROP_FRAME_WIDTH,WIDTH);
-	//capture.set(CV_CAP_PROP_FRAME_HEIGHT,HEIGHT);
-	capture.set(CV_CAP_PROP_FPS,FPS);
-	//以下 対応してない
-	//capture.set(CV_CAP_PROP_BUFFERSIZE, 1);
+	;
 }
 
 Camera::~Camera()
 {
-	capture.release();
+	;
 }
 
 int Camera::takePhoto()
 {
 	makeTimePath();
-	cv::Mat frame;
-	for (int i = 0; i < 5; i++)
-	{
-			capture.grab();
-	}
-	do
-	{
-		capture>>frame;
-	} while(frame.empty());
-	input = frame;
-	imwrite(timePath+FILE_EXTENTION,input);
+	std::string full_command;
+	std::string front_command= "raspistill -w 1920 -h 1080 -o ";//command
+	full_command = front_command+timePath+FILE_EXTENTION;//コマンドの文字列をつなげる。
+	system(full_command);//raspistillで静止画を撮って日時を含むファイル名で保存。
+	printf("%s\n",full_command);
+	input = cv::imread(timePath+FILE_EXTENTION);
 	return 0;
 }
 
@@ -97,8 +78,8 @@ int Camera::binarize()
 	cv::cvtColor(input,hsv,CV_BGR2HSV);//入力画像(src)をhsv色空間(dst)に変換
 	//inRange(入力画像,下界画像,上界画像,出力画像)
 	//「HSV」は、色を色相(Hue)・彩度(Saturation)・明度(Value)
-	cv::inRange(hsv,cv::Scalar(0,120,97),cv::Scalar(13,255,MAX_VALUE),hsv_filtered15);
-	cv::inRange(hsv,cv::Scalar(175,120,97),cv::Scalar(180,255,MAX_VALUE),hsv_filtered180);
+	cv::inRange(hsv,cv::Scalar(0,80,70),cv::Scalar(10,255,MAX_VALUE),hsv_filtered15);
+	cv::inRange(hsv,cv::Scalar(175,80,70),cv::Scalar(180,255,MAX_VALUE),hsv_filtered180);
 	cv::add(hsv_filtered15,hsv_filtered180,hsv);
 	output = rmNoise(hsv);
 	imwrite(timePath+"BINARY"+FILE_EXTENTION,output);
