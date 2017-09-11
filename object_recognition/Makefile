@@ -11,3 +11,6 @@ camera.o: camera.cpp
 	g++ -c camera.cpp
 motor.o: ../motor.c
 	gcc -c ../motor.c
+
+hsv.out: hsvtest.cpp
+	g++ -o hsv.out hsvtest.cpp `pkg-config --cflags opencv` `pkg-config --libs opencv` 
