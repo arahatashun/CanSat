@@ -6,10 +6,10 @@ using namespace std;
 
 int main()
 {
-  while(cin)
+  while(1)
   {
     string path;
-    getline(cin, path); 
+    getline(cin, path);
     cv::Mat input = cv::imread(path+".jpg");
     cv::Mat hsv_filtered15;//画像の初期化
     cv::Mat hsv_filtered180;//画像の初期化
