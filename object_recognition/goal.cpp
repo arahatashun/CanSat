@@ -55,7 +55,7 @@ int main (void)
 			//見つけれたら前進
 			forward_count++;
 			motor_forward(100);
-			delay(400);
+			delay(600);
 			motor_stop();
 			delay(DELAY_MILLIS);
 		}
