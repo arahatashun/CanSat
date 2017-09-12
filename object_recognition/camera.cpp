@@ -13,7 +13,7 @@ static const int AOV = 62.2;//ANGLE OF VIEW
 //明度について
 static const int MAX_VALUE = 255;//明るさ最大
 static const int NO_VALUE = 0;//明るさ最小
-static const double MIN_AREA = 1;//抽出する面積の最小値
+static const double MIN_AREA = 5;//抽出する面積の最小値
 
 Camera::Camera()
 {
@@ -29,7 +29,7 @@ int Camera::takePhoto()
 {
 	makeTimePath();
 	std::string full_command_string;
-	std::string front_command= "raspistill -ex beach -w 640 -h 480 -o ";//command
+	std::string front_command= "raspistill -ex beach -w 1920 -h 1080 -o ";//command
 	full_command_string = front_command+timePath+FILE_EXTENTION;//コマンドの文字列をつなげる。
 	const char * full_command = full_command_string.c_str();
 	system(full_command);//raspistillで静止画を撮って日時を含むファイル名で保存。
