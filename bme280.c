@@ -55,7 +55,7 @@
 #include <wiringPiI2C.h>
 #include <wiringPi.h>
 #include "bme280.h"
-//ADRESS
+//ADDRESS
 static const int BME280_ADDRESS = 0x76;
 static const int BME280_REGISTER_DIG_T1 = 0x88;
 static const int BME280_REGISTER_DIG_T2 = 0x8A;
