@@ -20,7 +20,7 @@ static const int OPEN_SEQ = 5;//ケーシング展開終了
 //タイムアウト時間 seconds
 static const int LUX_TIMEOUT_SECONDS = 3900; //光センサー放出判定
 static const int WAIT4LAND_SECONDS = 600;//NOTE 終端速度に依存
-static const int LANDTIMEOUT_SECONDS = 600; //高度着地判定
+static const int LANDTIMEOUT_SECONDS = 900; //高度着地判定
 static const int ALTUTUDE_RING_LEN = 10;//ring_bufferの長さ
 //THRESHOLD
 static const double ALT_CHANGE_THRESHOLD = 1.5; //高度情報安定判定閾値
