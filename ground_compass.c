@@ -61,8 +61,16 @@ int updateDistAngle(DistAngle *data,Queue* latring,Queue* lonring)
 int handleGpsZero(loc_t coord,Queue* latring,Queue* lonring)
 {
 	printf("GPS return 0 value\n");
-	coord.latitude = getLast(latring);
-	coord.longitude = getLast(lonring);
+	if(!is_empty(latring))
+	{
+		coord.latitude = getLast(latring);
+		coord.longitude = getLast(lonring);
+	}
+	else
+	{
+		coord.latitude = 0.0;
+		coord.longitude = 0.0;
+	}
 	//RING BUFFERの更新はしない(stack判定誤作動のため)
 	return 0;
 }
