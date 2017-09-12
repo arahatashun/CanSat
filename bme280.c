@@ -308,9 +308,9 @@ double calcAltitude(float pressure,float temperature)
 	// Note that using the equation from wikipedia can give bad results
 	// at high altitude.  See this thread for more information:
 	//  http://forums.adafruit.com/viewtopic.php?f=22&t=58064
-	double altitude = (temperature + 273.15)
-	                  * (pow(MEAN_SEA_LEVEL_PRESSURE/pressure, 0.190294957)-1.0) / 0.0065;
-
+	/*double altitude = (temperature + 273.15)
+	                  * (pow(MEAN_SEA_LEVEL_PRESSURE/pressure, 0.190294957)-1.0) / 0.0065;*/
+	double altitude = 44330.0 * (1.0 - pow(pressure / MEAN_SEA_LEVEL_PRESSURE, 0.190294957));
 	return altitude;
 }
 
@@ -410,7 +410,8 @@ float getSealevelPressure(float altitude)
 	float t = compensateTemperature(t_fine); // C
 	float p = compensatePressure(data.pressure,t_fine) / 100;// hPa
 	//float h = compensateHumidity(data.humidity,t_fine);// %
-	float sealevelPressure = p* pow(1-0.0065*altitude/(0.0065*altitude + t + 273.15),-5.257);
+	//float sealevelPressure = p* pow(1-0.0065*altitude/(0.0065*altitude + t + 273.15),-5.257);
+	float sealevelPressure = p / pow(1 - altitude/44330,5.255);
 	printf("%f\n",sealevelPressure);
 	return sealevelPressure;
 }
