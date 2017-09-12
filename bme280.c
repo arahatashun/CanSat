@@ -396,6 +396,7 @@ double readAltitude(void)
 	float t = compensateTemperature(t_fine); // C
 	float p = compensatePressure(data.pressure,t_fine) / 100;// hPa
 	//float h = compensateHumidity(data.humidity,t_fine);// %
+	printf("temperature %f\n",t);
 	double a = calcAltitude(p,t); // meters
 	printf("pressure:%f\naltitude:%f\n",p,a);
 	return a;
