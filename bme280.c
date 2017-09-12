@@ -88,7 +88,7 @@ static const int BME280_REGISTER_TEMPDATA = 0xFA;
 static const int BME280_REGISTER_HUMIDDATA = 0xFD;
 //海水面気圧
 //TODO 計算値の書き換え
-static const float MEAN_SEA_LEVEL_PRESSURE = 987;
+static const float MEAN_SEA_LEVEL_PRESSURE = 1020.66;
 static const int LOCL_COUNTER_MAX = 50;
 static const double INF_ALTITUDE = 1000000000;
 static const int SAMPLING_INTERVAL = 10;//milliseconds
@@ -407,7 +407,7 @@ float getSealevelPressure(float altitude)
 	bme280_processed_data data;
 	getProcessedData(&data);
 	int32_t t_fine = getTemperatureCalibration(data.temperature);
-	float t = compensateTemperature(t_fine); // C
+	//float t = compensateTemperature(t_fine); // C
 	float p = compensatePressure(data.pressure,t_fine) / 100;// hPa
 	//float h = compensateHumidity(data.humidity,t_fine);// %
 	//float sealevelPressure = p* pow(1-0.0065*altitude/(0.0065*altitude + t + 273.15),-5.257);
