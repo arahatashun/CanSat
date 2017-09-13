@@ -57,23 +57,14 @@ int updateDistAngle(DistAngle *data,Queue* latring,Queue* lonring)
 	return 0;
 }
 
-//gps０問題対策
-int handleGpsZero(loc_t coord,Queue* latring,Queue* lonring)
-{
-	printf("GPS return 0 value\n");
-	coord.latitude = getLast(latring);
-	coord.longitude = getLast(lonring);
-	//RING BUFFERの更新はしない(stack判定誤作動のため)
-	return 0;
-}
-
 int updateCoord(Queue* latring,Queue* lonring)
 {
 	loc_t coord;
 	gps_location(&coord);//gpsデータ取得
 	if(coord.latitude == 0.0)
 	{
-		handleGpsZero(coord,latring,lonring);
+		printf("GPS return 0 value\n");
+		//RING BUFFERの更新はしない(stack判定誤作動のため)
 	}
 	else
 	{
