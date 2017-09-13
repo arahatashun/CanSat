@@ -16,4 +16,4 @@ Runback
 
 ||record|weight|
 |:--|:--:|:--:|
-|1st experiment|1.34m|1002g|
+|1st launch|1.34m|1002g|
