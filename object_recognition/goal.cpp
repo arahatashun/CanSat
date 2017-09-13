@@ -42,7 +42,7 @@ int main (void)
 		camera.takePhoto();
 	  camera.binarize();
 	  double count = camera.countArea();
-
+		printf("forward_count %d\n",forward_count);
 		if(lastTime-startTime<MINIMUM_TIMUOUT)
 		{
 			forward_count = 0;
