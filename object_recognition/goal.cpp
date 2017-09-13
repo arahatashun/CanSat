@@ -43,7 +43,7 @@ int main (void)
 	  camera.binarize();
 	  double count = camera.countArea();
 
-		if(forward_count>CONTINUOUS_FORWARD)
+		if(lastTime-startTime<MINIMUM_TIMUOUT)
 		{
 			forward_count = 0;
 		}
@@ -76,7 +76,7 @@ int main (void)
 			motor_stop();
 			delay(DELAY_MILLIS);
 		}
-		if(lastTime-startTime>MINIMUM_TIMUOUT && forward_count == CONTINUOUS_FORWARD && EXIST_FLAG)
+		if(forward_count >= CONTINUOUS_FORWARD && EXIST_FLAG)
 		{
 			printf("NORMAL TIMEOUT\n");
 			return 0;
