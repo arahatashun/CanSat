@@ -19,7 +19,7 @@ static const double EXIST_THRESHOLD = 0.1;//ゴール存在判定 パーセン�
 static const int MINIMUM_TIMUOUT = 400;//seconds
 static const int MAXIMUM_TIMEOUT = 600;//seconds
 static const int DELAY_MILLIS = 50;
-static const int CONTINUOUS_FORWARD = 5;
+static const int CONTINUOUS_FORWARD = 4;
 static const double GOAL_THRESHOLD = 50;
 static int EXIST_FLAG = 0;
 void handler(int signum);
