@@ -10,3 +10,9 @@ Runback 1st prize
 |:--|:--:|:--:|:--:|
 |1st experiment|0.00m|14m24s|1039g|
 |2nd experiment|0.08m|7m47s|1027g|
+
+## ARLISS 2017
+Runback
+||record|weight|
+|:--|:--:|:--:|
+|1st experiment|1.34m|1002g|
