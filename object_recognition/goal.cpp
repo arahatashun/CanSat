@@ -37,20 +37,27 @@ int main (void)
 	int forward_count = 0;//連続してforwardした回数
 	while(lastTime-startTime<MAXIMUM_TIMEOUT)
 	{
-		if(forward_count>CONTINUOUS_FORWARD)
-		{
-			forward_count = 0;
-		}
 		printf("lastTime - startTime %d\n",lastTime - startTime);
 		time(&lastTime);
 		camera.takePhoto();
 	  camera.binarize();
 	  double count = camera.countArea();
-		if(count>GOAL_THRESHOLD)
+
+		if(forward_count>CONTINUOUS_FORWARD)
 		{
-			printf("COUNT IS AVOBE GOAL_THRESHOLD\n");
-			EXIST_FLAG = 1;
+			forward_count = 0;
 		}
+
+		if(!EXIST_FLAG)
+		{
+			if(count>GOAL_THRESHOLD)
+			{
+				printf("COUNT IS AVOBE GOAL_THRESHOLD\n");
+				EXIST_FLAG = 1;
+			}
+			forward_count = 0;
+		}
+
 		if(count < EXIST_THRESHOLD)
 		{
 			//回転するだけ
