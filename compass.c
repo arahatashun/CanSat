@@ -39,8 +39,8 @@ static const double COMPASS_Y_OFFSET = 0;
 ver3.1のoffset
 *************/
 
-static const double COMPASS_X_OFFSET = -15.5;
-static const double COMPASS_Y_OFFSET = 53.5;
+static const double COMPASS_X_OFFSET = 2.5;
+static const double COMPASS_Y_OFFSET = 116.0;
 
 /*************
 ver3.3のoffset
