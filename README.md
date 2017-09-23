@@ -12,7 +12,7 @@ Runback 1st prize
 |2nd experiment|0.08m|7m47s|1027g|
 
 ## ARLISS 2017
-Runback
+Runback Acuuracy Award & Overall Winner
 
 ||record|weight|
 |:--|:--:|:--:|
