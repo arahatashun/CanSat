@@ -20,4 +20,4 @@ Runback Accuracy Award & Overall Winner
 |2nd launch|0.00m|1008g|
 
 ## Post Flight Review
-[Slide](https://github.com/arahatashun/cansat/wiki/pdf/PostFlightReview_rev 2.pdf)
+[Slide](https://github.com/arahatashun/cansat/wiki/pdf/PostFlightReview.pdf)
