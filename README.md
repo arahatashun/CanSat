@@ -12,8 +12,12 @@ Event and ARLISS 2017.
 ## Sequence of Events
 ![sofe](https://github.com/arahatashun/cansat/blob/master/pictures/sequence_of_event.png)
 
-## Result
 
+## Result
+## 1st lauch (1.34m)
+![1_1](https://github.com/arahatashun/cansat/blob/master/pictures/1_1.png)
+![1_2](https://github.com/arahatashun/cansat/blob/master/pictures/1_2.png)
+## summary
 ### Noshiro Space Event 2017
 Runback 1st prize
 
