@@ -9,6 +9,9 @@ Event and ARLISS 2017.
 ## Physical Layout
 ![layout](https://github.com/arahatashun/cansat/blob/master/pictures/layout.png)
 
+## Sequence of Events
+![sofe](https://github.com/arahatashun/cansat/blob/master/pictures/sequence_of_event.png)
+
 ## Result
 
 ### Noshiro Space Event 2017
