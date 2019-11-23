@@ -6,7 +6,9 @@ Event and ARLISS 2017.
 ## Circuit Diagram
 ![circuit](https://github.com/arahatashun/cansat/blob/master/pictures/circuit.png)
 
-## Noshiro Space Event 2017
+
+## Result
+### Noshiro Space Event 2017
 Runback 1st prize
 
 ||record|time|weight|
@@ -14,7 +16,7 @@ Runback 1st prize
 |1st experiment|0.00m|14m24s|1039g|
 |2nd experiment|0.08m|7m47s|1027g|
 
-## ARLISS 2017
+### ARLISS 2017
 Runback Accuracy Award & Overall Winner
 
 ||record|weight|
