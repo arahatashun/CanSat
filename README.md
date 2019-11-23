@@ -3,6 +3,9 @@
 This is the University of Tokyo team THE-O's repository for Noshiro Space
 Event and ARLISS 2017.
 
+## Circuit Diagram
+![circuit](https://github.com/arahatashun/cansat/blob/master/pictures/circuit.png)
+
 ## Noshiro Space Event 2017
 Runback 1st prize
 
