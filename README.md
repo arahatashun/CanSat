@@ -12,15 +12,20 @@ Event and ARLISS 2017.
 ## Sequence of Events
 ![sofe](https://github.com/arahatashun/cansat/blob/master/pictures/sequence_of_event.png)
 
+## Object Recognition
+![obj](https://github.com/arahatashun/cansat/blob/master/pictures/binary.png)
 
 ## Result
+
 ## 1st lauch (1.34m)
 ![1](https://github.com/arahatashun/cansat/blob/master/pictures/1.png)
 
 ## 2nd launch (0.00m)
 ![2](https://github.com/arahatashun/cansat/blob/master/pictures/2.png)
 ![2_3](https://github.com/arahatashun/cansat/blob/master/pictures/2_3.png)
-## summary
+
+## Summary
+
 ### Noshiro Space Event 2017
 Runback 1st prize
 
