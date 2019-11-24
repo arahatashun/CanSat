@@ -1,4 +1,4 @@
-# cansat
+# CanSat ()
 
 This is the University of Tokyo team THE-O's repository for Noshiro Space
 Event and ARLISS 2017.
@@ -44,3 +44,6 @@ Runback Accuracy Award & Overall Winner
 
 ## Post Flight Review
 [Slide](https://github.com/arahatashun/cansat/wiki/pdf/PostFlightReview.pdf)
+
+## Reference
+http://www.arliss.org/
