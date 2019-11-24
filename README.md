@@ -1,4 +1,4 @@
-# CanSat ()
+# CanSat
 
 This is the University of Tokyo team THE-O's repository for Noshiro Space
 Event and ARLISS 2017.
